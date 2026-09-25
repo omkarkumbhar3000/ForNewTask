@@ -1,0 +1,846 @@
+[
+ {
+  "id": "adbridging__insertaddomain",
+  "title": "ADbridging lifecycle - InsertAdDomain",
+  "why": "Generated lifecycle chain: discover LOB context, create, read the record back, then optionally update and remove it.",
+  "generated": true,
+  "tier": 1,
+  "controller": "ADbridging",
+  "hops": [
+   {
+    "name": "GetLOBList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetLOBList",
+    "body": {},
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LobName": "AUTOMATION_TEST_LOB"
+     },
+     "take": {
+      "LOB_ID": "LobId",
+      "LOB_NAME": "LobName"
+     }
+    },
+    "sla_ms": 8000
+   },
+   {
+    "name": "GetUserGroupList",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetUserGroupListWithoutMandateValue",
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LOBName": "${LOB_NAME}"
+     },
+     "take": {
+      "USER_GROUP_ID": "UserGroupId",
+      "USER_GROUP_NAME": "UserGroupName"
+     }
+    },
+    "sla_ms": 12000
+   },
+   {
+    "name": "GetServerGroupList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetServerGroupList",
+    "body": {
+     "LobId": "${LOB_ID}"
+    },
+    "extract": {
+     "SERVER_GROUP_ID": "Result[0].ServerGroupId"
+    },
+    "stop_on_fail": false,
+    "sla_ms": 8000
+   },
+   {
+    "name": "InsertAdDomain",
+    "verb": "POST",
+    "path": "/api/ADbridging/InsertAdDomain",
+    "body": {
+     "DomainServerIP": "10.11.1.11",
+     "DomainName": "DOMAIN1.COM",
+     "DomainExtension": ".COM",
+     "LDAPDomainString": "",
+     "HostName": "${NEW_SERVICE_HOST}",
+     "DomainUserName": "user12",
+     "DomainPassword": "user@12",
+     "NISName": "DOMAIN1",
+     "OrganisationalUnitName": "PAMUSERS"
+    },
+    "expect_created": true,
+    "extract_any_id": "NEW_ID",
+    "sla_ms": 20000,
+    "stop_on_fail": true,
+    "note": "generated from insertAdDomain; chained: HostName <- ${NEW_SERVICE_HOST}"
+   },
+   {
+    "name": "GetServerList__verify",
+    "verb": "GET",
+    "path": "/api/ADbridging/GetServerList",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "verify_value_anywhere": {
+     "value": "${NEW_ID}",
+     "label": "created record id"
+    },
+    "note": "read-back chosen for entity 'addomain'"
+   },
+   {
+    "name": "DeleteAdDomain",
+    "verb": "POST",
+    "path": "/api/ADbridging/DeleteAdDomain",
+    "body": {
+     "DomainId": "30"
+    },
+    "sla_ms": 20000,
+    "stop_on_fail": false,
+    "teardown": true,
+    "note": "removes the record this flow created; requires --allow-teardown"
+   }
+  ]
+ },
+ {
+  "id": "adbridging__insertserverdomainmapping",
+  "title": "ADbridging lifecycle - InsertServerDomainMapping",
+  "why": "Generated lifecycle chain: discover LOB context, create, read the record back, then optionally update and remove it.",
+  "generated": true,
+  "tier": 1,
+  "controller": "ADbridging",
+  "hops": [
+   {
+    "name": "GetLOBList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetLOBList",
+    "body": {},
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LobName": "AUTOMATION_TEST_LOB"
+     },
+     "take": {
+      "LOB_ID": "LobId",
+      "LOB_NAME": "LobName"
+     }
+    },
+    "sla_ms": 8000
+   },
+   {
+    "name": "GetUserGroupList",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetUserGroupListWithoutMandateValue",
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LOBName": "${LOB_NAME}"
+     },
+     "take": {
+      "USER_GROUP_ID": "UserGroupId",
+      "USER_GROUP_NAME": "UserGroupName"
+     }
+    },
+    "sla_ms": 12000
+   },
+   {
+    "name": "GetServerGroupList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetServerGroupList",
+    "body": {
+     "LobId": "${LOB_ID}"
+    },
+    "extract": {
+     "SERVER_GROUP_ID": "Result[0].ServerGroupId"
+    },
+    "stop_on_fail": false,
+    "sla_ms": 8000
+   },
+   {
+    "name": "InsertServerDomainMapping",
+    "verb": "POST",
+    "path": "/api/ADbridging/InsertServerDomainMapping",
+    "body": {
+     "LinuxServerIP": "10.10.2.42",
+     "WindowsServerIP": "10.10.0.71",
+     "WindowsDomainName": "ATSTESTDC.COM",
+     "IsConfigured": true,
+     "CreateDateTime": "",
+     "CreatedBy": "root",
+     "ModifyDateTime": "",
+     "ModifyBy": "root"
+    },
+    "expect_created": true,
+    "extract_any_id": "NEW_ID",
+    "sla_ms": 20000,
+    "stop_on_fail": true,
+    "note": "generated from insertServerDomainMapping"
+   },
+   {
+    "name": "GetServerList__verify",
+    "verb": "GET",
+    "path": "/api/ADbridging/GetServerList",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "verify_value_anywhere": {
+     "value": "${NEW_ID}",
+     "label": "created record id"
+    },
+    "note": "read-back chosen for entity 'serverdomain'"
+   }
+  ]
+ },
+ {
+  "id": "adbridging__insertuserdetails",
+  "title": "ADbridging lifecycle - InsertUserDetails",
+  "why": "Generated lifecycle chain: discover LOB context, create, read the record back, then optionally update and remove it.",
+  "generated": true,
+  "tier": 1,
+  "controller": "ADbridging",
+  "hops": [
+   {
+    "name": "GetLOBList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetLOBList",
+    "body": {},
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LobName": "AUTOMATION_TEST_LOB"
+     },
+     "take": {
+      "LOB_ID": "LobId",
+      "LOB_NAME": "LobName"
+     }
+    },
+    "sla_ms": 8000
+   },
+   {
+    "name": "GetUserGroupList",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetUserGroupListWithoutMandateValue",
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LOBName": "${LOB_NAME}"
+     },
+     "take": {
+      "USER_GROUP_ID": "UserGroupId",
+      "USER_GROUP_NAME": "UserGroupName"
+     }
+    },
+    "sla_ms": 12000
+   },
+   {
+    "name": "GetServerGroupList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetServerGroupList",
+    "body": {
+     "LobId": "${LOB_ID}"
+    },
+    "extract": {
+     "SERVER_GROUP_ID": "Result[0].ServerGroupId"
+    },
+    "stop_on_fail": false,
+    "sla_ms": 8000
+   },
+   {
+    "name": "InsertUserDetails",
+    "verb": "POST",
+    "path": "/api/ADbridging/InsertUserDetails",
+    "body": {
+     "FirstName": "Devyani",
+     "LastName": "gawand",
+     "EmailId": "${NEW_USER_EMAIL}",
+     "Password": "${NEW_USER_PASSWORD}"
+    },
+    "expect_created": true,
+    "extract_any_id": "NEW_ID",
+    "sla_ms": 20000,
+    "stop_on_fail": true,
+    "note": "generated from insertUserDetails; chained: EmailId <- ${NEW_USER_EMAIL}, Password <- ${NEW_USER_PASSWORD}"
+   },
+   {
+    "name": "GetAllADUserDetails__verify",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetAllADUserDetails",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "verify_value_anywhere": {
+     "value": "${NEW_ID}",
+     "label": "created record id"
+    },
+    "note": "read-back chosen for entity 'user'",
+    "body": {}
+   },
+   {
+    "name": "UpdateRuleAssocUserStatus",
+    "verb": "POST",
+    "path": "/api/ADbridging/UpdateRuleAssocUserStatus",
+    "body": {
+     "Id": "3",
+     "RuleTypeId": "1",
+     "RuleId": "1",
+     "UserId": "${NEW_USERNAME}",
+     "IsConnected": "true",
+     "ServiceId": "6",
+     "ServerIP": "${NEW_SERVICE_HOST}"
+    },
+    "sla_ms": 20000,
+    "stop_on_fail": false,
+    "note": "update against the record created above"
+   },
+   {
+    "name": "RemoveUserStatusDetails",
+    "verb": "POST",
+    "path": "/api/ADbridging/RemoveUserStatusDetails",
+    "body": {
+     "ServerIP": "${NEW_SERVICE_HOST}",
+     "UserId": "${NEW_USERNAME}",
+     "IsConnected": "true"
+    },
+    "sla_ms": 20000,
+    "stop_on_fail": false,
+    "teardown": true,
+    "note": "removes the record this flow created; requires --allow-teardown"
+   }
+  ]
+ },
+ {
+  "id": "adbridging__addserverinformationaddomain",
+  "title": "ADbridging lifecycle - AddServerInformationAdDomain",
+  "why": "Generated lifecycle chain: discover LOB context, create, read the record back, then optionally update and remove it.",
+  "generated": true,
+  "tier": 1,
+  "controller": "ADbridging",
+  "hops": [
+   {
+    "name": "GetLOBList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetLOBList",
+    "body": {},
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LobName": "AUTOMATION_TEST_LOB"
+     },
+     "take": {
+      "LOB_ID": "LobId",
+      "LOB_NAME": "LobName"
+     }
+    },
+    "sla_ms": 8000
+   },
+   {
+    "name": "GetUserGroupList",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetUserGroupListWithoutMandateValue",
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LOBName": "${LOB_NAME}"
+     },
+     "take": {
+      "USER_GROUP_ID": "UserGroupId",
+      "USER_GROUP_NAME": "UserGroupName"
+     }
+    },
+    "sla_ms": 12000
+   },
+   {
+    "name": "GetServerGroupList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetServerGroupList",
+    "body": {
+     "LobId": "${LOB_ID}"
+    },
+    "extract": {
+     "SERVER_GROUP_ID": "Result[0].ServerGroupId"
+    },
+    "stop_on_fail": false,
+    "sla_ms": 8000
+   },
+   {
+    "name": "AddServerInformationAdDomain",
+    "verb": "POST",
+    "path": "/api/ADbridging/AddServerInformationAdDomain",
+    "body": {
+     "ServerDetailID": "53",
+     "ServerIP": "${NEW_SERVICE_HOST}",
+     "ServerHostName": "${NEW_SERVICE_HOST}",
+     "ServerType": "7",
+     "UserName": "${NEW_USERNAME}",
+     "UserPassword": "pass@123",
+     "ServerName": "",
+     "Version": "",
+     "VersionCodeName": "",
+     "PAMGroup": "VASANT_SG|6",
+     "IsConnected": "false",
+     "BridgedUsers": "",
+     "LOBMappingId": "97",
+     "RuleID": "45"
+    },
+    "expect_created": true,
+    "extract_any_id": "NEW_ID",
+    "sla_ms": 20000,
+    "stop_on_fail": true,
+    "note": "generated from addServerInformationAdDomain; chained: ServerIP <- ${NEW_SERVICE_HOST}, ServerHostName <- ${NEW_SERVICE_HOST}, UserName <- ${NEW_USERNAME}"
+   },
+   {
+    "name": "GetServerList__verify",
+    "verb": "GET",
+    "path": "/api/ADbridging/GetServerList",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "verify_value_anywhere": {
+     "value": "${NEW_ID}",
+     "label": "created record id"
+    },
+    "note": "read-back chosen for entity 'serverinformationaddomain'"
+   }
+  ]
+ },
+ {
+  "id": "adbridging__insertlobdetails",
+  "title": "ADbridging lifecycle - InsertLOBDetails",
+  "why": "Generated lifecycle chain: discover LOB context, create, read the record back, then optionally update and remove it.",
+  "generated": true,
+  "tier": 1,
+  "controller": "ADbridging",
+  "hops": [
+   {
+    "name": "GetLOBList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetLOBList",
+    "body": {},
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LobName": "AUTOMATION_TEST_LOB"
+     },
+     "take": {
+      "LOB_ID": "LobId",
+      "LOB_NAME": "LobName"
+     }
+    },
+    "sla_ms": 8000
+   },
+   {
+    "name": "GetUserGroupList",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetUserGroupListWithoutMandateValue",
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LOBName": "${LOB_NAME}"
+     },
+     "take": {
+      "USER_GROUP_ID": "UserGroupId",
+      "USER_GROUP_NAME": "UserGroupName"
+     }
+    },
+    "sla_ms": 12000
+   },
+   {
+    "name": "GetServerGroupList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetServerGroupList",
+    "body": {
+     "LobId": "${LOB_ID}"
+    },
+    "extract": {
+     "SERVER_GROUP_ID": "Result[0].ServerGroupId"
+    },
+    "stop_on_fail": false,
+    "sla_ms": 8000
+   },
+   {
+    "name": "InsertLOBDetails",
+    "verb": "POST",
+    "path": "/api/ADbridging/InsertLOBDetails",
+    "body": {
+     "Id": 86,
+     "DomainName": "10.10.0.33",
+     "LOBName": "MUMBAI ZONE",
+     "PAMGroup": "VASANT_SG|6",
+     "ActiveDirectoryOU": "Securiries",
+     "ActiveDirectoryGroup": "SECURITY_SERVERS",
+     "LOBId": "${LOB_ID}",
+     "MappingName": "Beta"
+    },
+    "expect_created": true,
+    "extract_any_id": "NEW_ID",
+    "sla_ms": 20000,
+    "stop_on_fail": true,
+    "note": "generated from insertLOBDetails; chained: LOBId <- ${LOB_ID}"
+   },
+   {
+    "name": "GetAllLOB__verify",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetAllLOB",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "verify_value_anywhere": {
+     "value": "${NEW_ID}",
+     "label": "created record id"
+    },
+    "note": "read-back chosen for entity 'lob'",
+    "body": {}
+   },
+   {
+    "name": "UpdateLOBDetails",
+    "verb": "POST",
+    "path": "/api/ADbridging/UpdateLOBDetails",
+    "body": {
+     "Id": "1",
+     "DomainName": "10.10.0.71",
+     "LobName": "DEFAULT LOB 1",
+     "PAMGroup": "QA Testing Group_PWR|32",
+     "ActiveDirectoryOU": "TESTOU",
+     "ActiveDirectoryGroup": "PAM",
+     "LobId": "${LOB_ID}",
+     "MappingName": "ChngPass"
+    },
+    "sla_ms": 20000,
+    "stop_on_fail": false,
+    "note": "update against the record created above"
+   },
+   {
+    "name": "DeleteLOBFromLobMappingId",
+    "verb": "POST",
+    "path": "/api/ADbridging/DeleteLOBFromLobMappingId",
+    "body": {
+     "Id": "3"
+    },
+    "sla_ms": 20000,
+    "stop_on_fail": false,
+    "teardown": true,
+    "note": "removes the record this flow created; requires --allow-teardown"
+   }
+  ]
+ },
+ {
+  "id": "adbridging__saveuserrolemappingdetails",
+  "title": "ADbridging lifecycle - SaveUserRoleMappingDetails",
+  "why": "Generated lifecycle chain: discover LOB context, create, read the record back, then optionally update and remove it.",
+  "generated": true,
+  "tier": 1,
+  "controller": "ADbridging",
+  "hops": [
+   {
+    "name": "GetLOBList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetLOBList",
+    "body": {},
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LobName": "AUTOMATION_TEST_LOB"
+     },
+     "take": {
+      "LOB_ID": "LobId",
+      "LOB_NAME": "LobName"
+     }
+    },
+    "sla_ms": 8000
+   },
+   {
+    "name": "GetUserGroupList",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetUserGroupListWithoutMandateValue",
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LOBName": "${LOB_NAME}"
+     },
+     "take": {
+      "USER_GROUP_ID": "UserGroupId",
+      "USER_GROUP_NAME": "UserGroupName"
+     }
+    },
+    "sla_ms": 12000
+   },
+   {
+    "name": "GetServerGroupList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetServerGroupList",
+    "body": {
+     "LobId": "${LOB_ID}"
+    },
+    "extract": {
+     "SERVER_GROUP_ID": "Result[0].ServerGroupId"
+    },
+    "stop_on_fail": false,
+    "sla_ms": 8000
+   },
+   {
+    "name": "SaveUserRoleMappingDetails",
+    "verb": "POST",
+    "path": "/api/ADbridging/SaveUserRoleMappingDetails",
+    "body": {
+     "RuleName": "TestRule1"
+    },
+    "expect_created": true,
+    "extract_any_id": "NEW_ID",
+    "sla_ms": 20000,
+    "stop_on_fail": true,
+    "note": "generated from saveUserRoleMappingDetails"
+   },
+   {
+    "name": "validateUserRoleMappingDetails__verify",
+    "verb": "POST",
+    "path": "/api/ADbridging/validateUserRoleMappingDetails",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "verify_value_anywhere": {
+     "value": "${NEW_ID}",
+     "label": "created record id"
+    },
+    "note": "read-back chosen for entity 'userrolemapping'",
+    "body": {
+     "RuleName": "TestRule1"
+    }
+   }
+  ]
+ },
+ {
+  "id": "adbridging__reads_1",
+  "title": "ADbridging read sweep 1",
+  "why": "Exercises read endpoints inside a chain, so each one is called with real LOB context rather than in isolation.",
+  "generated": true,
+  "tier": 2,
+  "controller": "ADbridging",
+  "hops": [
+   {
+    "name": "GetLOBList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetLOBList",
+    "body": {},
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LobName": "AUTOMATION_TEST_LOB"
+     },
+     "take": {
+      "LOB_ID": "LobId",
+      "LOB_NAME": "LobName"
+     }
+    },
+    "sla_ms": 8000
+   },
+   {
+    "name": "GetUserGroupList",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetUserGroupListWithoutMandateValue",
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LOBName": "${LOB_NAME}"
+     },
+     "take": {
+      "USER_GROUP_ID": "UserGroupId",
+      "USER_GROUP_NAME": "UserGroupName"
+     }
+    },
+    "sla_ms": 12000
+   },
+   {
+    "name": "GetServerGroupList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetServerGroupList",
+    "body": {
+     "LobId": "${LOB_ID}"
+    },
+    "extract": {
+     "SERVER_GROUP_ID": "Result[0].ServerGroupId"
+    },
+    "stop_on_fail": false,
+    "sla_ms": 8000
+   },
+   {
+    "name": "CheckUserDetails",
+    "verb": "POST",
+    "path": "/api/ADbridging/CheckUserDetails",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude",
+    "body": {
+     "FirstName": "Devyani",
+     "LastName": "gawand",
+     "EmailId": "${NEW_USER_EMAIL}",
+     "Password": "${NEW_USER_PASSWORD}"
+    }
+   },
+   {
+    "name": "GetDomainIPAddressList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetDomainIPAddressList",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude",
+    "body": {}
+   },
+   {
+    "name": "GetDomainDetailByServerIP",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetDomainDetailByServerIP",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude",
+    "body": {
+     "DomainServerIP": "10.10.0.71"
+    }
+   },
+   {
+    "name": "GetDbLOBByLobIdAndPAMGroup",
+    "verb": "GET",
+    "path": "/api/ADbridging/GetDbLOBByLobIdAndPAMGroup",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude"
+   },
+   {
+    "name": "GetDbLOBByMappingId",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetDbLOBByMappingId",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude",
+    "body": {
+     "Id": "1"
+    }
+   },
+   {
+    "name": "GetAllDBLOBData",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetAllDBLOBData",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude",
+    "body": {}
+   },
+   {
+    "name": "CheckRulesOnMappingID",
+    "verb": "POST",
+    "path": "/api/ADbridging/CheckRulesOnMappingID",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude",
+    "body": {
+     "RuleID": "47",
+     "RuleName": "TestRule3",
+     "Description": "",
+     "Date": "08/14/2020 04:11:00",
+     "ServerIP": "${NEW_SERVICE_HOST}",
+     "PAMLobMappingName": "TestU5"
+    }
+   },
+   {
+    "name": "GetAllConnectedUsers",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetAllConnectedUsers",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude",
+    "body": {
+     "ServerIP": "${NEW_SERVICE_HOST}",
+     "IsConnected": "true"
+    }
+   },
+   {
+    "name": "GetAllServerDetails",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetAllServerDetails",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude",
+    "body": {}
+   },
+   {
+    "name": "GetRuleUserAssocByRuleId",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetRuleUserAssocByRuleId",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude",
+    "body": {
+     "RuleID": "1"
+    }
+   }
+  ]
+ },
+ {
+  "id": "adbridging__reads_2",
+  "title": "ADbridging read sweep 2",
+  "why": "Exercises read endpoints inside a chain, so each one is called with real LOB context rather than in isolation.",
+  "generated": true,
+  "tier": 2,
+  "controller": "ADbridging",
+  "hops": [
+   {
+    "name": "GetLOBList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetLOBList",
+    "body": {},
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LobName": "AUTOMATION_TEST_LOB"
+     },
+     "take": {
+      "LOB_ID": "LobId",
+      "LOB_NAME": "LobName"
+     }
+    },
+    "sla_ms": 8000
+   },
+   {
+    "name": "GetUserGroupList",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetUserGroupListWithoutMandateValue",
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LOBName": "${LOB_NAME}"
+     },
+     "take": {
+      "USER_GROUP_ID": "UserGroupId",
+      "USER_GROUP_NAME": "UserGroupName"
+     }
+    },
+    "sla_ms": 12000
+   },
+   {
+    "name": "GetServerGroupList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetServerGroupList",
+    "body": {
+     "LobId": "${LOB_ID}"
+    },
+    "extract": {
+     "SERVER_GROUP_ID": "Result[0].ServerGroupId"
+    },
+    "stop_on_fail": false,
+    "sla_ms": 8000
+   },
+   {
+    "name": "GetRuleGroupsAssocByRuleId",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetRuleGroupsAssocByRuleId",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude",
+    "body": {
+     "RuleID": "1"
+    }
+   },
+   {
+    "name": "GetRuleDetails",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetRuleDetails",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude",
+    "body": {}
+   }
+  ]
+ }
+]

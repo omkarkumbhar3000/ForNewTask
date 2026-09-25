@@ -1,0 +1,125 @@
+[
+ {
+  "id": "data_positive_servicecreation_1",
+  "title": "ServiceCreation - positive data-driven batch 1",
+  "why": "Executes the QA team's authored positive scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "positive",
+  "tier": 4,
+  "controller": "ServiceCreation",
+  "hops": [
+   {
+    "name": "SetServiceDetails",
+    "verb": "POST",
+    "path": "/api/ServiceCreation/SetServiceDetails",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceCreation_positive row 1 (provider ServiceCreation)",
+    "body": {
+     "LOBID": 1,
+     "ServerGroupId": "1",
+     "Hostname": "10.xx.x.xx",
+     "IPAddress": "10.11.0.11",
+     "Domain": 2,
+     "ServiceTypeId": 1,
+     "DBInstanceName": "",
+     "ServiceUserName": "UserName1",
+     "ServicePassword": "NewPassword",
+     "Description1": "",
+     "Description2": "",
+     "Description3": "",
+     "Parameter": 1
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "SetDropService",
+    "verb": "POST",
+    "path": "/api/ServiceCreation/SetDropService",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceCreation_positive row 2 (provider ServiceCreation)",
+    "body": {
+     "ServiceId": 12
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "SetDeleteService",
+    "verb": "POST",
+    "path": "/api/ServiceCreation/SetDeleteService",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceCreation_positive row 3 (provider ServiceCreation)",
+    "body": {
+     "ServiceId": 4678
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "EnableService",
+    "verb": "POST",
+    "path": "/api/ServiceCreation/EnableService",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceCreation_positive row 4 (provider ServiceCreation)",
+    "body": {
+     "ServiceId": 7021
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "SetSSHLinuxVault",
+    "verb": "POST",
+    "path": "/api/ServiceCreation/SetSSHLinuxVault",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceCreation_positive row 5 (provider ServiceCreation)",
+    "body": {
+     "ServiceId": 7021,
+     "SSHKey": "TestKey1",
+     "PassPhrase": "",
+     "SSHKeyPath": "",
+     "LinuxType": "putty"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetStatus",
+    "verb": "GET",
+    "path": "/api/ServiceCreation/GetStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceCreation_positive row 6 (provider ServiceCreation)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "SetStatus",
+    "verb": "GET",
+    "path": "/api/ServiceCreation/SetStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceCreation_positive row 7 (provider ServiceCreation)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetDatabaseStatus",
+    "verb": "GET",
+    "path": "/api/ServiceCreation/GetDatabaseStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceCreation_positive row 8 (provider ServiceCreation)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   }
+  ]
+ }
+]

@@ -1,0 +1,825 @@
+{
+ "generated_by": "tools/obj007_required_fields.py",
+ "http_requests_issued": 0,
+ "database_queries_issued": 0,
+ "re_verification_of_prior_claim": {
+  "prior_claim": "3 [Required] properties across ~6,738 (docs/history/archive/document-agent-brief.md \u00a75)",
+  "prior_claim_provenance": [
+   "artifacts/loopholes/LH-10-no-validation-attributes-on-models/EVIDENCE.md \u00a71",
+   "tools/lh_specs_static.py::_lh10_scan",
+   "tools/SOURCE-MAP.md \u00a71 (reports 3, but over 2,674 distinct property NAMES, a different denominator)"
+  ],
+  "re_derived_cs_files": 6866,
+  "re_derived_chars_millions": 110.9,
+  "re_derived_public_classes": 5994,
+  "re_derived_auto_properties_same_regex": 6738,
+  "re_derived_auto_properties_broader_regex": 6845,
+  "re_derived_required_count": 3,
+  "verdict": "CONFIRMED \u2014 both figures reproduce exactly on an independent scan",
+  "coverage_pct_of_auto_properties": 0.0445,
+  "material_correction": {
+   "finding": "The denominator 6,738 is the whole .NET product's auto-property population, not the request-model surface of the API under test. pam/PAM implements only 48 of 1,306 catalogue endpoints (3.7%).",
+   "the_three_required_properties": [
+    {
+     "attribute": "[Required]",
+     "file": "ARCON_Services\\ProvisioningService\\ProvisioningDataAccessLayer\\Models\\Entity.cs",
+     "class": "Request",
+     "property_name": "targetHostType",
+     "declared_type": "MachineType"
+    },
+    {
+     "attribute": "[Required]",
+     "file": "ARCON_Services\\ProvisioningService\\ProvisioningDataAccessLayer\\Models\\Entity.cs",
+     "class": "Request",
+     "property_name": "rootUser",
+     "declared_type": "string"
+    },
+    {
+     "attribute": "[Required]",
+     "file": "ARCON_Services\\ProvisioningService\\ProvisioningDataAccessLayer\\Models\\Entity.cs",
+     "class": "Request",
+     "property_name": "rootpass",
+     "declared_type": "string"
+    }
+   ],
+   "endpoints_in_catalogue_using_those_property_names": 0,
+   "controllers_named_Provisioning_in_catalogue": 0,
+   "consequence": "For the 1,306-endpoint surface actually under test the declared-required count is 0, not 3. The three that exist sit on a ProvisioningService data-access class whose property names appear in none of the 5,762 mapped endpoint fields."
+  },
+  "sub_figure_discrepancies_found": [
+   {
+    "figure": "public classes",
+    "docs/briefs/developer-loopholes.md \u00a710": 5262,
+    "LH-10 EVIDENCE.md \u00a71": 5994,
+    "re_derived": 5994,
+    "verdict": "developer-loopholes.md is stale; the generated pack is correct"
+   },
+   {
+    "figure": "[Range] occurrences",
+    "docs/briefs/developer-loopholes.md \u00a710": 5,
+    "LH-10 EVIDENCE.md \u00a72": 0,
+    "re_derived": 0,
+    "verdict": "developer-loopholes.md is wrong; [Range] does not occur"
+   },
+   {
+    "figure": "[JsonProperty] occurrences",
+    "docs/briefs/developer-loopholes.md \u00a710": 7,
+    "LH-10 EVIDENCE.md \u00a75": 11,
+    "re_derived": 11,
+    "verdict": "developer-loopholes.md is stale; the generated pack is correct"
+   }
+  ]
+ },
+ "attribute_census_pam_PAM": {
+  "note": "Occurrences across every .cs file in pam/PAM. Any request-body constraint declared anywhere in the product would appear here.",
+  "counts": {
+   "[FromBody]": 14,
+   "[DataMember]": 4,
+   "[JsonProperty]": 11,
+   "[Required]": 3
+  },
+  "constraint_attributes_at_zero": [
+   "[Range]",
+   "[StringLength]",
+   "[MaxLength]",
+   "[MinLength]",
+   "[RegularExpression]",
+   "[EmailAddress]",
+   "[Phone]",
+   "[Url]",
+   "[Compare]",
+   "[DataType]",
+   "[AllowedValues]",
+   "JsonRequired=Always"
+  ],
+  "required_property_detail": [
+   {
+    "attribute": "[Required]",
+    "file": "ARCON_Services\\ProvisioningService\\ProvisioningDataAccessLayer\\Models\\Entity.cs",
+    "class": "Request",
+    "property_name": "targetHostType",
+    "declared_type": "MachineType"
+   },
+   {
+    "attribute": "[Required]",
+    "file": "ARCON_Services\\ProvisioningService\\ProvisioningDataAccessLayer\\Models\\Entity.cs",
+    "class": "Request",
+    "property_name": "rootUser",
+    "declared_type": "string"
+   },
+   {
+    "attribute": "[Required]",
+    "file": "ARCON_Services\\ProvisioningService\\ProvisioningDataAccessLayer\\Models\\Entity.cs",
+    "class": "Request",
+    "property_name": "rootpass",
+    "declared_type": "string"
+   }
+  ]
+ },
+ "property_universe": {
+  "endpoints": 1306,
+  "controllers": 70,
+  "rows_total": 5940,
+  "properties_body": 5175,
+  "properties_header": 759,
+  "properties_query": 6,
+  "endpoints_with_zero_properties_known": 697
+ },
+ "metadata_counts": {
+  "note": "Counted over body properties only \u2014 headers are transport, not application contract.",
+  "total_body_properties": 5175,
+  "is_required_declared_true": 0,
+  "required_inferred_true": 264,
+  "required_inferred_from_server_prose_OBSERVED": 224,
+  "required_inferred_from_doc_frequency_WEAK": 40,
+  "with_max_length": 0,
+  "with_format": 0,
+  "with_pattern": 0,
+  "with_enum_values": 7,
+  "with_declared_type_hint": 3689,
+  "nullable_actually_declared": 140,
+  "metadata_status": {
+   "ABSENT": 4904,
+   "DECLARED": 7,
+   "INFERRED": 264
+  }
+ },
+ "create_endpoints": {
+  "note": "The 217 create endpoints \u2014 the population A5 was asked to quantify.",
+  "create_endpoints_total": 217,
+  "create_endpoints_with_at_least_one_property_known": 151,
+  "create_endpoints_with_zero_properties_known": 66,
+  "create_body_properties": 1245,
+  "create_properties_required_DECLARED": 0,
+  "create_endpoints_with_ANY_mandatory_field_metadata": 32,
+  "create_endpoints_with_ANY_DECLARED_mandatory_metadata": 0,
+  "create_endpoints_with_OBSERVED_mandatory_set": 29,
+  "create_endpoints_with_no_mandatory_signal_at_all": 185,
+  "create_properties_with_max_length": 0,
+  "create_properties_with_format": 0,
+  "create_properties_with_pattern": 0,
+  "measured_outcome": {
+   "prior_claim_creates_that_inserted": 13,
+   "of_total": 217,
+   "prior_source": "artifacts/loopholes/LH-10 EVIDENCE.md \u00a73",
+   "re_derived_strict_message_contains_insert": 13,
+   "re_derived_broad_also_credits_Record_Added_successfully": 15,
+   "verdict": "CONFIRMED under the published rule (message must contain 'insert'). A broader reading that also credits 'Record Added successfully.' gives 15. The difference is definitional, not a measurement error; 13 remains the figure to quote for consistency with Reports/ and the loophole packs."
+  },
+  "create_side_L4_diagnosis": {
+   "note": "Why creates failed, taken from the L4 message-semantics check on create endpoints only. This is what licenses \u2014 and bounds \u2014 the causal claim: missing mandatory fields is the largest class the server actually named, but it is not the only cause, and most failures state no cause at all.",
+   "create_endpoints_called": 213,
+   "tally": {
+    "PASS:insert": 15,
+    "PASS:other": 19,
+    "FAIL:named-missing-property": 31,
+    "FAIL:cause-not-stated": 150
+   }
+  }
+ },
+ "swagger_specs": {
+  "specs_listed": 37,
+  "operations_listed": 690,
+  "csv": "data/sources/Automation PAM Endpoints Details_Shared(Swagger_JSON Links).csv",
+  "cached_locally": false,
+  "note": "Reports/SpecCache/ does not exist and fetching a spec needs network access, which A5 is forbidden. The archived validation run is the only retained evidence of what the specs declare.",
+  "archived_evidence": {
+   "path": "artifacts/runs-archive/Evidence/swagger-devint/",
+   "operations_validated": 102,
+   "L4_required_fields_verdicts": {
+    "NA": 102
+   },
+   "L4_note": "every one reads 'schema declares no required properties' \u2014 the developer-supplied schemas declare no required property for any operation validated"
+  }
+ },
+ "observed_mandatory_set": {
+  "note": "The server does know which fields are mandatory. It publishes that knowledge only in the prose of a rejection, in four different grammars, with inconsistent field-name casing.",
+  "endpoints_that_revealed_a_mandatory_field": 126,
+  "distinct_property_names_revealed": 37,
+  "prose_grammar_counts": {
+   "procedural": 64,
+   "json-deserialiser": 123,
+   "model-state": 8,
+   "is-required": 30,
+   "null-check": 3
+  },
+  "distinct_rejection_messages": 41,
+  "observed_constraints_leaked_in_prose": [
+   {
+    "endpoint": "ServiceDetails/GetAllSGServices",
+    "property_name": "PageSize",
+    "constraint": "> 0",
+    "kind": "range-minimum",
+    "source": "results.json error prose"
+   },
+   {
+    "endpoint": "ServiceDetails/GetAllLOBServices",
+    "property_name": "PageSize",
+    "constraint": "> 0",
+    "kind": "range-minimum",
+    "source": "results.json error prose"
+   },
+   {
+    "endpoint": "ServiceDetails/GetAllUserServices",
+    "property_name": "PageSize",
+    "constraint": "> 0",
+    "kind": "range-minimum",
+    "source": "results.json error prose"
+   },
+   {
+    "endpoint": "ServiceDetails/GetAllServicesTagValues",
+    "property_name": "PageSize",
+    "constraint": "> 0",
+    "kind": "range-minimum",
+    "source": "results.json error prose"
+   },
+   {
+    "endpoint": "ServiceDetailsV2/GetAllSGServices",
+    "property_name": "PageSize",
+    "constraint": "> 0",
+    "kind": "range-minimum",
+    "source": "results.json error prose"
+   },
+   {
+    "endpoint": "ServiceDetailsV2/GetAllLOBServices",
+    "property_name": "PageSize",
+    "constraint": "> 0",
+    "kind": "range-minimum",
+    "source": "results.json error prose"
+   },
+   {
+    "endpoint": "ServiceDetailsV2/GetAllUserServices",
+    "property_name": "PageSize",
+    "constraint": "> 0",
+    "kind": "range-minimum",
+    "source": "results.json error prose"
+   },
+   {
+    "endpoint": "ServiceDetailsV2/GetAllServicesTagValues",
+    "property_name": "PageSize",
+    "constraint": "> 0",
+    "kind": "range-minimum",
+    "source": "results.json error prose"
+   },
+   {
+    "endpoint": "ServiceDetailsV3/GetAllServicesTagValues",
+    "property_name": "PageSize",
+    "constraint": "> 0",
+    "kind": "range-minimum",
+    "source": "results.json error prose"
+   },
+   {
+    "endpoint": "ServiceDetailsV3/GetAllSGServices",
+    "property_name": "PageSize",
+    "constraint": "> 0",
+    "kind": "range-minimum",
+    "source": "results.json error prose"
+   },
+   {
+    "endpoint": "ServiceDetailsV3/GetAllLOBServices",
+    "property_name": "PageSize",
+    "constraint": "> 0",
+    "kind": "range-minimum",
+    "source": "results.json error prose"
+   },
+   {
+    "endpoint": "ServiceDetailsV3/GetAllUserServices",
+    "property_name": "PageSize",
+    "constraint": "> 0",
+    "kind": "range-minimum",
+    "source": "results.json error prose"
+   },
+   {
+    "endpoint": "ServiceDetails/GetAllActiveServices",
+    "property_name": "PageSize",
+    "constraint": "> 0",
+    "kind": "range-minimum",
+    "source": "results.json error prose"
+   },
+   {
+    "endpoint": "ServiceDetails/GetAllActiveServices",
+    "property_name": "PageSize",
+    "constraint": "> 0",
+    "kind": "range-minimum",
+    "source": "results.json error prose"
+   },
+   {
+    "endpoint": "ServiceDetails/GetAllActiveServices",
+    "property_name": "PageSize",
+    "constraint": "> 0",
+    "kind": "range-minimum",
+    "source": "results.json error prose"
+   },
+   {
+    "endpoint": "ServiceDetailsV2/GetAllActiveServices",
+    "property_name": "PageSize",
+    "constraint": "> 0",
+    "kind": "range-minimum",
+    "source": "results.json error prose"
+   },
+   {
+    "endpoint": "ServiceDetailsV2/GetAllActiveServices",
+    "property_name": "PageSize",
+    "constraint": "> 0",
+    "kind": "range-minimum",
+    "source": "results.json error prose"
+   },
+   {
+    "endpoint": "ServiceDetailsV2/GetAllActiveServices",
+    "property_name": "PageSize",
+    "constraint": "> 0",
+    "kind": "range-minimum",
+    "source": "results.json error prose"
+   },
+   {
+    "endpoint": "ServiceDetailsV3/GetAllActiveServices",
+    "property_name": "PageSize",
+    "constraint": "> 0",
+    "kind": "range-minimum",
+    "source": "results.json error prose"
+   },
+   {
+    "endpoint": "ServiceDetailsV3/GetAllActiveServices",
+    "property_name": "PageSize",
+    "constraint": "> 0",
+    "kind": "range-minimum",
+    "source": "results.json error prose"
+   },
+   {
+    "endpoint": "ServiceDetailsV3/GetAllActiveServices",
+    "property_name": "PageSize",
+    "constraint": "> 0",
+    "kind": "range-minimum",
+    "source": "results.json error prose"
+   }
+  ],
+  "names_revealed": [
+   "Dependancy_Type",
+   "DisplayName",
+   "FromDate",
+   "GroupId",
+   "HSMLabel",
+   "HSMPwd",
+   "HSMSlot",
+   "IPAddress",
+   "Id",
+   "LOBID",
+   "LOBId",
+   "LogTypeId",
+   "LogoutFlag",
+   "NumberOfRecords",
+   "OperationTypeId",
+   "PageSize",
+   "Param",
+   "ReferenceId",
+   "ServiceGroupId",
+   "ServiceID",
+   "ServiceID_Main",
+   "ServiceID_On",
+   "ServiceIP",
+   "ServiceId",
+   "ServiceTypeId",
+   "ServiceUserName",
+   "Service_ID",
+   "Service_Type",
+   "Service_Username",
+   "Text",
+   "ToDate",
+   "UserGroupId",
+   "UserID",
+   "UserId",
+   "UserName",
+   "UserSessionId",
+   "UsrId"
+  ]
+ },
+ "run_cross_checks": {
+  "flows": 326,
+  "hops": 1873,
+  "L5_fail_missing_NEW_ID": 196,
+  "layer_tally": {
+   "L1_FAIL": 180,
+   "L1_PASS": 1688,
+   "L2_FAIL": 4,
+   "L2_PASS": 1864,
+   "L3_FAIL": 590,
+   "L3_PASS": 1278,
+   "L4_FAIL": 458,
+   "L4_PASS": 1410,
+   "L5_FAIL": 196,
+   "L5_PASS": 982,
+   "L6_FAIL": 105,
+   "L6_PASS": 2,
+   "L7_FAIL": 13,
+   "L7_PASS": 1855
+  }
+ },
+ "negative_scenario_assertability": {
+  "existing_corpus": {
+   "file": "Automation gitlab repo/pam_automation_bootstrap/testdata/Negative_API_Automation_Test_Input_Data.xls",
+   "sheets": 76,
+   "rows_non_empty": 3167,
+   "expected_status_split": {
+    "405": 1604,
+    "401": 1550,
+    "200": 13
+   },
+   "rows_testing_transport_or_auth_401_405": 3154,
+   "rows_targeting_application_validation": 13,
+   "rows_with_an_ExpectedErrorCode": 0,
+   "unassertable_existing_rows": 13,
+   "why": "PAM signals a rejection as HTTP 200 with an errorCode in the body. A row whose only expectation is ExpectedStatus=200 passes whether the request was correctly rejected or wrongly accepted. Not one row carries an ExpectedErrorCode, so every application-level negative row is unassertable.",
+   "error": null
+  },
+  "prospective_scenario_space": {
+   "note": "Derived, not measured: the four standard property-level negative classes applied to every known body property. It states how many scenarios cannot be authored truthfully for want of metadata.",
+   "body_properties": 5175,
+   "classes": {
+    "missing_mandatory_field": {
+     "scenarios_possible": 5175,
+     "authorable": 224,
+     "unassertable": 4951,
+     "why": "A missing-mandatory test needs to know the field is mandatory. Only properties the server has already named in a rejection are known to be mandatory; for the rest, optionality is unknown"
+    },
+    "boundary_max_length": {
+     "scenarios_possible": 5175,
+     "authorable": 0,
+     "unassertable": 5175,
+     "why": "[StringLength]/[MaxLength]/[MinLength] occur 0 times; no boundary exists to probe. Applied to every body property rather than to string properties only, because declared types are themselves absent or name-matched \u2014 the surface cannot even be scoped to its string fields"
+    },
+    "invalid_format": {
+     "scenarios_possible": 5175,
+     "authorable": 0,
+     "unassertable": 5175,
+     "why": "[DataType]/[EmailAddress]/[Phone]/[Url] occur 0 times; no format is declared"
+    },
+    "invalid_pattern_or_enum": {
+     "scenarios_possible": 5175,
+     "authorable": 7,
+     "unassertable": 5168,
+     "why": "[RegularExpression] occurs 0 times. A C# enum type is sometimes name-matchable, but the match is not endpoint-bound"
+    }
+   },
+   "total_scenarios_possible": 20700,
+   "total_unassertable": 20469,
+   "pct_unassertable": 98.88
+  }
+ },
+ "per_controller": {
+  "ADbridging": {
+   "properties_total": 436,
+   "properties_body": 369,
+   "metadata_absent_body": 369
+  },
+  "ADbridgingV2": {
+   "properties_total": 124,
+   "properties_body": 122,
+   "metadata_absent_body": 122
+  },
+  "AGWPlus": {
+   "properties_total": 4,
+   "properties_body": 4,
+   "metadata_absent_body": 4
+  },
+  "APEMTool": {
+   "properties_total": 28,
+   "properties_body": 26,
+   "metadata_absent_body": 26
+  },
+  "ARCONLAMMiddleware": {
+   "properties_total": 2,
+   "properties_body": 2,
+   "metadata_absent_body": 2
+  },
+  "ARSIMServer": {
+   "properties_total": 94,
+   "properties_body": 82,
+   "metadata_absent_body": 82
+  },
+  "ATSConfiguration": {
+   "properties_total": 83,
+   "properties_body": 75,
+   "metadata_absent_body": 75
+  },
+  "ATSMapping": {
+   "properties_total": 101,
+   "properties_body": 85,
+   "metadata_absent_body": 85
+  },
+  "ActivityLogs": {
+   "properties_total": 166,
+   "properties_body": 149,
+   "metadata_absent_body": 148,
+   "enum_declared_body": 1
+  },
+  "CaptureLogImage": {
+   "properties_total": 47,
+   "properties_body": 39,
+   "metadata_absent_body": 39
+  },
+  "Command": {
+   "properties_total": 59,
+   "properties_body": 51,
+   "metadata_absent_body": 51
+  },
+  "Configuration": {
+   "properties_total": 26,
+   "properties_body": 18,
+   "metadata_absent_body": 18
+  },
+  "CustomErrorHandler": {
+   "properties_total": 28,
+   "properties_body": 24,
+   "metadata_absent_body": 24
+  },
+  "DeviceOnboarding": {
+   "properties_total": 125,
+   "properties_body": 100,
+   "metadata_absent_body": 100
+  },
+  "DualFactor": {
+   "properties_total": 30,
+   "properties_body": 28,
+   "metadata_absent_body": 28
+  },
+  "Encryption": {
+   "properties_total": 5,
+   "properties_body": 1,
+   "required_inferred_body": 1,
+   "required_observed_body": 1
+  },
+  "ErrorLogToDB": {
+   "properties_total": 15,
+   "properties_body": 13,
+   "metadata_absent_body": 13
+  },
+  "FileDetails": {
+   "properties_total": 42,
+   "properties_body": 38,
+   "metadata_absent_body": 36,
+   "required_inferred_body": 2
+  },
+  "FileServerDetail": {
+   "properties_total": 65,
+   "properties_body": 65,
+   "metadata_absent_body": 63,
+   "required_inferred_body": 2
+  },
+  "Flooding": {
+   "properties_total": 16,
+   "properties_body": 14,
+   "metadata_absent_body": 14
+  },
+  "HSMEntrust": {
+   "properties_total": 31,
+   "properties_body": 25,
+   "required_inferred_body": 3,
+   "required_observed_body": 3,
+   "metadata_absent_body": 22
+  },
+  "HSMUtimaco": {
+   "properties_total": 35,
+   "properties_body": 29,
+   "metadata_absent_body": 29
+  },
+  "License": {
+   "properties_total": 10,
+   "properties_body": 6,
+   "metadata_absent_body": 6
+  },
+  "LobandService": {
+   "properties_total": 32,
+   "properties_body": 26,
+   "metadata_absent_body": 26
+  },
+  "Logs": {
+   "properties_total": 26,
+   "properties_body": 19,
+   "metadata_absent_body": 15,
+   "required_inferred_body": 4,
+   "required_observed_body": 4
+  },
+  "MouseKeysActivityLogs": {
+   "properties_total": 3,
+   "properties_body": 3,
+   "required_inferred_body": 1,
+   "metadata_absent_body": 2
+  },
+  "NotificationDetails": {
+   "properties_total": 216,
+   "properties_body": 196,
+   "metadata_absent_body": 196
+  },
+  "OfflineSync": {
+   "properties_total": 10,
+   "properties_body": 8,
+   "metadata_absent_body": 8
+  },
+  "Pending_LogRequests": {
+   "properties_total": 43,
+   "properties_body": 41,
+   "metadata_absent_body": 41
+  },
+  "Policy": {
+   "properties_total": 4,
+   "properties_body": 2,
+   "metadata_absent_body": 2
+  },
+  "ProfileManagement": {
+   "properties_total": 20,
+   "properties_body": 16,
+   "metadata_absent_body": 16
+  },
+  "RASyn": {
+   "properties_total": 134,
+   "properties_body": 114,
+   "metadata_absent_body": 114
+  },
+  "RAVPNSetting": {
+   "properties_total": 23,
+   "properties_body": 19,
+   "metadata_absent_body": 19
+  },
+  "RDPSServiceInsert": {
+   "properties_total": 232,
+   "properties_body": 207,
+   "metadata_absent_body": 206,
+   "required_inferred_body": 1
+  },
+  "RDPSServiceInsertV2": {
+   "properties_total": 57,
+   "properties_body": 51,
+   "metadata_absent_body": 51
+  },
+  "RTSM": {
+   "properties_total": 31,
+   "properties_body": 24,
+   "metadata_absent_body": 24
+  },
+  "SIEM": {
+   "properties_total": 111,
+   "properties_body": 95,
+   "metadata_absent_body": 74,
+   "required_inferred_body": 21,
+   "required_observed_body": 21
+  },
+  "Se0rviceDetailsV3": {
+   "properties_total": 3,
+   "properties_body": 3,
+   "metadata_absent_body": 3
+  },
+  "ServiceCreation": {
+   "properties_total": 108,
+   "properties_body": 98,
+   "metadata_absent_body": 98
+  },
+  "ServiceDetails": {
+   "properties_total": 951,
+   "properties_body": 834,
+   "metadata_absent_body": 801,
+   "enum_declared_body": 3,
+   "required_inferred_body": 30,
+   "required_observed_body": 30
+  },
+  "ServiceDetailsV2": {
+   "properties_total": 279,
+   "properties_body": 253,
+   "metadata_absent_body": 216,
+   "required_inferred_body": 36,
+   "required_observed_body": 36,
+   "enum_declared_body": 1
+  },
+  "ServiceDetailsV3": {
+   "properties_total": 268,
+   "properties_body": 242,
+   "metadata_absent_body": 211,
+   "required_inferred_body": 30,
+   "required_observed_body": 30,
+   "enum_declared_body": 1
+  },
+  "ServicePassword": {
+   "properties_total": 152,
+   "properties_body": 133,
+   "metadata_absent_body": 124,
+   "required_inferred_body": 9,
+   "required_observed_body": 2
+  },
+  "ServicePasswordDependancy": {
+   "properties_total": 65,
+   "properties_body": 61,
+   "required_inferred_body": 10,
+   "required_observed_body": 8,
+   "metadata_absent_body": 51
+  },
+  "ServicePasswordV2": {
+   "properties_total": 20,
+   "properties_body": 15,
+   "required_inferred_body": 6,
+   "required_observed_body": 6,
+   "metadata_absent_body": 9
+  },
+  "ServiceType": {
+   "properties_total": 4,
+   "properties_body": 2,
+   "metadata_absent_body": 2
+  },
+  "TicketRequestDetails": {
+   "properties_total": 45,
+   "properties_body": 36,
+   "metadata_absent_body": 36
+  },
+  "UIAutomationData": {
+   "properties_total": 69,
+   "properties_body": 57,
+   "metadata_absent_body": 57
+  },
+  "User": {
+   "properties_total": 17,
+   "properties_body": 17,
+   "metadata_absent_body": 8,
+   "required_inferred_body": 9
+  },
+  "UserDelegation": {
+   "properties_total": 36,
+   "properties_body": 32,
+   "metadata_absent_body": 32
+  },
+  "UserDetails": {
+   "properties_total": 549,
+   "properties_body": 462,
+   "metadata_absent_body": 422,
+   "required_inferred_body": 39,
+   "required_observed_body": 23,
+   "enum_declared_body": 1
+  },
+  "UserDetailsV2": {
+   "properties_total": 126,
+   "properties_body": 103,
+   "metadata_absent_body": 86,
+   "required_inferred_body": 17,
+   "required_observed_body": 17
+  },
+  "UserDetailsV3": {
+   "properties_total": 118,
+   "properties_body": 97,
+   "metadata_absent_body": 75,
+   "required_inferred_body": 22,
+   "required_observed_body": 22
+  },
+  "UserDetailsV4": {
+   "properties_total": 117,
+   "properties_body": 96,
+   "metadata_absent_body": 79,
+   "required_inferred_body": 17,
+   "required_observed_body": 17
+  },
+  "UserFavourites": {
+   "properties_total": 22,
+   "properties_body": 18,
+   "metadata_absent_body": 18
+  },
+  "UserLabels": {
+   "properties_total": 23,
+   "properties_body": 17,
+   "metadata_absent_body": 16,
+   "required_inferred_body": 1,
+   "required_observed_body": 1
+  },
+  "UserOnboarding": {
+   "properties_total": 176,
+   "properties_body": 158,
+   "metadata_absent_body": 157,
+   "required_inferred_body": 1,
+   "required_observed_body": 1
+  },
+  "UserRegistration": {
+   "properties_total": 158,
+   "properties_body": 141,
+   "metadata_absent_body": 140,
+   "required_inferred_body": 1,
+   "required_observed_body": 1
+  },
+  "UserRegistrationV2": {
+   "properties_total": 55,
+   "properties_body": 55,
+   "metadata_absent_body": 54,
+   "required_inferred_body": 1,
+   "required_observed_body": 1
+  },
+  "UserRestrictCommand": {
+   "properties_total": 44,
+   "properties_body": 42,
+   "metadata_absent_body": 42
+  },
+  "UserServiceSession": {
+   "properties_total": 10,
+   "properties_body": 8,
+   "metadata_absent_body": 8
+  },
+  "VideoLog": {
+   "properties_total": 11,
+   "properties_body": 9,
+   "metadata_absent_body": 9
+  }
+ }
+}

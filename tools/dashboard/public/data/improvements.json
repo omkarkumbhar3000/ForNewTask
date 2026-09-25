@@ -1,0 +1,81 @@
+{
+ "productMovement": {
+  "note": "Only the Chain dimension existed in N-1, so it is the only apples-to-apples comparison.",
+  "comparable": 4010,
+  "unchanged": 3992,
+  "fixed": 3,
+  "regressed": 15,
+  "added": 1,
+  "retired": 23
+ },
+ "frameworkDefectsFixed": [
+  {
+   "n": "1",
+   "defect": "obj010_inventory.py matched workbooks by substring, so API_ExcelDataProviderFileName swallowed Negative_API_ExcelDataProviderFileName",
+   "impact": "376 providers read from the wrong workbook; corpus understated by ~2,450 rows (4,866 → 6,119)"
+  },
+  {
+   "n": "2",
+   "defect": "Action name extracted by splitting on / before stripping the query",
+   "impact": "A query containing a date (07/08/2059) yielded garbage as the action name. That name feeds the blocklist and destructive guards and the evidence filename. Measured impact: 1 row, no guard decision changed; the crash was the only consequence"
+  },
+  {
+   "n": "3",
+   "defect": "Evidence filename built from an unsanitised hop name",
+   "impact": "OSError 22 killed the run at hop 3,391 after 3 h 54 m"
+  },
+  {
+   "n": "4",
+   "defect": "--resume treated an ABORTED flow as complete",
+   "impact": "Would have silently dropped the 3 outage-aborted flows. Now re-queued, with a No flow left ABORTED checklist gate"
+  },
+  {
+   "n": "5",
+   "defect": "Validator scored any ErrorMessage as FAIL and hardcoded errorCode ∈ {201,202,203}",
+   "impact": "A correctly rejected negative case could only ever fail — negative testing was impossible before this run"
+  }
+ ],
+ "recommendations": [
+  {
+   "priority": "1",
+   "action": "Raise the invalid-token → HTTP 200 finding (§5) as a PAMIT security defect. 19 endpoints, several writes, several disclosing data",
+   "tier": "High"
+  },
+  {
+   "priority": "2",
+   "action": "Fix the 1,153 *_UnauthorizedAccess source rows — they need a credential column, or they remain inert in the Java suite",
+   "tier": "High"
+  },
+  {
+   "priority": "3",
+   "action": "Investigate the QA app-pool instability (§8) — 85 min of 329 lost to it",
+   "tier": "Medium"
+  },
+  {
+   "priority": "4",
+   "action": "Decide the /AdminAPI question: is it expected on QA_MsSQL? If yes it is a deployment gap; if no, 2,104 test rows target a surface that will never exist there",
+   "tier": "Medium"
+  },
+  {
+   "priority": "5",
+   "action": "Triage the 348 endpoints returning 404 (25.1% of those exercised) — deployment gap or stale catalogue",
+   "tier": "Low"
+  },
+  {
+   "priority": "6",
+   "action": "Replace the flat 300 s downtime wait with a short first probe and backoff; most pauses recovered immediately",
+   "tier": "Low"
+  },
+  {
+   "priority": "7",
+   "action": "Refresh the stale literal payloads behind the 78 HTTP 400s in the positive dimension",
+   "tier": "Low"
+  },
+  {
+   "priority": "8",
+   "action": "Consider enabling teardown so the 146 destructive rows become executable and created records are cleaned up",
+   "tier": "Low"
+  }
+ ],
+ "source": "docs/management/summary/OBJ-010-Execution-Benchmark.md §6, §9, §11"
+}

@@ -1,0 +1,369 @@
+[
+ {
+  "id": "data_negative_fileserverdetail_1",
+  "title": "FileServerDetail - negative data-driven batch 1",
+  "why": "Executes the QA team's authored negative scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status and error code.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "negative",
+  "tier": 4,
+  "controller": "FileServerDetail",
+  "hops": [
+   {
+    "name": "GetFileUploadConfiguration",
+    "verb": "GET",
+    "path": "/api/FileServerDetail/GetFileUploadConfiguration",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / FileServerDetail_Negative / FileServerDetail_MethodNotAllowed row 1 (provider FileServerDetail_MethodNotAllowed)",
+    "body": {
+     "fsd_id": "1"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "UpdateFileUploadConfiguration",
+    "verb": "GET",
+    "path": "/api/FileServerDetail/UpdateFileUploadConfiguration",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / FileServerDetail_Negative / FileServerDetail_MethodNotAllowed row 2 (provider FileServerDetail_MethodNotAllowed)",
+    "body": {
+     "fsd_id": "1",
+     "fsd_filepathofserver": "ftpfiles",
+     "fsd_maxfilesize": "15",
+     "fsd_autocleanupindays": 11,
+     "fsd_modified_on": "09/30/2020 05:33:00",
+     "fsd_modified_by": "Admin",
+     "fsd_service_id": "1"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "InsertFileServerConfiguration",
+    "verb": "GET",
+    "path": "/api/FileServerDetail/InsertFileServerConfiguration",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / FileServerDetail_Negative / FileServerDetail_MethodNotAllowed row 3 (provider FileServerDetail_MethodNotAllowed)",
+    "body": {
+     "fsd_filepathofserver": "ftpfiles",
+     "fsd_maxfilesize": "10",
+     "fsd_autocleanupindays": "30",
+     "fsd_createdby": "Admin",
+     "fsd_createdby_Id": "35",
+     "fsd_modified_by": "Admin",
+     "fsd_service_id": "1",
+     "fsd_isdeleted": 1
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetFileServerConfiguration",
+    "verb": "GET",
+    "path": "/api/FileServerDetail/GetFileServerConfiguration",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / FileServerDetail_Negative / FileServerDetail_MethodNotAllowed row 5 (provider FileServerDetail_MethodNotAllowed)",
+    "body": {
+     "fsd_createdby": "Admin"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetFileServerConfigJson",
+    "verb": "GET",
+    "path": "/api/FileServerDetail/GetFileServerConfigJson",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / FileServerDetail_Negative / FileServerDetail_MethodNotAllowed row 6 (provider FileServerDetail_MethodNotAllowed)",
+    "body": {
+     "fsd_createdby": "Admin"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetFileServerConfigurationJson",
+    "verb": "GET",
+    "path": "/api/FileServerDetail/GetFileServerConfigurationJson",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / FileServerDetail_Negative / FileServerDetail_MethodNotAllowed row 7 (provider FileServerDetail_MethodNotAllowed)",
+    "body": {
+     "fsd_createdby": "Admin"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetFileServerConfigurationforDownload",
+    "verb": "GET",
+    "path": "/api/FileServerDetail/GetFileServerConfigurationforDownload",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / FileServerDetail_Negative / FileServerDetail_MethodNotAllowed row 8 (provider FileServerDetail_MethodNotAllowed)",
+    "body": {
+     "afs_id": "1"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "InsertUploadedFileDetails",
+    "verb": "GET",
+    "path": "/api/FileServerDetail/InsertUploadedFileDetails",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / FileServerDetail_Negative / FileServerDetail_MethodNotAllowed row 9 (provider FileServerDetail_MethodNotAllowed)",
+    "body": {
+     "FileStorageType": "2",
+     "StorageReferenceNo": "1318",
+     "FileName": "TestFile",
+     "FileExtension": ".txt",
+     "FileSize": "100",
+     "FileContent": "Test",
+     "OperationBy": "Admin",
+     "FileDeleteOn": "10/01/2020 01:52:00",
+     "FilePathOnFileServer": "ARCOSADMIN/2020Oct28162544695"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetStatus",
+    "verb": "POST",
+    "path": "/api/FileServerDetail/GetStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / FileServerDetail_Negative / FileServerDetail_MethodNotAllowed row 10 (provider FileServerDetail_MethodNotAllowed)",
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "SetStatus",
+    "verb": "POST",
+    "path": "/api/FileServerDetail/SetStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / FileServerDetail_Negative / FileServerDetail_MethodNotAllowed row 11 (provider FileServerDetail_MethodNotAllowed)",
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetDatabaseStatus",
+    "verb": "POST",
+    "path": "/api/FileServerDetail/GetDatabaseStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / FileServerDetail_Negative / FileServerDetail_MethodNotAllowed row 12 (provider FileServerDetail_MethodNotAllowed)",
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetFileUploadConfiguration",
+    "verb": "POST",
+    "path": "/api/FileServerDetail/GetFileUploadConfiguration",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / FileServerDetail_Negative / FileServerDetail_UnauthorizedAccess row 1 (provider FileServerDetail_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "fsd_id": "1"
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   }
+  ]
+ },
+ {
+  "id": "data_negative_fileserverdetail_2",
+  "title": "FileServerDetail - negative data-driven batch 2",
+  "why": "Executes the QA team's authored negative scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status and error code.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "negative",
+  "tier": 4,
+  "controller": "FileServerDetail",
+  "hops": [
+   {
+    "name": "UpdateFileUploadConfiguration",
+    "verb": "POST",
+    "path": "/api/FileServerDetail/UpdateFileUploadConfiguration",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / FileServerDetail_Negative / FileServerDetail_UnauthorizedAccess row 2 (provider FileServerDetail_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "fsd_id": "1",
+     "fsd_filepathofserver": "ftpfiles",
+     "fsd_maxfilesize": "15",
+     "fsd_autocleanupindays": 11,
+     "fsd_modified_on": "09/30/2020 05:33:00",
+     "fsd_modified_by": "Admin",
+     "fsd_service_id": "1"
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "InsertFileServerConfiguration",
+    "verb": "POST",
+    "path": "/api/FileServerDetail/InsertFileServerConfiguration",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / FileServerDetail_Negative / FileServerDetail_UnauthorizedAccess row 3 (provider FileServerDetail_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "fsd_filepathofserver": "ftpfiles",
+     "fsd_maxfilesize": "10",
+     "fsd_autocleanupindays": "30",
+     "fsd_createdby": "Admin",
+     "fsd_createdby_Id": "35",
+     "fsd_modified_by": "Admin",
+     "fsd_service_id": "1",
+     "fsd_isdeleted": 1
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "GetFileServerConfiguration",
+    "verb": "POST",
+    "path": "/api/FileServerDetail/GetFileServerConfiguration",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / FileServerDetail_Negative / FileServerDetail_UnauthorizedAccess row 5 (provider FileServerDetail_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "fsd_createdby": "Admin"
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "GetFileServerConfigJson",
+    "verb": "POST",
+    "path": "/api/FileServerDetail/GetFileServerConfigJson",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / FileServerDetail_Negative / FileServerDetail_UnauthorizedAccess row 6 (provider FileServerDetail_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "fsd_createdby": "Admin"
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "GetFileServerConfigurationJson",
+    "verb": "POST",
+    "path": "/api/FileServerDetail/GetFileServerConfigurationJson",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / FileServerDetail_Negative / FileServerDetail_UnauthorizedAccess row 7 (provider FileServerDetail_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "fsd_createdby": "Admin"
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "GetFileServerConfigurationforDownload",
+    "verb": "POST",
+    "path": "/api/FileServerDetail/GetFileServerConfigurationforDownload",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / FileServerDetail_Negative / FileServerDetail_UnauthorizedAccess row 8 (provider FileServerDetail_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "afs_id": "1"
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "InsertUploadedFileDetails",
+    "verb": "POST",
+    "path": "/api/FileServerDetail/InsertUploadedFileDetails",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / FileServerDetail_Negative / FileServerDetail_UnauthorizedAccess row 9 (provider FileServerDetail_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "FileStorageType": "2",
+     "StorageReferenceNo": "1318",
+     "FileName": "TestFile",
+     "FileExtension": ".txt",
+     "FileSize": "100",
+     "FileContent": "Test",
+     "OperationBy": "Admin",
+     "FileDeleteOn": "10/01/2020 01:52:00",
+     "FilePathOnFileServer": "ARCOSADMIN/2020Oct28162544695"
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "GetStatus",
+    "verb": "GET",
+    "path": "/api/FileServerDetail/GetStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / FileServerDetail_Negative / FileServerDetail_UnauthorizedAccess row 10 (provider FileServerDetail_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "SetStatus",
+    "verb": "GET",
+    "path": "/api/FileServerDetail/SetStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / FileServerDetail_Negative / FileServerDetail_UnauthorizedAccess row 11 (provider FileServerDetail_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "GetDatabaseStatus",
+    "verb": "GET",
+    "path": "/api/FileServerDetail/GetDatabaseStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / FileServerDetail_Negative / FileServerDetail_UnauthorizedAccess row 12 (provider FileServerDetail_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   }
+  ]
+ }
+]

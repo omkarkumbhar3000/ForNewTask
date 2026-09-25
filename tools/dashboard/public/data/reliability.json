@@ -1,0 +1,1092 @@
+{
+ "generatedBy": "tools/obj015_build_dashboard_data.py (build_reliability)",
+ "objective": "OBJ-020",
+ "purpose": "Every execution and what became of it. An interrupted run is shown here with where it stopped - it is never dropped from the record.",
+ "plannedFlows": 0,
+ "plannedBasis": "count of flows in tools/flows/ at build time. A run executed before the last flow regeneration was measured against a different set, so completion % for older runs is indicative, not exact.",
+ "summary": {
+  "totalRuns": 13,
+  "completed": 9,
+  "interrupted": 2,
+  "substantive": 3,
+  "currentRun": "2026-08-16_100005"
+ },
+ "retryPolicy": {
+  "rule": "A timeout or temporary backend interruption is not a permanent failure. Wait 30 minutes, resume, repeat; at least five intervals; stop only on success or after 12 hours of continuous failure.",
+  "implementedBy": "tools/obj020_execution_supervisor.py",
+  "tokenSafety": "The bearer token is resolved once and pinned into the environment, so no retry ever calls /arcontoken. Retry-on-failure against that endpoint is what locked a shared service account in July."
+ },
+ "activeSupervisor": {
+  "objective": "OBJ-023",
+  "activity": "OBJ-023 reproducibility re-run",
+  "mode": "fresh full execution (no flow regeneration)",
+  "run": "2026-08-19_133400",
+  "comparisonBaseline": "2026-08-16_100005",
+  "startedAt": "2026-08-19T13:33:59+05:30",
+  "policy": {
+   "budgetSecondsPerAttempt": 43200,
+   "retryWaitSeconds": 1800,
+   "minRetries": 5,
+   "maxContinuousFailureSeconds": 43200
+  },
+  "tokenPinned": true,
+  "status": "stopped by owner",
+  "attempts": [],
+  "flowStateAtStart": {
+   "checkpoint": false
+  },
+  "stoppedAt": "2026-08-19T15:35:00+05:30",
+  "stopNote": "Owner asked for the execution to stop; the remaining work will be done later. Not a failure and not a timeout, so the retry policy was NOT engaged - the supervisor was killed first precisely so it could not observe the kill as a failure and relaunch. 178 of 747 flows are checkpointed and 945 evidence files retained. Resume instructions: state/weekly/OBJ-023-RESUME.md",
+  "flowsAtStop": 178,
+  "flowsRemaining": 569
+ },
+ "lastWeeklyJob": {
+  "started": "2026-08-19T11:53:26+05:30",
+  "finished": "2026-08-19T11:53:26+05:30",
+  "dryRun": true,
+  "ok": true,
+  "aborted": false,
+  "runId": "<the run this would create>",
+  "steps": [
+   {
+    "step": "token latch check",
+    "status": "ok",
+    "detail": "no latch — one token attempt is permitted this run"
+   },
+   {
+    "step": "environment pre-flight",
+    "status": "dry-run",
+    "detail": "would probe https://u16hf.arconnet.com:6302/ unauthenticated, waiting up to 45 min. No HTTP is issued in a dry run"
+   },
+   {
+    "step": "generate flows",
+    "status": "skipped",
+    "detail": "--no-generate: executing the flow set already on disk, unchanged, so the run stays comparable hop-for-hop against the run being reproduced"
+   },
+   {
+    "step": "execute suite",
+    "status": "dry-run",
+    "detail": "would run: chain_runner.py --execute --budget-seconds 43200 --delay-ms 2000 --allow-verbs GET,POST,PUT,PATCH --wait-for-env 15  (no teardown, no unsafe endpoints)"
+   },
+   {
+    "step": "resume once",
+    "status": "dry-run",
+    "detail": "would resume the run ONCE if any flow came back ABORTED, then stop either way"
+   },
+   {
+    "step": "validation gate",
+    "status": "dry-run",
+    "detail": "would run obj010_collect.py <run>"
+   },
+   {
+    "step": "run workbook",
+    "status": "dry-run",
+    "detail": "would run obj010_build_workbook.py <run> --baseline <previous>"
+   },
+   {
+    "step": "dashboard datasets",
+    "status": "dry-run",
+    "detail": "would regenerate the dashboard datasets (resolves N automatically)"
+   },
+   {
+    "step": "execution stamp",
+    "status": "dry-run",
+    "detail": "would write data/execution.json for the dashboard"
+   }
+  ]
+ },
+ "lastDailyJob": {
+  "started": "2026-09-01T08:30:02+05:30",
+  "finished": "2026-09-01T08:30:15+05:30",
+  "dryRun": false,
+  "ok": true,
+  "steps": [
+   {
+    "step": "pull pam/ (developer repo)",
+    "status": "ok",
+    "detail": "fast-forwarded aed4dd87e -> f002808d6; packfiles grew 0.0 MB; tree clean",
+    "branch": "35.8.29_Hotfix",
+    "head": "f002808d6",
+    "changed": true,
+    "packDeltaMb": 0.0,
+    "cleanAfter": true
+   },
+   {
+    "step": "fetch automation repo (report only)",
+    "status": "ok",
+    "detail": "fetched origin. Dev is 0 ahead / 0 behind origin/Dev. ⛔ Not merged — that is the owner's decision",
+    "branch": "Dev",
+    "ahead": 0,
+    "behind": 0,
+    "dirty": 0,
+    "stashes": 1
+   },
+   {
+    "step": "drift check",
+    "status": "ok",
+    "detail": "22 clean · 3 open (2 critical, 1 high). Reported, not auto-fixed",
+    "summary": {
+     "checked": 26,
+     "clean": 22,
+     "waived": 1,
+     "open": 3,
+     "by_severity": {
+      "critical": 2,
+      "high": 1,
+      "medium": 0,
+      "low": 0
+     },
+     "by_status": {
+      "probe-error": 1,
+      "violated": 2
+     },
+     "auto_fixable": 0
+    }
+   },
+   {
+    "step": "rag evidence index",
+    "status": "ok",
+    "detail": "wrote 594 sections from 45 sources."
+   },
+   {
+    "step": "dashboard datasets",
+    "status": "ok",
+    "detail": "regenerated 15 datasets; all self-checks against the run workbook pass",
+    "datasets": 15
+   },
+   {
+    "step": "refresh stamp",
+    "status": "ok",
+    "detail": "wrote refresh.json (ok=True)"
+   }
+  ]
+ },
+ "weeklyJobHistory": [
+  {
+   "startedAt": "2026-08-16T10:00:01+05:30",
+   "steps": [
+    {
+     "status": "ok",
+     "text": "token latch check: no latch — one token attempt is permitted this run"
+    },
+    {
+     "status": "ok",
+     "text": "environment pre-flight: https://u16hf.arconnet.com:6302 answered HTTP 200. Safe to spend a token"
+    },
+    {
+     "status": "ok",
+     "text": "generate flows: positive and data-driven flows regenerated from the current corpus"
+    },
+    {
+     "status": "failed",
+     "text": "weekly execution: timed out after 23400s"
+    }
+   ],
+   "result": "FAILED",
+   "run": "none"
+  },
+  {
+   "startedAt": "2026-08-18T11:24:46+05:30",
+   "steps": [
+    {
+     "status": "ok",
+     "text": "token latch check: no latch — one token attempt is permitted this run"
+    },
+    {
+     "status": "ok",
+     "text": "environment pre-flight: https://u16hf.arconnet.com:6302 answered HTTP 200. Safe to spend a token"
+    },
+    {
+     "status": "skipped",
+     "text": "generate flows: --resume-only"
+    },
+    {
+     "status": "skipped",
+     "text": "execute suite: --resume-only: resuming 2026-08-16_100005"
+    },
+    {
+     "status": "failed",
+     "text": "resume once: resume exited 2 and 18 flow(s) are still ABORTED. ⛔ Not retrying again — the run is kept and flagged as incomplete"
+    },
+    {
+     "status": "failed",
+     "text": "validation gate: obj010_collect.py exited 1 and wrote no validation.json"
+    },
+    {
+     "status": "failed",
+     "text": "run workbook: exited 2; the dashboard cannot promote this run without its workbook. ⛔ E:\\Omkar\\Automation\\Dev Project\\2026-08-16_100005\\results.json not found - has the run finished?"
+    },
+    {
+     "status": "ok",
+     "text": "dashboard datasets: regenerated; N is now the newest substantive run."
+    },
+    {
+     "status": "ok",
+     "text": "execution stamp: wrote execution.json (ok=False)"
+    }
+   ],
+   "result": "FAILED",
+   "run": "2026-08-16_100005"
+  },
+  {
+   "startedAt": "2026-08-18T11:30:32+05:30",
+   "steps": [
+    {
+     "status": "ok",
+     "text": "token latch check: no latch — one token attempt is permitted this run"
+    },
+    {
+     "status": "ok",
+     "text": "environment pre-flight: https://u16hf.arconnet.com:6302 answered HTTP 200. Safe to spend a token"
+    },
+    {
+     "status": "skipped",
+     "text": "generate flows: --resume-only"
+    },
+    {
+     "status": "skipped",
+     "text": "execute suite: --resume-only: resuming 2026-08-16_100005"
+    },
+    {
+     "status": "failed",
+     "text": "weekly execution: timed out after 45000s"
+    }
+   ],
+   "result": "FAILED",
+   "run": "2026-08-16_100005"
+  },
+  {
+   "startedAt": "2026-08-19T00:30:32+05:30",
+   "steps": [
+    {
+     "status": "ok",
+     "text": "token latch check: no latch — one token attempt is permitted this run"
+    }
+   ],
+   "result": "FAILED",
+   "run": "none"
+  },
+  {
+   "startedAt": "2026-08-19T01:45:34+05:30",
+   "steps": [
+    {
+     "status": "ok",
+     "text": "token latch check: no latch — one token attempt is permitted this run"
+    }
+   ],
+   "result": "FAILED",
+   "run": "none"
+  },
+  {
+   "startedAt": "2026-08-19T03:00:36+05:30",
+   "steps": [
+    {
+     "status": "ok",
+     "text": "token latch check: no latch — one token attempt is permitted this run"
+    }
+   ],
+   "result": "FAILED",
+   "run": "none"
+  },
+  {
+   "startedAt": "2026-08-19T04:15:38+05:30",
+   "steps": [
+    {
+     "status": "ok",
+     "text": "token latch check: no latch — one token attempt is permitted this run"
+    }
+   ],
+   "result": "FAILED",
+   "run": "none"
+  },
+  {
+   "startedAt": "2026-08-19T05:30:41+05:30",
+   "steps": [
+    {
+     "status": "ok",
+     "text": "token latch check: no latch — one token attempt is permitted this run"
+    },
+    {
+     "status": "ok",
+     "text": "environment pre-flight: https://u16hf.arconnet.com:6302 answered HTTP 200. Safe to spend a token"
+    },
+    {
+     "status": "skipped",
+     "text": "generate flows: --resume-only"
+    },
+    {
+     "status": "skipped",
+     "text": "execute suite: --resume-only: resuming 2026-08-16_100005"
+    },
+    {
+     "status": "failed",
+     "text": "resume once: resume exited 1 and 0 flow(s) are still ABORTED. ⛔ Not retrying again — the run is kept and flagged as incomplete"
+    },
+    {
+     "status": "ok",
+     "text": "validation gate: 10 of 10 gates passed"
+    },
+    {
+     "status": "ok",
+     "text": "run workbook: built against baseline 2026-08-05_114315 (521 KB)"
+    },
+    {
+     "status": "failed",
+     "text": "dashboard datasets: generator exited 1 — its self-check against the run workbook did not pass.   VERIFICATION FAILED"
+    },
+    {
+     "status": "ok",
+     "text": "execution stamp: wrote execution.json (ok=False)"
+    }
+   ],
+   "result": "FAILED",
+   "run": "2026-08-16_100005"
+  },
+  {
+   "startedAt": "2026-08-19T07:53:29+05:30",
+   "steps": [
+    {
+     "status": "ok",
+     "text": "token latch check: no latch — one token attempt is permitted this run"
+    },
+    {
+     "status": "ok",
+     "text": "environment pre-flight: https://u16hf.arconnet.com:6302 answered HTTP 200. Safe to spend a token"
+    },
+    {
+     "status": "skipped",
+     "text": "generate flows: --resume-only"
+    },
+    {
+     "status": "skipped",
+     "text": "execute suite: --resume-only: resuming 2026-08-16_100005"
+    },
+    {
+     "status": "skipped",
+     "text": "resume once: no ABORTED flow — nothing to resume"
+    },
+    {
+     "status": "ok",
+     "text": "validation gate: 10 of 10 gates passed"
+    },
+    {
+     "status": "ok",
+     "text": "run workbook: built against baseline 2026-08-05_114315 (521 KB)"
+    },
+    {
+     "status": "failed",
+     "text": "dashboard datasets: generator exited 1 — its self-check against the run workbook did not pass.   VERIFICATION FAILED"
+    },
+    {
+     "status": "ok",
+     "text": "execution stamp: wrote execution.json (ok=False)"
+    }
+   ],
+   "result": "FAILED",
+   "run": "2026-08-16_100005"
+  },
+  {
+   "startedAt": "2026-08-19T08:23:44+05:30",
+   "steps": [
+    {
+     "status": "ok",
+     "text": "token latch check: no latch — one token attempt is permitted this run"
+    },
+    {
+     "status": "ok",
+     "text": "environment pre-flight: https://u16hf.arconnet.com:6302 answered HTTP 200. Safe to spend a token"
+    },
+    {
+     "status": "skipped",
+     "text": "generate flows: --resume-only"
+    },
+    {
+     "status": "skipped",
+     "text": "execute suite: --resume-only: resuming 2026-08-16_100005"
+    },
+    {
+     "status": "skipped",
+     "text": "resume once: no ABORTED flow — nothing to resume"
+    },
+    {
+     "status": "ok",
+     "text": "validation gate: 10 of 10 gates passed"
+    },
+    {
+     "status": "ok",
+     "text": "run workbook: built against baseline 2026-08-05_114315 (521 KB)"
+    },
+    {
+     "status": "failed",
+     "text": "dashboard datasets: generator exited 1 — its self-check against the run workbook did not pass.   VERIFICATION FAILED"
+    },
+    {
+     "status": "ok",
+     "text": "execution stamp: wrote execution.json (ok=False)"
+    }
+   ],
+   "result": "FAILED",
+   "run": "2026-08-16_100005"
+  },
+  {
+   "startedAt": "2026-08-19T08:53:57+05:30",
+   "steps": [
+    {
+     "status": "ok",
+     "text": "token latch check: no latch — one token attempt is permitted this run"
+    },
+    {
+     "status": "ok",
+     "text": "environment pre-flight: https://u16hf.arconnet.com:6302 answered HTTP 200. Safe to spend a token"
+    },
+    {
+     "status": "skipped",
+     "text": "generate flows: --resume-only"
+    },
+    {
+     "status": "skipped",
+     "text": "execute suite: --resume-only: resuming 2026-08-16_100005"
+    },
+    {
+     "status": "skipped",
+     "text": "resume once: no ABORTED flow — nothing to resume"
+    },
+    {
+     "status": "ok",
+     "text": "validation gate: 10 of 10 gates passed"
+    },
+    {
+     "status": "ok",
+     "text": "run workbook: built against baseline 2026-08-05_114315 (521 KB)"
+    },
+    {
+     "status": "failed",
+     "text": "dashboard datasets: generator exited 1 — its self-check against the run workbook did not pass.   VERIFICATION FAILED"
+    },
+    {
+     "status": "ok",
+     "text": "execution stamp: wrote execution.json (ok=False)"
+    }
+   ],
+   "result": "FAILED",
+   "run": "2026-08-16_100005"
+  },
+  {
+   "startedAt": "2026-08-19T09:24:12+05:30",
+   "steps": [
+    {
+     "status": "ok",
+     "text": "token latch check: no latch — one token attempt is permitted this run"
+    },
+    {
+     "status": "ok",
+     "text": "environment pre-flight: https://u16hf.arconnet.com:6302 answered HTTP 200. Safe to spend a token"
+    },
+    {
+     "status": "skipped",
+     "text": "generate flows: --resume-only"
+    },
+    {
+     "status": "skipped",
+     "text": "execute suite: --resume-only: resuming 2026-08-16_100005"
+    },
+    {
+     "status": "skipped",
+     "text": "resume once: no ABORTED flow — nothing to resume"
+    },
+    {
+     "status": "ok",
+     "text": "validation gate: 10 of 10 gates passed"
+    },
+    {
+     "status": "ok",
+     "text": "run workbook: built against baseline 2026-08-05_114315 (521 KB)"
+    },
+    {
+     "status": "failed",
+     "text": "dashboard datasets: generator exited 1 — its self-check against the run workbook did not pass.   VERIFICATION FAILED"
+    },
+    {
+     "status": "ok",
+     "text": "execution stamp: wrote execution.json (ok=False)"
+    }
+   ],
+   "result": "FAILED",
+   "run": "2026-08-16_100005"
+  }
+ ],
+ "runs": [
+  {
+   "terminalState": "Incomplete - interrupted",
+   "whyItStopped": "the runner was terminated before it could write results.json; only its checkpoint survives, recording 178 flows",
+   "flowsRecorded": 178,
+   "flowVerdicts": {
+    "PASS": 24,
+    "FAIL": 154
+   },
+   "abortedFlows": 0,
+   "hasResults": false,
+   "hasRunReport": false,
+   "evidenceFiles": 945,
+   "promotedToCurrent": false,
+   "promotedNote": "not promoted: a run without a workbook cannot become N, by design",
+   "plannedFlows": 0,
+   "completionPct": "N/A",
+   "id": "2026-08-19_133400",
+   "date": "2026-08-19",
+   "type": "Aborted before any result was written",
+   "executed": "N/A",
+   "substantive": false,
+   "jobInvocations": []
+  },
+  {
+   "terminalState": "Completed",
+   "whyItStopped": "results.json and RUN_REPORT.md were both written",
+   "flowsRecorded": 747,
+   "flowVerdicts": {
+    "PASS": 168,
+    "FAIL": 579
+   },
+   "abortedFlows": 0,
+   "hasResults": true,
+   "hasRunReport": true,
+   "evidenceFiles": 5390,
+   "promotedToCurrent": true,
+   "promotedNote": "this run is N - the dashboard's headline figures come from it",
+   "plannedFlows": 0,
+   "completionPct": "N/A",
+   "id": "2026-08-16_100005",
+   "date": "2026-08-16",
+   "type": "Full suite — positive + negative",
+   "executed": 5382,
+   "substantive": true,
+   "jobInvocations": [
+    {
+     "startedAt": "2026-08-18T11:24:46+05:30",
+     "steps": [
+      {
+       "status": "ok",
+       "text": "token latch check: no latch — one token attempt is permitted this run"
+      },
+      {
+       "status": "ok",
+       "text": "environment pre-flight: https://u16hf.arconnet.com:6302 answered HTTP 200. Safe to spend a token"
+      },
+      {
+       "status": "skipped",
+       "text": "generate flows: --resume-only"
+      },
+      {
+       "status": "skipped",
+       "text": "execute suite: --resume-only: resuming 2026-08-16_100005"
+      },
+      {
+       "status": "failed",
+       "text": "resume once: resume exited 2 and 18 flow(s) are still ABORTED. ⛔ Not retrying again — the run is kept and flagged as incomplete"
+      },
+      {
+       "status": "failed",
+       "text": "validation gate: obj010_collect.py exited 1 and wrote no validation.json"
+      },
+      {
+       "status": "failed",
+       "text": "run workbook: exited 2; the dashboard cannot promote this run without its workbook. ⛔ E:\\Omkar\\Automation\\Dev Project\\2026-08-16_100005\\results.json not found - has the run finished?"
+      },
+      {
+       "status": "ok",
+       "text": "dashboard datasets: regenerated; N is now the newest substantive run."
+      },
+      {
+       "status": "ok",
+       "text": "execution stamp: wrote execution.json (ok=False)"
+      }
+     ],
+     "result": "FAILED",
+     "run": "2026-08-16_100005"
+    },
+    {
+     "startedAt": "2026-08-18T11:30:32+05:30",
+     "steps": [
+      {
+       "status": "ok",
+       "text": "token latch check: no latch — one token attempt is permitted this run"
+      },
+      {
+       "status": "ok",
+       "text": "environment pre-flight: https://u16hf.arconnet.com:6302 answered HTTP 200. Safe to spend a token"
+      },
+      {
+       "status": "skipped",
+       "text": "generate flows: --resume-only"
+      },
+      {
+       "status": "skipped",
+       "text": "execute suite: --resume-only: resuming 2026-08-16_100005"
+      },
+      {
+       "status": "failed",
+       "text": "weekly execution: timed out after 45000s"
+      }
+     ],
+     "result": "FAILED",
+     "run": "2026-08-16_100005"
+    },
+    {
+     "startedAt": "2026-08-19T05:30:41+05:30",
+     "steps": [
+      {
+       "status": "ok",
+       "text": "token latch check: no latch — one token attempt is permitted this run"
+      },
+      {
+       "status": "ok",
+       "text": "environment pre-flight: https://u16hf.arconnet.com:6302 answered HTTP 200. Safe to spend a token"
+      },
+      {
+       "status": "skipped",
+       "text": "generate flows: --resume-only"
+      },
+      {
+       "status": "skipped",
+       "text": "execute suite: --resume-only: resuming 2026-08-16_100005"
+      },
+      {
+       "status": "failed",
+       "text": "resume once: resume exited 1 and 0 flow(s) are still ABORTED. ⛔ Not retrying again — the run is kept and flagged as incomplete"
+      },
+      {
+       "status": "ok",
+       "text": "validation gate: 10 of 10 gates passed"
+      },
+      {
+       "status": "ok",
+       "text": "run workbook: built against baseline 2026-08-05_114315 (521 KB)"
+      },
+      {
+       "status": "failed",
+       "text": "dashboard datasets: generator exited 1 — its self-check against the run workbook did not pass.   VERIFICATION FAILED"
+      },
+      {
+       "status": "ok",
+       "text": "execution stamp: wrote execution.json (ok=False)"
+      }
+     ],
+     "result": "FAILED",
+     "run": "2026-08-16_100005"
+    },
+    {
+     "startedAt": "2026-08-19T07:53:29+05:30",
+     "steps": [
+      {
+       "status": "ok",
+       "text": "token latch check: no latch — one token attempt is permitted this run"
+      },
+      {
+       "status": "ok",
+       "text": "environment pre-flight: https://u16hf.arconnet.com:6302 answered HTTP 200. Safe to spend a token"
+      },
+      {
+       "status": "skipped",
+       "text": "generate flows: --resume-only"
+      },
+      {
+       "status": "skipped",
+       "text": "execute suite: --resume-only: resuming 2026-08-16_100005"
+      },
+      {
+       "status": "skipped",
+       "text": "resume once: no ABORTED flow — nothing to resume"
+      },
+      {
+       "status": "ok",
+       "text": "validation gate: 10 of 10 gates passed"
+      },
+      {
+       "status": "ok",
+       "text": "run workbook: built against baseline 2026-08-05_114315 (521 KB)"
+      },
+      {
+       "status": "failed",
+       "text": "dashboard datasets: generator exited 1 — its self-check against the run workbook did not pass.   VERIFICATION FAILED"
+      },
+      {
+       "status": "ok",
+       "text": "execution stamp: wrote execution.json (ok=False)"
+      }
+     ],
+     "result": "FAILED",
+     "run": "2026-08-16_100005"
+    },
+    {
+     "startedAt": "2026-08-19T08:23:44+05:30",
+     "steps": [
+      {
+       "status": "ok",
+       "text": "token latch check: no latch — one token attempt is permitted this run"
+      },
+      {
+       "status": "ok",
+       "text": "environment pre-flight: https://u16hf.arconnet.com:6302 answered HTTP 200. Safe to spend a token"
+      },
+      {
+       "status": "skipped",
+       "text": "generate flows: --resume-only"
+      },
+      {
+       "status": "skipped",
+       "text": "execute suite: --resume-only: resuming 2026-08-16_100005"
+      },
+      {
+       "status": "skipped",
+       "text": "resume once: no ABORTED flow — nothing to resume"
+      },
+      {
+       "status": "ok",
+       "text": "validation gate: 10 of 10 gates passed"
+      },
+      {
+       "status": "ok",
+       "text": "run workbook: built against baseline 2026-08-05_114315 (521 KB)"
+      },
+      {
+       "status": "failed",
+       "text": "dashboard datasets: generator exited 1 — its self-check against the run workbook did not pass.   VERIFICATION FAILED"
+      },
+      {
+       "status": "ok",
+       "text": "execution stamp: wrote execution.json (ok=False)"
+      }
+     ],
+     "result": "FAILED",
+     "run": "2026-08-16_100005"
+    },
+    {
+     "startedAt": "2026-08-19T08:53:57+05:30",
+     "steps": [
+      {
+       "status": "ok",
+       "text": "token latch check: no latch — one token attempt is permitted this run"
+      },
+      {
+       "status": "ok",
+       "text": "environment pre-flight: https://u16hf.arconnet.com:6302 answered HTTP 200. Safe to spend a token"
+      },
+      {
+       "status": "skipped",
+       "text": "generate flows: --resume-only"
+      },
+      {
+       "status": "skipped",
+       "text": "execute suite: --resume-only: resuming 2026-08-16_100005"
+      },
+      {
+       "status": "skipped",
+       "text": "resume once: no ABORTED flow — nothing to resume"
+      },
+      {
+       "status": "ok",
+       "text": "validation gate: 10 of 10 gates passed"
+      },
+      {
+       "status": "ok",
+       "text": "run workbook: built against baseline 2026-08-05_114315 (521 KB)"
+      },
+      {
+       "status": "failed",
+       "text": "dashboard datasets: generator exited 1 — its self-check against the run workbook did not pass.   VERIFICATION FAILED"
+      },
+      {
+       "status": "ok",
+       "text": "execution stamp: wrote execution.json (ok=False)"
+      }
+     ],
+     "result": "FAILED",
+     "run": "2026-08-16_100005"
+    },
+    {
+     "startedAt": "2026-08-19T09:24:12+05:30",
+     "steps": [
+      {
+       "status": "ok",
+       "text": "token latch check: no latch — one token attempt is permitted this run"
+      },
+      {
+       "status": "ok",
+       "text": "environment pre-flight: https://u16hf.arconnet.com:6302 answered HTTP 200. Safe to spend a token"
+      },
+      {
+       "status": "skipped",
+       "text": "generate flows: --resume-only"
+      },
+      {
+       "status": "skipped",
+       "text": "execute suite: --resume-only: resuming 2026-08-16_100005"
+      },
+      {
+       "status": "skipped",
+       "text": "resume once: no ABORTED flow — nothing to resume"
+      },
+      {
+       "status": "ok",
+       "text": "validation gate: 10 of 10 gates passed"
+      },
+      {
+       "status": "ok",
+       "text": "run workbook: built against baseline 2026-08-05_114315 (521 KB)"
+      },
+      {
+       "status": "failed",
+       "text": "dashboard datasets: generator exited 1 — its self-check against the run workbook did not pass.   VERIFICATION FAILED"
+      },
+      {
+       "status": "ok",
+       "text": "execution stamp: wrote execution.json (ok=False)"
+      }
+     ],
+     "result": "FAILED",
+     "run": "2026-08-16_100005"
+    }
+   ]
+  },
+  {
+   "terminalState": "Completed",
+   "whyItStopped": "results.json and RUN_REPORT.md were both written",
+   "flowsRecorded": 747,
+   "flowVerdicts": {
+    "FAIL": 579,
+    "PASS": 168
+   },
+   "abortedFlows": 0,
+   "hasResults": true,
+   "hasRunReport": true,
+   "evidenceFiles": 5424,
+   "promotedToCurrent": false,
+   "promotedNote": "not promoted: a run without a workbook cannot become N, by design",
+   "plannedFlows": 0,
+   "completionPct": "N/A",
+   "id": "2026-08-05_114315",
+   "date": "2026-08-05",
+   "type": "Full suite — positive + negative",
+   "executed": 5416,
+   "substantive": true,
+   "jobInvocations": []
+  },
+  {
+   "terminalState": "Completed",
+   "whyItStopped": "results.json and RUN_REPORT.md were both written",
+   "flowsRecorded": 1,
+   "flowVerdicts": {
+    "FAIL": 1
+   },
+   "abortedFlows": 0,
+   "hasResults": true,
+   "hasRunReport": true,
+   "evidenceFiles": 12,
+   "promotedToCurrent": false,
+   "promotedNote": "not promoted: a run without a workbook cannot become N, by design",
+   "plannedFlows": 0,
+   "completionPct": "N/A",
+   "id": "2026-08-05_114219",
+   "date": "2026-08-05",
+   "type": "Feasibility / probe",
+   "executed": 12,
+   "substantive": false,
+   "jobInvocations": []
+  },
+  {
+   "terminalState": "Completed",
+   "whyItStopped": "results.json and RUN_REPORT.md were both written",
+   "flowsRecorded": 1,
+   "flowVerdicts": {
+    "PASS": 1
+   },
+   "abortedFlows": 0,
+   "hasResults": true,
+   "hasRunReport": true,
+   "evidenceFiles": 12,
+   "promotedToCurrent": false,
+   "promotedNote": "not promoted: a run without a workbook cannot become N, by design",
+   "plannedFlows": 0,
+   "completionPct": "N/A",
+   "id": "2026-08-05_114154",
+   "date": "2026-08-05",
+   "type": "Feasibility / probe",
+   "executed": 12,
+   "substantive": false,
+   "jobInvocations": []
+  },
+  {
+   "terminalState": "Completed",
+   "whyItStopped": "results.json and RUN_REPORT.md were both written",
+   "flowsRecorded": 1,
+   "flowVerdicts": {
+    "FAIL": 1
+   },
+   "abortedFlows": 0,
+   "hasResults": true,
+   "hasRunReport": true,
+   "evidenceFiles": 12,
+   "promotedToCurrent": false,
+   "promotedNote": "not promoted: a run without a workbook cannot become N, by design",
+   "plannedFlows": 0,
+   "completionPct": "N/A",
+   "id": "2026-08-05_113925",
+   "date": "2026-08-05",
+   "type": "Feasibility / probe",
+   "executed": 12,
+   "substantive": false,
+   "jobInvocations": []
+  },
+  {
+   "terminalState": "Completed",
+   "whyItStopped": "results.json and RUN_REPORT.md were both written",
+   "flowsRecorded": 747,
+   "flowVerdicts": {
+    "BLOCKED": 326,
+    "PASS": 421
+   },
+   "abortedFlows": 0,
+   "hasResults": true,
+   "hasRunReport": true,
+   "evidenceFiles": 0,
+   "promotedToCurrent": false,
+   "promotedNote": "not promoted: a run without a workbook cannot become N, by design",
+   "plannedFlows": 0,
+   "completionPct": "N/A",
+   "id": "2026-08-05_113851",
+   "date": "2026-08-05",
+   "type": "Started, no test case executed",
+   "executed": 0,
+   "substantive": false,
+   "jobInvocations": []
+  },
+  {
+   "terminalState": "No result recorded",
+   "whyItStopped": "neither a checkpoint nor results.json is present",
+   "flowsRecorded": 0,
+   "flowVerdicts": {},
+   "abortedFlows": 0,
+   "hasResults": false,
+   "hasRunReport": false,
+   "evidenceFiles": 0,
+   "promotedToCurrent": false,
+   "promotedNote": "not promoted: a run without a workbook cannot become N, by design",
+   "plannedFlows": 0,
+   "completionPct": "N/A",
+   "id": "2026-08-05_113842",
+   "date": "2026-08-05",
+   "type": "Aborted before any result was written",
+   "executed": "N/A",
+   "substantive": false,
+   "jobInvocations": []
+  },
+  {
+   "terminalState": "Incomplete - interrupted",
+   "whyItStopped": "the runner was terminated before it could write results.json; only its checkpoint survives, recording 3 flows",
+   "flowsRecorded": 3,
+   "flowVerdicts": {
+    "PASS": 2,
+    "FAIL": 1
+   },
+   "abortedFlows": 0,
+   "hasResults": false,
+   "hasRunReport": false,
+   "evidenceFiles": 18,
+   "promotedToCurrent": false,
+   "promotedNote": "not promoted: a run without a workbook cannot become N, by design",
+   "plannedFlows": 0,
+   "completionPct": "N/A",
+   "id": "2026-08-05_110615",
+   "date": "2026-08-05",
+   "type": "Aborted before any result was written",
+   "executed": "N/A",
+   "substantive": false,
+   "jobInvocations": []
+  },
+  {
+   "terminalState": "Completed",
+   "whyItStopped": "results.json and RUN_REPORT.md were both written",
+   "flowsRecorded": 326,
+   "flowVerdicts": {
+    "PASS": 30,
+    "FAIL": 296
+   },
+   "abortedFlows": 0,
+   "hasResults": true,
+   "hasRunReport": true,
+   "evidenceFiles": 1868,
+   "promotedToCurrent": false,
+   "promotedNote": "not promoted: a run without a workbook cannot become N, by design",
+   "plannedFlows": 0,
+   "completionPct": "N/A",
+   "id": "2026-07-29_181439",
+   "date": "2026-07-29",
+   "type": "Generated positive chains",
+   "executed": 1868,
+   "substantive": true,
+   "jobInvocations": []
+  },
+  {
+   "terminalState": "No result recorded",
+   "whyItStopped": "neither a checkpoint nor results.json is present",
+   "flowsRecorded": 0,
+   "flowVerdicts": {},
+   "abortedFlows": 0,
+   "hasResults": false,
+   "hasRunReport": false,
+   "evidenceFiles": 0,
+   "promotedToCurrent": false,
+   "promotedNote": "not promoted: a run without a workbook cannot become N, by design",
+   "plannedFlows": 0,
+   "completionPct": "N/A",
+   "id": "2026-07-29_181419",
+   "date": "2026-07-29",
+   "type": "Aborted before any result was written",
+   "executed": "N/A",
+   "substantive": false,
+   "jobInvocations": []
+  },
+  {
+   "terminalState": "Completed",
+   "whyItStopped": "results.json and RUN_REPORT.md were both written",
+   "flowsRecorded": 1,
+   "flowVerdicts": {
+    "FAIL": 1
+   },
+   "abortedFlows": 0,
+   "hasResults": true,
+   "hasRunReport": true,
+   "evidenceFiles": 1,
+   "promotedToCurrent": false,
+   "promotedNote": "not promoted: a run without a workbook cannot become N, by design",
+   "plannedFlows": 0,
+   "completionPct": "N/A",
+   "id": "2026-07-29_181111",
+   "date": "2026-07-29",
+   "type": "Feasibility / probe",
+   "executed": 1,
+   "substantive": false,
+   "jobInvocations": []
+  },
+  {
+   "terminalState": "Completed",
+   "whyItStopped": "results.json and RUN_REPORT.md were both written",
+   "flowsRecorded": 0,
+   "flowVerdicts": {},
+   "abortedFlows": 0,
+   "hasResults": true,
+   "hasRunReport": true,
+   "evidenceFiles": 15,
+   "promotedToCurrent": false,
+   "promotedNote": "not promoted: a run without a workbook cannot become N, by design",
+   "plannedFlows": 0,
+   "completionPct": "N/A",
+   "id": "2026-07-29_160155",
+   "date": "2026-07-29",
+   "type": "Feasibility / probe",
+   "executed": 15,
+   "substantive": false,
+   "jobInvocations": []
+  }
+ ]
+}

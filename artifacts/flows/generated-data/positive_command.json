@@ -1,0 +1,200 @@
+[
+ {
+  "id": "data_positive_command_1",
+  "title": "Command - positive data-driven batch 1",
+  "why": "Executes the QA team's authored positive scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "positive",
+  "tier": 4,
+  "controller": "Command",
+  "hops": [
+   {
+    "name": "WriteCommandDataToFile",
+    "verb": "POST",
+    "path": "/api/Command/WriteCommandDataToFile",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Command_positive row 1 (provider Command)",
+    "body": {
+     "SessionId": 5,
+     "SequenceId": 1,
+     "CommandTyped": "[sshlinux@lnxrh5_arconsrv]$ date",
+     "CommandResponse": "Restricted Command",
+     "TimeStamp": "11/09/2020 12:04:00"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "SessionDetails",
+    "verb": "POST",
+    "path": "/api/Command/SessionDetails",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Command_positive row 2 (provider Command)",
+    "body": {
+     "SessionId": 5,
+     "SequenceId": 1,
+     "CommandTyped": "[sshlinux@lnxrh5_arconsrv]$ date",
+     "CommandResponse": "Restricted Command",
+     "CommandResponseByte": "",
+     "FileName": "1.txt",
+     "isFile": true,
+     "isFileEncrypted": true,
+     "TimeStamp": "11/09/2020 12:04:00"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "WriteCommandDataToDatabase",
+    "verb": "POST",
+    "path": "/api/Command/WriteCommandDataToDatabase",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Command_positive row 3 (provider Command)",
+    "body": {
+     "SessionId": 5,
+     "SequenceId": 1,
+     "CommandTyped": "[sshlinux@lnxrh5_arconsrv]$ date",
+     "CommandResponse": "Restricted Command",
+     "CommandResponseByte": "",
+     "FileName": "1.txt",
+     "isFile": true,
+     "isFileEncrypted": true,
+     "TimeStamp": "11/09/2020 12:04:00"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "WriteCommandDataToDatabaseBulk",
+    "verb": "POST",
+    "path": "/api/Command/WriteCommandDataToDatabaseBulk",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Command_positive row 4 (provider Command)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "WriteCommandDataToDatabaseNew",
+    "verb": "POST",
+    "path": "/api/Command/WriteCommandDataToDatabaseNew",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Command_positive row 5 (provider Command)",
+    "body": [
+     {
+      "SessionId": 16221,
+      "CommandTyped": "<First cmd os session>"
+     },
+     {
+      "SessionId": 16221,
+      "CommandTyped": "<Second cmd on session>"
+     },
+     {
+      "SessionId": 16221,
+      "CommandTyped": "<Third cmd on session>"
+     }
+    ],
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "WriteCommandDataToFile",
+    "verb": "GET",
+    "path": "/api/Command/WriteCommandDataToFile",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from Negative_API_ExcelDataProviderFileName / Command_Negative / Command_MethodNotAllowed row 1 (provider Command_MethodNotAllowed)",
+    "body": {
+     "SessionId": 5,
+     "SequenceId": 1,
+     "CommandTyped": "[sshlinux@lnxrh5_arconsrv]$ date",
+     "CommandResponse": "Restricted Command",
+     "TimeStamp": "11/09/2020 12:04:00"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed"
+   },
+   {
+    "name": "SessionDetails",
+    "verb": "GET",
+    "path": "/api/Command/SessionDetails",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from Negative_API_ExcelDataProviderFileName / Command_Negative / Command_MethodNotAllowed row 2 (provider Command_MethodNotAllowed)",
+    "body": {
+     "SessionId": 5,
+     "SequenceId": 1,
+     "CommandTyped": "[sshlinux@lnxrh5_arconsrv]$ date",
+     "CommandResponse": "Restricted Command",
+     "CommandResponseByte": "",
+     "FileName": "1.txt",
+     "isFile": true,
+     "isFileEncrypted": true,
+     "TimeStamp": "11/09/2020 12:04:00"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed"
+   },
+   {
+    "name": "WriteCommandDataToDatabase",
+    "verb": "GET",
+    "path": "/api/Command/WriteCommandDataToDatabase",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from Negative_API_ExcelDataProviderFileName / Command_Negative / Command_MethodNotAllowed row 3 (provider Command_MethodNotAllowed)",
+    "body": {
+     "SessionId": 5,
+     "SequenceId": 1,
+     "CommandTyped": "[sshlinux@lnxrh5_arconsrv]$ date",
+     "CommandResponse": "Restricted Command",
+     "CommandResponseByte": "",
+     "FileName": "1.txt",
+     "isFile": true,
+     "isFileEncrypted": true,
+     "TimeStamp": "11/09/2020 12:04:00"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed"
+   },
+   {
+    "name": "WriteCommandDataToDatabaseBulk",
+    "verb": "GET",
+    "path": "/api/Command/WriteCommandDataToDatabaseBulk",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from Negative_API_ExcelDataProviderFileName / Command_Negative / Command_MethodNotAllowed row 4 (provider Command_MethodNotAllowed)",
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed"
+   },
+   {
+    "name": "WriteCommandDataToDatabaseNew",
+    "verb": "GET",
+    "path": "/api/Command/WriteCommandDataToDatabaseNew",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from Negative_API_ExcelDataProviderFileName / Command_Negative / Command_MethodNotAllowed row 5 (provider Command_MethodNotAllowed)",
+    "body": [
+     {
+      "SessionId": 16221,
+      "CommandTyped": "<First cmd os session>"
+     },
+     {
+      "SessionId": 16221,
+      "CommandTyped": "<Second cmd on session>"
+     },
+     {
+      "SessionId": 16221,
+      "CommandTyped": "<Third cmd on session>"
+     }
+    ],
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed"
+   }
+  ]
+ }
+]

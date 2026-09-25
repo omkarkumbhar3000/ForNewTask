@@ -1,0 +1,295 @@
+{
+  "_schema": "obj013-facts/1",
+  "_doc": [
+    "Canonical fact registry for the OBJ-013 closed loop (v0.1).",
+    "",
+    "One entry per fact that is quoted in a document AND can be re-derived from source.",
+    "The loop never trusts a document; it runs the named probe, renders the value, and",
+    "compares it against each declared site.",
+    "",
+    "policy:",
+    "  autofix     - obj013_fix.py may correct this in place (D1 allowlist still applies)",
+    "  report-only - reported for a human, never written. Use when the derivation is",
+    "                ambiguous, disputed, or multi-basis.",
+    "",
+    "site.pattern MUST contain exactly one capture group isolating the value, and MUST",
+    "match exactly once in the file. Zero matches -> anchor-not-found (the doc moved:",
+    "report, never guess). Two or more -> anchor-ambiguous (refuse: an edit could hit",
+    "the wrong one). This is what keeps a targeted edit targeted.",
+    "",
+    "D1 write allowlist (v0.1): root CLAUDE.md, root README.md, the three .claude/rules/*,",
+    "and the automation repo's CLAUDE.md + AGENTS.md. Every other file is report-only",
+    "regardless of the policy set here."
+  ],
+
+  "facts": [
+    {
+      "id": "graph.automation.nodes",
+      "title": "Automation-repo knowledge graph — node count",
+      "probe": "graph_automation_summary",
+      "path": "nodes",
+      "unit": "nodes",
+      "basis": "graphify-out/GRAPH_REPORT.md §Summary line",
+      "policy": "autofix",
+      "render": "{value:,}",
+      "sites": [
+        { "file": "CLAUDE.md", "pattern": "indexes the Java sources as ([\\d,]+) nodes" }
+      ]
+    },
+    {
+      "id": "graph.automation.edges",
+      "title": "Automation-repo knowledge graph — edge count",
+      "probe": "graph_automation_summary",
+      "path": "edges",
+      "unit": "edges",
+      "basis": "graphify-out/GRAPH_REPORT.md §Summary line",
+      "policy": "autofix",
+      "render": "{value:,}",
+      "sites": [
+        { "file": "CLAUDE.md", "pattern": "/ ([\\d,]+) edges" }
+      ]
+    },
+    {
+      "id": "graph.automation.communities",
+      "title": "Automation-repo knowledge graph — community count",
+      "probe": "graph_automation_summary",
+      "path": "comm",
+      "unit": "communities",
+      "basis": "graphify-out/GRAPH_REPORT.md §Summary line",
+      "policy": "autofix",
+      "render": "{value:,}",
+      "sites": [
+        { "file": "Automation gitlab repo/pam_automation_bootstrap/AGENTS.md",
+          "pattern": "god nodes, ([\\d,]+) communities" }
+      ]
+    },
+    {
+      "id": "graph.automation.communities_shown",
+      "title": "Automation-repo graph — communities shown (named)",
+      "_why": "AGENTS.md states this on the same line as the total. Correcting only the total would leave the line looking verified while two numbers on it stay wrong.",
+      "probe": "graph_automation_summary",
+      "path": "shown",
+      "unit": "communities shown",
+      "basis": "graphify-out/GRAPH_REPORT.md §Summary parenthetical",
+      "policy": "autofix",
+      "render": "{value:,}",
+      "sites": [
+        { "file": "Automation gitlab repo/pam_automation_bootstrap/AGENTS.md",
+          "pattern": "communities \\(([\\d,]+) \\*\\*named\\*\\*" }
+      ]
+    },
+    {
+      "id": "graph.automation.communities_thin",
+      "title": "Automation-repo graph — thin communities omitted",
+      "probe": "graph_automation_summary",
+      "path": "thin",
+      "unit": "communities omitted",
+      "basis": "graphify-out/GRAPH_REPORT.md §Summary parenthetical",
+      "policy": "autofix",
+      "render": "{value:,}",
+      "sites": [
+        { "file": "Automation gitlab repo/pam_automation_bootstrap/AGENTS.md",
+          "pattern": "\\*\\*named\\*\\*, ([\\d,]+) thin omitted" }
+      ]
+    },
+    {
+      "id": "code.apihelper.gettoken_line",
+      "title": "ApiHelper.getToken() declaration line",
+      "probe": "apihelper_gettoken_line",
+      "unit": "line number",
+      "basis": "first live `public String getToken(` in ApiHelper.java",
+      "policy": "autofix",
+      "render": "{value}",
+      "sites": [
+        { "file": "CLAUDE.md", "pattern": "`ApiHelper\\.java:(\\d+)`" }
+      ]
+    },
+    {
+      "id": "code.apihelper.dead_block_start",
+      "title": "ApiHelper superseded (commented) validateResponseErrorCode block start",
+      "probe": "apihelper_envelope_pins",
+      "path": "dead_block_start",
+      "unit": "line number",
+      "basis": "first commented `private String validateResponseErrorCode(` in ApiHelper.java",
+      "policy": "autofix",
+      "render": "{value}",
+      "sites": [
+        { "file": "CLAUDE.md", "pattern": "dead pair is at \\*\\*(\\d+)\\*\\*" }
+      ]
+    },
+    {
+      "id": "deck.prepare1.slides",
+      "title": "Prepare-1.pptx slide count",
+      "probe": "pptx_slides",
+      "unit": "slides",
+      "basis": "python-pptx over artifacts/deck/Prepare-1.pptx",
+      "policy": "autofix",
+      "render": "{value}",
+      "sites": [
+        { "file": "CLAUDE.md", "pattern": "\\(the (\\d+)-slide management deck, `OBJ-012`\\)" }
+      ]
+    },
+    {
+      "id": "inventory.issue_files",
+      "title": "docs/findings/issues — authored ISSUE write-ups",
+      "probe": "workspace_inventory",
+      "path": "issue_files",
+      "unit": "files",
+      "basis": "glob docs/findings/issues/ISSUE-*.md",
+      "policy": "autofix",
+      "render": "{value}",
+      "sites": [
+        { "file": "CLAUDE.md", "pattern": "`issues/` = the (\\d+) authored `ISSUE-\\*\\.md`" },
+        { "file": "README.md", "pattern": "`docs/findings/issues/` — (\\d+) issues" }
+      ]
+    },
+    {
+      "id": "inventory.lh_packs",
+      "title": "Developer-Loopholes — evidence packs",
+      "probe": "workspace_inventory",
+      "path": "lh_packs",
+      "unit": "packs",
+      "basis": "count of artifacts/loopholes/LH-* directories",
+      "policy": "autofix",
+      "render": "{value}",
+      "sites": [
+        { "file": "CLAUDE.md", "pattern": "source of truth for the (\\d+) findings" },
+        { "file": ".claude/rules/markdown-docs.md", "pattern": "The (\\d+) findings in one brief" }
+      ]
+    },
+    {
+      "id": "graph.pamscope.report_lines",
+      "title": "artifacts/graph/pam-scope GRAPH_REPORT.md — line count",
+      "probe": "large_files",
+      "path": "artifacts/graph/pam-scope/graphify-out/GRAPH_REPORT.md.lines",
+      "unit": "lines",
+      "basis": "line count of the pam-scope graph report",
+      "policy": "autofix",
+      "render": "{value:,}",
+      "sites": [
+        { "file": "CLAUDE.md",
+          "pattern": "`artifacts/graph/pam-scope/graphify-out/GRAPH_REPORT\\.md` \\| ([\\d,]+) \\|" }
+      ]
+    },
+    {
+      "id": "inventory.env_property_files",
+      "title": "Environments/*.properties count",
+      "probe": "workspace_inventory",
+      "path": "env_property_files",
+      "unit": "files",
+      "basis": "glob Environments/*.properties in the automation repo",
+      "policy": "autofix",
+      "render": "{value}",
+      "sites": [
+        { "file": "CLAUDE.md", "pattern": "\\((\\d+) available\\)" },
+        { "file": "README.md", "pattern": "\\((\\d+) available\\)" }
+      ]
+    },
+    {
+      "id": "inventory.harness_scripts",
+      "title": "workbench/scripts — Python harness scripts",
+      "probe": "workspace_inventory",
+      "path": "harness_scripts_py",
+      "unit": "scripts",
+      "basis": "glob tools/*.py",
+      "policy": "report-only",
+      "render": "{value}",
+      "_why_report_only": "The documents describe this set in prose ('every harness script lives here') rather than quoting a number at a stable anchor. Adding a script legitimately changes the count, so an auto-edit would churn.",
+      "sites": []
+    },
+    {
+      "id": "rag.corpus.pam_api_lines",
+      "title": "artifacts/rag-corpus/pam-api.md — line count",
+      "probe": "large_files",
+      "path": "artifacts/rag-corpus/pam-api.md.lines",
+      "unit": "lines",
+      "basis": "line count of the extracted corpus file",
+      "policy": "autofix",
+      "render": "{value:,}",
+      "sites": [
+        { "file": "CLAUDE.md", "pattern": "`artifacts/rag-corpus/pam-api\\.md` \\| ([\\d,]+) \\|" }
+      ]
+    },
+    {
+      "id": "api.endpoint_count",
+      "title": "APIConfig.java endpoint count",
+      "probe": "endpoint_count",
+      "unit": "MULTI-BASIS",
+      "basis": "several — see the probe's derivation",
+      "policy": "report-only",
+      "render": "{value}",
+      "_why_report_only": "⛔ DO NOT AUTO-FIX. The workspace canon is 1,306 distinct (controller, action) pairs. This derivation yields 1,302 strict / 1,308 loose; the loose basis reproduces the documented 1,308 exactly, but the exact rule behind 1,306 is unrecorded. Rewriting 1,306 -> 1,302 across a dozen files would propagate a wrong canonical. A human must settle the rule, then this becomes autofix.",
+      "sites": []
+    },
+    {
+      "id": "run.newest",
+      "title": "Newest run folder under artifacts/runs",
+      "probe": "newest_run",
+      "unit": "run id",
+      "basis": "lexicographic max of artifacts/runs/*",
+      "policy": "report-only",
+      "_why_report_only": "The guidance names specific runs for specific reasons (OBJ-007 analysis is pinned to 2026-07-29_181439 for reproducibility). 'Newest' is not automatically 'the one that should be cited'.",
+      "render": "{value}",
+      "sites": []
+    }
+  ],
+
+  "invariants": [
+    {
+      "id": "safety.deny_by_default",
+      "title": "Every harness script that can issue HTTP is deny-by-default",
+      "probe": "harness_safety_gates",
+      "expect": { "value": 0 },
+      "severity": "critical",
+      "statement": "Root CLAUDE.md and .claude/rules/api-surface.md both assert a bare run issues zero HTTP calls. A script with urlopen but no --execute/--revalidate gate breaks that promise."
+    },
+    {
+      "id": "safety.blocklist_single_source",
+      "title": "The app-pool blocklist has one definition, and it is complete",
+      "probe": "blocklist_consistency",
+      "expect": { "detail.incomplete": {} },
+      "severity": "critical",
+      "statement": "GetLogs / GetErrorLogs / GetAllActiveUserDetails stop the IIS application pool. Independent copies of the blocklist drift; a copy missing an entry is a live hazard."
+    },
+    {
+      "id": "graph.rebuild_target",
+      "title": "graphify-out/.graphify_root names THIS checkout",
+      "probe": "graph_root_marker",
+      "expect": { "detail.points_at_this_checkout": true },
+      "severity": "critical",
+      "statement": "If the marker names a foreign checkout, the installed post-commit/post-checkout hooks rebuild the wrong tree. v0.1 raises REFUSE and never triggers a rebuild."
+    },
+    {
+      "id": "governance.objective_single_injection",
+      "title": "BLAST/Objective.md reaches context exactly once",
+      "probe": "objective_injection",
+      "expect": { "value": 1 },
+      "severity": "high",
+      "statement": "Both the CLAUDE.md @-import and a UserPromptSubmit hook inject it. The import is a session-start snapshot and goes stale mid-session while the hook stays live, so context can hold two disagreeing copies of the active objective."
+    },
+    {
+      "id": "governance.no_push_permission",
+      "title": "git push is not reachable through a wildcard allow rule",
+      "probe": "permission_guardrails",
+      "expect": { "value": false },
+      "severity": "high",
+      "statement": "permissions.allow contains PowerShell(git *), which permits git push. The never-push rule is prose only until permissions.deny enforces it."
+    },
+    {
+      "id": "graph.indexes_validation_package",
+      "title": "The repo graph indexes com.arcon.utils.validation",
+      "probe": "graph_indexes_validation_pkg",
+      "expect": { "detail.graph_is_stale": false },
+      "severity": "critical",
+      "statement": "Root CLAUDE.md directs agents to use com.arcon.utils.validation for anything new and to consult the graph before grepping. If the graph predates the package, every query returns 'not found' for exactly that code."
+    },
+    {
+      "id": "docs.declared_paths_exist",
+      "title": "Every path the guidance tells a reader to open exists",
+      "probe": "declared_paths_exist",
+      "expect": { "value": 0 },
+      "severity": "medium",
+      "statement": "A dead pointer sends a reader somewhere that is not there. Known dead: GRAPH_TREE.html, the callflow HTML, the QA Buddy reference deck."
+    }
+  ]
+}

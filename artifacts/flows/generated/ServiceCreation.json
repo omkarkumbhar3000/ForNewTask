@@ -1,0 +1,496 @@
+[
+ {
+  "id": "servicecreation__setservicedetails",
+  "title": "ServiceCreation lifecycle - SetServiceDetails",
+  "why": "Generated lifecycle chain: discover LOB context, create, read the record back, then optionally update and remove it.",
+  "generated": true,
+  "tier": 1,
+  "controller": "ServiceCreation",
+  "hops": [
+   {
+    "name": "GetLOBList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetLOBList",
+    "body": {},
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LobName": "AUTOMATION_TEST_LOB"
+     },
+     "take": {
+      "LOB_ID": "LobId",
+      "LOB_NAME": "LobName"
+     }
+    },
+    "sla_ms": 8000
+   },
+   {
+    "name": "GetUserGroupList",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetUserGroupListWithoutMandateValue",
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LOBName": "${LOB_NAME}"
+     },
+     "take": {
+      "USER_GROUP_ID": "UserGroupId",
+      "USER_GROUP_NAME": "UserGroupName"
+     }
+    },
+    "sla_ms": 12000
+   },
+   {
+    "name": "GetServerGroupList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetServerGroupList",
+    "body": {
+     "LobId": "${LOB_ID}"
+    },
+    "extract": {
+     "SERVER_GROUP_ID": "Result[0].ServerGroupId"
+    },
+    "stop_on_fail": false,
+    "sla_ms": 8000
+   },
+   {
+    "name": "SetServiceDetails",
+    "verb": "POST",
+    "path": "/api/ServiceCreation/SetServiceDetails",
+    "body": {
+     "LOBID": "${LOB_ID}",
+     "ServerGroupId": "${SERVER_GROUP_ID}",
+     "Hostname": "${NEW_SERVICE_HOST}",
+     "IPAddress": "${NEW_SERVICE_HOST}",
+     "Domain": 2,
+     "ServiceTypeId": 1,
+     "DBInstanceName": "",
+     "ServiceUserName": "${NEW_SERVICE_USER}",
+     "ServicePassword": "${NEW_SERVICE_PASSWORD}",
+     "Description1": "",
+     "Description2": "",
+     "Description3": "",
+     "Parameter": 1
+    },
+    "expect_created": true,
+    "extract_any_id": "NEW_ID",
+    "sla_ms": 20000,
+    "stop_on_fail": true,
+    "note": "generated from setServiceDetails; chained: LOBID <- ${LOB_ID}, ServerGroupId <- ${SERVER_GROUP_ID}, Hostname <- ${NEW_SERVICE_HOST}, IPAddress <- ${NEW_SERVICE_HOST}, ServiceUserName <- ${NEW_SERVICE_USER}, ServicePassword <- ${NEW_SERVICE_PASSWORD}"
+   },
+   {
+    "name": "GetStatus__verify",
+    "verb": "GET",
+    "path": "/api/ServiceCreation/GetStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "verify_value_anywhere": {
+     "value": "${NEW_ID}",
+     "label": "created record id"
+    },
+    "note": "read-back chosen for entity 'service'"
+   },
+   {
+    "name": "EnableService",
+    "verb": "POST",
+    "path": "/api/ServiceCreation/EnableService",
+    "body": {
+     "ServiceId": 7021
+    },
+    "sla_ms": 20000,
+    "stop_on_fail": false,
+    "note": "update against the record created above"
+   }
+  ]
+ },
+ {
+  "id": "servicecreation__setdropservice",
+  "title": "ServiceCreation lifecycle - SetDropService",
+  "why": "Generated lifecycle chain: discover LOB context, create, read the record back, then optionally update and remove it.",
+  "generated": true,
+  "tier": 1,
+  "controller": "ServiceCreation",
+  "hops": [
+   {
+    "name": "GetLOBList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetLOBList",
+    "body": {},
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LobName": "AUTOMATION_TEST_LOB"
+     },
+     "take": {
+      "LOB_ID": "LobId",
+      "LOB_NAME": "LobName"
+     }
+    },
+    "sla_ms": 8000
+   },
+   {
+    "name": "GetUserGroupList",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetUserGroupListWithoutMandateValue",
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LOBName": "${LOB_NAME}"
+     },
+     "take": {
+      "USER_GROUP_ID": "UserGroupId",
+      "USER_GROUP_NAME": "UserGroupName"
+     }
+    },
+    "sla_ms": 12000
+   },
+   {
+    "name": "GetServerGroupList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetServerGroupList",
+    "body": {
+     "LobId": "${LOB_ID}"
+    },
+    "extract": {
+     "SERVER_GROUP_ID": "Result[0].ServerGroupId"
+    },
+    "stop_on_fail": false,
+    "sla_ms": 8000
+   },
+   {
+    "name": "SetDropService",
+    "verb": "POST",
+    "path": "/api/ServiceCreation/SetDropService",
+    "body": {
+     "ServiceId": 12
+    },
+    "expect_created": true,
+    "extract_any_id": "NEW_ID",
+    "sla_ms": 20000,
+    "stop_on_fail": true,
+    "note": "generated from setDropService"
+   },
+   {
+    "name": "GetStatus__verify",
+    "verb": "GET",
+    "path": "/api/ServiceCreation/GetStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "verify_value_anywhere": {
+     "value": "${NEW_ID}",
+     "label": "created record id"
+    },
+    "note": "read-back chosen for entity 'dropservice'"
+   }
+  ]
+ },
+ {
+  "id": "servicecreation__setdeleteservice",
+  "title": "ServiceCreation lifecycle - SetDeleteService",
+  "why": "Generated lifecycle chain: discover LOB context, create, read the record back, then optionally update and remove it.",
+  "generated": true,
+  "tier": 1,
+  "controller": "ServiceCreation",
+  "hops": [
+   {
+    "name": "GetLOBList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetLOBList",
+    "body": {},
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LobName": "AUTOMATION_TEST_LOB"
+     },
+     "take": {
+      "LOB_ID": "LobId",
+      "LOB_NAME": "LobName"
+     }
+    },
+    "sla_ms": 8000
+   },
+   {
+    "name": "GetUserGroupList",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetUserGroupListWithoutMandateValue",
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LOBName": "${LOB_NAME}"
+     },
+     "take": {
+      "USER_GROUP_ID": "UserGroupId",
+      "USER_GROUP_NAME": "UserGroupName"
+     }
+    },
+    "sla_ms": 12000
+   },
+   {
+    "name": "GetServerGroupList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetServerGroupList",
+    "body": {
+     "LobId": "${LOB_ID}"
+    },
+    "extract": {
+     "SERVER_GROUP_ID": "Result[0].ServerGroupId"
+    },
+    "stop_on_fail": false,
+    "sla_ms": 8000
+   },
+   {
+    "name": "SetDeleteService",
+    "verb": "POST",
+    "path": "/api/ServiceCreation/SetDeleteService",
+    "body": {
+     "ServiceId": 4678
+    },
+    "expect_created": true,
+    "extract_any_id": "NEW_ID",
+    "sla_ms": 20000,
+    "stop_on_fail": true,
+    "note": "generated from setDeleteService"
+   },
+   {
+    "name": "GetStatus__verify",
+    "verb": "GET",
+    "path": "/api/ServiceCreation/GetStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "verify_value_anywhere": {
+     "value": "${NEW_ID}",
+     "label": "created record id"
+    },
+    "note": "read-back chosen for entity 'deleteservice'"
+   }
+  ]
+ },
+ {
+  "id": "servicecreation__setsshlinuxvault",
+  "title": "ServiceCreation lifecycle - SetSSHLinuxVault",
+  "why": "Generated lifecycle chain: discover LOB context, create, read the record back, then optionally update and remove it.",
+  "generated": true,
+  "tier": 1,
+  "controller": "ServiceCreation",
+  "hops": [
+   {
+    "name": "GetLOBList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetLOBList",
+    "body": {},
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LobName": "AUTOMATION_TEST_LOB"
+     },
+     "take": {
+      "LOB_ID": "LobId",
+      "LOB_NAME": "LobName"
+     }
+    },
+    "sla_ms": 8000
+   },
+   {
+    "name": "GetUserGroupList",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetUserGroupListWithoutMandateValue",
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LOBName": "${LOB_NAME}"
+     },
+     "take": {
+      "USER_GROUP_ID": "UserGroupId",
+      "USER_GROUP_NAME": "UserGroupName"
+     }
+    },
+    "sla_ms": 12000
+   },
+   {
+    "name": "GetServerGroupList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetServerGroupList",
+    "body": {
+     "LobId": "${LOB_ID}"
+    },
+    "extract": {
+     "SERVER_GROUP_ID": "Result[0].ServerGroupId"
+    },
+    "stop_on_fail": false,
+    "sla_ms": 8000
+   },
+   {
+    "name": "SetSSHLinuxVault",
+    "verb": "POST",
+    "path": "/api/ServiceCreation/SetSSHLinuxVault",
+    "body": {
+     "ServiceId": 7021,
+     "SSHKey": "TestKey1",
+     "PassPhrase": "",
+     "SSHKeyPath": "",
+     "LinuxType": "putty"
+    },
+    "expect_created": true,
+    "extract_any_id": "NEW_ID",
+    "sla_ms": 20000,
+    "stop_on_fail": true,
+    "note": "generated from setSSHLinuxVault"
+   },
+   {
+    "name": "GetStatus__verify",
+    "verb": "GET",
+    "path": "/api/ServiceCreation/GetStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "verify_value_anywhere": {
+     "value": "${NEW_ID}",
+     "label": "created record id"
+    },
+    "note": "read-back chosen for entity 'sshlinuxvault'"
+   }
+  ]
+ },
+ {
+  "id": "servicecreation__setstatus",
+  "title": "ServiceCreation lifecycle - SetStatus (no body defined)",
+  "why": "Generated lifecycle chain: discover LOB context, create, read the record back, then optionally update and remove it. This create has no payload defined in the framework, so it is probed with an empty body to document the gap.",
+  "generated": true,
+  "tier": 3,
+  "controller": "ServiceCreation",
+  "hops": [
+   {
+    "name": "GetLOBList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetLOBList",
+    "body": {},
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LobName": "AUTOMATION_TEST_LOB"
+     },
+     "take": {
+      "LOB_ID": "LobId",
+      "LOB_NAME": "LobName"
+     }
+    },
+    "sla_ms": 8000
+   },
+   {
+    "name": "GetUserGroupList",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetUserGroupListWithoutMandateValue",
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LOBName": "${LOB_NAME}"
+     },
+     "take": {
+      "USER_GROUP_ID": "UserGroupId",
+      "USER_GROUP_NAME": "UserGroupName"
+     }
+    },
+    "sla_ms": 12000
+   },
+   {
+    "name": "GetServerGroupList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetServerGroupList",
+    "body": {
+     "LobId": "${LOB_ID}"
+    },
+    "extract": {
+     "SERVER_GROUP_ID": "Result[0].ServerGroupId"
+    },
+    "stop_on_fail": false,
+    "sla_ms": 8000
+   },
+   {
+    "name": "SetStatus",
+    "verb": "GET",
+    "path": "/api/ServiceCreation/SetStatus",
+    "body": {},
+    "expect_created": false,
+    "extract_any_id": "NEW_ID",
+    "sla_ms": 20000,
+    "stop_on_fail": false,
+    "note": "generated from setStatusSC; NO request body defined in the framework - called with {} to record the gap"
+   },
+   {
+    "name": "GetStatus__verify",
+    "verb": "GET",
+    "path": "/api/ServiceCreation/GetStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "verify_value_anywhere": {
+     "value": "${NEW_ID}",
+     "label": "created record id"
+    },
+    "note": "read-back chosen for entity 'status'"
+   }
+  ]
+ },
+ {
+  "id": "servicecreation__reads_1",
+  "title": "ServiceCreation read sweep 1",
+  "why": "Exercises read endpoints inside a chain, so each one is called with real LOB context rather than in isolation.",
+  "generated": true,
+  "tier": 2,
+  "controller": "ServiceCreation",
+  "hops": [
+   {
+    "name": "GetLOBList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetLOBList",
+    "body": {},
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LobName": "AUTOMATION_TEST_LOB"
+     },
+     "take": {
+      "LOB_ID": "LobId",
+      "LOB_NAME": "LobName"
+     }
+    },
+    "sla_ms": 8000
+   },
+   {
+    "name": "GetUserGroupList",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetUserGroupListWithoutMandateValue",
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LOBName": "${LOB_NAME}"
+     },
+     "take": {
+      "USER_GROUP_ID": "UserGroupId",
+      "USER_GROUP_NAME": "UserGroupName"
+     }
+    },
+    "sla_ms": 12000
+   },
+   {
+    "name": "GetServerGroupList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetServerGroupList",
+    "body": {
+     "LobId": "${LOB_ID}"
+    },
+    "extract": {
+     "SERVER_GROUP_ID": "Result[0].ServerGroupId"
+    },
+    "stop_on_fail": false,
+    "sla_ms": 8000
+   },
+   {
+    "name": "GetDatabaseStatus",
+    "verb": "GET",
+    "path": "/api/ServiceCreation/GetDatabaseStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude"
+   }
+  ]
+ }
+]

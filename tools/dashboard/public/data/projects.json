@@ -1,0 +1,27 @@
+[
+ {
+  "id": "PAM",
+  "name": "ARCON Privileged Access Management",
+  "tracker": "PAMIT",
+  "owner": "Sudesh Sawant",
+  "notes": "Reference implementation. 122 API modules across 70 controllers.",
+  "environment": "QA_MsSQL",
+  "catalogueEndpoints": 1306,
+  "catalogueBasis": "distinct (controller, action) pairs. The same file also yields 1,336 (all public static String declarations, including header and verb constants), 1,321 (/api/ declarations with duplicates) and 1,308 (distinct path strings). Quote 1,306.",
+  "totalRuns": 13,
+  "substantiveRuns": 3,
+  "latestRunId": "2026-08-16_100005",
+  "latestSuccessRate": 63.6,
+  "totalTestCases": 5382,
+  "endpointsReached": 1388,
+  "endpointsInCatalogue": 1140,
+  "endpointsOutsideCatalogue": 248,
+  "coveragePct": 87.3,
+  "coverageBasis": "1,140 of the 1,388 endpoints reached are declared in APIConfig.java, against a catalogue of 1,306. The other 248 come from the QA team's Excel test corpus, which contains endpoints the catalogue does not declare — so 'reached' and 'declared' are different populations and their raw ratio is not a coverage figure.",
+  "findings": 13,
+  "findingsRaised": 1,
+  "performanceTrend": "mean down, median down, p95 up",
+  "profileSource": "data/profiles/pam.json",
+  "onboardingKit": "tools/onboarding/"
+ }
+]

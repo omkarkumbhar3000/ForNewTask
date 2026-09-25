@@ -1,0 +1,225 @@
+{
+ "dataState": "measured",
+ "currentRunId": "2026-08-18_181323",
+ "baselineRunId": "2026-08-18_180719",
+ "gate": "WARN",
+ "gateReasons": [
+  "check pass rate fell vs N-1"
+ ],
+ "gateBasis": "Baseline-relative: WARN above 15% of N-1, FAIL above 30%, hard FAIL on any login failure or a check-rate drop. No invented SLO.",
+ "contaminationNote": "Both executions ran while the OBJ-020 API execution was loading the same environment (running since 11:30). Latencies are therefore inflated relative to an idle environment. N-1 and N share that condition, so the COMPARISON is valid; the absolute values are not an idle-environment baseline. Grade: Likely (no isolated control run exists).",
+ "metrics": [
+  {
+   "metric": "Login journey p95",
+   "unit": "ms",
+   "current": 6130,
+   "baseline": 7654.5,
+   "deltaPct": -19.9,
+   "gate": "PASS",
+   "direction": "lower-better"
+  },
+  {
+   "metric": "Login journey median",
+   "unit": "ms",
+   "current": 5887,
+   "baseline": 6705,
+   "deltaPct": -12.2,
+   "gate": "PASS",
+   "direction": "lower-better"
+  },
+  {
+   "metric": "Authentication median",
+   "unit": "ms",
+   "current": 5647,
+   "baseline": 6519,
+   "deltaPct": -13.4,
+   "gate": "PASS",
+   "direction": "lower-better"
+  },
+  {
+   "metric": "Navigation median",
+   "unit": "ms",
+   "current": 2551,
+   "baseline": 2484,
+   "deltaPct": 2.7,
+   "gate": "PASS",
+   "direction": "lower-better"
+  },
+  {
+   "metric": "Modules measured",
+   "unit": "of 13",
+   "current": 12,
+   "baseline": 12,
+   "deltaPct": "N/A",
+   "gate": "INFO",
+   "direction": "higher-better"
+  },
+  {
+   "metric": "Check pass rate",
+   "unit": "fraction",
+   "current": 0.7619,
+   "baseline": 0.7857,
+   "deltaPct": -3,
+   "gate": "INFO",
+   "direction": "higher-better"
+  },
+  {
+   "metric": "Successful logins",
+   "unit": "of 3",
+   "current": 3,
+   "baseline": 3,
+   "deltaPct": "N/A",
+   "gate": "PASS",
+   "direction": "higher-better"
+  }
+ ],
+ "vitals": [
+  {
+   "metric": "LCP",
+   "raw": "browser_web_vital_lcp",
+   "ms": 3056.769,
+   "p90": 4622,
+   "p95": 6916.6,
+   "baseline": 3164.148,
+   "deltaPct": -3.4,
+   "gate": "PASS",
+   "unit": "ms"
+  },
+  {
+   "metric": "CLS",
+   "raw": "browser_web_vital_cls",
+   "ms": 0.175,
+   "p90": 0.666,
+   "p95": 0.717,
+   "baseline": 0.183,
+   "deltaPct": -4.4,
+   "gate": "PASS",
+   "unit": "score"
+  },
+  {
+   "metric": "FCP",
+   "raw": "browser_web_vital_fcp",
+   "ms": 2280.5,
+   "p90": 3687.2,
+   "p95": 4350.6,
+   "baseline": 2143.619,
+   "deltaPct": 6.4,
+   "gate": "PASS",
+   "unit": "ms"
+  },
+  {
+   "metric": "TTFB",
+   "raw": "browser_web_vital_ttfb",
+   "ms": 963.215,
+   "p90": 1851.27,
+   "p95": 2237.59,
+   "baseline": 922.61,
+   "deltaPct": 4.4,
+   "gate": "PASS",
+   "unit": "ms"
+  }
+ ],
+ "moduleRegressions": [
+  {
+   "module": "Session Monitoring",
+   "currentMs": 5692.333,
+   "baselineMs": 4667.667,
+   "deltaPct": 22,
+   "gate": "WARN"
+  }
+ ],
+ "moduleImprovements": [
+  {
+   "module": "My Access",
+   "currentMs": 4.333,
+   "baselineMs": 6.667,
+   "deltaPct": -35
+  },
+  {
+   "module": "Reports",
+   "currentMs": 4910.667,
+   "baselineMs": 7158.667,
+   "deltaPct": -31.4
+  },
+  {
+   "module": "Digital Vault",
+   "currentMs": 4920.333,
+   "baselineMs": 5807.667,
+   "deltaPct": -15.3
+  },
+  {
+   "module": "Password Manager",
+   "currentMs": 13785,
+   "baselineMs": 24595,
+   "deltaPct": -44
+  },
+  {
+   "module": "Access Control",
+   "currentMs": 15690,
+   "baselineMs": 22710,
+   "deltaPct": -30.9
+  }
+ ],
+ "moduleTrend": [
+  {
+   "module": "My Access",
+   "08-18 180719": 6.667,
+   "08-18 181323": 4.333
+  },
+  {
+   "module": "Manager",
+   "08-18 180719": 3266.667,
+   "08-18 181323": 3145
+  },
+  {
+   "module": "Reports",
+   "08-18 180719": 7158.667,
+   "08-18 181323": 4910.667
+  },
+  {
+   "module": "About",
+   "08-18 180719": 9721.333,
+   "08-18 181323": 10502.333
+  },
+  {
+   "module": "Session Monitoring",
+   "08-18 180719": 4667.667,
+   "08-18 181323": 5692.333
+  },
+  {
+   "module": "Digital Vault",
+   "08-18 180719": 5807.667,
+   "08-18 181323": 4920.333
+  },
+  {
+   "module": "PAM Logs",
+   "08-18 180719": 27483,
+   "08-18 181323": 28188.5
+  },
+  {
+   "module": "Settings",
+   "08-18 180719": 28889.5,
+   "08-18 181323": 28462
+  },
+  {
+   "module": "Administrative Console",
+   "08-18 180719": 24588,
+   "08-18 181323": 27124.5
+  },
+  {
+   "module": "Password Manager",
+   "08-18 180719": 24595,
+   "08-18 181323": 13785
+  },
+  {
+   "module": "Access Control",
+   "08-18 180719": 22710,
+   "08-18 181323": 15690
+  },
+  {
+   "module": "Privilege User Discovery",
+   "08-18 180719": 25917,
+   "08-18 181323": 26141
+  }
+ ]
+}

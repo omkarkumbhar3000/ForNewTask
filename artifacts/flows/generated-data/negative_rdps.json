@@ -1,0 +1,152 @@
+[
+ {
+  "id": "data_negative_rdps_1",
+  "title": "RDPS - negative data-driven batch 1",
+  "why": "Executes the QA team's authored negative scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status and error code.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "negative",
+  "tier": 4,
+  "controller": "RDPS",
+  "hops": [
+   {
+    "name": "GetConfig",
+    "verb": "GET",
+    "path": "/api/v1.0/GetConfig",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / RDPS_Negative / RDPS_MethodNotAllowed row 1 (provider RDPS_MethodNotAllowed)",
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "ClientAuth",
+    "verb": "GET",
+    "path": "/api/RDPS/ClientAuth",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / RDPS_Negative / RDPS_MethodNotAllowed row 2 (provider RDPS_MethodNotAllowed)",
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetConfig",
+    "verb": "GET",
+    "path": "/api/RDPS/GetConfig",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / RDPS_Negative / RDPS_MethodNotAllowed row 3 (provider RDPS_MethodNotAllowed)",
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "RegisterClient",
+    "verb": "GET",
+    "path": "/api/RDPS/RegisterClient",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / RDPS_Negative / RDPS_MethodNotAllowed row 4 (provider RDPS_MethodNotAllowed)",
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "RegisterClient",
+    "verb": "GET",
+    "path": "/api/v1.0/RegisterClient",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / RDPS_Negative / RDPS_MethodNotAllowed row 5 (provider RDPS_MethodNotAllowed)",
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "ClientAuth",
+    "verb": "GET",
+    "path": "/api/v1.0/ClientAuth",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / RDPS_Negative / RDPS_MethodNotAllowed row 6 (provider RDPS_MethodNotAllowed)",
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetConfig",
+    "verb": "POST",
+    "path": "/api/v1.0/GetConfig",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / RDPS_Negative / RDPS_UnauthorizedAccess row 1 (provider RDPS_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "ClientAuth",
+    "verb": "POST",
+    "path": "/api/RDPS/ClientAuth",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / RDPS_Negative / RDPS_UnauthorizedAccess row 2 (provider RDPS_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "GetConfig",
+    "verb": "POST",
+    "path": "/api/RDPS/GetConfig",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / RDPS_Negative / RDPS_UnauthorizedAccess row 3 (provider RDPS_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "RegisterClient",
+    "verb": "POST",
+    "path": "/api/RDPS/RegisterClient",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / RDPS_Negative / RDPS_UnauthorizedAccess row 4 (provider RDPS_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "RegisterClient",
+    "verb": "POST",
+    "path": "/api/v1.0/RegisterClient",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / RDPS_Negative / RDPS_UnauthorizedAccess row 5 (provider RDPS_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "ClientAuth",
+    "verb": "POST",
+    "path": "/api/v1.0/ClientAuth",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / RDPS_Negative / RDPS_UnauthorizedAccess row 6 (provider RDPS_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   }
+  ]
+ }
+]

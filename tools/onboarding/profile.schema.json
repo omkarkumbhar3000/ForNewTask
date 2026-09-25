@@ -1,0 +1,300 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://arcon.internal/schemas/api-onboarding-profile-1.0.json",
+  "title": "API onboarding project profile",
+  "description": "Everything the dynamic API generation solution needs to know about ONE project. Each field here corresponds to a place where the PAM implementation currently hardcodes a PAM fact. A profile that validates clean is a project the harness can run against without a code change. x-blocker fields must be answered before any execution; x-degrades fields reduce coverage when absent but do not stop a run.",
+  "type": "object",
+  "required": ["schema_version", "project", "workspace", "environment", "auth", "catalogue", "envelope", "safety", "validation", "reporting"],
+  "properties": {
+
+    "schema_version": {
+      "type": "string",
+      "enum": ["1.0"],
+      "description": "Version of this schema the profile was authored against."
+    },
+
+    "project": {
+      "type": "object",
+      "description": "Who and what. Used for report headers, evidence paths and ticket references.",
+      "required": ["key", "name", "owner"],
+      "properties": {
+        "key": {"type": "string", "pattern": "^[A-Z][A-Z0-9_]{1,15}$", "description": "Short uppercase code, e.g. PAM, IDEV. Used in filenames."},
+        "name": {"type": "string", "description": "Human name of the product under test."},
+        "owner": {"type": "string", "description": "The person who answers questions about it. A profile with no named owner has no route to resolving an UNKNOWN."},
+        "tracker": {"type": "string", "description": "Jira (or other) project key for raising defects, e.g. PAMIT."},
+        "notes": {"type": "string"}
+      }
+    },
+
+    "workspace": {
+      "type": "object",
+      "description": "Where things live on disk. Replaces chain_runner.py's hardcoded REPO / ROOT resolution.",
+      "required": ["root_markers", "reports_dir", "flows_dir"],
+      "properties": {
+        "root_markers": {
+          "type": "array", "items": {"type": "string"}, "minItems": 1,
+          "description": "Directory names that identify the workspace root by search rather than a fixed number of parent hops, so scripts keep working when moved. PAM uses ['Reports', 'Automation gitlab repo']."
+        },
+        "reference_repo": {"type": "string", "description": "Relative path to a repo read as a GENERATION INPUT only. Never executed, never written to."},
+        "reports_dir": {"type": "string", "description": "Relative path where dated run folders are written."},
+        "flows_dir": {"type": "string", "description": "Relative path holding flow JSON, hand-written and generated."}
+      }
+    },
+
+    "environment": {
+      "type": "object",
+      "description": "The target environment. One profile addresses exactly one environment; copy the profile for another.",
+      "required": ["name", "api_base", "is_production", "config_format"],
+      "properties": {
+        "name": {"type": "string", "x-blocker": true, "description": "Environment identifier, e.g. QA_MsSQL."},
+        "api_base": {"type": "string", "x-blocker": true, "description": "Scheme, host and port serving the API. Often NOT the same port as the app."},
+        "app_base": {"type": "string", "description": "The UI/app origin, when it differs. PAM: API :6302, app :1302 — confusing the two produces 404s that read as missing endpoints."},
+        "is_production": {"type": "boolean", "x-blocker": true, "description": "MUST be false. A true value is a hard refusal, not a warning."},
+        "config_format": {"type": "string", "enum": ["java-properties", "dotenv", "json", "yaml", "env-vars-only", "UNKNOWN"], "description": "How environment settings are stored, so the loader knows how to parse them."},
+        "config_file": {"type": "string", "description": "Relative path to that file. Assume its contents are secret even if the repo tracks them in plaintext (PAM's 20 env files do)."},
+        "verify_tls": {"type": "boolean", "default": true, "description": "false only for a QA host with a self-signed certificate. Record WHY in notes."},
+        "notes": {"type": "string"},
+        "stability": {"type": "string", "enum": ["stable", "intermittent", "poor", "UNKNOWN"], "description": "Measured, not assumed. PAM QA: poor — 17 downtime pauses costing 85 of 329 minutes in one run."}
+      }
+    },
+
+    "auth": {
+      "type": "object",
+      "description": "How a request is authenticated, and the lockout policy that governs how often credentials may be presented.",
+      "required": ["kind", "header", "lockout_risk", "max_token_attempts_per_run"],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": ["oauth2-password", "bearer-static", "api-key", "basic", "session-cookie", "none", "UNKNOWN"],
+          "x-blocker": true,
+          "description": "Nothing can execute until this is known and proven with one successful call."
+        },
+        "token_endpoint": {"type": "string", "description": "Path or absolute URL that issues a token. PAM: /arcontoken."},
+        "credential_keys": {
+          "type": "object",
+          "description": "Maps a logical credential to the KEY NAME in config_file. Never put a secret value in a profile.",
+          "properties": {
+            "username": {"type": "string"}, "password": {"type": "string"},
+            "grant_type": {"type": "string"}, "client_id": {"type": "string"}, "client_secret": {"type": "string"},
+            "api_key": {"type": "string"}, "token_url": {"type": "string"}
+          }
+        },
+        "header": {
+          "type": "object", "required": ["name", "template"],
+          "properties": {
+            "name": {"type": "string", "description": "e.g. Authorization"},
+            "template": {"type": "string", "description": "e.g. 'Bearer {token}' — {token} is substituted."}
+          }
+        },
+        "extra_headers": {"type": "object", "description": "Static headers every request needs, e.g. an API version header."},
+        "token_lifetime_hours": {"type": "number", "description": "Drives cache expiry. PAM: 24."},
+        "env_var_override": {"type": "string", "description": "Env var that supplies a token directly and bypasses the credential endpoint entirely. The safest option for an unattended run."},
+        "cache_file": {"type": "string", "description": "Where the single per-run token is cached."},
+        "lockout_risk": {
+          "type": "string", "enum": ["high", "medium", "low", "none", "UNKNOWN"], "x-blocker": true,
+          "description": "high = the account locks after N failures and the account is shared with something that matters. PAM is high: repeated /arcontoken calls locked GenericScheduler, which is also the data-warehouse ETL account."
+        },
+        "max_token_attempts_per_run": {
+          "type": "integer", "minimum": 1, "maximum": 3, "x-blocker": true,
+          "description": "1 whenever lockout_risk is high. Retry-on-failure and account lockout are fundamentally incompatible."
+        },
+        "latch_on_failure": {
+          "type": "boolean", "default": true,
+          "description": "A failed attempt blocks all later attempts, in this run AND future runs, until a human clears it. Without this, 'once per run' silently becomes 'every run' — which is how PAM's account was locked."
+        },
+        "roles": {
+          "type": "array", "items": {"type": "object"},
+          "description": "Distinct identities needed to exercise authorization boundaries. Absent this, every authorization test is inert."
+        },
+        "invalid_token_sample": {"type": "string", "description": "A deliberately invalid credential, for negative auth tests. Sending a VALID token while asserting 401 makes the assertion unfalsifiable — 1,153 PAM cases did exactly that."}
+      }
+    },
+
+    "catalogue": {
+      "type": "object",
+      "description": "Where the machine-readable list of endpoints comes from. Without this there is nothing to generate from.",
+      "required": ["adapter", "allow_verbs"],
+      "properties": {
+        "adapter": {
+          "type": "string",
+          "enum": ["openapi", "postman", "har", "csv", "java-constants", "router-dump", "graphql-introspection", "UNKNOWN"],
+          "x-blocker": true,
+          "description": "openapi is the cheapest path by a wide margin. java-constants is what PAM needed because no spec exists."
+        },
+        "source": {"type": "string", "description": "Path or URL the adapter reads."},
+        "expected_count": {"type": "integer", "description": "Endpoint count the adapter should yield. A drift here means the catalogue moved — fail loudly rather than silently covering less."},
+        "count_basis": {"type": "string", "description": "WHAT was counted. PAM's file yields 1,336 / 1,321 / 1,308 / 1,306 depending on basis; the canonical figure is 1,306 distinct (controller, action) pairs. Quote a figure with its basis, never bare."},
+        "allow_verbs": {"type": "array", "items": {"type": "string"}, "description": "Verbs the executor may issue. PAM: GET, POST — which is 99.7% of its surface."},
+        "verb_distribution": {"type": "object", "description": "Measured, per verb. Reveals whether verb-based safety guards can work at all."},
+        "templated_marker": {"type": "string", "description": "How the catalogue expresses a path parameter, e.g. '{id}'. Templated paths cannot be called without a value."},
+        "exclude_patterns": {"type": "array", "items": {"type": "string"}, "description": "Endpoints to drop at generation time for reasons other than safety, e.g. an undeployed surface."}
+      }
+    },
+
+    "payloads": {
+      "type": "object",
+      "description": "Where request bodies come from. Absent, coverage degrades to read-only: creates cannot be generated.",
+      "properties": {
+        "adapter": {
+          "type": "string",
+          "enum": ["openapi-schema", "postman", "java-payload-helpers", "docs-corpus", "recorded-traffic", "none", "UNKNOWN"],
+          "x-degrades": true
+        },
+        "source": {"type": "string"},
+        "coverage": {
+          "type": "object",
+          "description": "Measured create coverage. Budget for THIS, not for tooling — it was the largest single cost on PAM.",
+          "properties": {
+            "create_endpoints": {"type": "integer"},
+            "with_working_body": {"type": "integer"},
+            "with_no_body": {"type": "integer"},
+            "measured_in": {"type": "string"}
+          }
+        },
+        "binding_confidence": {"type": "string", "enum": ["exact", "by-name", "by-page-proximity", "UNKNOWN"], "description": "How a body was bound to an endpoint. PAM's documentation binds by page proximity, so some bindings are simply wrong."},
+        "unique_fields": {"type": "array", "items": {"type": "string"}, "description": "Fields that must be randomised per run or the second run returns 'already exists' instead of creating."}
+      }
+    },
+
+    "envelope": {
+      "type": "object",
+      "description": "How the API signals success and failure. The single most consequential section: get it wrong and every assertion is decorative.",
+      "required": ["status_is_authoritative", "shapes_measured"],
+      "properties": {
+        "status_is_authoritative": {
+          "type": "boolean", "x-blocker": true,
+          "description": "true only if a rejected request reliably returns 4xx. PAM: false — 1,022 cases returned HTTP 200 while failing validation. MEASURE it; do not accept a developer's assurance."
+        },
+        "shapes_measured": {
+          "type": "integer", "minimum": 0, "x-blocker": true,
+          "description": "How many distinct top-level response shapes were observed in a probe. 0 means no probe has been run, which means the assertions are guesses. PAM: 31."
+        },
+        "shape_census": {"type": "string", "description": "Path to the probe output listing every shape with an example endpoint."},
+        "success_fields": {"type": "array", "items": {"type": "string"}, "description": "Candidate names for the boolean success flag, ALL casings that occur. PAM ships PascalCase 'Success' 1,580 times and camelCase 'success' 0 times — a case-sensitive parser looking for the latter fails on every response the API can produce."},
+        "error_code_fields": {"type": "array", "items": {"type": "string"}},
+        "error_message_fields": {"type": "array", "items": {"type": "string"}},
+        "result_containers": {"type": "array", "items": {"type": "string"}, "description": "Field names holding the payload rows, e.g. Result, aaData, Data, items."},
+        "created_messages": {"type": "array", "items": {"type": "string"}, "description": "Message substrings that mean a write really happened."},
+        "noop_messages": {"type": "array", "items": {"type": "string"}, "description": "Message substrings that mean nothing was written DESPITE a success flag. PAM returns Success:true with 'Already Exists'."},
+        "error_code_registry": {"type": "string", "description": "Path to the known error codes, or 'NOT DOCUMENTED'. Match on prefix and record an unrecognised code as an observation — a hardcoded allowlist turns an undocumented product code into a failed test."},
+        "non_json_expected": {"type": "boolean", "description": "true if some endpoints answer with a bare array, bare boolean, empty string or HTML. PAM: 127 of 1,868 responses were not JSON objects at all."}
+      }
+    },
+
+    "identity_prelude": {
+      "type": "array",
+      "description": "The hops that discover the context ids every later payload needs. THE MOST COMMONLY MISSED INPUT. Without it every payload is environment-bound and the flows are not portable. PAM discovers LOB then server group then user group.",
+      "x-degrades": true,
+      "items": {
+        "type": "object",
+        "required": ["name", "verb", "path"],
+        "properties": {
+          "name": {"type": "string"}, "verb": {"type": "string"}, "path": {"type": "string"},
+          "body": {"type": "object"},
+          "extract": {"type": "object", "description": "Dotted selectors, e.g. {'GROUP_ID': 'Result[0].GroupId'}."},
+          "find_extract": {"type": "object", "description": "Filtered row join — select the row WHERE a field equals a carried value, then take ids from it. Blind Result[0] chaining silently picks the wrong record."},
+          "envelope": {"type": "boolean"},
+          "note": {"type": "string"}
+        }
+      }
+    },
+
+    "id_aliases": {
+      "type": "object",
+      "description": "Maps a payload field name (lowercased) to the prelude variable that supplies it, so a generator can substitute discovered ids into literal bodies. PAM maps lobid/lob_id/lobsid all to ${LOB_ID}."
+    },
+
+    "safety": {
+      "type": "object",
+      "description": "Deny-by-default controls. Non-negotiable whenever the harness can write.",
+      "required": ["default_mode", "blocklist", "destructive_name_regex", "teardown"],
+      "properties": {
+        "default_mode": {
+          "type": "string", "enum": ["plan-only", "execute"], "x-blocker": true,
+          "description": "MUST be plan-only. A bare run issues zero HTTP calls; an explicit flag is required to make any."
+        },
+        "blocklist": {
+          "type": "object", "x-blocker": true,
+          "description": "Action-name substring -> reason. Enforced at PLANNING time, before a request is built. PAM's three entries stop the IIS application pool; three sequential calls took the whole API to 503 with no recovery."
+        },
+        "destructive_name_regex": {
+          "type": "string", "x-blocker": true,
+          "description": "Names that must not be called unless teardown is explicitly permitted. GUARD ON NAMES, NOT VERBS: PAM expresses deletion as POST /api/X/DeleteThing, so a destructive call looks like an ordinary POST."
+        },
+        "teardown": {"type": "string", "enum": ["disabled", "created-only", "enabled"], "description": "created-only means the harness may delete records it created in this run and nothing else."},
+        "health_probe": {"type": "object", "description": "A cheap, safe, read-only call used to decide whether the environment is up. Must not be blocklisted and must not write."},
+        "throttle_ms": {"type": "integer", "minimum": 0, "description": "Delay between calls. PAM used 2000."},
+        "breaker_consecutive_5xx": {"type": "integer", "minimum": 1, "description": "Consecutive server errors or timeouts before the run pauses."},
+        "downtime_wait_s": {"type": "integer", "minimum": 0, "description": "Wait, probe, then RESUME from the paused hop — never restart."},
+        "max_calls": {"type": "integer", "minimum": 1},
+        "http_timeout_s": {"type": "integer", "minimum": 1},
+        "body_cap_bytes": {"type": "integer", "description": "Cap response bodies. One PAM endpoint returns 1.1 MB with no filter parameter."},
+        "redact_keys": {"type": "array", "items": {"type": "string"}, "description": "Substrings whose values are redacted before anything reaches disk."},
+        "rate_limit": {"type": "object", "description": "Documented limits, if the API publishes them. Replaces a fixed throttle with limit-aware backoff."}
+      }
+    },
+
+    "validation": {
+      "type": "object",
+      "description": "Which assertion layers apply. Keep every layer that the API's own behaviour makes meaningful.",
+      "required": ["layers"],
+      "properties": {
+        "layers": {
+          "type": "array", "items": {"type": "string"}, "minItems": 1, "x-blocker": true,
+          "description": "Subset of L1 http-status, L2 content-type, L3 envelope, L4 message-semantics, L5 chain-key-extracted, L6 record-exists, L7 latency, L8 schema, L9 mandatory-fields, L10 business-rule, L11 db-persistence, L12 security. Drop L3/L4 ONLY if status_is_authoritative is true."
+        },
+        "sla_ms": {"type": "object", "description": "Per-operation-class latency budgets. One global budget tuned on reads produces false failures on every write; PAM writes take 5-7 s."},
+        "database": {
+          "type": "object",
+          "description": "L11 only. Read-only least-privilege account, or omit the layer.",
+          "properties": {
+            "dialect": {"type": "string", "enum": ["mssql", "mysql", "postgres", "oracle", "none", "UNKNOWN"]},
+            "read_only": {"type": "boolean"},
+            "config_keys": {"type": "object"},
+            "tables_of_interest": {"type": "array", "items": {"type": "string"}}
+          }
+        }
+      }
+    },
+
+    "reporting": {
+      "type": "object",
+      "description": "Where evidence goes and how long it lives.",
+      "required": ["run_dir_pattern", "retention"],
+      "properties": {
+        "run_dir_pattern": {"type": "string", "description": "e.g. 'artifacts/runs/{stamp}' with {stamp} as YYYY-MM-DD_HHMMSS. A dated folder per execution is what makes N-1 vs N possible at all."},
+        "retention": {"type": "string", "enum": ["forever", "n-runs", "days"], "x-blocker": true, "description": "forever is strongly preferred. Auto-deleting prior output destroys comparability, and you only discover that when you need a baseline."},
+        "evidence_per_call": {"type": "boolean", "description": "One redacted request/response/verdict file per call. This is what lets a reviewer verify a single claim, and what makes offline re-scoring possible."},
+        "workbook": {"type": "boolean", "description": "Emit an .xlsx alongside the markdown. Requires openpyxl — the only third-party dependency in the whole solution."},
+        "benchmark_baseline": {"type": "string", "description": "Run folder that is N-1. A metric absent from N-1 is reported as N/A, never dropped."}
+      }
+    },
+
+    "unknowns": {
+      "type": "array",
+      "description": "Every fact not yet established, each naming what would settle it and who owns the answer. An empty list on a new project is a warning sign, not an achievement — it usually means nobody looked.",
+      "items": {
+        "type": "object",
+        "required": ["field", "question", "settled_by"],
+        "properties": {
+          "field": {"type": "string", "description": "Dotted path into this profile."},
+          "question": {"type": "string"},
+          "settled_by": {"type": "string", "description": "The specific artifact, call or person that answers it."},
+          "owner": {"type": "string"},
+          "blocks": {"type": "boolean", "description": "true if execution cannot start until answered."}
+        }
+      }
+    },
+
+    "provenance": {
+      "type": "object",
+      "description": "How this profile came to say what it says.",
+      "properties": {
+        "authored_from": {"type": "array", "items": {"type": "string"}},
+        "probe_run": {"type": "string", "description": "The run folder whose probe established the envelope section."},
+        "measured_run": {"type": "string", "description": "The run folder the measured counts come from."},
+        "reviewed_by": {"type": "string"}
+      }
+    }
+  }
+}

@@ -1,0 +1,10 @@
+# Credentials — never commit. This folder sits outside both git checkouts, but the
+# ignore file is kept so the rule travels if this folder is ever moved into one.
+.env
+*.env
+!.env.sample
+
+# Working files
+.tmp/
+*.zip
+last-created-issue.json

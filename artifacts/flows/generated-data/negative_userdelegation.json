@@ -1,0 +1,113 @@
+[
+ {
+  "id": "data_negative_userdelegation_1",
+  "title": "UserDelegation - negative data-driven batch 1",
+  "why": "Executes the QA team's authored negative scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status and error code.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "negative",
+  "tier": 4,
+  "controller": "UserDelegation",
+  "hops": [
+   {
+    "name": "GetUserDelegation",
+    "verb": "GET",
+    "path": "/api/UserDelegation/GetUserDelegation",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDelegation_Negative / UserDelegation_MethodNotAllowed row 1 (provider UserDelegation_MethodNotAllowed)",
+    "body": {
+     "UserID": 23266
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "SaveUserDelegation",
+    "verb": "GET",
+    "path": "/api/UserDelegation/SaveUserDelegation",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDelegation_Negative / UserDelegation_MethodNotAllowed row 2 (provider UserDelegation_MethodNotAllowed)",
+    "body": {
+     "ActionType": "insert",
+     "UserId": "35",
+     "DelegatedUserId": "92",
+     "ApprovalType": "1",
+     "StartTime": "2021-02-11T02:37:00",
+     "EndTime": "2021-02-12T02:37:00",
+     "IsActive": true,
+     "IsEnableAll": true,
+     "wdd_id": "1",
+     "wdd_wdm_id": "1"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "ValidateSaveUserDelegation",
+    "verb": "GET",
+    "path": "/api/UserDelegation/ValidateSaveUserDelegation",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDelegation_Negative / UserDelegation_MethodNotAllowed row 3 (provider UserDelegation_MethodNotAllowed)",
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetUserDelegation",
+    "verb": "POST",
+    "path": "/api/UserDelegation/GetUserDelegation",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDelegation_Negative / UserDelegation_UnauthorizedAccess row 1 (provider UserDelegation_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "UserID": 23266
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "SaveUserDelegation",
+    "verb": "POST",
+    "path": "/api/UserDelegation/SaveUserDelegation",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDelegation_Negative / UserDelegation_UnauthorizedAccess row 2 (provider UserDelegation_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "ActionType": "insert",
+     "UserId": "35",
+     "DelegatedUserId": "92",
+     "ApprovalType": "1",
+     "StartTime": "2021-02-11T02:37:00",
+     "EndTime": "2021-02-12T02:37:00",
+     "IsActive": true,
+     "IsEnableAll": true,
+     "wdd_id": "1",
+     "wdd_wdm_id": "1"
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "ValidateSaveUserDelegation",
+    "verb": "POST",
+    "path": "/api/UserDelegation/ValidateSaveUserDelegation",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDelegation_Negative / UserDelegation_UnauthorizedAccess row 3 (provider UserDelegation_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   }
+  ]
+ }
+]

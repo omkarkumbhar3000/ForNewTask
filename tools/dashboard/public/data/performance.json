@@ -1,0 +1,995 @@
+{
+ "overall": {
+  "count": 5382,
+  "meanMs": 578,
+  "medianMs": 286,
+  "p95Ms": 1411,
+  "maxMs": 21729
+ },
+ "byModule": [
+  {
+   "module": "(unattributed)",
+   "count": 9,
+   "meanMs": 2404,
+   "medianMs": 316,
+   "p95Ms": 8710,
+   "maxMs": 8710
+  },
+  {
+   "module": "ADbridging",
+   "count": 105,
+   "meanMs": 223,
+   "medianMs": 157,
+   "p95Ms": 705,
+   "maxMs": 1191
+  },
+  {
+   "module": "ADbridgingV10",
+   "count": 3,
+   "meanMs": 150,
+   "medianMs": 41,
+   "p95Ms": 395,
+   "maxMs": 395
+  },
+  {
+   "module": "ADbridgingV11",
+   "count": 3,
+   "meanMs": 78,
+   "medianMs": 25,
+   "p95Ms": 188,
+   "maxMs": 188
+  },
+  {
+   "module": "ADbridgingV12",
+   "count": 3,
+   "meanMs": 241,
+   "medianMs": 164,
+   "p95Ms": 537,
+   "maxMs": 537
+  },
+  {
+   "module": "ADbridgingV13",
+   "count": 3,
+   "meanMs": 89,
+   "medianMs": 36,
+   "p95Ms": 218,
+   "maxMs": 218
+  },
+  {
+   "module": "ADbridgingV14",
+   "count": 3,
+   "meanMs": 92,
+   "medianMs": 39,
+   "p95Ms": 214,
+   "maxMs": 214
+  },
+  {
+   "module": "ADbridgingV15",
+   "count": 3,
+   "meanMs": 39,
+   "medianMs": 32,
+   "p95Ms": 58,
+   "maxMs": 58
+  },
+  {
+   "module": "ADbridgingV16",
+   "count": 3,
+   "meanMs": 137,
+   "medianMs": 78,
+   "p95Ms": 302,
+   "maxMs": 302
+  },
+  {
+   "module": "ADbridgingV17",
+   "count": 3,
+   "meanMs": 147,
+   "medianMs": 194,
+   "p95Ms": 232,
+   "maxMs": 232
+  },
+  {
+   "module": "ADbridgingV18",
+   "count": 3,
+   "meanMs": 144,
+   "medianMs": 40,
+   "p95Ms": 363,
+   "maxMs": 363
+  },
+  {
+   "module": "ADbridgingV19",
+   "count": 3,
+   "meanMs": 116,
+   "medianMs": 17,
+   "p95Ms": 317,
+   "maxMs": 317
+  },
+  {
+   "module": "ADbridgingV2",
+   "count": 52,
+   "meanMs": 201,
+   "medianMs": 178,
+   "p95Ms": 525,
+   "maxMs": 601
+  },
+  {
+   "module": "ADbridgingV20",
+   "count": 3,
+   "meanMs": 261,
+   "medianMs": 15,
+   "p95Ms": 754,
+   "maxMs": 754
+  },
+  {
+   "module": "ADbridgingV21",
+   "count": 3,
+   "meanMs": 174,
+   "medianMs": 51,
+   "p95Ms": 454,
+   "maxMs": 454
+  },
+  {
+   "module": "ADbridgingV23",
+   "count": 3,
+   "meanMs": 123,
+   "medianMs": 22,
+   "p95Ms": 328,
+   "maxMs": 328
+  },
+  {
+   "module": "ADbridgingV24",
+   "count": 3,
+   "meanMs": 133,
+   "medianMs": 41,
+   "p95Ms": 339,
+   "maxMs": 339
+  },
+  {
+   "module": "ADbridgingV27",
+   "count": 3,
+   "meanMs": 87,
+   "medianMs": 22,
+   "p95Ms": 222,
+   "maxMs": 222
+  },
+  {
+   "module": "ADbridgingV28",
+   "count": 3,
+   "meanMs": 127,
+   "medianMs": 54,
+   "p95Ms": 309,
+   "maxMs": 309
+  },
+  {
+   "module": "ADbridgingV29",
+   "count": 3,
+   "meanMs": 91,
+   "medianMs": 53,
+   "p95Ms": 183,
+   "maxMs": 183
+  },
+  {
+   "module": "ADbridgingV3",
+   "count": 3,
+   "meanMs": 26,
+   "medianMs": 26,
+   "p95Ms": 32,
+   "maxMs": 32
+  },
+  {
+   "module": "ADbridgingV30",
+   "count": 3,
+   "meanMs": 91,
+   "medianMs": 45,
+   "p95Ms": 205,
+   "maxMs": 205
+  },
+  {
+   "module": "ADbridgingV31",
+   "count": 3,
+   "meanMs": 165,
+   "medianMs": 78,
+   "p95Ms": 359,
+   "maxMs": 359
+  },
+  {
+   "module": "ADbridgingV32",
+   "count": 3,
+   "meanMs": 156,
+   "medianMs": 120,
+   "p95Ms": 241,
+   "maxMs": 241
+  },
+  {
+   "module": "ADbridgingV33",
+   "count": 3,
+   "meanMs": 248,
+   "medianMs": 60,
+   "p95Ms": 655,
+   "maxMs": 655
+  },
+  {
+   "module": "ADbridgingV35",
+   "count": 3,
+   "meanMs": 456,
+   "medianMs": 601,
+   "p95Ms": 671,
+   "maxMs": 671
+  },
+  {
+   "module": "ADbridgingV4",
+   "count": 3,
+   "meanMs": 175,
+   "medianMs": 240,
+   "p95Ms": 264,
+   "maxMs": 264
+  },
+  {
+   "module": "ADbridgingV5",
+   "count": 3,
+   "meanMs": 174,
+   "medianMs": 131,
+   "p95Ms": 329,
+   "maxMs": 329
+  },
+  {
+   "module": "ADbridgingV6",
+   "count": 3,
+   "meanMs": 304,
+   "medianMs": 253,
+   "p95Ms": 604,
+   "maxMs": 604
+  },
+  {
+   "module": "ADbridgingV7",
+   "count": 3,
+   "meanMs": 237,
+   "medianMs": 281,
+   "p95Ms": 340,
+   "maxMs": 340
+  },
+  {
+   "module": "ADbridgingV9",
+   "count": 3,
+   "meanMs": 228,
+   "medianMs": 165,
+   "p95Ms": 471,
+   "maxMs": 471
+  },
+  {
+   "module": "AGWPlus",
+   "count": 30,
+   "meanMs": 398,
+   "medianMs": 328,
+   "p95Ms": 1105,
+   "maxMs": 1285
+  },
+  {
+   "module": "APEMTool",
+   "count": 21,
+   "meanMs": 309,
+   "medianMs": 272,
+   "p95Ms": 719,
+   "maxMs": 1034
+  },
+  {
+   "module": "ARCONLAMMiddleware",
+   "count": 25,
+   "meanMs": 307,
+   "medianMs": 301,
+   "p95Ms": 699,
+   "maxMs": 700
+  },
+  {
+   "module": "ARSIMServer",
+   "count": 24,
+   "meanMs": 283,
+   "medianMs": 328,
+   "p95Ms": 524,
+   "maxMs": 573
+  },
+  {
+   "module": "ATSConfiguration",
+   "count": 25,
+   "meanMs": 247,
+   "medianMs": 262,
+   "p95Ms": 471,
+   "maxMs": 529
+  },
+  {
+   "module": "ATSMapping",
+   "count": 48,
+   "meanMs": 422,
+   "medianMs": 334,
+   "p95Ms": 906,
+   "maxMs": 3292
+  },
+  {
+   "module": "AWSKeyVault",
+   "count": 28,
+   "meanMs": 231,
+   "medianMs": 198,
+   "p95Ms": 441,
+   "maxMs": 789
+  },
+  {
+   "module": "Access Control",
+   "count": 36,
+   "meanMs": 47,
+   "medianMs": 37,
+   "p95Ms": 158,
+   "maxMs": 309
+  },
+  {
+   "module": "ActivityLogs",
+   "count": 93,
+   "meanMs": 285,
+   "medianMs": 284,
+   "p95Ms": 647,
+   "maxMs": 1095
+  },
+  {
+   "module": "AzureKeyVault",
+   "count": 27,
+   "meanMs": 247,
+   "medianMs": 224,
+   "p95Ms": 485,
+   "maxMs": 661
+  },
+  {
+   "module": "Base",
+   "count": 18,
+   "meanMs": 205,
+   "medianMs": 206,
+   "p95Ms": 395,
+   "maxMs": 395
+  },
+  {
+   "module": "CaptureLogImage",
+   "count": 25,
+   "meanMs": 110,
+   "medianMs": 34,
+   "p95Ms": 455,
+   "maxMs": 534
+  },
+  {
+   "module": "Collaborations",
+   "count": 56,
+   "meanMs": 76,
+   "medianMs": 32,
+   "p95Ms": 421,
+   "maxMs": 532
+  },
+  {
+   "module": "Command",
+   "count": 15,
+   "meanMs": 1357,
+   "medianMs": 102,
+   "p95Ms": 10334,
+   "maxMs": 10334
+  },
+  {
+   "module": "Configuration",
+   "count": 48,
+   "meanMs": 641,
+   "medianMs": 325,
+   "p95Ms": 2808,
+   "maxMs": 9247
+  },
+  {
+   "module": "CustomErrorHandler",
+   "count": 14,
+   "meanMs": 244,
+   "medianMs": 296,
+   "p95Ms": 459,
+   "maxMs": 459
+  },
+  {
+   "module": "DeviceOnboarding",
+   "count": 70,
+   "meanMs": 437,
+   "medianMs": 262,
+   "p95Ms": 799,
+   "maxMs": 8250
+  },
+  {
+   "module": "DualFactor",
+   "count": 10,
+   "meanMs": 225,
+   "medianMs": 60,
+   "p95Ms": 1137,
+   "maxMs": 1137
+  },
+  {
+   "module": "Encryption",
+   "count": 7,
+   "meanMs": 109,
+   "medianMs": 39,
+   "p95Ms": 343,
+   "maxMs": 343
+  },
+  {
+   "module": "ErrorLogToDB",
+   "count": 21,
+   "meanMs": 683,
+   "medianMs": 254,
+   "p95Ms": 1022,
+   "maxMs": 9206
+  },
+  {
+   "module": "FileDetails",
+   "count": 33,
+   "meanMs": 262,
+   "medianMs": 246,
+   "p95Ms": 736,
+   "maxMs": 1404
+  },
+  {
+   "module": "FileServerDetail",
+   "count": 54,
+   "meanMs": 423,
+   "medianMs": 345,
+   "p95Ms": 953,
+   "maxMs": 1424
+  },
+  {
+   "module": "Flooding",
+   "count": 21,
+   "meanMs": 246,
+   "medianMs": 240,
+   "p95Ms": 572,
+   "maxMs": 644
+  },
+  {
+   "module": "HSMEntrust",
+   "count": 28,
+   "meanMs": 248,
+   "medianMs": 254,
+   "p95Ms": 448,
+   "maxMs": 522
+  },
+  {
+   "module": "HSMUtimaco",
+   "count": 28,
+   "meanMs": 279,
+   "medianMs": 263,
+   "p95Ms": 660,
+   "maxMs": 731
+  },
+  {
+   "module": "LOB Details by User",
+   "count": 3,
+   "meanMs": 310,
+   "medianMs": 257,
+   "p95Ms": 461,
+   "maxMs": 461
+  },
+  {
+   "module": "License",
+   "count": 24,
+   "meanMs": 245,
+   "medianMs": 218,
+   "p95Ms": 662,
+   "maxMs": 725
+  },
+  {
+   "module": "Lob",
+   "count": 10,
+   "meanMs": 135,
+   "medianMs": 50,
+   "p95Ms": 807,
+   "maxMs": 807
+  },
+  {
+   "module": "LobandService",
+   "count": 57,
+   "meanMs": 1446,
+   "medianMs": 281,
+   "p95Ms": 13027,
+   "maxMs": 18071
+  },
+  {
+   "module": "Logs",
+   "count": 55,
+   "meanMs": 422,
+   "medianMs": 255,
+   "p95Ms": 492,
+   "maxMs": 10288
+  },
+  {
+   "module": "MouseKeysActivityLogs",
+   "count": 33,
+   "meanMs": 248,
+   "medianMs": 259,
+   "p95Ms": 644,
+   "maxMs": 700
+  },
+  {
+   "module": "New Server Onboarding",
+   "count": 3,
+   "meanMs": 438,
+   "medianMs": 203,
+   "p95Ms": 914,
+   "maxMs": 914
+  },
+  {
+   "module": "NotificationDetails",
+   "count": 74,
+   "meanMs": 337,
+   "medianMs": 63,
+   "p95Ms": 952,
+   "maxMs": 9053
+  },
+  {
+   "module": "OfflineSync",
+   "count": 34,
+   "meanMs": 1568,
+   "medianMs": 86,
+   "p95Ms": 11173,
+   "maxMs": 12245
+  },
+  {
+   "module": "OutsideARCONPAMAccess",
+   "count": 11,
+   "meanMs": 99,
+   "medianMs": 33,
+   "p95Ms": 446,
+   "maxMs": 446
+  },
+  {
+   "module": "Pending_LogRequests",
+   "count": 15,
+   "meanMs": 298,
+   "medianMs": 219,
+   "p95Ms": 875,
+   "maxMs": 875
+  },
+  {
+   "module": "Policy",
+   "count": 22,
+   "meanMs": 728,
+   "medianMs": 291,
+   "p95Ms": 1209,
+   "maxMs": 9918
+  },
+  {
+   "module": "ProfileManagement",
+   "count": 24,
+   "meanMs": 220,
+   "medianMs": 207,
+   "p95Ms": 413,
+   "maxMs": 440
+  },
+  {
+   "module": "RASyn",
+   "count": 31,
+   "meanMs": 662,
+   "medianMs": 272,
+   "p95Ms": 2926,
+   "maxMs": 9210
+  },
+  {
+   "module": "RAVPNSetting",
+   "count": 40,
+   "meanMs": 1136,
+   "medianMs": 278,
+   "p95Ms": 8666,
+   "maxMs": 14677
+  },
+  {
+   "module": "RDPS",
+   "count": 22,
+   "meanMs": 558,
+   "medianMs": 50,
+   "p95Ms": 1526,
+   "maxMs": 8766
+  },
+  {
+   "module": "RDPSServiceInsert",
+   "count": 69,
+   "meanMs": 757,
+   "medianMs": 266,
+   "p95Ms": 2445,
+   "maxMs": 11507
+  },
+  {
+   "module": "RDPSServiceInsertV2",
+   "count": 73,
+   "meanMs": 462,
+   "medianMs": 260,
+   "p95Ms": 778,
+   "maxMs": 9749
+  },
+  {
+   "module": "RTSM",
+   "count": 30,
+   "meanMs": 1263,
+   "medianMs": 286,
+   "p95Ms": 8397,
+   "maxMs": 12182
+  },
+  {
+   "module": "Reference & Sync Lists",
+   "count": 21,
+   "meanMs": 2065,
+   "medianMs": 350,
+   "p95Ms": 8246,
+   "maxMs": 17133
+  },
+  {
+   "module": "SIEM",
+   "count": 63,
+   "meanMs": 1101,
+   "medianMs": 411,
+   "p95Ms": 7847,
+   "maxMs": 10389
+  },
+  {
+   "module": "Se0rviceDetailsV3",
+   "count": 4,
+   "meanMs": 147,
+   "medianMs": 28,
+   "p95Ms": 516,
+   "maxMs": 516
+  },
+  {
+   "module": "Server Decommission",
+   "count": 3,
+   "meanMs": 1617,
+   "medianMs": 39,
+   "p95Ms": 4789,
+   "maxMs": 4789
+  },
+  {
+   "module": "Server Manager [SNow]",
+   "count": 14,
+   "meanMs": 290,
+   "medianMs": 330,
+   "p95Ms": 612,
+   "maxMs": 612
+  },
+  {
+   "module": "Service Group / Active Services",
+   "count": 6,
+   "meanMs": 763,
+   "medianMs": 477,
+   "p95Ms": 2500,
+   "maxMs": 2500
+  },
+  {
+   "module": "ServiceCreation",
+   "count": 49,
+   "meanMs": 557,
+   "medianMs": 327,
+   "p95Ms": 3486,
+   "maxMs": 4105
+  },
+  {
+   "module": "ServiceDetails",
+   "count": 529,
+   "meanMs": 371,
+   "medianMs": 306,
+   "p95Ms": 775,
+   "maxMs": 7277
+  },
+  {
+   "module": "ServiceDetailsV2",
+   "count": 555,
+   "meanMs": 443,
+   "medianMs": 312,
+   "p95Ms": 787,
+   "maxMs": 11382
+  },
+  {
+   "module": "ServiceDetailsV3",
+   "count": 513,
+   "meanMs": 587,
+   "medianMs": 367,
+   "p95Ms": 1500,
+   "maxMs": 11378
+  },
+  {
+   "module": "ServicePassword",
+   "count": 68,
+   "meanMs": 676,
+   "medianMs": 417,
+   "p95Ms": 3534,
+   "maxMs": 3701
+  },
+  {
+   "module": "ServicePasswordDependancy",
+   "count": 24,
+   "meanMs": 836,
+   "medianMs": 368,
+   "p95Ms": 3442,
+   "maxMs": 8076
+  },
+  {
+   "module": "ServicePasswordV2",
+   "count": 100,
+   "meanMs": 943,
+   "medianMs": 402,
+   "p95Ms": 3987,
+   "maxMs": 20387
+  },
+  {
+   "module": "ServiceType",
+   "count": 26,
+   "meanMs": 279,
+   "medianMs": 287,
+   "p95Ms": 380,
+   "maxMs": 1278
+  },
+  {
+   "module": "TicketRequestDetails",
+   "count": 26,
+   "meanMs": 287,
+   "medianMs": 141,
+   "p95Ms": 1219,
+   "maxMs": 1718
+  },
+  {
+   "module": "UIAutomationData",
+   "count": 56,
+   "meanMs": 489,
+   "medianMs": 283,
+   "p95Ms": 1665,
+   "maxMs": 8095
+  },
+  {
+   "module": "User",
+   "count": 11,
+   "meanMs": 1196,
+   "medianMs": 250,
+   "p95Ms": 9085,
+   "maxMs": 9085
+  },
+  {
+   "module": "User & Service Mappings",
+   "count": 3,
+   "meanMs": 683,
+   "medianMs": 659,
+   "p95Ms": 966,
+   "maxMs": 966
+  },
+  {
+   "module": "User Management",
+   "count": 9,
+   "meanMs": 1638,
+   "medianMs": 861,
+   "p95Ms": 5527,
+   "maxMs": 5527
+  },
+  {
+   "module": "UserDelegation",
+   "count": 17,
+   "meanMs": 227,
+   "medianMs": 32,
+   "p95Ms": 1109,
+   "maxMs": 1109
+  },
+  {
+   "module": "UserDetails",
+   "count": 283,
+   "meanMs": 929,
+   "medianMs": 338,
+   "p95Ms": 5111,
+   "maxMs": 15739
+  },
+  {
+   "module": "UserDetailsV2",
+   "count": 296,
+   "meanMs": 824,
+   "medianMs": 323,
+   "p95Ms": 3790,
+   "maxMs": 21729
+  },
+  {
+   "module": "UserDetailsV3",
+   "count": 284,
+   "meanMs": 867,
+   "medianMs": 275,
+   "p95Ms": 6144,
+   "maxMs": 14204
+  },
+  {
+   "module": "UserDetailsV4",
+   "count": 270,
+   "meanMs": 862,
+   "medianMs": 283,
+   "p95Ms": 5173,
+   "maxMs": 19212
+  },
+  {
+   "module": "UserFavourites",
+   "count": 21,
+   "meanMs": 1433,
+   "medianMs": 404,
+   "p95Ms": 8927,
+   "maxMs": 12415
+  },
+  {
+   "module": "UserLabels",
+   "count": 29,
+   "meanMs": 1102,
+   "medianMs": 391,
+   "p95Ms": 8912,
+   "maxMs": 9595
+  },
+  {
+   "module": "UserOnboarding",
+   "count": 71,
+   "meanMs": 1160,
+   "medianMs": 355,
+   "p95Ms": 8852,
+   "maxMs": 11768
+  },
+  {
+   "module": "UserRegistration",
+   "count": 49,
+   "meanMs": 254,
+   "medianMs": 216,
+   "p95Ms": 682,
+   "maxMs": 857
+  },
+  {
+   "module": "UserRegistrationV10",
+   "count": 3,
+   "meanMs": 320,
+   "medianMs": 337,
+   "p95Ms": 385,
+   "maxMs": 385
+  },
+  {
+   "module": "UserRegistrationV11",
+   "count": 3,
+   "meanMs": 3206,
+   "medianMs": 189,
+   "p95Ms": 9291,
+   "maxMs": 9291
+  },
+  {
+   "module": "UserRegistrationV12",
+   "count": 3,
+   "meanMs": 213,
+   "medianMs": 178,
+   "p95Ms": 314,
+   "maxMs": 314
+  },
+  {
+   "module": "UserRegistrationV2",
+   "count": 19,
+   "meanMs": 233,
+   "medianMs": 195,
+   "p95Ms": 1257,
+   "maxMs": 1257
+  },
+  {
+   "module": "UserRegistrationV3",
+   "count": 3,
+   "meanMs": 212,
+   "medianMs": 204,
+   "p95Ms": 231,
+   "maxMs": 231
+  },
+  {
+   "module": "UserRegistrationV4",
+   "count": 3,
+   "meanMs": 400,
+   "medianMs": 344,
+   "p95Ms": 540,
+   "maxMs": 540
+  },
+  {
+   "module": "UserRegistrationV5",
+   "count": 3,
+   "meanMs": 402,
+   "medianMs": 423,
+   "p95Ms": 509,
+   "maxMs": 509
+  },
+  {
+   "module": "UserRegistrationV7",
+   "count": 3,
+   "meanMs": 402,
+   "medianMs": 267,
+   "p95Ms": 728,
+   "maxMs": 728
+  },
+  {
+   "module": "UserRegistrationV8",
+   "count": 3,
+   "meanMs": 476,
+   "medianMs": 434,
+   "p95Ms": 645,
+   "maxMs": 645
+  },
+  {
+   "module": "UserRegistrationV9",
+   "count": 3,
+   "meanMs": 270,
+   "medianMs": 311,
+   "p95Ms": 343,
+   "maxMs": 343
+  },
+  {
+   "module": "UserRestrictCommand",
+   "count": 13,
+   "meanMs": 747,
+   "medianMs": 36,
+   "p95Ms": 4711,
+   "maxMs": 4711
+  },
+  {
+   "module": "UserServiceSession",
+   "count": 21,
+   "meanMs": 287,
+   "medianMs": 286,
+   "p95Ms": 597,
+   "maxMs": 654
+  },
+  {
+   "module": "VideoLog",
+   "count": 22,
+   "meanMs": 238,
+   "medianMs": 224,
+   "p95Ms": 481,
+   "maxMs": 483
+  },
+  {
+   "module": "WebSM-Dashboard",
+   "count": 3,
+   "meanMs": 28,
+   "medianMs": 24,
+   "p95Ms": 44,
+   "maxMs": 44
+  },
+  {
+   "module": "WebSM-Service",
+   "count": 86,
+   "meanMs": 27,
+   "medianMs": 22,
+   "p95Ms": 41,
+   "maxMs": 304
+  },
+  {
+   "module": "WebSM-ServiceGroup",
+   "count": 21,
+   "meanMs": 28,
+   "medianMs": 23,
+   "p95Ms": 42,
+   "maxMs": 53
+  },
+  {
+   "module": "WebSM-User",
+   "count": 64,
+   "meanMs": 315,
+   "medianMs": 245,
+   "p95Ms": 551,
+   "maxMs": 2155
+  },
+  {
+   "module": "WebSM-UserGroup",
+   "count": 17,
+   "meanMs": 26,
+   "medianMs": 21,
+   "p95Ms": 47,
+   "maxMs": 47
+  },
+  {
+   "module": "v1.0",
+   "count": 4,
+   "meanMs": 155,
+   "medianMs": 153,
+   "p95Ms": 298,
+   "maxMs": 298
+  }
+ ],
+ "previous": {
+  "runId": "2026-08-05_114315",
+  "meanMs": 632,
+  "medianMs": 411,
+  "p95Ms": 1410,
+  "source": "derived from 2026-08-05_114315/results.json"
+ },
+ "note": "Latency distribution. Pacing differed between runs, so compare per-call latency, not throughput."
+}

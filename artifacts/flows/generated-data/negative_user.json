@@ -1,0 +1,82 @@
+[
+ {
+  "id": "data_negative_user_1",
+  "title": "User - negative data-driven batch 1",
+  "why": "Executes the QA team's authored negative scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status and error code.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "negative",
+  "tier": 4,
+  "controller": "User",
+  "hops": [
+   {
+    "name": "User",
+    "verb": "GET",
+    "path": "/api/User",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / User_Negative / User_MethodNotAllowed row 1 (provider User_MethodNotAllowed)",
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "Create",
+    "verb": "GET",
+    "path": "/api/User/Create",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / User_Negative / User_MethodNotAllowed row 2 (provider User_MethodNotAllowed)",
+    "body": {
+     "UserName": "arconuser",
+     "UserDisplayName": "Arcon User",
+     "DomainName": "ArconNet",
+     "Password": "pxxxxxx3",
+     "ConfirmPassword": "pxxxxxx3",
+     "UserTypeId": 1,
+     "ValidTillDate": "20/04/2060 12:00:00 PM",
+     "Enabled": 1,
+     "EmailId": "arcon.user@arconnet.com"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "User",
+    "verb": "POST",
+    "path": "/api/User",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / User_Negative / User_UnauthorizedAccess row 1 (provider User_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "Create",
+    "verb": "POST",
+    "path": "/api/User/Create",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / User_Negative / User_UnauthorizedAccess row 2 (provider User_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "UserName": "arconuser",
+     "UserDisplayName": "Arcon User",
+     "DomainName": "ArconNet",
+     "Password": "pxxxxxx3",
+     "ConfirmPassword": "pxxxxxx3",
+     "UserTypeId": 1,
+     "ValidTillDate": "20/04/2060 12:00:00 PM",
+     "Enabled": 1,
+     "EmailId": "arcon.user@arconnet.com"
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   }
+  ]
+ }
+]

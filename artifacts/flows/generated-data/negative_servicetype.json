@@ -1,0 +1,69 @@
+[
+ {
+  "id": "data_negative_servicetype_1",
+  "title": "ServiceType - negative data-driven batch 1",
+  "why": "Executes the QA team's authored negative scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status and error code.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "negative",
+  "tier": 4,
+  "controller": "ServiceType",
+  "hops": [
+   {
+    "name": "GetServiceType",
+    "verb": "GET",
+    "path": "/api/ServiceType/GetServiceType",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / ServiceType_Negative / ServiceType_MethodNotAllowed row 1 (provider ServiceType_MethodNotAllowed)",
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetAwsKeys",
+    "verb": "GET",
+    "path": "/api/ServiceType/GetAwsKeys",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / ServiceType_Negative / ServiceType_MethodNotAllowed row 2 (provider ServiceType_MethodNotAllowed)",
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetStatus",
+    "verb": "POST",
+    "path": "/api/ServiceType/GetStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / ServiceType_Negative / ServiceType_MethodNotAllowed row 3 (provider ServiceType_MethodNotAllowed)",
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "SetStatus",
+    "verb": "POST",
+    "path": "/api/ServiceType/SetStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / ServiceType_Negative / ServiceType_MethodNotAllowed row 4 (provider ServiceType_MethodNotAllowed)",
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetDatabaseStatus",
+    "verb": "POST",
+    "path": "/api/ServiceType/GetDatabaseStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / ServiceType_Negative / ServiceType_MethodNotAllowed row 5 (provider ServiceType_MethodNotAllowed)",
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   }
+  ]
+ }
+]

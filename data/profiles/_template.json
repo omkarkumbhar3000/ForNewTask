@@ -1,0 +1,155 @@
+{
+  "schema_version": "1.0",
+
+  "_comment": [
+    "COPY THIS FILE to <projectkey>.json and fill it in. Do not edit the template itself.",
+    "",
+    "Every \"UNKNOWN\" is a real question, not a placeholder to delete. validate_profile.py refuses",
+    "a profile that still carries UNKNOWN in a blocker field, and tells you which ones - so the",
+    "honest path is to answer them, and the safe path is that you cannot execute until you have.",
+    "",
+    "Fill it in this order. Each step is only answerable once the previous one is:",
+    "  1. project + workspace     - who owns it, where files live          (minutes)",
+    "  2. environment             - a safe, non-production target           (needs an owner decision)",
+    "  3. auth                    - ONE successful authenticated call        (the first hard gate)",
+    "  4. envelope                - run the probe, then write what you SAW   (never what you expect)",
+    "  5. catalogue               - the machine-readable endpoint list        (the second hard gate)",
+    "  6. safety                  - blocklist + destructive names            (before any write)",
+    "  7. identity_prelude        - how context ids are discovered            (the most-missed input)",
+    "  8. payloads                - request bodies, if any source exists      (degrades, not blocks)",
+    "  9. validation + reporting  - which layers apply, where evidence goes",
+    "",
+    "See docs/briefs/new-project-implementation.md - the guide is this file, explained."
+  ],
+
+  "project": {
+    "key": "UNKNOWN",
+    "name": "UNKNOWN",
+    "owner": "UNKNOWN",
+    "tracker": "UNKNOWN",
+    "notes": ""
+  },
+
+  "workspace": {
+    "root_markers": ["Reports"],
+    "reference_repo": "UNKNOWN",
+    "reports_dir": "Reports",
+    "flows_dir": "flows"
+  },
+
+  "environment": {
+    "name": "UNKNOWN",
+    "api_base": "UNKNOWN",
+    "app_base": "UNKNOWN",
+    "is_production": false,
+    "config_format": "UNKNOWN",
+    "config_file": "UNKNOWN",
+    "verify_tls": true,
+    "stability": "UNKNOWN",
+    "notes": "Confirm the API port is the API port. A UI origin answering 404 to every /api call is the most common false 'the endpoints do not exist' report."
+  },
+
+  "auth": {
+    "kind": "UNKNOWN",
+    "token_endpoint": "UNKNOWN",
+    "credential_keys": {},
+    "header": {"name": "Authorization", "template": "Bearer {token}"},
+    "token_lifetime_hours": 0,
+    "env_var_override": "UNKNOWN",
+    "cache_file": ".token_cache.json",
+    "lockout_risk": "UNKNOWN",
+    "max_token_attempts_per_run": 1,
+    "latch_on_failure": true,
+    "invalid_token_sample": "Bearer invalid.token.forced-negative-auth-probe",
+    "roles": [],
+    "notes": "Ask explicitly: does this account lock after N failed attempts, and is it shared with anything that is not testing? Assume high risk until told otherwise - max_token_attempts_per_run stays 1 while lockout_risk is UNKNOWN."
+  },
+
+  "catalogue": {
+    "adapter": "UNKNOWN",
+    "source": "UNKNOWN",
+    "expected_count": 0,
+    "count_basis": "UNKNOWN",
+    "allow_verbs": ["GET"],
+    "verb_distribution": {},
+    "templated_marker": "{",
+    "exclude_patterns": [],
+    "notes": "Ask for an OpenAPI/Swagger document first. If one exists this section and most of payloads come free. If not, the fallback order is: Postman collection -> recorded traffic (HAR) -> a router/route dump from the developers -> constants in an existing test framework."
+  },
+
+  "payloads": {
+    "adapter": "UNKNOWN",
+    "source": "UNKNOWN",
+    "coverage": {"create_endpoints": 0, "with_working_body": 0, "with_no_body": 0, "measured_in": "UNKNOWN"},
+    "binding_confidence": "UNKNOWN",
+    "unique_fields": [],
+    "notes": "Absent a source, coverage degrades to read-only and creates cannot be generated. That is a coverage decision to state openly, not a blocker to hide."
+  },
+
+  "envelope": {
+    "status_is_authoritative": false,
+    "shapes_measured": 0,
+    "shape_census": "UNKNOWN",
+    "success_fields": [],
+    "error_code_fields": [],
+    "error_message_fields": [],
+    "result_containers": [],
+    "created_messages": ["created", "inserted", "added", "saved"],
+    "noop_messages": ["already exists", "duplicate"],
+    "error_code_registry": "UNKNOWN",
+    "non_json_expected": false,
+    "notes": "DO NOT fill this section from documentation or from what a developer tells you. Run the probe against 10-20 read endpoints, then write down the shapes you actually saw. status_is_authoritative starts false and is only raised to true once a deliberately-bad request has been shown to return a 4xx."
+  },
+
+  "identity_prelude": [],
+
+  "id_aliases": {},
+
+  "safety": {
+    "default_mode": "plan-only",
+    "blocklist": {},
+    "destructive_name_regex": "^(delete|remove|drop|purge|reset|revoke|disable|deactivate|terminate|kill|wipe)",
+    "teardown": "disabled",
+    "health_probe": {},
+    "throttle_ms": 2000,
+    "breaker_consecutive_5xx": 3,
+    "downtime_wait_s": 300,
+    "max_calls": 1000,
+    "http_timeout_s": 45,
+    "body_cap_bytes": 8388608,
+    "redact_keys": ["password", "passwd", "token", "secret", "credential"],
+    "notes": "An empty blocklist is a claim that no endpoint can harm the environment. Ask the developers which endpoints are expensive, long-running, or take a service down - and write the answer here even if it is 'none known', so the next person knows the question was asked. Keep the destructive regex name-based: many APIs express deletion as a POST."
+  },
+
+  "validation": {
+    "layers": ["L1", "L2", "L3", "L5", "L7"],
+    "sla_ms": {"default": 5000, "read": 3000, "write": 10000},
+    "database": {"dialect": "none", "read_only": true, "config_keys": {}, "tables_of_interest": []},
+    "notes": "Start with L1, L2, L3, L5, L7. Add L4 once you know what a success message looks like, L6 once a create can be read back, L11 once a read-only DB account exists. Only drop L3 if a bad request provably returns 4xx."
+  },
+
+  "reporting": {
+    "run_dir_pattern": "artifacts/runs/{stamp}",
+    "retention": "forever",
+    "evidence_per_call": true,
+    "workbook": false,
+    "benchmark_baseline": "UNKNOWN",
+    "notes": "benchmark_baseline stays UNKNOWN until a first full run exists - that run becomes N-1. Set retention to forever now; discovering you need a baseline after deleting it is unrecoverable."
+  },
+
+  "unknowns": [
+    {"field": "environment.api_base", "question": "Which host and port serves the API on a non-production environment?", "settled_by": "one successful call", "owner": "UNKNOWN", "blocks": true},
+    {"field": "auth.kind", "question": "How is a request authenticated, and can that credential be issued to automation?", "settled_by": "one successful authenticated call", "owner": "UNKNOWN", "blocks": true},
+    {"field": "auth.lockout_risk", "question": "Does the account lock after failed attempts, and is it shared with any non-testing consumer?", "settled_by": "the identity/AD owner", "owner": "UNKNOWN", "blocks": true},
+    {"field": "catalogue.adapter", "question": "Is there a machine-readable list of endpoints - OpenAPI, Postman, route dump?", "settled_by": "the development team", "owner": "UNKNOWN", "blocks": true},
+    {"field": "envelope.status_is_authoritative", "question": "Does a rejected request return 4xx, or HTTP 200 with an in-body error?", "settled_by": "one deliberately malformed request", "owner": "UNKNOWN", "blocks": true},
+    {"field": "safety.blocklist", "question": "Which endpoints are expensive, long-running, or capable of taking the environment down?", "settled_by": "the development team; record 'none known' if that is the answer", "owner": "UNKNOWN", "blocks": true}
+  ],
+
+  "provenance": {
+    "authored_from": [],
+    "probe_run": "UNKNOWN",
+    "measured_run": "UNKNOWN",
+    "reviewed_by": "UNKNOWN"
+  }
+}

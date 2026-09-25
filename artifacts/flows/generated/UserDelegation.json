@@ -1,0 +1,160 @@
+[
+ {
+  "id": "userdelegation__saveuserdelegation",
+  "title": "UserDelegation lifecycle - SaveUserDelegation",
+  "why": "Generated lifecycle chain: discover LOB context, create, read the record back, then optionally update and remove it.",
+  "generated": true,
+  "tier": 1,
+  "controller": "UserDelegation",
+  "hops": [
+   {
+    "name": "GetLOBList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetLOBList",
+    "body": {},
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LobName": "AUTOMATION_TEST_LOB"
+     },
+     "take": {
+      "LOB_ID": "LobId",
+      "LOB_NAME": "LobName"
+     }
+    },
+    "sla_ms": 8000
+   },
+   {
+    "name": "GetUserGroupList",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetUserGroupListWithoutMandateValue",
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LOBName": "${LOB_NAME}"
+     },
+     "take": {
+      "USER_GROUP_ID": "UserGroupId",
+      "USER_GROUP_NAME": "UserGroupName"
+     }
+    },
+    "sla_ms": 12000
+   },
+   {
+    "name": "GetServerGroupList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetServerGroupList",
+    "body": {
+     "LobId": "${LOB_ID}"
+    },
+    "extract": {
+     "SERVER_GROUP_ID": "Result[0].ServerGroupId"
+    },
+    "stop_on_fail": false,
+    "sla_ms": 8000
+   },
+   {
+    "name": "SaveUserDelegation",
+    "verb": "POST",
+    "path": "/api/UserDelegation/SaveUserDelegation",
+    "body": {
+     "ActionType": "insert",
+     "UserId": "${NEW_USERNAME}",
+     "DelegatedUserId": "92",
+     "ApprovalType": "1",
+     "StartTime": "2021-02-11T02:37:00",
+     "EndTime": "2021-02-12T02:37:00",
+     "IsActive": true,
+     "IsEnableAll": true,
+     "wdd_id": "1",
+     "wdd_wdm_id": "1"
+    },
+    "expect_created": true,
+    "extract_any_id": "NEW_ID",
+    "sla_ms": 20000,
+    "stop_on_fail": true,
+    "note": "generated from saveUserDelegation; chained: UserId <- ${NEW_USERNAME}"
+   },
+   {
+    "name": "GetUserDelegation__verify",
+    "verb": "POST",
+    "path": "/api/UserDelegation/GetUserDelegation",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "verify_value_anywhere": {
+     "value": "${NEW_ID}",
+     "label": "created record id"
+    },
+    "note": "read-back chosen for entity 'userdelegation'",
+    "body": {
+     "UserID": "${NEW_USERNAME}"
+    }
+   }
+  ]
+ },
+ {
+  "id": "userdelegation__reads_1",
+  "title": "UserDelegation read sweep 1",
+  "why": "Exercises read endpoints inside a chain, so each one is called with real LOB context rather than in isolation.",
+  "generated": true,
+  "tier": 2,
+  "controller": "UserDelegation",
+  "hops": [
+   {
+    "name": "GetLOBList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetLOBList",
+    "body": {},
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LobName": "AUTOMATION_TEST_LOB"
+     },
+     "take": {
+      "LOB_ID": "LobId",
+      "LOB_NAME": "LobName"
+     }
+    },
+    "sla_ms": 8000
+   },
+   {
+    "name": "GetUserGroupList",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetUserGroupListWithoutMandateValue",
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LOBName": "${LOB_NAME}"
+     },
+     "take": {
+      "USER_GROUP_ID": "UserGroupId",
+      "USER_GROUP_NAME": "UserGroupName"
+     }
+    },
+    "sla_ms": 12000
+   },
+   {
+    "name": "GetServerGroupList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetServerGroupList",
+    "body": {
+     "LobId": "${LOB_ID}"
+    },
+    "extract": {
+     "SERVER_GROUP_ID": "Result[0].ServerGroupId"
+    },
+    "stop_on_fail": false,
+    "sla_ms": 8000
+   },
+   {
+    "name": "ValidateSaveUserDelegation",
+    "verb": "POST",
+    "path": "/api/UserDelegation/ValidateSaveUserDelegation",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude",
+    "body": {}
+   }
+  ]
+ }
+]

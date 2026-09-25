@@ -1,0 +1,697 @@
+[
+ {
+  "id": "data_negative_notificationdetails_1",
+  "title": "NotificationDetails - negative data-driven batch 1",
+  "why": "Executes the QA team's authored negative scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status and error code.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "negative",
+  "tier": 4,
+  "controller": "NotificationDetails",
+  "hops": [
+   {
+    "name": "GetPendingNotificationsCount",
+    "verb": "GET",
+    "path": "/api/NotificationDetails/GetPendingNotificationsCount",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / NotificationDetails_Negative / NotificationDetails_MethodNotAllowed row 1 (provider NotificationDetails_MethodNotAllowed)",
+    "body": {
+     "UserID": 35
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetServiceAccessRequestNotification",
+    "verb": "GET",
+    "path": "/api/NotificationDetails/GetServiceAccessRequestNotification",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / NotificationDetails_Negative / NotificationDetails_MethodNotAllowed row 2 (provider NotificationDetails_MethodNotAllowed)",
+    "body": {
+     "UserID": 35
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "ServiceAccessRequestApproveReject",
+    "verb": "GET",
+    "path": "/api/NotificationDetails/ServiceAccessRequestApproveReject",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / NotificationDetails_Negative / NotificationDetails_MethodNotAllowed row 3 (provider NotificationDetails_MethodNotAllowed)",
+    "body": {
+     "UserID": 36,
+     "LstSAAR": [
+      {
+       "TransID": "3",
+       "CurrentApprovalLevel": "1",
+       "WorkflowID": "1"
+      }
+     ],
+     "Type": "Approve",
+     "Comment": "Test"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "ViewServiceAccessRequest",
+    "verb": "GET",
+    "path": "/api/NotificationDetails/ViewServiceAccessRequest",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / NotificationDetails_Negative / NotificationDetails_MethodNotAllowed row 4 (provider NotificationDetails_MethodNotAllowed)",
+    "body": {
+     "UserID": 36,
+     "TransID": "A123",
+     "CurrentApprovalLevel": "1"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetServicePasswordRequestNotification",
+    "verb": "GET",
+    "path": "/api/NotificationDetails/GetServicePasswordRequestNotification",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / NotificationDetails_Negative / NotificationDetails_MethodNotAllowed row 5 (provider NotificationDetails_MethodNotAllowed)",
+    "body": {
+     "UserID": 36
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "ServicePasswordRequestApproveReject",
+    "verb": "GET",
+    "path": "/api/NotificationDetails/ServicePasswordRequestApproveReject",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / NotificationDetails_Negative / NotificationDetails_MethodNotAllowed row 6 (provider NotificationDetails_MethodNotAllowed)",
+    "body": {
+     "UserID": 36,
+     "LstSPPR": [
+      {
+       "TransID": "3",
+       "CurrentStatusID": "1"
+      }
+     ],
+     "Type": "Approve",
+     "Comment": "Test"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "ViewServicePasswordRequest",
+    "verb": "GET",
+    "path": "/api/NotificationDetails/ViewServicePasswordRequest",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / NotificationDetails_Negative / NotificationDetails_MethodNotAllowed row 7 (provider NotificationDetails_MethodNotAllowed)",
+    "body": {
+     "UserID": 36,
+     "TransID": "972f911",
+     "CurrentStatusID": "1"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetTicketRequestNotification",
+    "verb": "GET",
+    "path": "/api/NotificationDetails/GetTicketRequestNotification",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / NotificationDetails_Negative / NotificationDetails_MethodNotAllowed row 8 (provider NotificationDetails_MethodNotAllowed)",
+    "body": {
+     "UserID": 36,
+     "LstSPPR": [
+      {
+       "TransID": "3",
+       "CurrentStatusID": "1"
+      }
+     ],
+     "Type": "Approve",
+     "Comment": "Test"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "ApproveRejectTicketRequest",
+    "verb": "GET",
+    "path": "/api/NotificationDetails/ApproveRejectTicketRequest",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / NotificationDetails_Negative / NotificationDetails_MethodNotAllowed row 9 (provider NotificationDetails_MethodNotAllowed)",
+    "body": {
+     "UserID": 36,
+     "TicketId": "9",
+     "Type": "Approve",
+     "Comment": "Test"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "CloseTicketRequest",
+    "verb": "GET",
+    "path": "/api/NotificationDetails/CloseTicketRequest",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / NotificationDetails_Negative / NotificationDetails_MethodNotAllowed row 10 (provider NotificationDetails_MethodNotAllowed)",
+    "body": {
+     "UserID": 35,
+     "TicketId": "9",
+     "Comment": "Testing",
+     "StartTime": "19/11/2019 12:30",
+     "EndTime": "20/11/2019 00:00",
+     "TicketStatus": "Completed",
+     "AssignedStartTime": "19/11/2019 12:30"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "ViewTicketRequest",
+    "verb": "GET",
+    "path": "/api/NotificationDetails/ViewTicketRequest",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / NotificationDetails_Negative / NotificationDetails_MethodNotAllowed row 11 (provider NotificationDetails_MethodNotAllowed)",
+    "body": {
+     "UserID": 35,
+     "TicketId": "9",
+     "TicketNo": "DEFAULTLOB1_PE_SA_SHAILSERVERS_00008"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetDownloadTicketAttachmentDetails",
+    "verb": "GET",
+    "path": "/api/NotificationDetails/GetDownloadTicketAttachmentDetails",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / NotificationDetails_Negative / NotificationDetails_MethodNotAllowed row 12 (provider NotificationDetails_MethodNotAllowed)",
+    "body": {
+     "FileStorageId": 71
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   }
+  ]
+ },
+ {
+  "id": "data_negative_notificationdetails_2",
+  "title": "NotificationDetails - negative data-driven batch 2",
+  "why": "Executes the QA team's authored negative scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status and error code.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "negative",
+  "tier": 4,
+  "controller": "NotificationDetails",
+  "hops": [
+   {
+    "name": "DownloadTicketAttachment",
+    "verb": "GET",
+    "path": "/api/NotificationDetails/DownloadTicketAttachment",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / NotificationDetails_Negative / NotificationDetails_MethodNotAllowed row 13 (provider NotificationDetails_MethodNotAllowed)",
+    "body": {
+     "FileStorageId": 71
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetMailBoxNotification",
+    "verb": "GET",
+    "path": "/api/NotificationDetails/GetMailBoxNotification",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / NotificationDetails_Negative / NotificationDetails_MethodNotAllowed row 14 (provider NotificationDetails_MethodNotAllowed)",
+    "body": {
+     "UserID": 36
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "OpenMail",
+    "verb": "GET",
+    "path": "/api/NotificationDetails/OpenMail",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / NotificationDetails_Negative / NotificationDetails_MethodNotAllowed row 16 (provider NotificationDetails_MethodNotAllowed)",
+    "body": {
+     "UserID": "36",
+     "smi_id": "2",
+     "smi_spv_id": "3"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "VaultPasswordMailBox",
+    "verb": "GET",
+    "path": "/api/NotificationDetails/VaultPasswordMailBox",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / NotificationDetails_Negative / NotificationDetails_MethodNotAllowed row 17 (provider NotificationDetails_MethodNotAllowed)",
+    "body": {
+     "UserID": "36",
+     "smi_spv_id": "3"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "DownloadSSHKey",
+    "verb": "GET",
+    "path": "/api/NotificationDetails/DownloadSSHKey",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / NotificationDetails_Negative / NotificationDetails_MethodNotAllowed row 18 (provider NotificationDetails_MethodNotAllowed)",
+    "body": {
+     "SSHFileName": "Test",
+     "SSHFileData": "1234567890"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetPasswordChangeScheduledDDL",
+    "verb": "GET",
+    "path": "/api/NotificationDetails/GetPasswordChangeScheduledDDL",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / NotificationDetails_Negative / NotificationDetails_MethodNotAllowed row 19 (provider NotificationDetails_MethodNotAllowed)",
+    "body": {
+     "UserID": "35",
+     "LOBId": "1"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetPasswordChangeScheduledList",
+    "verb": "GET",
+    "path": "/api/NotificationDetails/GetPasswordChangeScheduledList",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / NotificationDetails_Negative / NotificationDetails_MethodNotAllowed row 20 (provider NotificationDetails_MethodNotAllowed)",
+    "body": {
+     "UserID": "35",
+     "LOBId": "1",
+     "ServiceGroupId": "",
+     "ServiceTyeId": ""
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetPendingNotificationsCount",
+    "verb": "POST",
+    "path": "/api/NotificationDetails/GetPendingNotificationsCount",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / NotificationDetails_Negative / NotificationDetails_UnauthorizedAccess row 1 (provider NotificationDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "UserID": 35
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "GetServiceAccessRequestNotification",
+    "verb": "POST",
+    "path": "/api/NotificationDetails/GetServiceAccessRequestNotification",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / NotificationDetails_Negative / NotificationDetails_UnauthorizedAccess row 2 (provider NotificationDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "UserID": 35
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "ServiceAccessRequestApproveReject",
+    "verb": "POST",
+    "path": "/api/NotificationDetails/ServiceAccessRequestApproveReject",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / NotificationDetails_Negative / NotificationDetails_UnauthorizedAccess row 3 (provider NotificationDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "UserID": 36,
+     "LstSAAR": [
+      {
+       "TransID": "3",
+       "CurrentApprovalLevel": "1",
+       "WorkflowID": "1"
+      }
+     ],
+     "Type": "Approve",
+     "Comment": "Test"
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "ViewServiceAccessRequest",
+    "verb": "POST",
+    "path": "/api/NotificationDetails/ViewServiceAccessRequest",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / NotificationDetails_Negative / NotificationDetails_UnauthorizedAccess row 4 (provider NotificationDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "UserID": 36,
+     "TransID": "A123",
+     "CurrentApprovalLevel": "1"
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "GetServicePasswordRequestNotification",
+    "verb": "POST",
+    "path": "/api/NotificationDetails/GetServicePasswordRequestNotification",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / NotificationDetails_Negative / NotificationDetails_UnauthorizedAccess row 5 (provider NotificationDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "UserID": 36
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   }
+  ]
+ },
+ {
+  "id": "data_negative_notificationdetails_3",
+  "title": "NotificationDetails - negative data-driven batch 3",
+  "why": "Executes the QA team's authored negative scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status and error code.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "negative",
+  "tier": 4,
+  "controller": "NotificationDetails",
+  "hops": [
+   {
+    "name": "ServicePasswordRequestApproveReject",
+    "verb": "POST",
+    "path": "/api/NotificationDetails/ServicePasswordRequestApproveReject",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / NotificationDetails_Negative / NotificationDetails_UnauthorizedAccess row 6 (provider NotificationDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "UserID": 36,
+     "LstSPPR": [
+      {
+       "TransID": "3",
+       "CurrentStatusID": "1"
+      }
+     ],
+     "Type": "Approve",
+     "Comment": "Test"
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "ViewServicePasswordRequest",
+    "verb": "POST",
+    "path": "/api/NotificationDetails/ViewServicePasswordRequest",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / NotificationDetails_Negative / NotificationDetails_UnauthorizedAccess row 7 (provider NotificationDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "UserID": 36,
+     "TransID": "972f911",
+     "CurrentStatusID": "1"
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "GetTicketRequestNotification",
+    "verb": "POST",
+    "path": "/api/NotificationDetails/GetTicketRequestNotification",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / NotificationDetails_Negative / NotificationDetails_UnauthorizedAccess row 8 (provider NotificationDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "UserID": 36,
+     "LstSPPR": [
+      {
+       "TransID": "3",
+       "CurrentStatusID": "1"
+      }
+     ],
+     "Type": "Approve",
+     "Comment": "Test"
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "ApproveRejectTicketRequest",
+    "verb": "POST",
+    "path": "/api/NotificationDetails/ApproveRejectTicketRequest",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / NotificationDetails_Negative / NotificationDetails_UnauthorizedAccess row 9 (provider NotificationDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "UserID": 36,
+     "TicketId": "9",
+     "Type": "Approve",
+     "Comment": "Test"
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "CloseTicketRequest",
+    "verb": "POST",
+    "path": "/api/NotificationDetails/CloseTicketRequest",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / NotificationDetails_Negative / NotificationDetails_UnauthorizedAccess row 10 (provider NotificationDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "UserID": 35,
+     "TicketId": "9",
+     "Comment": "Testing",
+     "StartTime": "19/11/2019 12:30",
+     "EndTime": "20/11/2019 00:00",
+     "TicketStatus": "Completed",
+     "AssignedStartTime": "19/11/2019 12:30"
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "ViewTicketRequest",
+    "verb": "POST",
+    "path": "/api/NotificationDetails/ViewTicketRequest",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / NotificationDetails_Negative / NotificationDetails_UnauthorizedAccess row 11 (provider NotificationDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "UserID": 35,
+     "TicketId": "9",
+     "TicketNo": "DEFAULTLOB1_PE_SA_SHAILSERVERS_00008"
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "GetDownloadTicketAttachmentDetails",
+    "verb": "POST",
+    "path": "/api/NotificationDetails/GetDownloadTicketAttachmentDetails",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / NotificationDetails_Negative / NotificationDetails_UnauthorizedAccess row 12 (provider NotificationDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "FileStorageId": 71
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "DownloadTicketAttachment",
+    "verb": "POST",
+    "path": "/api/NotificationDetails/DownloadTicketAttachment",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / NotificationDetails_Negative / NotificationDetails_UnauthorizedAccess row 13 (provider NotificationDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "FileStorageId": 71
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "GetMailBoxNotification",
+    "verb": "POST",
+    "path": "/api/NotificationDetails/GetMailBoxNotification",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / NotificationDetails_Negative / NotificationDetails_UnauthorizedAccess row 14 (provider NotificationDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "UserID": 36
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "OpenMail",
+    "verb": "POST",
+    "path": "/api/NotificationDetails/OpenMail",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / NotificationDetails_Negative / NotificationDetails_UnauthorizedAccess row 16 (provider NotificationDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "UserID": "36",
+     "smi_id": "2",
+     "smi_spv_id": "3"
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "VaultPasswordMailBox",
+    "verb": "POST",
+    "path": "/api/NotificationDetails/VaultPasswordMailBox",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / NotificationDetails_Negative / NotificationDetails_UnauthorizedAccess row 17 (provider NotificationDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "UserID": "36",
+     "smi_spv_id": "3"
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "DownloadSSHKey",
+    "verb": "POST",
+    "path": "/api/NotificationDetails/DownloadSSHKey",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / NotificationDetails_Negative / NotificationDetails_UnauthorizedAccess row 18 (provider NotificationDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "SSHFileName": "Test",
+     "SSHFileData": "1234567890"
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   }
+  ]
+ },
+ {
+  "id": "data_negative_notificationdetails_4",
+  "title": "NotificationDetails - negative data-driven batch 4",
+  "why": "Executes the QA team's authored negative scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status and error code.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "negative",
+  "tier": 4,
+  "controller": "NotificationDetails",
+  "hops": [
+   {
+    "name": "GetPasswordChangeScheduledDDL",
+    "verb": "POST",
+    "path": "/api/NotificationDetails/GetPasswordChangeScheduledDDL",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / NotificationDetails_Negative / NotificationDetails_UnauthorizedAccess row 19 (provider NotificationDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "UserID": "35",
+     "LOBId": "1"
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "GetPasswordChangeScheduledList",
+    "verb": "POST",
+    "path": "/api/NotificationDetails/GetPasswordChangeScheduledList",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / NotificationDetails_Negative / NotificationDetails_UnauthorizedAccess row 20 (provider NotificationDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "UserID": "35",
+     "LOBId": "1",
+     "ServiceGroupId": "",
+     "ServiceTyeId": ""
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   }
+  ]
+ }
+]

@@ -1,0 +1,246 @@
+[
+ {
+  "id": "data_positive_deviceonboarding_1",
+  "title": "DeviceOnboarding - positive data-driven batch 1",
+  "why": "Executes the QA team's authored positive scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "positive",
+  "tier": 4,
+  "controller": "DeviceOnboarding",
+  "hops": [
+   {
+    "name": "CreateGenericIds",
+    "verb": "POST",
+    "path": "/api/DeviceOnboarding/CreateGenericIds",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / DeviceOnboarding_positive row 1 (provider DeviceOnboarding)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "ReconcileGenericIds",
+    "verb": "POST",
+    "path": "/api/DeviceOnboarding/ReconcileGenericIds",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / DeviceOnboarding_positive row 3 (provider DeviceOnboarding)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "SetDefaultGenericIds",
+    "verb": "POST",
+    "path": "/api/DeviceOnboarding/SetDefaultGenericIds",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / DeviceOnboarding_positive row 5 (provider DeviceOnboarding)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetLOBList",
+    "verb": "GET",
+    "path": "/api/DeviceOnboarding/GetLOBList",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / DeviceOnboarding_positive row 6 (provider DeviceOnboarding)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "CallBack",
+    "verb": "POST",
+    "path": "/api/DeviceOnboarding/CallBack",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / DeviceOnboarding_positive row 8 (provider DeviceOnboarding)",
+    "body": {
+     "status": "SUCCESS",
+     "message": "User Testuser added successfully. Setting password for user Testuser is SUCCESS. ",
+     "uuid": "2915abb8-xxx-4d66-xxx-695xxxb0a93f\\24581",
+     "auid": "a80d9f70-7ff1-xx58-axx43-5xxxxx7166",
+     "action": "AddUser"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "CreateGenericIdsV2",
+    "verb": "POST",
+    "path": "/api/DeviceOnboarding/CreateGenericIdsV2",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / DeviceOnboarding_positive row 9 (provider DeviceOnboarding)",
+    "body": [
+     {
+      "ServerIP": "10.11.0.11",
+      "ServerHostname": "10.11.0.11",
+      "ServerDomainname": "domain",
+      "HostUserGroup": "Performance Monitor Users",
+      "OSorDB": "OS",
+      "NameOfOSorDB": "Linux",
+      "InstanceName": "",
+      "DBName": "",
+      "UserToBeCreated": "root",
+      "DBRole": "",
+      "ARCOSFlag": "Y",
+      "SourceDetails": "",
+      "HomeDirectory": "",
+      "Port": "",
+      "ARCOSLOB": "2",
+      "ARCOSServerGroup": "SG",
+      "UniqueId": "",
+      "PrivilegedIDDomainName": "",
+      "RequesterUsername": "Username",
+      "RoleTemplate": "",
+      "IsSafe": "True",
+      "Script": "",
+      "Emailid": "",
+      "MapAllAssignedServiceGroups": "false",
+      "TicketId": "123",
+      "IsCreateArcosServerGroup": "true",
+      "NewServerGroupName": "NewServerGroup",
+      "CallingApplicationName": "thirdpartyapplicationname",
+      "UserGroupId": "7,4,",
+      "ValidUntil": "2021-12-31T23:59:59.511Z",
+      "Description1": "Test Provisioning",
+      "Description2": "Test Provisioning",
+      "Description3": "DA",
+      "Description4": "<PTY>",
+      "UseRootServicePasswordPolicy": "true",
+      "Minimumpasswordage": "10",
+      "Maximumpasswordage": "60",
+      "UserOrganizationalUnit": "ARCOS|TESTOU",
+      "AdEntity": "user"
+     }
+    ],
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "ReconcileGenericIdsV2",
+    "verb": "POST",
+    "path": "/api/DeviceOnboarding/ReconcileGenericIdsV2",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / DeviceOnboarding_positive row 10 (provider DeviceOnboarding)",
+    "body": [
+     {
+      "ServerIP": "10.11.1.99",
+      "ServerHostname": "HostABC",
+      "OSorDB": "OS",
+      "NameOfOSorDB": "LINUX",
+      "DBName": "",
+      "TargetUser": [
+       "GenAB12",
+       "Root",
+       "SYS"
+      ]
+     },
+     {
+      "ServerIP": "10.11.9.11",
+      "ServerHostname": "HostABC",
+      "OSorDB": "DB",
+      "NameOfOSorDB": "ORACLE",
+      "DBName": "DBtest",
+      "TargetUser": [
+       "Ora1234"
+      ]
+     }
+    ],
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "SetDefaultGenericIdsV2",
+    "verb": "POST",
+    "path": "/api/DeviceOnboarding/SetDefaultGenericIdsV2",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / DeviceOnboarding_positive row 11 (provider DeviceOnboarding)",
+    "body": [
+     {
+      "NameOfOSorDB": "sql",
+      "DefaultUsername": "sa"
+     }
+    ],
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "AssignGroup",
+    "verb": "POST",
+    "path": "/api/DeviceOnboarding/AssignGroup",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / DeviceOnboarding_positive row 14 (provider DeviceOnboarding)",
+    "body": {
+     "__raw__": "[\n{\n\"ServerIP\": \"10.10.0.XX\",\n\"ServerHostname\": \"10.10.0.XX\",\n\"ServerDomainname\": \"domain\",\n\"HostUserGroup\": \"Performance Monitor Users\",\n\"OSorDB\": \"OS\",\n\"NameOfOSorDB\": \"Linux\",\n\"InstanceName\": \"\",\n\"DBName\": \"\",\n\"UserToBeCreated\": \"root\",\n\"DBRole\": \"\",\n\"ARCOSFlag\": \"N\", // [Set this flag to 'N' when service not to be created in ARCON PAM]\n\"Port\": \"\",\n\"UniqueId\":\"\",\n\"RequesterUsername\": \"Username\",\n\"CallingApplicationName\": \"thirdpartyapplicationname\",\n\"UserOrganizationalUnit\": \"ARCOS|TESTOU\",\n\"AdEntity\": \"user\",\n\"OuGroup\": \"Builtin\"\n},\n{\n\"ServerIP\": \"10.10.0.XX\",\n\"ServerHostname\": \"10.10.0.XX\",\n\"ServerDomainname\": \"domain\",\n\"HostUserGroup\": \"Backup Operators\",\n\"OSorDB\": \"OS\",\n\"NameOfOSorDB\": \"Linux\",\n\"InstanceName\": \"\",\n\"DBName\": \"\",\n\"UserToBeCreated\": \"Test1\",\n\"DBRole\": \"\",\n\"ARCOSFlag\": \"N\", // [Set this flag to 'N' when service not to be created in ARCON PAM]\n\"Port\": \"\",\n\"UniqueId\":\"\",\n\"RequesterUsername\": \"Username\",\n\"CallingApplicationName\": \"thirdpartyapplicationname\",\n\"UserOrganizationalUnit\": \"ARCOS|TESTOU\",\n\"AdEntity\": \"user\",\n\"OuGroup\": \"Builtin\"\n}\n]"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetProvisioningReport",
+    "verb": "POST",
+    "path": "/api/DeviceOnboarding/GetProvisioningReport",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / DeviceOnboarding_positive row 17 (provider DeviceOnboarding)",
+    "body": {
+     "Reporttype": "provisioning",
+     "Reportstatus": "success",
+     "Servicetype": "Windows",
+     "Datefrom": "2020-05-26 11:50:56.700",
+     "Dateto": "2020-06-30 11:50:56.700"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetStatus",
+    "verb": "GET",
+    "path": "/api/DeviceOnboarding/GetStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / DeviceOnboarding_positive row 18 (provider DeviceOnboarding)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "SetStatus",
+    "verb": "GET",
+    "path": "/api/DeviceOnboarding/SetStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / DeviceOnboarding_positive row 19 (provider DeviceOnboarding)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   }
+  ]
+ },
+ {
+  "id": "data_positive_deviceonboarding_2",
+  "title": "DeviceOnboarding - positive data-driven batch 2",
+  "why": "Executes the QA team's authored positive scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "positive",
+  "tier": 4,
+  "controller": "DeviceOnboarding",
+  "hops": [
+   {
+    "name": "GetDatabaseStatus",
+    "verb": "GET",
+    "path": "/api/DeviceOnboarding/GetDatabaseStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / DeviceOnboarding_positive row 20 (provider DeviceOnboarding)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   }
+  ]
+ }
+]

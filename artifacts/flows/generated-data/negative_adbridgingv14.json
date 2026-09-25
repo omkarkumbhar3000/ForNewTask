@@ -1,0 +1,61 @@
+[
+ {
+  "id": "data_negative_adbridgingv14_1",
+  "title": "ADbridgingV14 - negative data-driven batch 1",
+  "why": "Executes the QA team's authored negative scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status and error code.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "negative",
+  "tier": 4,
+  "controller": "ADbridgingV14",
+  "hops": [
+   {
+    "name": "GetDomainDetailByServerIP",
+    "verb": "GET",
+    "path": "/api/ADbridgingV2/GetDomainDetailByServerIP",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / ADbridgingV2_Negative / ADbridgingV2_MethodNotAllowed row 13 (provider ADbridgingV2_MethodNotAllowed)",
+    "body": {
+     "DomainId": 47,
+     "DomainServerIP": "10.11.1.11",
+     "DomainName": "DOMAIN1.COM",
+     "DomainExtension": ".COM",
+     "LDAPDomainString": "",
+     "HostName": "DOMAIN1",
+     "DomainUserName": "user12",
+     "DomainPassword": "user@12",
+     "NISName": "DOMAIN1",
+     "OrganisationalUnitName": "PAMUSERS"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetDomainDetailByServerIP",
+    "verb": "POST",
+    "path": "/api/ADbridgingV2/GetDomainDetailByServerIP",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / ADbridgingV2_Negative / ADbridgingV2_UnauthorizedAccess row 13 (provider ADbridgingV2_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "DomainId": 47,
+     "DomainServerIP": "10.11.1.11",
+     "DomainName": "DOMAIN1.COM",
+     "DomainExtension": ".COM",
+     "LDAPDomainString": "",
+     "HostName": "DOMAIN1",
+     "DomainUserName": "user12",
+     "DomainPassword": "user@12",
+     "NISName": "DOMAIN1",
+     "OrganisationalUnitName": "PAMUSERS"
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   }
+  ]
+ }
+]

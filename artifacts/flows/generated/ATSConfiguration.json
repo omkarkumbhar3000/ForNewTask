@@ -1,0 +1,273 @@
+[
+ {
+  "id": "atsconfiguration__insertatsconfiguration",
+  "title": "ATSConfiguration lifecycle - InsertAtsConfiguration",
+  "why": "Generated lifecycle chain: discover LOB context, create, read the record back, then optionally update and remove it.",
+  "generated": true,
+  "tier": 1,
+  "controller": "ATSConfiguration",
+  "hops": [
+   {
+    "name": "GetLOBList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetLOBList",
+    "body": {},
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LobName": "AUTOMATION_TEST_LOB"
+     },
+     "take": {
+      "LOB_ID": "LobId",
+      "LOB_NAME": "LobName"
+     }
+    },
+    "sla_ms": 8000
+   },
+   {
+    "name": "GetUserGroupList",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetUserGroupListWithoutMandateValue",
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LOBName": "${LOB_NAME}"
+     },
+     "take": {
+      "USER_GROUP_ID": "UserGroupId",
+      "USER_GROUP_NAME": "UserGroupName"
+     }
+    },
+    "sla_ms": 12000
+   },
+   {
+    "name": "GetServerGroupList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetServerGroupList",
+    "body": {
+     "LobId": "${LOB_ID}"
+    },
+    "extract": {
+     "SERVER_GROUP_ID": "Result[0].ServerGroupId"
+    },
+    "stop_on_fail": false,
+    "sla_ms": 8000
+   },
+   {
+    "name": "InsertAtsConfiguration",
+    "verb": "POST",
+    "path": "/api/ATSConfiguration/InsertAtsConfiguration",
+    "body": {
+     "AtsId": 18,
+     "AtsConfigName": "ATS test1",
+     "AtsDescription": "test1",
+     "AtsUrl": "https://10.10.0.173/Software/html5.html",
+     "AtsUserName": "TEST1",
+     "AtsXWD": "RHQngl96sGRrnRmKOdddiNtqQ/lr7Yz+EuqKe92LHjM=",
+     "AtsExePath": "ARWH",
+     "AtsDirectoryPath": "ARWH",
+     "AtsPin": "2823",
+     "AtsIsActive": 1,
+     "AtsUseForSM": 0,
+     "AtsDmz": "localhost"
+    },
+    "expect_created": true,
+    "extract_any_id": "NEW_ID",
+    "sla_ms": 20000,
+    "stop_on_fail": true,
+    "note": "generated from insertAtsConfiguration"
+   },
+   {
+    "name": "GetAtsConfiguration__verify",
+    "verb": "POST",
+    "path": "/api/ATSConfiguration/GetAtsConfiguration",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "verify_value_anywhere": {
+     "value": "${NEW_ID}",
+     "label": "created record id"
+    },
+    "note": "read-back chosen for entity 'atsconfiguration'",
+    "body": {
+     "AtsId": 1,
+     "AtsConfigName": "ATS test",
+     "AtsDescription": "testing ATS",
+     "AtsUrl": "https://10.10.0.173/Software/html5.html",
+     "AtsUserName": "TEST",
+     "AtsXWD": "Pass@321"
+    }
+   },
+   {
+    "name": "UpdateAtsConfiguration",
+    "verb": "POST",
+    "path": "/api/ATSConfiguration/UpdateAtsConfiguration",
+    "body": {
+     "AtsId": 2,
+     "AtsConfigName": "test",
+     "AtsUrl": "https://10.10.0.173/software/html5.html",
+     "AtsUserName": "test",
+     "AtsXWD": "OAIZwY+gSYXQqLj5Z1EAgg==",
+     "AtsPin": "2328"
+    },
+    "sla_ms": 20000,
+    "stop_on_fail": false,
+    "note": "update against the record created above"
+   },
+   {
+    "name": "DeleteAtsConfiguration",
+    "verb": "POST",
+    "path": "/api/ATSConfiguration/DeleteAtsConfiguration",
+    "body": {
+     "AtsId": 1
+    },
+    "sla_ms": 20000,
+    "stop_on_fail": false,
+    "teardown": true,
+    "note": "removes the record this flow created; requires --allow-teardown"
+   }
+  ]
+ },
+ {
+  "id": "atsconfiguration__setstatus",
+  "title": "ATSConfiguration lifecycle - SetStatus (no body defined)",
+  "why": "Generated lifecycle chain: discover LOB context, create, read the record back, then optionally update and remove it. This create has no payload defined in the framework, so it is probed with an empty body to document the gap.",
+  "generated": true,
+  "tier": 3,
+  "controller": "ATSConfiguration",
+  "hops": [
+   {
+    "name": "GetLOBList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetLOBList",
+    "body": {},
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LobName": "AUTOMATION_TEST_LOB"
+     },
+     "take": {
+      "LOB_ID": "LobId",
+      "LOB_NAME": "LobName"
+     }
+    },
+    "sla_ms": 8000
+   },
+   {
+    "name": "GetUserGroupList",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetUserGroupListWithoutMandateValue",
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LOBName": "${LOB_NAME}"
+     },
+     "take": {
+      "USER_GROUP_ID": "UserGroupId",
+      "USER_GROUP_NAME": "UserGroupName"
+     }
+    },
+    "sla_ms": 12000
+   },
+   {
+    "name": "GetServerGroupList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetServerGroupList",
+    "body": {
+     "LobId": "${LOB_ID}"
+    },
+    "extract": {
+     "SERVER_GROUP_ID": "Result[0].ServerGroupId"
+    },
+    "stop_on_fail": false,
+    "sla_ms": 8000
+   },
+   {
+    "name": "SetStatus",
+    "verb": "GET",
+    "path": "/api/ATSConfiguration/SetStatus",
+    "body": {},
+    "expect_created": false,
+    "extract_any_id": "NEW_ID",
+    "sla_ms": 20000,
+    "stop_on_fail": false,
+    "note": "generated from setStatusATSConfiguration; NO request body defined in the framework - called with {} to record the gap"
+   },
+   {
+    "name": "GetStatus__verify",
+    "verb": "GET",
+    "path": "/api/ATSConfiguration/GetStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "verify_value_anywhere": {
+     "value": "${NEW_ID}",
+     "label": "created record id"
+    },
+    "note": "read-back chosen for entity 'status'"
+   }
+  ]
+ },
+ {
+  "id": "atsconfiguration__reads_1",
+  "title": "ATSConfiguration read sweep 1",
+  "why": "Exercises read endpoints inside a chain, so each one is called with real LOB context rather than in isolation.",
+  "generated": true,
+  "tier": 2,
+  "controller": "ATSConfiguration",
+  "hops": [
+   {
+    "name": "GetLOBList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetLOBList",
+    "body": {},
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LobName": "AUTOMATION_TEST_LOB"
+     },
+     "take": {
+      "LOB_ID": "LobId",
+      "LOB_NAME": "LobName"
+     }
+    },
+    "sla_ms": 8000
+   },
+   {
+    "name": "GetUserGroupList",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetUserGroupListWithoutMandateValue",
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LOBName": "${LOB_NAME}"
+     },
+     "take": {
+      "USER_GROUP_ID": "UserGroupId",
+      "USER_GROUP_NAME": "UserGroupName"
+     }
+    },
+    "sla_ms": 12000
+   },
+   {
+    "name": "GetServerGroupList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetServerGroupList",
+    "body": {
+     "LobId": "${LOB_ID}"
+    },
+    "extract": {
+     "SERVER_GROUP_ID": "Result[0].ServerGroupId"
+    },
+    "stop_on_fail": false,
+    "sla_ms": 8000
+   },
+   {
+    "name": "GetDatabaseStatus",
+    "verb": "GET",
+    "path": "/api/ATSConfiguration/GetDatabaseStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude"
+   }
+  ]
+ }
+]

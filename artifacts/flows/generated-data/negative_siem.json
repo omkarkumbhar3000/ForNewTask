@@ -1,0 +1,307 @@
+[
+ {
+  "id": "data_negative_siem_1",
+  "title": "SIEM - negative data-driven batch 1",
+  "why": "Executes the QA team's authored negative scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status and error code.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "negative",
+  "tier": 4,
+  "controller": "SIEM",
+  "hops": [
+   {
+    "name": "GetUserLoginAttempt",
+    "verb": "GET",
+    "path": "/api/SIEM/GetUserLoginAttempt",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / SIEM_Negative / SIEM_MethodNotAllowed row 1 (provider SIEM_MethodNotAllowed)",
+    "body": {
+     "FromDate": "2019-06-22T02:37:00",
+     "ToDate": "2020-04-22T02:37:00",
+     "NumberOfRecords": 2
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetFailedLoginAttempt",
+    "verb": "GET",
+    "path": "/api/SIEM/GetFailedLoginAttempt",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / SIEM_Negative / SIEM_MethodNotAllowed row 2 (provider SIEM_MethodNotAllowed)",
+    "body": {
+     "FromDate": "2019-06-22T02:37:00",
+     "ToDate": "2020-04-22T02:37:00",
+     "NumberOfRecords": 3
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetServiceAccess",
+    "verb": "GET",
+    "path": "/api/SIEM/GetServiceAccess",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / SIEM_Negative / SIEM_MethodNotAllowed row 3 (provider SIEM_MethodNotAllowed)",
+    "body": {
+     "FromDate": "2019-06-22T02:37:00",
+     "ToDate": "2020-04-22T02:37:00",
+     "NumberOfRecords": 3
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetServiceCommand",
+    "verb": "GET",
+    "path": "/api/SIEM/GetServiceCommand",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / SIEM_Negative / SIEM_MethodNotAllowed row 4 (provider SIEM_MethodNotAllowed)",
+    "body": {
+     "FromDate": "2019-06-22T02:37:00",
+     "ToDate": "2020-04-22T02:37:00",
+     "NumberOfRecords": 3
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetPasswordView",
+    "verb": "GET",
+    "path": "/api/SIEM/GetPasswordView",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / SIEM_Negative / SIEM_MethodNotAllowed row 5 (provider SIEM_MethodNotAllowed)",
+    "body": {
+     "FromDate": "2019-06-22T02:37:00",
+     "ToDate": "2020-04-22T02:37:00",
+     "NumberOfRecords": 3
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetServicePasswordChange",
+    "verb": "GET",
+    "path": "/api/SIEM/GetServicePasswordChange",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / SIEM_Negative / SIEM_MethodNotAllowed row 6 (provider SIEM_MethodNotAllowed)",
+    "body": {
+     "FromDate": "2019-06-22T02:37:00",
+     "ToDate": "2020-04-22T02:37:00",
+     "NumberOfRecords": 3
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetServicePasswordEnvelopePrint",
+    "verb": "GET",
+    "path": "/api/SIEM/GetServicePasswordEnvelopePrint",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / SIEM_Negative / SIEM_MethodNotAllowed row 7 (provider SIEM_MethodNotAllowed)",
+    "body": {
+     "FromDate": "2019-06-22T02:37:00",
+     "ToDate": "2020-04-22T02:37:00",
+     "NumberOfRecords": 3
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetArcosLog",
+    "verb": "GET",
+    "path": "/api/SIEM/GetArcosLog",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / SIEM_Negative / SIEM_MethodNotAllowed row 8 (provider SIEM_MethodNotAllowed)",
+    "body": {
+     "FromDate": "2019-06-22T02:37:00",
+     "ToDate": "2020-04-22T02:37:00",
+     "NumberOfRecords": 3
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetProcessLog",
+    "verb": "GET",
+    "path": "/api/SIEM/GetProcessLog",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / SIEM_Negative / SIEM_MethodNotAllowed row 9 (provider SIEM_MethodNotAllowed)",
+    "body": {
+     "FromDate": "2022-01-01T02:37:00",
+     "ToDate": "2022-05-10T12:37:00",
+     "NumberOfRecords": 10000,
+     "lobId": "6"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetServicePasswordStatus",
+    "verb": "GET",
+    "path": "/api/SIEM/GetServicePasswordStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / SIEM_Negative / SIEM_MethodNotAllowed row 10 (provider SIEM_MethodNotAllowed)",
+    "body": {
+     "ServiceTypeId": 10,
+     "UserName": "arcos007",
+     "Password": "",
+     "DomainName": "178.249.3.21",
+     "ServerIp": "178.249.3.21"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetUserActivityLogSSM",
+    "verb": "GET",
+    "path": "/api/SIEM/GetUserActivityLogSSM",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / SIEM_Negative / SIEM_MethodNotAllowed row 11 (provider SIEM_MethodNotAllowed)",
+    "body": {
+     "FromDate": "2022-01-01T02:37:00",
+     "ToDate": "2022-05-10T12:37:00",
+     "NumberOfRecords": 10000,
+     "lobId": "6"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetUserActivityLogOOA",
+    "verb": "GET",
+    "path": "/api/SIEM/GetUserActivityLogOOA",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / SIEM_Negative / SIEM_MethodNotAllowed row 12 (provider SIEM_MethodNotAllowed)",
+    "body": {
+     "FromDate": "2022-01-01T02:37:00",
+     "ToDate": "2022-05-10T12:37:00",
+     "NumberOfRecords": 10000,
+     "lobId": "6"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   }
+  ]
+ },
+ {
+  "id": "data_negative_siem_2",
+  "title": "SIEM - negative data-driven batch 2",
+  "why": "Executes the QA team's authored negative scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status and error code.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "negative",
+  "tier": 4,
+  "controller": "SIEM",
+  "hops": [
+   {
+    "name": "GetMetaDataLog",
+    "verb": "GET",
+    "path": "/api/SIEM/GetMetaDataLog",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / SIEM_Negative / SIEM_MethodNotAllowed row 13 (provider SIEM_MethodNotAllowed)",
+    "body": {
+     "FromDate": "2022-01-01T02:37:00",
+     "ToDate": "2022-05-10T12:37:00",
+     "NumberOfRecords": 10000,
+     "lobId": "6"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetServicePasswordRequestLog",
+    "verb": "GET",
+    "path": "/api/SIEM/GetServicePasswordRequestLog",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / SIEM_Negative / SIEM_MethodNotAllowed row 14 (provider SIEM_MethodNotAllowed)",
+    "body": {
+     "FromDate": "2022-01-01T02:37:00",
+     "ToDate": "2022-05-10T12:37:00",
+     "NumberOfRecords": 10000,
+     "lobId": "6"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetUserStatusLog",
+    "verb": "GET",
+    "path": "/api/SIEM/GetUserStatusLog",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / SIEM_Negative / SIEM_MethodNotAllowed row 15 (provider SIEM_MethodNotAllowed)",
+    "body": {
+     "FromDate": "2022-01-01T02:37:00",
+     "ToDate": "2022-05-10T12:37:00",
+     "NumberOfRecords": 10000,
+     "lobId": "6"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetStatus",
+    "verb": "POST",
+    "path": "/api/SIEM/GetStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / SIEM_Negative / SIEM_MethodNotAllowed row 16 (provider SIEM_MethodNotAllowed)",
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "SetStatus",
+    "verb": "POST",
+    "path": "/api/SIEM/SetStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / SIEM_Negative / SIEM_MethodNotAllowed row 17 (provider SIEM_MethodNotAllowed)",
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetDatabaseStatus",
+    "verb": "POST",
+    "path": "/api/SIEM/GetDatabaseStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / SIEM_Negative / SIEM_MethodNotAllowed row 18 (provider SIEM_MethodNotAllowed)",
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   }
+  ]
+ }
+]

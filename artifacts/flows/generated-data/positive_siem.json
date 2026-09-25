@@ -1,0 +1,289 @@
+[
+ {
+  "id": "data_positive_siem_1",
+  "title": "SIEM - positive data-driven batch 1",
+  "why": "Executes the QA team's authored positive scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "positive",
+  "tier": 4,
+  "controller": "SIEM",
+  "hops": [
+   {
+    "name": "GetUserLoginAttempt",
+    "verb": "POST",
+    "path": "/api/SIEM/GetUserLoginAttempt",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / SIEM_positive row 1 (provider SIEM)",
+    "body": {
+     "FromDate": "2019-06-22T02:37:00",
+     "ToDate": "2020-04-22T02:37:00",
+     "NumberOfRecords": 2
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetFailedLoginAttempt",
+    "verb": "POST",
+    "path": "/api/SIEM/GetFailedLoginAttempt",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / SIEM_positive row 2 (provider SIEM)",
+    "body": {
+     "FromDate": "2019-06-22T02:37:00",
+     "ToDate": "2020-04-22T02:37:00",
+     "NumberOfRecords": 3
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetServiceAccess",
+    "verb": "POST",
+    "path": "/api/SIEM/GetServiceAccess",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / SIEM_positive row 3 (provider SIEM)",
+    "body": {
+     "FromDate": "2019-06-22T02:37:00",
+     "ToDate": "2020-04-22T02:37:00",
+     "NumberOfRecords": 3
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetServiceCommand",
+    "verb": "POST",
+    "path": "/api/SIEM/GetServiceCommand",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / SIEM_positive row 4 (provider SIEM)",
+    "body": {
+     "FromDate": "2019-06-22T02:37:00",
+     "ToDate": "2020-04-22T02:37:00",
+     "NumberOfRecords": 3
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetPasswordView",
+    "verb": "POST",
+    "path": "/api/SIEM/GetPasswordView",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / SIEM_positive row 5 (provider SIEM)",
+    "body": {
+     "FromDate": "2019-06-22T02:37:00",
+     "ToDate": "2020-04-22T02:37:00",
+     "NumberOfRecords": 3
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetServicePasswordChange",
+    "verb": "POST",
+    "path": "/api/SIEM/GetServicePasswordChange",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / SIEM_positive row 6 (provider SIEM)",
+    "body": {
+     "FromDate": "2019-06-22T02:37:00",
+     "ToDate": "2020-04-22T02:37:00",
+     "NumberOfRecords": 3
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetServicePasswordEnvelopePrint",
+    "verb": "POST",
+    "path": "/api/SIEM/GetServicePasswordEnvelopePrint",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / SIEM_positive row 7 (provider SIEM)",
+    "body": {
+     "FromDate": "2019-06-22T02:37:00",
+     "ToDate": "2020-04-22T02:37:00",
+     "NumberOfRecords": 3
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetArcosLog",
+    "verb": "POST",
+    "path": "/api/SIEM/GetArcosLog",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / SIEM_positive row 8 (provider SIEM)",
+    "body": {
+     "FromDate": "2019-06-22T02:37:00",
+     "ToDate": "2020-04-22T02:37:00",
+     "NumberOfRecords": 3
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetProcessLog",
+    "verb": "POST",
+    "path": "/api/SIEM/GetProcessLog",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / SIEM_positive row 9 (provider SIEM)",
+    "body": {
+     "FromDate": "2022-01-01T02:37:00",
+     "ToDate": "2022-05-10T12:37:00",
+     "NumberOfRecords": 10000,
+     "lobId": "6"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetServicePasswordStatus",
+    "verb": "POST",
+    "path": "/api/SIEM/GetServicePasswordStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / SIEM_positive row 10 (provider SIEM)",
+    "body": {
+     "ServiceTypeId": 10,
+     "UserName": "arcos007",
+     "Password": "",
+     "DomainName": "178.249.3.21",
+     "ServerIp": "178.249.3.21"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetUserActivityLogSSM",
+    "verb": "POST",
+    "path": "/api/SIEM/GetUserActivityLogSSM",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / SIEM_positive row 11 (provider SIEM)",
+    "body": {
+     "FromDate": "2022-01-01T02:37:00",
+     "ToDate": "2022-05-10T12:37:00",
+     "NumberOfRecords": 10000,
+     "lobId": "6"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetUserActivityLogOOA",
+    "verb": "POST",
+    "path": "/api/SIEM/GetUserActivityLogOOA",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / SIEM_positive row 12 (provider SIEM)",
+    "body": {
+     "FromDate": "2022-01-01T02:37:00",
+     "ToDate": "2022-05-10T12:37:00",
+     "NumberOfRecords": 10000,
+     "lobId": "6"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   }
+  ]
+ },
+ {
+  "id": "data_positive_siem_2",
+  "title": "SIEM - positive data-driven batch 2",
+  "why": "Executes the QA team's authored positive scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "positive",
+  "tier": 4,
+  "controller": "SIEM",
+  "hops": [
+   {
+    "name": "GetMetaDataLog",
+    "verb": "POST",
+    "path": "/api/SIEM/GetMetaDataLog",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / SIEM_positive row 13 (provider SIEM)",
+    "body": {
+     "FromDate": "2022-01-01T02:37:00",
+     "ToDate": "2022-05-10T12:37:00",
+     "NumberOfRecords": 10000,
+     "lobId": "6"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetServicePasswordRequestLog",
+    "verb": "POST",
+    "path": "/api/SIEM/GetServicePasswordRequestLog",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / SIEM_positive row 14 (provider SIEM)",
+    "body": {
+     "FromDate": "2022-01-01T02:37:00",
+     "ToDate": "2022-05-10T12:37:00",
+     "NumberOfRecords": 10000,
+     "lobId": "6"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetUserStatusLog",
+    "verb": "POST",
+    "path": "/api/SIEM/GetUserStatusLog",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / SIEM_positive row 15 (provider SIEM)",
+    "body": {
+     "FromDate": "2022-01-01T02:37:00",
+     "ToDate": "2022-05-10T12:37:00",
+     "NumberOfRecords": 10000,
+     "lobId": "6"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetStatus",
+    "verb": "GET",
+    "path": "/api/SIEM/GetStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / SIEM_positive row 16 (provider SIEM)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "SetStatus",
+    "verb": "GET",
+    "path": "/api/SIEM/SetStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / SIEM_positive row 17 (provider SIEM)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetDatabaseStatus",
+    "verb": "GET",
+    "path": "/api/SIEM/GetDatabaseStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / SIEM_positive row 18 (provider SIEM)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   }
+  ]
+ }
+]

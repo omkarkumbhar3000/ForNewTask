@@ -1,0 +1,180 @@
+[
+ {
+  "id": "data_negative_user_management_1",
+  "title": "User Management - negative data-driven batch 1",
+  "why": "Executes the QA team's authored negative scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status and error code.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "negative",
+  "tier": 4,
+  "controller": "User Management",
+  "hops": [
+   {
+    "name": "EnableUser",
+    "verb": "POST",
+    "path": "/api/UserDetails/EnableUser?UserId=35",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from API_ExcelDataProviderFileName / KotakSNOWApi_NegativeScenarios / KotakSNOWApi_InvalidQueryParams row 2 (provider KotakSNOWApi_InvalidQueryParams)",
+    "body": {
+     "UserId": 35
+    },
+    "expect_status": 400,
+    "scenario": "InvalidQueryParams",
+    "negative": true
+   },
+   {
+    "name": "UpdateUserInfo",
+    "verb": "POST",
+    "path": "/api/UserDetails/UpdateUserInfo?UserId=35&UserDisplayName=ARCOSADMIN&DomainName=ARCOSAUTH&ValidTill=01/01/2059%2011:59:00&Status=1&UserLOBId=24&UserGroupId=30&EmailId=test@gmail.com&MobileNo=9876543210&UserTypeId=0&DualFactorTypeId=4",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from API_ExcelDataProviderFileName / KotakSNOWApi_NegativeScenarios / KotakSNOWApi_InvalidQueryParams row 3 (provider KotakSNOWApi_InvalidQueryParams)",
+    "body": {
+     "UserId": 35,
+     "UserDisplayName": "ARCOSADMIN",
+     "DomainName": "ARCOSAUTH",
+     "ValidTill": "01/01/2059 11:59:00",
+     "Status": 1,
+     "UserLOBId": "9",
+     "UserGroupId": "30",
+     "EmailId": "test@gmail.com",
+     "MobileNo": "9876543210",
+     "UserTypeId": 0,
+     "DualFactorTypeId": 4
+    },
+    "expect_status": 400,
+    "scenario": "InvalidQueryParams",
+    "negative": true
+   },
+   {
+    "name": "SetUserDetails",
+    "verb": "POST",
+    "path": "/api/UserDetails/SetUserDetails?payload=%7B%22LOBID%22%3A24%2C%22UserGroupId%22%3A30%2C%22DomainName%22%3A%22ARCOSAUTH%22%2C%22UserDisplayName%22%3A%22ARCOSADMIN%22%2C%22UserId%22%3A%2235%22%2C%22Password%22%3A%22pass%40123%22%2C%22UserTypeId%22%3A2%2C%22DualFactorTypeId%22%3A1%2C%22MobileNo%22%3A9876543211%2C%22EmailId%22%3A%22abc12%40email.com%22%7D",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from API_ExcelDataProviderFileName / KotakSNOWApi_NegativeScenarios / KotakSNOWApi_InvalidQueryParams row 16 (provider KotakSNOWApi_InvalidQueryParams)",
+    "body": {
+     "LOBID": 9,
+     "UserGroupId": 30,
+     "DomainName": "ARCOSAUTH",
+     "UserDisplayName": "ARCOSADMIN",
+     "UserId": "35",
+     "Password": "pass@123",
+     "UserTypeId": 2,
+     "DualFactorTypeId": 1,
+     "MobileNo": 9876543211,
+     "EmailId": "abc12@email.com"
+    },
+    "expect_status": 400,
+    "scenario": "InvalidQueryParams",
+    "negative": true
+   },
+   {
+    "name": "EnableUser",
+    "verb": "GET",
+    "path": "/api/UserDetails/EnableUser",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from API_ExcelDataProviderFileName / KotakSNOWApi_NegativeScenarios / KotakSNOWApi_MethodNotAllowed row 2 (provider KotakSNOWApi_MethodNotAllowed)",
+    "body": {
+     "__raw__": "{\n\u00a0 \u00a0 \"UserId\":35\n}"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "UpdateUserInfo",
+    "verb": "GET",
+    "path": "/api/UserDetails/UpdateUserInfo",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from API_ExcelDataProviderFileName / KotakSNOWApi_NegativeScenarios / KotakSNOWApi_MethodNotAllowed row 3 (provider KotakSNOWApi_MethodNotAllowed)",
+    "body": {
+     "__raw__": "{\n\u00a0 \u00a0 \u00a0\"UserId\": 35,\n\u00a0 \u00a0 \u00a0 \"UserDisplayName\": \"ARCOSADMIN\",\n\u00a0 \u00a0 \u00a0 \"DomainName\": \"ARCOSAUTH\",\n\u00a0 \u00a0 \u00a0 \"ValidTill\": \"01/01/2059 11:59:00\",\n\u00a0 \u00a0 \u00a0 \"Status\": 1,\n\u00a0 \u00a0 \u00a0 \"UserLOBId\": \"24\",\n\u00a0 \u00a0 \u00a0 \"UserGroupId\": \"30\",\n\u00a0 \u00a0 \u00a0 \"EmailId\": \"test@gmail.com\",\n\u00a0 \u00a0 \u00a0 \"MobileNo\": \"9876543210\",\n\u00a0 \u00a0 \u00a0 \"UserTypeId\": 0,\n\u00a0 \u00a0 \u00a0 \"DualFactorTypeId\": 4\n}"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "SetUserDetails",
+    "verb": "GET",
+    "path": "/api/UserDetails/SetUserDetails",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from API_ExcelDataProviderFileName / KotakSNOWApi_NegativeScenarios / KotakSNOWApi_MethodNotAllowed row 16 (provider KotakSNOWApi_MethodNotAllowed)",
+    "body": {
+     "LOBID": 24,
+     "UserGroupId": 30,
+     "DomainName": "ARCOSAUTH",
+     "UserDisplayName": "ARCOSADMIN",
+     "UserId": "35",
+     "Password": "pass@123",
+     "UserTypeId": 2,
+     "DualFactorTypeId": 1,
+     "MobileNo": 9876543211,
+     "EmailId": "abc12@email.com"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "EnableUser",
+    "verb": "POST",
+    "path": "/api/UserDetails/EnableUser",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from API_ExcelDataProviderFileName / KotakSNOWApi_NegativeScenarios / KotakSNOWApi_UnauthorizedAccess row 2 (provider KotakSNOWApi_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "__raw__": "{\n\u00a0 \u00a0 \"UserId\":35\n}"
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "UpdateUserInfo",
+    "verb": "POST",
+    "path": "/api/UserDetails/UpdateUserInfo",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from API_ExcelDataProviderFileName / KotakSNOWApi_NegativeScenarios / KotakSNOWApi_UnauthorizedAccess row 3 (provider KotakSNOWApi_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "__raw__": "{\n\u00a0 \u00a0 \u00a0\"UserId\": 35,\n\u00a0 \u00a0 \u00a0 \"UserDisplayName\": \"ARCOSADMIN\",\n\u00a0 \u00a0 \u00a0 \"DomainName\": \"ARCOSAUTH\",\n\u00a0 \u00a0 \u00a0 \"ValidTill\": \"01/01/2059 11:59:00\",\n\u00a0 \u00a0 \u00a0 \"Status\": 1,\n\u00a0 \u00a0 \u00a0 \"UserLOBId\": \"24\",\n\u00a0 \u00a0 \u00a0 \"UserGroupId\": \"30\",\n\u00a0 \u00a0 \u00a0 \"EmailId\": \"test@gmail.com\",\n\u00a0 \u00a0 \u00a0 \"MobileNo\": \"9876543210\",\n\u00a0 \u00a0 \u00a0 \"UserTypeId\": 0,\n\u00a0 \u00a0 \u00a0 \"DualFactorTypeId\": 4\n}"
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "SetUserDetails",
+    "verb": "POST",
+    "path": "/api/UserDetails/SetUserDetails",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from API_ExcelDataProviderFileName / KotakSNOWApi_NegativeScenarios / KotakSNOWApi_UnauthorizedAccess row 16 (provider KotakSNOWApi_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "LOBID": 24,
+     "UserGroupId": 30,
+     "DomainName": "ARCOSAUTH",
+     "UserDisplayName": "ARCOSADMIN",
+     "UserId": "35",
+     "Password": "pass@123",
+     "UserTypeId": 2,
+     "DualFactorTypeId": 1,
+     "MobileNo": 9876543211,
+     "EmailId": "abc12@email.com"
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   }
+  ]
+ }
+]

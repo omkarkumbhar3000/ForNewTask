@@ -1,0 +1,1681 @@
+[
+ {
+  "id": "data_positive_servicedetailsv3_1",
+  "title": "ServiceDetailsV3 - positive data-driven batch 1",
+  "why": "Executes the QA team's authored positive scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "positive",
+  "tier": 4,
+  "controller": "ServiceDetailsV3",
+  "hops": [
+   {
+    "name": "GetServiceDetails",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetServiceDetails",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 1 (provider ServiceDetailsV3)",
+    "body": {
+     "ServiceId": "114535",
+     "UserId": 35,
+     "ServiceTypeId": "1",
+     "UserSessionId": "1",
+     "ConnectionType": "ACMOCLI"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetDomains",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetDomains",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 2 (provider ServiceDetailsV3)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "CheckAzureSession",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/CheckAzureSession",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 3 (provider ServiceDetailsV3)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "AuthenticateUser",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/AuthenticateUser",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 4 (provider ServiceDetailsV3)",
+    "body": {
+     "__raw__": "{\n\"UserName\":\"User12\",\n\"Password\":\"User@1234\",\n\"DomainName\":\"ATSTESTDC\",\n\"IPAddress\":\"10.10.1.123\",\n\"IPMacAddress\":\"AB:CD:34:EF:GH:12\",\n\"ConnectionType\":\"sso\",\n\"ProcessorID\":\"\",\n\"BIOSSerialID\":\"\", \n}"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "AuthenticateUser_Pycli",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/AuthenticateUser_Pycli",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 5 (provider ServiceDetailsV3)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "AuthenticateUserEncrypted",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/AuthenticateUserEncrypted",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 6 (provider ServiceDetailsV3)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetUsersServicesTimebased",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetUsersServicesTimebased",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 7 (provider ServiceDetailsV3)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetServicesParamByServiceID",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetServicesParamByServiceID",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 8 (provider ServiceDetailsV3)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetOrSet2FAInRA",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetOrSet2FAInRA",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 9 (provider ServiceDetailsV3)",
+    "body": {
+     "UserName": "ARCOSADMIN",
+     "IsEnable": true,
+     "ActionType": "insert",
+     "ModifiedBy": "ARCOSADMIN"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "AuthenticateUserPasswordLess",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/AuthenticateUserPasswordLess",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 10 (provider ServiceDetailsV3)",
+    "body": {
+     "UserName": "ARCOSADMIN",
+     "UserId": "",
+     "DomainName": "ARCOSAUTH",
+     "IPAddress": "10.10.1.123",
+     "IPMacAddress": "AB:CD:34:EF:GH:12",
+     "ProcessorID": "",
+     "BIOSSerialID": ""
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetUserPasswordLessLogin",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetUserPasswordLessLogin",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 11 (provider ServiceDetailsV3)",
+    "body": {
+     "UserId": "35"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "AuthenticateUserAfterLockout",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/AuthenticateUserAfterLockout",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 12 (provider ServiceDetailsV3)",
+    "body": {
+     "UserName": "User12",
+     "Password": "User@1234",
+     "DomainName": "ATSTESTDC",
+     "IPAddress": "10.10.1.123",
+     "IPMacAddress": "AB:CD:34:EF:GH:12"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   }
+  ]
+ },
+ {
+  "id": "data_positive_servicedetailsv3_2",
+  "title": "ServiceDetailsV3 - positive data-driven batch 2",
+  "why": "Executes the QA team's authored positive scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "positive",
+  "tier": 4,
+  "controller": "ServiceDetailsV3",
+  "hops": [
+   {
+    "name": "ResendOTP",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/ResendOTP",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 13 (provider ServiceDetailsV3)",
+    "body": {
+     "SessionID": 1,
+     "FAAccessType": 4
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "ValidateOTP",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/ValidateOTP",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 14 (provider ServiceDetailsV3)",
+    "body": {
+     "SessionID": "1",
+     "FAAccessType": "4"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetConfigDetails",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetConfigDetails",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 15 (provider ServiceDetailsV3)",
+    "body": {
+     "UserId": 35
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetMasterChildServiceData",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetMasterChildServiceData",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 16 (provider ServiceDetailsV3)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetAssignedServiceList",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetAssignedServiceList",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 17 (provider ServiceDetailsV3)",
+    "body": {
+     "UserId": 35,
+     "ServiceTypeId": "1"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetAssignedServiceListForPaging",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetAssignedServiceListForPaging",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 18 (provider ServiceDetailsV3)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetAssignedServiceListForPagingNew",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetAssignedServiceListForPagingNew",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 19 (provider ServiceDetailsV3)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetAssignedServiceListWithSpecificCount",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetAssignedServiceListWithSpecificCount",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 20 (provider ServiceDetailsV3)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetAssignedServiceListForOnlineMultitab",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetAssignedServiceListForOnlineMultitab",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 21 (provider ServiceDetailsV3)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetFilteredAssignedServiceList1",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetFilteredAssignedServiceList1",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 22 (provider ServiceDetailsV3)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetFilteredAssignedServiceListWithPaging",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetFilteredAssignedServiceListWithPaging",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 23 (provider ServiceDetailsV3)",
+    "body": {
+     "UserId": "35",
+     "ServiceTypeId": "7",
+     "PageNumber": 1,
+     "PageSize": 10
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetFilteredAssignedServiceList",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetFilteredAssignedServiceList",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 24 (provider ServiceDetailsV3)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   }
+  ]
+ },
+ {
+  "id": "data_positive_servicedetailsv3_3",
+  "title": "ServiceDetailsV3 - positive data-driven batch 3",
+  "why": "Executes the QA team's authored positive scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "positive",
+  "tier": 4,
+  "controller": "ServiceDetailsV3",
+  "hops": [
+   {
+    "name": "GetServiceReferenceTemplate",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetServiceReferenceTemplate",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 25 (provider ServiceDetailsV3)",
+    "body": {
+     "serviceId": "20"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "ValidateServiceReference",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/ValidateServiceReference",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 26 (provider ServiceDetailsV3)",
+    "body": {
+     "__raw__": "{\n\"UserName\":\"\",\n\"UserId\":\"\",\n\"ScenarioName\":\"\",\n\"TicketNo\":\"\",\n\"ServerIPAddress\":\"\",\n\"IsValidateServerIp\":\"\",\n\"UserGroup\":\"\",\n\"IsReferenceOption1\":\"\",\n\"IsIPAddressReferenceOption1\":\"\",\n\"ReferenceMethodOption1\":\"\",\n\"AllowedMaxAttempts\":\"\";\n}"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetServiceDetails_Pycli",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetServiceDetails_Pycli",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 27 (provider ServiceDetailsV3)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetServiceDetailsByIP",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetServiceDetailsByIP",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 28 (provider ServiceDetailsV3)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetServiceDetailsByIPNew",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetServiceDetailsByIPNew",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 29 (provider ServiceDetailsV3)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "SetSessionVideoLog",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/SetSessionVideoLog",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 30 (provider ServiceDetailsV3)",
+    "body": {
+     "ServiceSessionId": "23455",
+     "Base64image": "Test"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "SetSessionCommandLog",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/SetSessionCommandLog",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 31 (provider ServiceDetailsV3)",
+    "body": {
+     "ServiceSessionId": "54535",
+     "CommandType": "[sshlinux@lnxrh5_arconsrv]$ date",
+     "CommandResponse": "Restricted Command"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "SetRDPSessionProcessLog",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/SetRDPSessionProcessLog",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 32 (provider ServiceDetailsV3)",
+    "body": {
+     "__raw__": "{\n\"ServiceSessionId\":\"56\",\n\"UserSessionId\":\"4\",\n\"ServiceID\":\"\"1\",\n\"UserID\":\"35\",\n\"ProcessName\":\"explorer\",\n\"ProcessTitle\":\"Start menu\",\n\"ProcessLogType\":\"5\",\n\"LogResponse\":\"Test\",\n\"LogNo\":\"1\"\n}"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "SetServiceSessionLogout",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/SetServiceSessionLogout",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 33 (provider ServiceDetailsV3)",
+    "body": {
+     "ServiceSessionID": "1",
+     "LogoutDateTime": "08/04/2020 10:42:00",
+     "LogoutMessage": "Logout"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "SetUserSessionLogout",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/SetUserSessionLogout",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 34 (provider ServiceDetailsV3)",
+    "body": {
+     "UserSessionId": "1",
+     "UserId": "35",
+     "LogoutDateTime": "08/04/2020 03:52:00",
+     "LogoutMessage": "Logout"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "SetErrorLog",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/SetErrorLog",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 35 (provider ServiceDetailsV3)",
+    "body": {
+     "IpAddress": "10.11.1.111",
+     "LoggedOnDate": "08/13/2020 17:07:03",
+     "Thread": "113",
+     "Level": "Error",
+     "NameSpace": "Project1.Database",
+     "Class": "Class1",
+     "Method": "Test",
+     "Message": "TestMessage",
+     "Exception": "TestException"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetRecentServices",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetRecentServices",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 36 (provider ServiceDetailsV3)",
+    "body": {
+     "UserId": 35,
+     "NoOfRecentConnections": 2
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   }
+  ]
+ },
+ {
+  "id": "data_positive_servicedetailsv3_4",
+  "title": "ServiceDetailsV3 - positive data-driven batch 4",
+  "why": "Executes the QA team's authored positive scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "positive",
+  "tier": 4,
+  "controller": "ServiceDetailsV3",
+  "hops": [
+   {
+    "name": "GetUserGroupHistoryVideoLog",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetUserGroupHistoryVideoLog",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 37 (provider ServiceDetailsV3)",
+    "body": {
+     "log_id": "1",
+     "pamurl": "http://localhost:55560"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetServerDetailsFromOSName",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetServerDetailsFromOSName",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 38 (provider ServiceDetailsV3)",
+    "body": {
+     "__raw__": "http://localhost:55560/api/ServiceDetails/GetServerDetailsFromOSName?ServiceType=Windows"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetLDAPDomainDetails",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetLDAPDomainDetails",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 39 (provider ServiceDetailsV3)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "SetServiceOnboarding",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/SetServiceOnboarding",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 40 (provider ServiceDetailsV3)",
+    "body": {
+     "LOBID": "NOIDA1",
+     "ServerGroupName": "DTH-DARTS",
+     "Hostname": "N2PL-PA-RPT101",
+     "IPAddress": "10.10.0.110",
+     "Domain": "oneairtel",
+     "ServiceTypeId": "WindowsRDP",
+     "DBInstanceName": "",
+     "Port": "",
+     "ServiceUserName": "arcos_user",
+     "ServicePassword": "[... Removed for brevity ....]",
+     "ValidTilldate": "",
+     "Description1": "",
+     "Description2": "",
+     "Description3": "",
+     "Parameter": "",
+     "AllowPasswordChange": true,
+     "Minimumpasswordage": 30,
+     "Maximumpasswordage": 90,
+     "UseGlobalPasswordPolicy": true,
+     "AllowScheduledPasswordChange": true,
+     "AutoMapUsersInUserGroup": true,
+     "RequestorUserID": "arcosadmin",
+     "RequestorDomain": "testarcos"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "SetServiceOffboarding",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/SetServiceOffboarding",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 41 (provider ServiceDetailsV3)",
+    "body": {
+     "IPAddress": "10.10.0.48",
+     "ServiceTypeID": "1"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetAvailableSession",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetAvailableSession",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 42 (provider ServiceDetailsV3)",
+    "body": {
+     "ServiceSessionId": "16545",
+     "ACMOURL": "",
+     "VideoFileName": "",
+     "RelativePath": ""
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "UpdateSessionVideoDetails",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/UpdateSessionVideoDetails",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 43 (provider ServiceDetailsV3)",
+    "body": {
+     "ServiceSessionId": "BGxWpFJESu/VMEDN0Ugw9w==",
+     "ACMOURL": "",
+     "VideoFileName": "xxxxx",
+     "RelativePath": "xxxxx"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetServiceDetailsFromSession",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetServiceDetailsFromSession",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 44 (provider ServiceDetailsV3)",
+    "body": {
+     "ServiceSessionId": "2227"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetKeyGenerateStatus",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetKeyGenerateStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 45 (provider ServiceDetailsV3)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetAppSettings",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetAppSettings",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 46 (provider ServiceDetailsV3)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "UpdateSnowTicket",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/UpdateSnowTicket",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 47 (provider ServiceDetailsV3)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetFromTableValues",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetFromTableValues",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 48 (provider ServiceDetailsV3)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   }
+  ]
+ },
+ {
+  "id": "data_positive_servicedetailsv3_5",
+  "title": "ServiceDetailsV3 - positive data-driven batch 5",
+  "why": "Executes the QA team's authored positive scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "positive",
+  "tier": 4,
+  "controller": "ServiceDetailsV3",
+  "hops": [
+   {
+    "name": "IsSSMorFWActive",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/IsSSMorFWActive",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 49 (provider ServiceDetailsV3)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetCriticalCommands",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetCriticalCommands",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 50 (provider ServiceDetailsV3)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetCriticalRestrictedCommands",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetCriticalRestrictedCommands",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 51 (provider ServiceDetailsV3)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetServiceDetailsBySessionId_AcmoCLI",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetServiceDetailsBySessionId_AcmoCLI",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 52 (provider ServiceDetailsV3)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetServiceDetailsBySessionId",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetServiceDetailsBySessionId",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 53 (provider ServiceDetailsV3)",
+    "body": {
+     "__raw__": "http://localhost:55560/api/ServiceDetails/GetServiceDetailsBySessionId?sessionId=2227"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetServiceDetailsBySessionId_New",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetServiceDetailsBySessionId_New",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 54 (provider ServiceDetailsV3)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetServiceUsernamePasswordBySessionIdHash",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetServiceUsernamePasswordBySessionIdHash",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 55 (provider ServiceDetailsV3)",
+    "body": {
+     "ServiceSessionId": "BGxWpFJESu/VMEDN0Ugw9w==",
+     "ACMOURL": "",
+     "VideoFileName": "",
+     "RelativePath": ""
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetLogManagerSetting",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetLogManagerSetting",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 56 (provider ServiceDetailsV3)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetLAConfigSetting",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetLAConfigSetting",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 57 (provider ServiceDetailsV3)",
+    "body": {
+     "APS_Id": 80
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetVideoFileName",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetVideoFileName",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 58 (provider ServiceDetailsV3)",
+    "body": {
+     "APS_Id": 80
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetFolderTime",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetFolderTime",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 59 (provider ServiceDetailsV3)",
+    "body": {
+     "APS_Id": 80,
+     "Action_Type": "selectFolderDatetime"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "SetVideoFileName",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/SetVideoFileName",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 60 (provider ServiceDetailsV3)",
+    "body": {
+     "APS_Id": 80,
+     "Action_Type": "UpdateVideoFileName",
+     "VideofileName": "163521.wmv"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   }
+  ]
+ },
+ {
+  "id": "data_positive_servicedetailsv3_6",
+  "title": "ServiceDetailsV3 - positive data-driven batch 6",
+  "why": "Executes the QA team's authored positive scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "positive",
+  "tier": 4,
+  "controller": "ServiceDetailsV3",
+  "hops": [
+   {
+    "name": "Getlobwisevideopath",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/Getlobwisevideopath",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 61 (provider ServiceDetailsV3)",
+    "body": {
+     "aps_id": 168,
+     "Action_Type": "SESSIONVIDEOPATH"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "SetServiceSessionLogoutV2",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/SetServiceSessionLogoutV2",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 62 (provider ServiceDetailsV3)",
+    "body": {
+     "ServiceSessionID": 1,
+     "LogoutDateTimeEpoch": 10,
+     "LogoutMessage": "Logout"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "SetUserSessionLogoutV2",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/SetUserSessionLogoutV2",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 63 (provider ServiceDetailsV3)",
+    "body": {
+     "UserSessionId": 1,
+     "UserId": 35,
+     "LogoutDateTimeEpoch": "10",
+     "LogoutMessage": "Logout"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetActiveServicesByLOBIdAndGroupId",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetActiveServicesByLOBIdAndGroupId",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 64 (provider ServiceDetailsV3)",
+    "body": {
+     "LOBId": 2,
+     "GroupId": 6
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetActiveServicesByLOBId",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetActiveServicesByLOBId",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 65 (provider ServiceDetailsV3)",
+    "body": {
+     "LOBId": 2
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetActiveServicesByFilter",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetActiveServicesByFilter",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 66 (provider ServiceDetailsV3)",
+    "body": {
+     "ServerIp": "10.10.1.111",
+     "ServiceUserName": "tuser985",
+     "DomainName": "LNXRH4_ARCONSRV",
+     "DBInstanceName": ""
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetActiveServicesByGroupId",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetActiveServicesByGroupId",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 67 (provider ServiceDetailsV3)",
+    "body": {
+     "GroupId": "2"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "UpdateUserPassword",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/UpdateUserPassword",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 69 (provider ServiceDetailsV3)",
+    "body": {
+     "userName": "User12",
+     "oldPassword": "User12",
+     "newPassword": "User@1234"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetAllServiceType",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetAllServiceType",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 70 (provider ServiceDetailsV3)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetAllActiveServices",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetAllActiveServices",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 71 (provider ServiceDetailsV3)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetAllSGServices",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetAllSGServices",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 72 (provider ServiceDetailsV3)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetAllLOBServices",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetAllLOBServices",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 73 (provider ServiceDetailsV3)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   }
+  ]
+ },
+ {
+  "id": "data_positive_servicedetailsv3_7",
+  "title": "ServiceDetailsV3 - positive data-driven batch 7",
+  "why": "Executes the QA team's authored positive scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "positive",
+  "tier": 4,
+  "controller": "ServiceDetailsV3",
+  "hops": [
+   {
+    "name": "GetAllUserServices",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetAllUserServices",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 74 (provider ServiceDetailsV3)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetAllServicesTagValues",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetAllServicesTagValues",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 75 (provider ServiceDetailsV3)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "RaiseServiceAccessRequest",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/RaiseServiceAccessRequest",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 76 (provider ServiceDetailsV3)",
+    "body": {
+     "UseValueForMapping": "ServiceUserName",
+     "LOBName": "DEBOARDING",
+     "UserName": "ARCOSADMIN",
+     "ServiceIP": "10.10.0.126",
+     "ServiceUserName": "Pratap.patil",
+     "ServiceTypeID": 1,
+     "DomainName": "ARCOSDEV2",
+     "HostName": "ARCOSDEV2",
+     "DBInstanceName": "NA",
+     "AccessType": 3,
+     "TagValue": "Tag1",
+     "StartDate": "2020-11-29T20:23:23",
+     "EndDate": "2020-11-30T23:59:59",
+     "StartTime": "20:23",
+     "EndTime": "23:59",
+     "AccessDurationHours": 1,
+     "AccessDurationMinutes": 1,
+     "ReferenceType": "",
+     "ReferenceId": "",
+     "DescriptionForRequest": ""
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetConfigCommand",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetConfigCommand",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 77 (provider ServiceDetailsV3)",
+    "body": {
+     "ServiceTypeID": 1
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetAlertMessage",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetAlertMessage",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 78 (provider ServiceDetailsV3)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "RaisePasswordViewRequest",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/RaisePasswordViewRequest",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 79 (provider ServiceDetailsV3)",
+    "body": {
+     "ServiceId": 114535,
+     "UserId": 35,
+     "UserSessionId": 1,
+     "RSPDescription": "Test",
+     "RSPViewOn": "08/13/2020 03:23:00",
+     "RSPViewOnDate": "8",
+     "RequestOpenForHours": "1",
+     "RSPOpenTillDate": "8",
+     "LobID": "1",
+     "UserName": "Pra12",
+     "DomainName": "Arcos01",
+     "VerificationCode": "1234"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "OpenARCOSGateway",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/OpenARCOSGateway",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 80 (provider ServiceDetailsV3)",
+    "body": {
+     "LOBProfile": "DEFAULT LOB 1",
+     "ServerIP": "192.168.0.241",
+     "ServiceType": "WindowsRDP",
+     "UserName": "Administrator",
+     "IsUseCustomPort": "false"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "ActiveSessionCount",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/ActiveSessionCount",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 81 (provider ServiceDetailsV3)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "CloseARCOSGateway",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/CloseARCOSGateway",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 82 (provider ServiceDetailsV3)",
+    "body": {
+     "SessionId": 9001
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "SetRelativePath",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/SetRelativePath",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 84 (provider ServiceDetailsV3)",
+    "body": {
+     "SessionLogId": 1,
+     "RelativePath": "LOB 1\\2020\\01\\29\\2020_01_29_1234.Mp4"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetTemplateScreenDetails",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetTemplateScreenDetails",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 85 (provider ServiceDetailsV3)",
+    "body": {
+     "APS_Id": 1
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "UpdateApplicationSessionIdByArconSessionId",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/UpdateApplicationSessionIdByArconSessionId",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 86 (provider ServiceDetailsV3)",
+    "body": {
+     "__raw__": "http://localhost:55560/api/ServiceDetails/UpdateApplicationSessionIdByArconSessionId?arconSessionId=1&appSessionId=2"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   }
+  ]
+ },
+ {
+  "id": "data_positive_servicedetailsv3_8",
+  "title": "ServiceDetailsV3 - positive data-driven batch 8",
+  "why": "Executes the QA team's authored positive scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "positive",
+  "tier": 4,
+  "controller": "ServiceDetailsV3",
+  "hops": [
+   {
+    "name": "RaiseSAR",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/RaiseSAR",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 87 (provider ServiceDetailsV3)",
+    "body": {
+     "UseValueForMapping": "1",
+     "LOBName": "DEFAULT LOB 1",
+     "UserName": "ARCOSADMIN",
+     "ServiceIP": "10.00.0.00",
+     "ServiceUserName": "",
+     "ServiceTypeID": 1,
+     "DomainName": "10.00.0.00",
+     "HostName": "WIN2K8R2ENT_SQL.ANBGLOBALDC.COM",
+     "DBInstanceName": "",
+     "AccessType": 1,
+     "TagValue": ""
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetServiceLastPwdChanged",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetServiceLastPwdChanged",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 88 (provider ServiceDetailsV3)",
+    "body": {
+     "__raw__": "http://localhost:55560/api/ServiceDetails/GetServiceLastPwdChanged?serviceId=5"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "RaisingServiceAccessRequest",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/RaisingServiceAccessRequest",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 89 (provider ServiceDetailsV3)",
+    "body": {
+     "UseValueForMapping": "ServiceUserName",
+     "LOBName": "DEBOARDING",
+     "UserName": "ARCOSADMIN",
+     "ServiceIP": "10.10.0.126",
+     "ServiceUserName": "Pratap.patil",
+     "ServiceTypeID": 1,
+     "DomainName": "ARCOSDEV2",
+     "HostName": "ARCOSDEV2",
+     "DBInstanceName": "NA",
+     "AccessType": 3,
+     "TagValue": "Tag1",
+     "StartDate": "2020-11-29T20:23:23",
+     "EndDate": "2020-11-30T23:59:59",
+     "StartTime": "20:23",
+     "EndTime": "23:59",
+     "AccessDurationHours": 1,
+     "AccessDurationMinutes": 1,
+     "ReferenceType": "",
+     "ReferenceId": "",
+     "DescriptionForRequest": ""
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetCreateModifiedServices",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetCreateModifiedServices",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 90 (provider ServiceDetailsV3)",
+    "body": {
+     "FromDate": "2019-06-22T02:37:00",
+     "ToDate": "2019-06-26T12:37:00",
+     "NumberOfRecords": 2
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetCreateModifiedServicesByLobId",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetCreateModifiedServicesByLobId",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 91 (provider ServiceDetailsV3)",
+    "body": {
+     "FromDate": "2020-01-28T00:00:00",
+     "ToDate": "2020-12-29T00:00:00",
+     "NumberOfRecords": "2",
+     "LOBId": "2"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetCreateModifiedServicesByGroupId",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetCreateModifiedServicesByGroupId",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 92 (provider ServiceDetailsV3)",
+    "body": {
+     "FromDate": "2020-01-28T00:00:00",
+     "ToDate": "2020-12-29T00:00:00",
+     "NumberOfRecords": "2",
+     "GroupId": "2"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetServiceDetailsByServiceId",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetServiceDetailsByServiceId",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 93 (provider ServiceDetailsV3)",
+    "body": {
+     "__raw__": "http://localhost:55560/api/ServiceDetails/GetServiceDetailsByServiceId?serviceId=61307"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetServiceDetailsByServiceIdNew",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetServiceDetailsByServiceIdNew",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 94 (provider ServiceDetailsV3)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetServiceAWSRoles",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetServiceAWSRoles",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 95 (provider ServiceDetailsV3)",
+    "body": {
+     "__raw__": "http://localhost:55560/api/ServiceDetails/GetServiceAWSRoles?serviceId=114605"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetServiceAWSRolesDetails",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetServiceAWSRolesDetails",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 96 (provider ServiceDetailsV3)",
+    "body": {
+     "__raw__": "http://localhost:55560/api/ServiceDetails/GetServiceAWSRolesDetails?roleId=1298"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetServiceDetailsByServiceIdForBot",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetServiceDetailsByServiceIdForBot",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 97 (provider ServiceDetailsV3)",
+    "body": {
+     "ServiceId": 114535,
+     "UserId": 35,
+     "ServiceTypeId": 1,
+     "UserSessionId": 1
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "Set_Service_Session_Limit",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/Set_Service_Session_Limit",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 98 (provider ServiceDetailsV3)",
+    "body": {
+     "__raw__": "http://localhost:55560/api/ServiceDetails/Set_Service_Session_Limit?UserId=35"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   }
+  ]
+ },
+ {
+  "id": "data_positive_servicedetailsv3_9",
+  "title": "ServiceDetailsV3 - positive data-driven batch 9",
+  "why": "Executes the QA team's authored positive scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "positive",
+  "tier": 4,
+  "controller": "ServiceDetailsV3",
+  "hops": [
+   {
+    "name": "Set_User_Session_Limit",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/Set_User_Session_Limit",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 99 (provider ServiceDetailsV3)",
+    "body": {
+     "__raw__": "http://localhost:55560/api/ServiceDetails/Set_User_Session_Limit?UserId=35"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetServicesParamConfig",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetServicesParamConfig",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 100 (provider ServiceDetailsV3)",
+    "body": {
+     "__raw__": "http://localhost:55560/api/ServiceDetails/GetServicesParamConfig?serviceid=1&spmid=1"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetServiceParameters",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetServiceParameters",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 101 (provider ServiceDetailsV3)",
+    "body": {
+     "__raw__": "http://localhost:55560/api/ServiceDetails/GetServiceParameters?serviceId=114925"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetSSOServiceOpenCon",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetSSOServiceOpenCon",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 102 (provider ServiceDetailsV3)",
+    "body": {
+     "__raw__": "http://localhost:55560/api/ServiceDetails/GetSSOServiceOpenCon?serviceid=114925"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetSSOServiceOpenConCSE",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetSSOServiceOpenConCSE",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 103 (provider ServiceDetailsV3)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetSSHKey",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetSSHKey",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 104 (provider ServiceDetailsV3)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetSSHKeyFromIP",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetSSHKeyFromIP",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 105 (provider ServiceDetailsV3)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetWebAPIConfigObject",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetWebAPIConfigObject",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 106 (provider ServiceDetailsV3)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "SetUserSessionTimerUpdate",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/SetUserSessionTimerUpdate",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 107 (provider ServiceDetailsV3)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "UpdateToOTPAuth",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/UpdateToOTPAuth",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 108 (provider ServiceDetailsV3)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "UpdateToNull",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/UpdateToNull",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 109 (provider ServiceDetailsV3)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "EndServiceSession",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/EndServiceSession",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 110 (provider ServiceDetailsV3)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   }
+  ]
+ },
+ {
+  "id": "data_positive_servicedetailsv3_10",
+  "title": "ServiceDetailsV3 - positive data-driven batch 10",
+  "why": "Executes the QA team's authored positive scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "positive",
+  "tier": 4,
+  "controller": "ServiceDetailsV3",
+  "hops": [
+   {
+    "name": "UpdatePasswordOnConnectorLogout",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/UpdatePasswordOnConnectorLogout",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 111 (provider ServiceDetailsV3)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "updateSessionActivityLogs",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/updateSessionActivityLogs",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 112 (provider ServiceDetailsV3)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "newUpdateSessionActivityLogs",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/newUpdateSessionActivityLogs",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 113 (provider ServiceDetailsV3)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetCompleteSessionDetails",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetCompleteSessionDetails",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 114 (provider ServiceDetailsV3)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetConfigById",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetConfigById",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 115 (provider ServiceDetailsV3)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "EndServiceSession_New",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/EndServiceSession_New",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 116 (provider ServiceDetailsV3)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetServicePasswordStatus",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetServicePasswordStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 117 (provider ServiceDetailsV3)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetStatus",
+    "verb": "GET",
+    "path": "/api/ServiceDetailsV3/GetStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 118 (provider ServiceDetailsV3)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "SetStatus",
+    "verb": "GET",
+    "path": "/api/ServiceDetailsV3/SetStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 119 (provider ServiceDetailsV3)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetDatabaseStatus",
+    "verb": "GET",
+    "path": "/api/ServiceDetailsV3/GetDatabaseStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 120 (provider ServiceDetailsV3)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetUserGroupHistory",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetUserGroupHistory",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 123 (provider ServiceDetailsV3)",
+    "body": {
+     "userid": "35",
+     "service_type_id": "2"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetAllServices = GetAllServiceTagValues",
+    "verb": "POST",
+    "path": "/api/ServiceDetailsV3/GetAllServices = GetAllServiceTagValues",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ServiceDetailsV3_positive row 124 (provider ServiceDetailsV3)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   }
+  ]
+ }
+]

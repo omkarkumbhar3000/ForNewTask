@@ -1,0 +1,70 @@
+[
+ {
+  "id": "data_positive_pending_logrequests_1",
+  "title": "Pending_LogRequests - positive data-driven batch 1",
+  "why": "Executes the QA team's authored positive scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "positive",
+  "tier": 4,
+  "controller": "Pending_LogRequests",
+  "hops": [
+   {
+    "name": "GetServiceAccessPendingLogRequest",
+    "verb": "POST",
+    "path": "/api/Pending_LogRequests/GetServiceAccessPendingLogRequest",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Pending_LogRequests_positive row 1 (provider Pending_LogRequests)",
+    "body": {
+     "UserID": "35",
+     "Type": "All"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetServicePasswordPendingLogRequest",
+    "verb": "POST",
+    "path": "/api/Pending_LogRequests/GetServicePasswordPendingLogRequest",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Pending_LogRequests_positive row 2 (provider Pending_LogRequests)",
+    "body": {
+     "UserID": "35",
+     "Type": "All"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetTicketdPendingLogRequest",
+    "verb": "POST",
+    "path": "/api/Pending_LogRequests/GetTicketdPendingLogRequest",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Pending_LogRequests_positive row 3 (provider Pending_LogRequests)",
+    "body": {
+     "UserID": "35",
+     "Type": "All"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "ViewServiceAccessPendingLogRequest",
+    "verb": "POST",
+    "path": "/api/Pending_LogRequests/ViewServiceAccessPendingLogRequest",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Pending_LogRequests_positive row 4 (provider Pending_LogRequests)",
+    "body": {
+     "UserID": "35",
+     "WFID": "379"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   }
+  ]
+ }
+]

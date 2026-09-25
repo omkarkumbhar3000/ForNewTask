@@ -1,0 +1,128 @@
+{
+ "currentRunId": "2026-08-16_100005",
+ "previousRunId": "2026-08-05_114315",
+ "asOf": "2026-08-16",
+ "trend": "",
+ "tiles": [
+  {
+   "id": "executed",
+   "label": "Test cases executed",
+   "value": 5382,
+   "previous": 5416,
+   "unit": "",
+   "direction": "up-good",
+   "hint": "Generated, executed and validated with no hand-written test code."
+  },
+  {
+   "id": "passed",
+   "label": "Passed",
+   "value": 3422,
+   "previous": 3459,
+   "unit": "",
+   "direction": "up-good",
+   "hint": "All validation layers passed."
+  },
+  {
+   "id": "failed",
+   "label": "Failed",
+   "value": 1960,
+   "previous": 1957,
+   "unit": "",
+   "direction": "down-good",
+   "hint": "At least one validation layer failed."
+  },
+  {
+   "id": "successRate",
+   "label": "Success rate",
+   "value": 63.6,
+   "previous": 63.9,
+   "unit": "%",
+   "direction": "up-good",
+   "hint": "Test-case level. Flow-level rate punishes long chains and understates reality."
+  },
+  {
+   "id": "duration",
+   "label": "Execution duration",
+   "value": 840.8,
+   "previous": 94.9,
+   "unit": "min",
+   "direction": "neutral",
+   "hint": "No environment downtime recorded during this run."
+  },
+  {
+   "id": "endpoints",
+   "label": "Distinct endpoints reached",
+   "value": 1388,
+   "previous": 1388,
+   "unit": "",
+   "direction": "up-good",
+   "hint": "Against a catalogue of 1,306 declared endpoints."
+  },
+  {
+   "id": "findings",
+   "label": "Findings identified",
+   "value": 13,
+   "previous": "N/A",
+   "unit": "",
+   "direction": "down-good",
+   "hint": "1 raised in Jira so far."
+  },
+  {
+   "id": "projects",
+   "label": "Projects",
+   "value": 1,
+   "previous": "N/A",
+   "unit": "",
+   "direction": "neutral",
+   "hint": "PAM. The dashboard is built to take more."
+  },
+  {
+   "id": "runs",
+   "label": "Execution runs retained",
+   "value": 13,
+   "previous": "N/A",
+   "unit": "",
+   "direction": "neutral",
+   "hint": "3 substantive, 10 probes or aborted. Runs are never deleted."
+  }
+ ],
+ "severityRollup": [
+  {
+   "severity": "Critical",
+   "count": 4
+  },
+  {
+   "severity": "High",
+   "count": 2
+  },
+  {
+   "severity": "Medium",
+   "count": 5
+  },
+  {
+   "severity": "Low",
+   "count": 2
+  },
+  {
+   "severity": "Informational",
+   "count": 0
+  }
+ ],
+ "statusSplit": [
+  {
+   "name": "Passed",
+   "value": 3422
+  },
+  {
+   "name": "Failed",
+   "value": 1960
+  },
+  {
+   "name": "Blocked",
+   "value": 14
+  }
+ ],
+ "headlinesFor": "2026-08-05_114315",
+ "headlinesApply": false,
+ "headlines": []
+}

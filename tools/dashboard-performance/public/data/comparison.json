@@ -1,0 +1,8 @@
+{
+ "dataState": "not-measured",
+ "sample": false,
+ "runId": "2026-08-18_181323",
+ "verdict": "N/A",
+ "reason": "API-vs-UI attribution needs BOTH phases of the same run. Phase 2 did not run, so no attribution is computed rather than presenting UI timings as one.",
+ "perModule": []
+}

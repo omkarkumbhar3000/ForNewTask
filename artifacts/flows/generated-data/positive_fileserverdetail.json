@@ -1,0 +1,169 @@
+[
+ {
+  "id": "data_positive_fileserverdetail_1",
+  "title": "FileServerDetail - positive data-driven batch 1",
+  "why": "Executes the QA team's authored positive scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "positive",
+  "tier": 4,
+  "controller": "FileServerDetail",
+  "hops": [
+   {
+    "name": "GetFileUploadConfiguration",
+    "verb": "POST",
+    "path": "/api/FileServerDetail/GetFileUploadConfiguration",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / FileServerDetail_positive row 1 (provider FileServerDetail)",
+    "body": {
+     "fsd_id": "1"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "UpdateFileUploadConfiguration",
+    "verb": "POST",
+    "path": "/api/FileServerDetail/UpdateFileUploadConfiguration",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / FileServerDetail_positive row 2 (provider FileServerDetail)",
+    "body": {
+     "fsd_id": "1",
+     "fsd_filepathofserver": "ftpfiles",
+     "fsd_maxfilesize": "15",
+     "fsd_autocleanupindays": 11,
+     "fsd_modified_on": "09/30/2020 05:33:00",
+     "fsd_modified_by": "Admin",
+     "fsd_service_id": "1"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "InsertFileServerConfiguration",
+    "verb": "POST",
+    "path": "/api/FileServerDetail/InsertFileServerConfiguration",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / FileServerDetail_positive row 3 (provider FileServerDetail)",
+    "body": {
+     "fsd_filepathofserver": "ftpfiles",
+     "fsd_maxfilesize": "10",
+     "fsd_autocleanupindays": "30",
+     "fsd_createdby": "Admin",
+     "fsd_createdby_Id": "35",
+     "fsd_modified_by": "Admin",
+     "fsd_service_id": "1",
+     "fsd_isdeleted": 1
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetFileServerConfiguration",
+    "verb": "POST",
+    "path": "/api/FileServerDetail/GetFileServerConfiguration",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / FileServerDetail_positive row 5 (provider FileServerDetail)",
+    "body": {
+     "fsd_createdby": "Admin"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetFileServerConfigJson",
+    "verb": "POST",
+    "path": "/api/FileServerDetail/GetFileServerConfigJson",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / FileServerDetail_positive row 6 (provider FileServerDetail)",
+    "body": {
+     "fsd_createdby": "Admin"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetFileServerConfigurationJson",
+    "verb": "POST",
+    "path": "/api/FileServerDetail/GetFileServerConfigurationJson",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / FileServerDetail_positive row 7 (provider FileServerDetail)",
+    "body": {
+     "fsd_createdby": "Admin"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetFileServerConfigurationforDownload",
+    "verb": "POST",
+    "path": "/api/FileServerDetail/GetFileServerConfigurationforDownload",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / FileServerDetail_positive row 8 (provider FileServerDetail)",
+    "body": {
+     "afs_id": "1"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "InsertUploadedFileDetails",
+    "verb": "POST",
+    "path": "/api/FileServerDetail/InsertUploadedFileDetails",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / FileServerDetail_positive row 9 (provider FileServerDetail)",
+    "body": {
+     "FileStorageType": "2",
+     "StorageReferenceNo": "1318",
+     "FileName": "TestFile",
+     "FileExtension": ".txt",
+     "FileSize": "100",
+     "FileContent": "Test",
+     "OperationBy": "Admin",
+     "FileDeleteOn": "10/01/2020 01:52:00",
+     "FilePathOnFileServer": "ARCOSADMIN/2020Oct28162544695"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetStatus",
+    "verb": "GET",
+    "path": "/api/FileServerDetail/GetStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / FileServerDetail_positive row 10 (provider FileServerDetail)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "SetStatus",
+    "verb": "GET",
+    "path": "/api/FileServerDetail/SetStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / FileServerDetail_positive row 11 (provider FileServerDetail)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetDatabaseStatus",
+    "verb": "GET",
+    "path": "/api/FileServerDetail/GetDatabaseStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / FileServerDetail_positive row 12 (provider FileServerDetail)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   }
+  ]
+ }
+]

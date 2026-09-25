@@ -1,0 +1,947 @@
+[
+ {
+  "id": "data_positive_websm_user_1",
+  "title": "WebSM-User - positive data-driven batch 1",
+  "why": "Executes the QA team's authored positive scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "positive",
+  "tier": 4,
+  "controller": "WebSM-User",
+  "hops": [
+   {
+    "name": "GetAllUsers",
+    "verb": "POST",
+    "path": "/api/User/GetAllUsers",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Web_SM_Positive row 4 (provider WebSM)",
+    "body": {
+     "isMultiFilter": false,
+     "UserId": 0,
+     "Lobs": [
+      28
+     ],
+     "UserStatus": [
+      1
+     ],
+     "UserType": [],
+     "Domains": [],
+     "UserGroups": [],
+     "CreatedBy": [],
+     "ModifiedBy": [],
+     "PageSize": 50,
+     "PageNumber": 1,
+     "CreatedOnFromDate": "",
+     "CreatedOnToDate": "",
+     "ModifiedOnFromDate": "",
+     "ModifiedOnToDate": "",
+     "IsPAMSelected": true,
+     "AgGridQuickSearchText": "",
+     "sortModel": {
+      "sortColumn": null,
+      "sortOrder": null
+     },
+     "FilterModel": [],
+     "GridColumnUserNameFilter": "",
+     "GridColumnUserDisplayNameFilter": "",
+     "GridColumnServerIPFilter": "",
+     "GridColumnUserTypeFilter": "",
+     "GridColumnDomainNameFilter": "",
+     "GridColumnUserRolesFilter": "",
+     "GridColumnUserGroupFilter": "",
+     "GridColumnUserLobFilter": "",
+     "GridColumnCreatedByFilter": "",
+     "GridColumnModifiedByFilter": "",
+     "GridColumnEmailFilter": ""
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetUsersDataById",
+    "verb": "GET",
+    "path": "/api/User/GetUsersDataById",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Web_SM_Positive row 5 (provider WebSM)",
+    "body": {
+     "__raw__": "encryptedText: {\"encryptedBase64\":\"dE2brc601SLH3Wqj9dLsNQ==\"}"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetUserStatusList",
+    "verb": "POST",
+    "path": "/api/User/GetUserStatusList",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Web_SM_Positive row 6 (provider WebSM)",
+    "body": {
+     "CurrentUserStatus": "-1"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetPasswordParameters",
+    "verb": "GET",
+    "path": "/api/User/GetPasswordParameters",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Web_SM_Positive row 7 (provider WebSM)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "MultiSelectAllUserDisableDetails",
+    "verb": "POST",
+    "path": "/api/User/MultiSelectAllUserDisableDetails",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Web_SM_Positive row 8 (provider WebSM)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "MultiSelectAllUserUpdateDetails",
+    "verb": "POST",
+    "path": "/api/User/MultiSelectAllUserUpdateDetails",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Web_SM_Positive row 9 (provider WebSM)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "MultiSelectAllUserSecurityDetails",
+    "verb": "POST",
+    "path": "/api/User/MultiSelectAllUserSecurityDetails",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Web_SM_Positive row 10 (provider WebSM)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "MultiSelectAllUserAssignDetails",
+    "verb": "POST",
+    "path": "/api/User/MultiSelectAllUserAssignDetails",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Web_SM_Positive row 11 (provider WebSM)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "MultiSelectAllUserCustomDetails",
+    "verb": "POST",
+    "path": "/api/User/MultiSelectAllUserCustomDetails",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Web_SM_Positive row 12 (provider WebSM)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "UserType",
+    "verb": "GET",
+    "path": "/api/User/UserType",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Web_SM_Positive row 13 (provider WebSM)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetUserCustomFieldConfig",
+    "verb": "GET",
+    "path": "/api/User/GetUserCustomFieldConfig",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Web_SM_Positive row 14 (provider WebSM)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetUserDisplayEnabled",
+    "verb": "GET",
+    "path": "/api/User/GetUserDisplayEnabled",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Web_SM_Positive row 15 (provider WebSM)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   }
+  ]
+ },
+ {
+  "id": "data_positive_websm_user_2",
+  "title": "WebSM-User - positive data-driven batch 2",
+  "why": "Executes the QA team's authored positive scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "positive",
+  "tier": 4,
+  "controller": "WebSM-User",
+  "hops": [
+   {
+    "name": "GetDualFactTypeList",
+    "verb": "GET",
+    "path": "/api/User/GetDualFactTypeList",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Web_SM_Positive row 16 (provider WebSM)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetDomains",
+    "verb": "GET",
+    "path": "/api/User/GetDomains",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Web_SM_Positive row 17 (provider WebSM)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetMFAUserwise",
+    "verb": "POST",
+    "path": "/api/User/GetMFAUserwise",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Web_SM_Positive row 18 (provider WebSM)",
+    "body": {
+     "encryptedBase64": "lccuryQmuylIqSiNIeOFCQ=="
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetUsersMappingLOBs",
+    "verb": "POST",
+    "path": "/api/User/GetUsersMappingLOBs",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Web_SM_Positive row 19 (provider WebSM)",
+    "body": {
+     "userId": "",
+     "UsersIds": 35,
+     "IsConvergedIdentity": false
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetUsersForClone",
+    "verb": "POST",
+    "path": "/api/User/GetUsersForClone",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Web_SM_Positive row 20 (provider WebSM)",
+    "body": {
+     "userId": "",
+     "userLobIds": [],
+     "assignUserId": 0,
+     "IsPAMSelected": true
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetMobileNumber",
+    "verb": "GET",
+    "path": "/api/User/GetMobileNumber",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Web_SM_Positive row 21 (provider WebSM)",
+    "body": {
+     "__raw__": "encryptedText: {\"encryptedBase64\":\"dE2brc601SLH3Wqj9dLsNQ==\"}"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetUsersPermission",
+    "verb": "GET",
+    "path": "/api/User/GetUsersPermission",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Web_SM_Positive row 22 (provider WebSM)",
+    "body": {
+     "__raw__": "id:0"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetTicketingSystem",
+    "verb": "GET",
+    "path": "/api/User/GetTicketingSystem",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Web_SM_Positive row 23 (provider WebSM)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetGridFilterData",
+    "verb": "GET",
+    "path": "/api/User/GetGridFilterData",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Web_SM_Positive row 24 (provider WebSM)",
+    "body": {
+     "__raw__": "id:0"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetUserServices",
+    "verb": "POST",
+    "path": "/api/User/GetUserServices",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Web_SM_Positive row 25 (provider WebSM)",
+    "body": {
+     "__raw__": "{\n    \"userId\": \"\",\n    \"userLobIds\": [\n        28\n    ],\n    \"userGroupIds\": [\n        176,\n        232,\n        618,\n        10663,\n        10860,\n        10871,\n        10915,\n        10917,\n        10918,\n        10919,\n        10932,\n        10933,\n        10934,\n        10961,\n        10963,\n        11021,\n        11433,\n        11457,\n        11473,\n        11514,\n        11717,\n        11721,\n        11872,\n        11884\n    ],\n    \"userServiceIds\": [\n        82770,\n        84195,\n        97813,\n        7751,\n        20372,\n        21945,\n        81968,\n        81969,\n        81970,\n        81971,\n        81976,\n        81978,\n        81979,\n        81982,\n        81984,\n        81985,\n        81986,\n        81987,\n        81990,\n        81992,\n        81994,\n        81995,\n        81996,\n        81997,\n        81998,\n        81999,\n        82001,\n        82002,\n        82003,\n        82004,\n        82005,\n        82007,\n        82008,\n        82013,\n        82018,\n        82019,\n        82021,\n        82022,\n        82032,\n        82033,\n        82046,\n        82047,\n        82048,\n        82055,\n        82057,\n        82059,\n        82081,\n        82093,\n        82095,\n        82096,\n        82097,\n        82099,\n        82121,\n        82122,\n        82125,\n        82126,\n        82127,\n        82132,\n        82135,\n        82136,\n        82146,\n        82148,\n        82161,\n        82162,\n        82163,\n        82172,\n        82174,\n        82175,\n        82209,\n        82210,\n        82211,\n        82212,\n        82213,\n        82214,\n        82221,\n        82226,\n        82228,\n        82229,\n        82230,\n        82231,\n        82232,\n        82233,\n        82234,\n        82235,\n        82236,\n        82237,\n        82258,\n        82267,\n        82297,\n        82311,\n        82312,\n        82316,\n        82317,\n        82318,\n        82356,\n        82359,\n        82377,\n        82378,\n        82486,\n        82512,\n        82515,\n        82527,\n        82534,\n        82535,\n        82536,\n        82545,\n        82546,\n        82547,\n        82576,\n        82578,\n        82616,\n        82636,\n        82651,\n        82658,\n        82659,\n        82661,\n        82698,\n        82702,\n        82703,\n        82710,\n        82716,\n        82732,\n        82734,\n        82744,\n        82745,\n        82747,\n        82752,\n        82753,\n        82762,\n        82763,\n        82765,\n        82766,\n        82768,\n        82771,\n        82772,\n        82783,\n        82797,\n        82807,\n        82839,\n        82856,\n        82857,\n        82862,\n        82864,\n        82869,\n        82880,\n        82881,\n        82891,\n        82896,\n        82898,\n        82911,\n        82913,\n        82915,\n        82920,\n        82921,\n        82927,\n        82934,\n        82967,\n        82970,\n        82974,\n        82976,\n        82977,\n        82978,\n        82979,\n        82981,\n        82990,\n        82996,\n        82997,\n        82998,\n        83006,\n        83007,\n        83013,\n        83014,\n        83015,\n        83024,\n        83025,\n        83026,\n        83027,\n        83028,\n        83030,\n        83043,\n        83044,\n        83052,\n        83055,\n        83057,\n        83058,\n        83059,\n        83061,\n        83064,\n        83069,\n        83073,\n        83074,\n        83082,\n        83083,\n        83084,\n        83085,\n        83086,\n        83127,\n        83128,\n        83144,\n        83152,\n        83160,\n        83161,\n        83162,\n        83166,\n        83169,\n        83172,\n        83173,\n        83174,\n        83175,\n        83176,\n        84189,\n        84191,\n        84197,\n        84198,\n        84199,\n        84201,\n        84202,\n        84203,\n        84204,\n        84207,\n        84208,\n        84209,\n        84210,\n        84211,\n        84212,\n        84213,\n        84214,\n        84215,\n        84216,\n        84217,\n        84218,\n        84219,\n        84220,\n        84221,\n        84222,\n        84223,\n        84224,\n        84225,\n        84226,\n        84227,\n        84228,\n        84229,\n        84230,\n        84231,\n        84232,\n        84233,\n        84234,\n        84235,\n        84236,\n        84237,\n        84239,\n        84240,\n        84241,\n        84242,\n        84244,\n        84245,\n        84246,\n        84247,\n        84248,\n        84249,\n        84250,\n        87585,\n        87586,\n        87587,\n        87588,\n        87589,\n        87590,\n        87591,\n        87593,\n        87594,\n        87595,\n        87596,\n        87597,\n        87598,\n        87604,\n        87605,\n        87612,\n        87613,\n        87619,\n        87621,\n        87629,\n        87631,\n        87634,\n        87637,\n        87638,\n        87642,\n        87643,\n        87644,\n        87645,\n        87646,\n        87648,\n        87655,\n        87656,\n        87672,\n        87674,\n        87677,\n        87679,\n        87681,\n        87683,\n        87685,\n        87687,\n        87692,\n        87694,\n        87696,\n        87697,\n        87700,\n        87701,\n        87702,\n        87703,\n        87706,\n        87707,\n        88941,\n        88948,\n        88949,\n        96767,\n        96768,\n        96770,\n        96772,\n        96777,\n        96778,\n        96779,\n        96780,\n        96781,\n        96784,\n        96786,\n        96789,\n        96790,\n        96791,\n        96792,\n        96797,\n        96798,\n        96799,\n        96800,\n        96801,\n        96803,\n        96810,\n        96812,\n        96818,\n        96819,\n        96820,\n        96822,\n        96823,\n        96825,\n        96827,\n        96831,\n        96833,\n        96856,\n        96860,\n        96861,\n        96865,\n        96866,\n        96868,\n        96869,\n        96870,\n        96871,\n        96874,\n        96877,\n        96882,\n        96883,\n        96885,\n        96886,\n        96892,\n        96893,\n        96896,\n        96898,\n        96899,\n        96900,\n        96902,\n        96903,\n        96904,\n        96905,\n        96906,\n        96907,\n        96908,\n        96909,\n        96910,\n        96911,\n        96912,\n        96913,\n        96915,\n        96916,\n        96917,\n        96918,\n        96919,\n        96920,\n        96921,\n        96922,\n        96923,\n        96924,\n        96925,\n        96926,\n        96928,\n        96930,\n        96933,\n        96942,\n        96954,\n        96960,\n        96975,\n        96978,\n        96979,\n        96980,\n        96981,\n        96982,\n        96983,\n        96987,\n        96989,\n        96990,\n        96991,\n        96992,\n        96993,\n        97562,\n        97564,\n        97568,\n        97569,\n        97570,\n        97571,\n        97572,\n        97573,\n        97574,\n        97575,\n        97576,\n        97578,\n        97579,\n        97580,\n        97584,\n        97585,\n        97665,\n        97666,\n        97668,\n        97669,\n        97671,\n        97679,\n        97680,\n        97681,\n        97682,\n        97683,\n        97686,\n        97687,\n        97688,\n        97689,\n        97691,\n        97692,\n        97694,\n        97696,\n        97697,\n        97699,\n        97700,\n        97705,\n        97709,\n        97731,\n        97732,\n        97734,\n        97735,\n        97737,\n        97741,\n        97742,\n        97745,\n        97747,\n        97795,\n        97805,\n        97808,\n        97810,\n        97815,\n        97892,\n        97897,\n        97902,\n        97905,\n        97908,\n        97911,\n        97913,\n        97915,\n        97917,\n        97918,\n        97920,\n        97930,\n        97935,\n        97938,\n        97942,\n        97945,\n        97946,\n        97962,\n        97965,\n        97970,\n        97972,\n        97973,\n        97977,\n        97978,\n        97981,\n        97984,\n        97990,\n        97996,\n        97999,\n        98004,\n        98009,\n        98010,\n        98011,\n        98013,\n        98016,\n        98024,\n        98027,\n        98028,\n        98031,\n        98032,\n        98033,\n        98034,\n        98035,\n        98036,\n        98038,\n        98040,\n        98041,\n        98042,\n        98044,\n        98045,\n        98046,\n        98047,\n        98048,\n        98050,\n        156967,\n        157023,\n        157035,\n        157042,\n        157043,\n        157044,\n        157045,\n        157046,\n        157047,\n        157048,\n        212889,\n        212893,\n        212894,\n        212895,\n        212900,\n        212905,\n        212907,\n        212908,\n        212912,\n        212913,\n        212917,\n        212968,\n        212975,\n        212976,\n        212997,\n        212999,\n        213000,\n        213001,\n        213003,\n        213006,\n        213046,\n        146535,\n        172220,\n        101692,\n        156969,\n        140962,\n        102711,\n        156614,\n        101646,\n        157424,\n        176966,\n        141457,\n        198832,\n        157541,\n        177607,\n        117338,\n        191825,\n        146529,\n        102611,\n        155789,\n        107248,\n        157501,\n        162914,\n        117375,\n        182585,\n        116534,\n        102765,\n        191931,\n        101832,\n        182539,\n        141022,\n        177069,\n        162911,\n        157624,\n        140973,\n        177000,\n        101752,\n        182545,\n        107225,\n        140996,\n        101872,\n        177286,\n        143129,\n        157295,\n        179184,\n        162954,\n        157126,\n        103836,\n        173133,\n        141692,\n        157332,\n        198846,\n        202190,\n        196674,\n        116508,\n        179164,\n        155815,\n        196631,\n        141102,\n        177149,\n        191805,\n        211530,\n        141992,\n        143117,\n        211430,\n        156648,\n        157873,\n        141892,\n        141251,\n        146612,\n        117447,\n        101643,\n        177057,\n        176986,\n        158394,\n        107239,\n        163017,\n        177272,\n        157375,\n        172194,\n        173359,\n        176963,\n        196599,\n        101666,\n        202218,\n        211587,\n        117650,\n        173336,\n        98039,\n        107331,\n        157298,\n        212652,\n        173353,\n        157985,\n        177727,\n        182542,\n        156728,\n        177026,\n        143149,\n        102184,\n        212729,\n        197140,\n        197152,\n        198812,\n        191882,\n        102173,\n        191782,\n        158294,\n        102127,\n        102422,\n        107228,\n        158025,\n        117332,\n        157905,\n        191939,\n        157839,\n        162908,\n        196891,\n        177189,\n        197255,\n        157813,\n        157862,\n        197183,\n        102410,\n        212331,\n        197375,\n        101649,\n        107222,\n        177501,\n        102290,\n        141703,\n        141062,\n        177444,\n        155718,\n        143163,\n        116519,\n        157329,\n        146509,\n        101706,\n        211584,\n        156943,\n        101955,\n        141497,\n        202187,\n        203547,\n        3748,\n        159531,\n        141578,\n        142079,\n        155902,\n        177012,\n        157585,\n        117367,\n        155693,\n        196786,\n        102185,\n        177931,\n        162949,\n        157639,\n        141409,\n        172295,\n        191731,\n        101638,\n        101970,\n        101627,\n        158481,\n        212338,\n        192764,\n        196746,\n        157499,\n        179188,\n        157359,\n        141618,\n        101830,\n        197141,\n        202305,\n        101884,\n        179142,\n        140931,\n        176981,\n        142062,\n        192965,\n        117668,\n        191891,\n        156603,\n        140928,\n        173062,\n        141000,\n        196660,\n        177233,\n        173348,\n        102411,\n        141114,\n        162932,\n        146504,\n        117333,\n        141237,\n        176969,\n        107254,\n        141455,\n        177490,\n        177502,\n        179162,\n        211379,\n        212624,\n        211473,\n        159537,\n        173019,\n        212412,\n        177147,\n        157536,\n        141896,\n        107223,\n        101658,\n        101664,\n        182657,\n        157330,\n        146510,\n        202233,\n        176955,\n        101707,\n        197762,\n        211579,\n        156646,\n        147864,\n        141034,\n        101833,\n        179168,\n        211539,\n        157373,\n        173025,\n        140988,\n        202193,\n        211376,\n        178080,\n        159511,\n        212704,\n        182580,\n        101718,\n        178097,\n        156949,\n        140917,\n        196935,\n        159557,\n        172123,\n        212650,\n        198810,\n        192976,\n        177038,\n        177184,\n        141466,\n        196649,\n        211453,\n        212295,\n        212882,\n        101681,\n        176978,\n        157502,\n        157553,\n        178114,\n        116437,\n        101635,\n        103848,\n        191834,\n        183899,\n        101916,\n        158097,\n        196706,\n        157313,\n        196683,\n        155890,\n        156649,\n        140925,\n        140974,\n        117662,\n        140948,\n        191728,\n        197728,\n        192653,\n        196614,\n        103882,\n        197579,\n        197745,\n        107226,\n        157127,\n        156955,\n        101867,\n        141166,\n        177287,\n        197181,\n        146550,\n        101661,\n        103868,\n        192690,\n        146507,\n        177001,\n        102002,\n        192647,\n        177150,\n        198790,\n        176958,\n        141154,\n        177201,\n        141252,\n        116609,\n        183891,\n        157874,\n        211482,\n        157284,\n        157374,\n        158109,\n        172101,\n        102615,\n        103826,\n        162924,\n        117365,\n        197262,\n        157683,\n        177319,\n        117674,\n        211471,\n        212728,\n        140989,\n        141536,\n        140920,\n        140943,\n        196838,\n        196936,\n        177534,\n        155791,\n        141467,\n        158447,\n        177027,\n        177726,\n        162907,\n        191729,\n        177073,\n        197139,\n        192762,\n        102174,\n        158195,\n        157311,\n        196798,\n        197093,\n        172310,\n        203539,\n        202211,\n        143133,\n        158098,\n        141284,\n        164261,\n        196635,\n        177614,\n        172253,\n        108583,\n        157863,\n        142045,\n        146545,\n        146622,\n        191752,\n        191823,\n        176947,\n        141161,\n        146528,\n        155848,\n        196615,\n        155748,\n        116624,\n        101819,\n        143107,\n        107229,\n        212330,\n        192977,\n        164269,\n        101756,\n        116412,\n        143127,\n        157285,\n        101662,\n        141112,\n        155897,\n        182555,\n        140912,\n        211377,\n        177196,\n        198836,\n        212410,\n        196921,\n        101705,\n        141149,\n        141198,\n        192648,\n        102297,\n        155905,\n        182563,\n        140963,\n        157872,\n        157943,\n        140940,\n        196718,\n        102781,\n        117368,\n        158298,\n        157448,\n        172098,\n        172104,\n        212301,\n        157348,\n        177654,\n        141038,\n        196618,\n        141433,\n        96876,\n        192682,\n        212625,\n        197150,\n        102764,\n        155696,\n        107341,\n        157594,\n        211497,\n        177136,\n        177468,\n        157903,\n        102217,\n        173054,\n        157548,\n        177823,\n        101925,\n        103846,\n        117322,\n        176984,\n        157408,\n        101879,\n        172307,\n        196850,\n        198816,\n        157102,\n        196612,\n        101630,\n        162910,\n        176950,\n        157978,\n        196661,\n        202228,\n        163027,\n        147856,\n        197302,\n        143153,\n        116621,\n        141115,\n        155771,\n        102337,\n        173020,\n        140909,\n        140946,\n        196675,\n        177242,\n        107269,\n        191849,\n        157488,\n        102798,\n        177491,\n        197471,\n        178081,\n        116415,\n        212805,\n        141101,\n        157382,\n        102151,\n        158464,\n        212613,\n        157303,\n        140987,\n        177532,\n        156971,\n        116490,\n        101740,\n        157349,\n        196882,\n        116467,\n        192637,\n        157326,\n        196596,\n        178027,\n        212651,\n        211400,\n        192683,\n        157489,\n        172176,\n        157420,\n        172099,\n        197575,\n        159533,\n        179198,\n        101780,\n        182541,\n        172262,\n        173055,\n        196796,\n        179152,\n        172153,\n        197151,\n        177025,\n        172205,\n        196650,\n        212296,\n        177572,\n        196604,\n        159521,\n        212883,\n        101680,\n        159567,\n        117449,\n        196633,\n        196968,\n        212285,\n        157314,\n        172302,\n        117661,\n        192983,\n        177137,\n        173135,\n        182647,\n        157861,\n        102507,\n        177927,\n        173009,\n        156656,\n        196676,\n        212328,\n        141788,\n        156942,\n        177492,\n        197374,\n        146520,\n        146506,\n        202192,\n        116567,\n        116616,\n        116510,\n        197117,\n        212806,\n        196627,\n        157334,\n        202186,\n        192989,\n        172196,\n        101691,\n        177034,\n        107264,\n        177011,\n        101714,\n        156613,\n        173052,\n        212631,\n        159553,\n        196833,\n        157638,\n        102186,\n        191924,\n        176965,\n        155694,\n        196785,\n        102215,\n        101645,\n        140944,\n        202295,\n        156730,\n        192680,\n        101969,\n        141468,\n        158448,\n        197386,\n        202203,\n        108575,\n        197729,\n        182544,\n        107247,\n        157306,\n        196845,\n        141571,\n        103852,\n        156968,\n        191936,\n        196607,\n        157360,\n        176982,\n        196799,\n        157260,\n        212783,\n        162913,\n        202212,\n        102175,\n        182538,\n        156619,\n        212637,\n        157386,\n        140927,\n        182570,\n        162933,\n        173347,\n        197675,\n        155800,\n        211572,\n        157317,\n        142046,\n        146503,\n        116576,\n        101820,\n        196687,\n        141456,\n        202189,\n        196722,\n        177738,\n        198800,\n        156931,\n        177097,\n        141207,\n        177503,\n        102255,\n        141499,\n        196630,\n        197220,\n        141691,\n        212860,\n        182564,\n        116413,\n        103872,\n        162939,\n        155857,\n        11239,\n        42115,\n        82657,\n        82966,\n        82993,\n        83051,\n        84194,\n        96769,\n        96802,\n        96878,\n        96894,\n        96897,\n        96973,\n        96988,\n        96994,\n        97659,\n        97662,\n        97673,\n        97677,\n        97678,\n        97693,\n        97748,\n        101628,\n        101629,\n        101637,\n        101641,\n        101644,\n        101651,\n        101653,\n        101654,\n        101655,\n        101656,\n        101657,\n        101660,\n        101663,\n        101667,\n        101672,\n        101677,\n        101678,\n        101716,\n        101754,\n        101755,\n        101758,\n        101781,\n        101784,\n        101785,\n        101786,\n        101791,\n        101794,\n        101795,\n        101804,\n        101806,\n        101821,\n        101868,\n        101869,\n        101870,\n        101871,\n        101886,\n        101887,\n        101888,\n        101889,\n        101890,\n        101891,\n        101892,\n        101893,\n        101894,\n        101895,\n        101974,\n        101975,\n        101976,\n        102005,\n        102018,\n        102019,\n        102154,\n        102166,\n        102275,\n        102296,\n        102298,\n        102300,\n        102341,\n        102342,\n        102349,\n        102355,\n        102371,\n        102373,\n        102383,\n        102384,\n        102386,\n        102391,\n        102392,\n        102401,\n        102402,\n        102404,\n        102405,\n        102407,\n        102435,\n        102445,\n        102477,\n        102494,\n        102495,\n        102500,\n        102502,\n        102517,\n        102518,\n        102528,\n        102533,\n        102535,\n        102548,\n        102550,\n        102552,\n        102557,\n        102558,\n        102564,\n        102571,\n        102603,\n        102604,\n        102607,\n        102613,\n        102614,\n        102616,\n        102618,\n        102627,\n        102630,\n        102633,\n        102634,\n        102635,\n        102643,\n        102644,\n        102650,\n        102651,\n        102652,\n        102661,\n        102662,\n        102663,\n        102664,\n        102665,\n        102667,\n        102680,\n        102681,\n        102688,\n        102689,\n        102692,\n        102694,\n        102695,\n        102696,\n        102698,\n        102701,\n        102706,\n        102710,\n        102719,\n        102720,\n        102721,\n        102722,\n        102723,\n        102789,\n        102797,\n        102799,\n        102803,\n        102806,\n        102809,\n        102810,\n        102811,\n        102812,\n        102813,\n        103824,\n        103829,\n        103832,\n        103833,\n        103834,\n        103837,\n        103838,\n        103839,\n        103842,\n        103843,\n        103844,\n        103845,\n        103847,\n        103849,\n        103850,\n        103851,\n        103853,\n        103854,\n        103855,\n        103856,\n        103857,\n        103858,\n        103859,\n        103860,\n        103861,\n        103862,\n        103863,\n        103864,\n        103865,\n        103866,\n        103867,\n        103869,\n        103870,\n        103871,\n        103874,\n        103875,\n        103876,\n        103877,\n        103879,\n        103880,\n        103881,\n        103883,\n        103884,\n        103885,\n        107220,\n        107221,\n        107224,\n        107230,\n        107231,\n        107232,\n        107233,\n        107240,\n        107256,\n        107266,\n        107272,\n        107273,\n        107277,\n        107278,\n        107279,\n        107280,\n        107281,\n        107283,\n        107290,\n        107291,\n        107307,\n        107309,\n        107312,\n        107314,\n        107316,\n        107318,\n        107320,\n        107326,\n        107328,\n        107330,\n        107334,\n        107335,\n        107336,\n        107337,\n        107340,\n        108582,\n        116401,\n        116402,\n        116403,\n        116404,\n        116406,\n        116411,\n        116414,\n        116420,\n        116423,\n        116424,\n        116425,\n        116426,\n        116431,\n        116432,\n        116433,\n        116434,\n        116435,\n        116436,\n        116444,\n        116446,\n        116452,\n        116453,\n        116454,\n        116456,\n        116457,\n        116459,\n        116461,\n        116465,\n        116494,\n        116495,\n        116499,\n        116500,\n        116502,\n        116503,\n        116504,\n        116505,\n        116511,\n        116512,\n        116516,\n        116517,\n        116520,\n        116526,\n        116527,\n        116528,\n        116530,\n        116531,\n        116532,\n        116533,\n        116536,\n        116537,\n        116538,\n        116539,\n        116540,\n        116541,\n        116542,\n        116543,\n        116544,\n        116545,\n        116546,\n        116547,\n        116549,\n        116550,\n        116551,\n        116552,\n        116553,\n        116554,\n        116555,\n        116556,\n        116557,\n        116558,\n        116559,\n        116560,\n        116562,\n        116564,\n        116588,\n        116594,\n        116607,\n        116612,\n        116613,\n        116614,\n        116615,\n        116617,\n        116622,\n        116623,\n        116625,\n        116626,\n        116627,\n        116628,\n        117196,\n        117198,\n        117202,\n        117203,\n        117204,\n        117205,\n        117206,\n        117207,\n        117208,\n        117209,\n        117210,\n        117212,\n        117213,\n        117214,\n        117218,\n        117219,\n        117293,\n        117296,\n        117299,\n        117300,\n        117302,\n        117303,\n        117306,\n        117310,\n        117311,\n        117312,\n        117313,\n        117314,\n        117315,\n        117316,\n        117319,\n        117320,\n        117321,\n        117324,\n        117325,\n        117326,\n        117327,\n        117329,\n        117330,\n        117342,\n        117364,\n        117370,\n        117374,\n        117378,\n        117380,\n        117381,\n        117429,\n        117439,\n        117442,\n        117444,\n        117526,\n        117531,\n        117536,\n        117539,\n        117542,\n        117545,\n        117547,\n        117549,\n        117551,\n        117552,\n        117554,\n        117564,\n        117569,\n        117572,\n        117576,\n        117579,\n        117580,\n        117596,\n        117599,\n        117604,\n        117606,\n        117607,\n        117611,\n        117612,\n        117615,\n        117618,\n        117624,\n        117630,\n        117633,\n        117638,\n        117643,\n        117644,\n        117645,\n        117647,\n        117658,\n        117666,\n        117667,\n        117669,\n        117670,\n        117671,\n        117673,\n        117675,\n        117676,\n        117677,\n        117679,\n        117680,\n        117681,\n        117682,\n        117683,\n        117685,\n        140910,\n        140911,\n        140919,\n        140923,\n        140926,\n        140933,\n        140935,\n        140936,\n        140937,\n        140938,\n        140939,\n        140942,\n        140945,\n        140949,\n        140954,\n        140959,\n        140960,\n        140998,\n        141036,\n        141037,\n        141040,\n        141063,\n        141066,\n        141067,\n        141068,\n        141073,\n        141076,\n        141077,\n        141086,\n        141088,\n        141103,\n        141150,\n        141151,\n        141152,\n        141153,\n        141168,\n        141169,\n        141170,\n        141171,\n        141172,\n        141173,\n        141174,\n        141175,\n        141176,\n        141177,\n        141256,\n        141257,\n        141258,\n        141287,\n        141300,\n        141301,\n        141436,\n        141448,\n        141556,\n        141577,\n        141579,\n        141581,\n        141622,\n        141623,\n        141630,\n        141636,\n        141652,\n        141654,\n        141664,\n        141665,\n        141667,\n        141672,\n        141673,\n        141682,\n        141683,\n        141685,\n        141686,\n        141688,\n        141716,\n        141726,\n        141758,\n        141775,\n        141776,\n        141781,\n        141783,\n        141798,\n        141799,\n        141809,\n        141814,\n        141816,\n        141829,\n        141831,\n        141833,\n        141838,\n        141839,\n        141845,\n        141852,\n        141884,\n        141885,\n        141888,\n        141894,\n        141895,\n        141897,\n        141899,\n        141908,\n        141911,\n        141914,\n        141915,\n        141916,\n        141924,\n        141925,\n        141931,\n        141932,\n        141933,\n        141942,\n        141943,\n        141944,\n        141945,\n        141946,\n        141948,\n        141961,\n        141962,\n        141969,\n        141970,\n        141973,\n        141975,\n        141976,\n        141977,\n        141979,\n        141982,\n        141987,\n        141991,\n        142000,\n        142001,\n        142002,\n        142003,\n        142004,\n        142070,\n        142078,\n        142080,\n        142084,\n        142087,\n        142090,\n        142091,\n        142092,\n        142093,\n        142094,\n        143105,\n        143110,\n        143113,\n        143114,\n        143115,\n        143118,\n        143119,\n        143120,\n        143123,\n        143124,\n        143125,\n        143126,\n        143128,\n        143130,\n        143131,\n        143132,\n        143134,\n        143135,\n        143136,\n        143137,\n        143138,\n        143139,\n        143140,\n        143141,\n        143142,\n        143143,\n        143144,\n        143145,\n        143146,\n        143147,\n        143148,\n        143150,\n        143151,\n        143152,\n        143155,\n        143156,\n        143157,\n        143158,\n        143160,\n        143161,\n        143162,\n        143164,\n        143165,\n        143166,\n        146501,\n        146502,\n        146505,\n        146511,\n        146512,\n        146513,\n        146514,\n        146521,\n        146537,\n        146547,\n        146553,\n        146554,\n        146558,\n        146559,\n        146560,\n        146561,\n        146562,\n        146564,\n        146571,\n        146572,\n        146588,\n        146590,\n        146593,\n        146595,\n        146597,\n        146599,\n        146601,\n        146607,\n        146609,\n        146611,\n        146615,\n        146616,\n        146617,\n        146618,\n        146621,\n        147863,\n        155682,\n        155683,\n        155684,\n        155685,\n        155687,\n        155692,\n        155695,\n        155701,\n        155704,\n        155705,\n        155706,\n        155707,\n        155712,\n        155713,\n        155714,\n        155715,\n        155716,\n        155717,\n        155725,\n        155727,\n        155733,\n        155734,\n        155735,\n        155737,\n        155738,\n        155740,\n        155742,\n        155746,\n        155775,\n        155776,\n        155780,\n        155781,\n        155783,\n        155784,\n        155785,\n        155786,\n        155792,\n        155793,\n        155797,\n        155798,\n        155801,\n        155807,\n        155808,\n        155809,\n        155811,\n        155812,\n        155813,\n        155814,\n        155817,\n        155818,\n        155819,\n        155820,\n        155821,\n        155822,\n        155823,\n        155824,\n        155825,\n        155826,\n        155827,\n        155828,\n        155830,\n        155831,\n        155832,\n        155833,\n        155834,\n        155835,\n        155836,\n        155837,\n        155838,\n        155839,\n        155840,\n        155841,\n        155843,\n        155845,\n        155869,\n        155875,\n        155888,\n        155893,\n        155894,\n        155895,\n        155896,\n        155898,\n        155903,\n        155904,\n        155906,\n        155907,\n        155908,\n        155909,\n        156477,\n        156479,\n        156483,\n        156484,\n        156485,\n        156486,\n        156487,\n        156488,\n        156489,\n        156490,\n        156491,\n        156493,\n        156494,\n        156495,\n        156499,\n        156500,\n        156574,\n        156577,\n        156580,\n        156581,\n        156583,\n        156584,\n        156587,\n        156591,\n        156592,\n        156593,\n        156594,\n        156595,\n        156596,\n        156597,\n        156600,\n        156601,\n        156602,\n        156605,\n        156606,\n        156607,\n        156608,\n        156610,\n        156611,\n        156623,\n        156645,\n        156651,\n        156655,\n        156659,\n        156661,\n        156662,\n        156710,\n        156720,\n        156723,\n        156725,\n        156807,\n        156812,\n        156817,\n        156820,\n        156823,\n        156826,\n        156828,\n        156830,\n        156832,\n        156833,\n        156835,\n        156845,\n        156850,\n        156853,\n        156857,\n        156860,\n        156861,\n        156877,\n        156880,\n        156885,\n        156887,\n        156888,\n        156892,\n        156893,\n        156896,\n        156899,\n        156905,\n        156911,\n        156914,\n        156919,\n        156924,\n        156925,\n        156926,\n        156928,\n        156939,\n        156947,\n        156948,\n        156950,\n        156951,\n        156952,\n        156954,\n        156956,\n        156957,\n        156958,\n        156960,\n        156961,\n        156962,\n        156963,\n        156964,\n        156966,\n        157114,\n        157121,\n        157122,\n        157123,\n        157124,\n        157125,\n        157272,\n        157279,\n        157280,\n        157281,\n        157282,\n        157283,\n        157296,\n        157297,\n        157305,\n        157309,\n        157312,\n        157319,\n        157321,\n        157322,\n        157323,\n        157324,\n        157325,\n        157328,\n        157331,\n        157335,\n        157340,\n        157345,\n        157346,\n        157384,\n        157422,\n        157423,\n        157426,"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetUserAssets",
+    "verb": "POST",
+    "path": "/api/User/GetUserAssets",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Web_SM_Positive row 26 (provider WebSM)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetUserAdDetails",
+    "verb": "GET",
+    "path": "/api/User/GetUserAdDetails",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Web_SM_Positive row 27 (provider WebSM)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   }
+  ]
+ },
+ {
+  "id": "data_positive_websm_user_3",
+  "title": "WebSM-User - positive data-driven batch 3",
+  "why": "Executes the QA team's authored positive scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "positive",
+  "tier": 4,
+  "controller": "WebSM-User",
+  "hops": [
+   {
+    "name": "ShowMoreDetail",
+    "verb": "POST",
+    "path": "/api/User/ShowMoreDetail",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Web_SM_Positive row 28 (provider WebSM)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetUserFilterTypes",
+    "verb": "GET",
+    "path": "/api/User/GetUserFilterTypes",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Web_SM_Positive row 29 (provider WebSM)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetUserDualFactorEnabledForMobileNo",
+    "verb": "GET",
+    "path": "/api/User/GetUserDualFactorEnabledForMobileNo",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Web_SM_Positive row 30 (provider WebSM)",
+    "body": {
+     "__raw__": "id:35"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetUserEndPointAccessDetails",
+    "verb": "GET",
+    "path": "/api/User/GetUserEndPointAccessDetails",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Web_SM_Positive row 31 (provider WebSM)",
+    "body": {
+     "__raw__": "id:35"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetSelectedServiceTimeBasedAccessDetails",
+    "verb": "POST",
+    "path": "/api/User/GetSelectedServiceTimeBasedAccessDetails",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Web_SM_Positive row 32 (provider WebSM)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "ExportAllUsers",
+    "verb": "POST",
+    "path": "/api/User/ExportAllUsers",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Web_SM_Positive row 33 (provider WebSM)",
+    "body": {
+     "isMultiFilter": false,
+     "UserId": 0,
+     "Lobs": [
+      28
+     ],
+     "UserStatus": [
+      1
+     ],
+     "UserType": [],
+     "Domains": [],
+     "UserGroups": [],
+     "CreatedBy": [],
+     "ModifiedBy": [],
+     "PageSize": 50,
+     "PageNumber": 1,
+     "CreatedOnFromDate": "",
+     "CreatedOnToDate": "",
+     "ModifiedOnFromDate": "",
+     "ModifiedOnToDate": "",
+     "IsPAMSelected": true,
+     "SelectedColumns": [
+      "UserName",
+      "UserDisplayName",
+      "UserType",
+      "DomainName",
+      "userRoles",
+      "ValidTillDate",
+      "NameUserGroups"
+     ],
+     "sortModel": {
+      "sortColumn": "",
+      "sortOrder": ""
+     },
+     "AgGridQuickSearchText": "",
+     "GridColumnUserNameFilter": "",
+     "GridColumnUserDisplayNameFilter": "",
+     "GridColumnServerIPFilter": "",
+     "GridColumnUserTypeFilter": "",
+     "GridColumnDomainNameFilter": "",
+     "GridColumnUserRolesFilter": "",
+     "GridColumnUserGroupFilter": "",
+     "GridColumnUserLobFilter": "",
+     "GridColumnCreatedByFilter": "",
+     "GridColumnModifiedByFilter": "",
+     "GridColumnEmailFilter": ""
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "Create",
+    "verb": "POST",
+    "path": "/api/User/Create",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Web_SM_Positive row 34 (provider WebSM)",
+    "body": {
+     "encryptedBase64": "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"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "TrackLoginActivity",
+    "verb": "POST",
+    "path": "/api/User/TrackLoginActivity",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Web_SM_Positive row 35 (provider WebSM)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "MultiUserUpdateDetails",
+    "verb": "POST",
+    "path": "/api/User/MultiUserUpdateDetails",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Web_SM_Positive row 36 (provider WebSM)",
+    "body": {
+     "encryptedBase64": "0rpeaPW+8hjGOBnO7tKt7uwsMc+lOPg89scoxdEd00iL5Em764OgExOiXGalekygq9Bz7btG7RKF1pt/Lbx8dZb46Fk8MHBURoGQMm2ITXE8SDT8otOWiMxsvhOfzxEQEH3K/x/Ge+tK8avZERaDkPLMd2yHjtqjtTjZGDh973VMbhDZHsbh/ro+gw6IIB6fWgQW4ftykdPsgMi8z4F8egy/bij5juHdL2LgHIEMKu7zg5hnxIGZSeR9+nyIhiwW7aGTsWal3MPiOY2A8/F+RQo64G98VZ5Ofz+mdTCPaWcW8FKH9KkRDjx9IrqmfWzciyuu05lVqNOlbBuMA7mkdyAXf91YhIHkoRrJU7LQ50okEaUZbrvtYD/q/pd9EPovaiFAgrRzbyrZWF4kPT4+evROPWtrJCsK8EsKW9ZojRoyXvRbfVn6CJ06ZryTBonRrTpZ7pJDITazV9qJdPvQt279X3plwX89A5K2jrMTrMNcUE7hsF1R+ZpEv07oQpsQVbEj6XvipK323eeUrbA9uP35t9JpiiZKj2LIoYi0ivYoy64CC1JbBUBVnPvrIv1p88IysZw6lfsMfUS1J+7ibJo1Fu33jHh4pjOt/TvTIixCXcTk0rXzaXJQvR6SS2myLlH+OddFanLRHs45V596Hqk5bA5bsffetzj196gaQRdTH+8WWNegzk42FPf5pQdFyib35Qf/hipaZ73X/SjJvWio+ygJKIEqTAHQsXmVIICsSC+7ryhh0x0tT6kgikt98XeL8f2Sl9+ioOpqCri3YG0VXTRfad8NJ8JcrZtvgLVdXqOcQh0LqLZn85UPR921JqVg2OPRc0vd/A/vsboKfsl5ZNwnYt/CMHur0Ux28XCaykKbTek36xJXRmWKYL4AsaeGEgYI7yhZQW8qXQFIeqrWwLYcIE4tunNww8P3VFJ6FhnCeoz74EdPwqFAc0Dv"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "MultiUserUpdateAssignDetails",
+    "verb": "POST",
+    "path": "/api/User/MultiUserUpdateAssignDetails",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Web_SM_Positive row 37 (provider WebSM)",
+    "body": {
+     "encryptedBase64": "0rpeaPW+8hjGOBnO7tKt7iqeCOiruqsUqRVTbUbV9KcYlUvqXWy+oAZQ+6mDVvTGTO5kINf2OqIDYCVV51QpXbSnoCXlcfg1cp6RFI2Biyt4IYRCYn9juML4GmyGdLyVHIQXjCP0ZQEtevZxOjkSyROss3JLgXOjLv3/uSw3SOrdxDC6Ma6mt2+CPA/4M5GyRQhedzN8L1beTN3ba3rA4jySroWT4MuC9OaUNN99EsRIFQWpY48T/Pynii5bsAxvrU+7aW/XBKBR9TYkrwJ9t2ci5HTfYD9FA8gt5HrClT6u/IIooCZtDx/Z54/tFRb0nBPp6xKVcvzLLCn6rmpNKvPAgQfGCEikczYbHwlpqqsEhyMwpvXMyX5PpRqjcB7bD/u4OScQuou10GusWVQA5MDig91bFRk3ZoBAtaW6c/5SgkSYI0LRN0Fzk2Cv4dlq8G+Qp1dUcKgS0NsUy5vd1f9eJuWFLr035c8OzMEo+S8x2q1Yb4dCPu2zVKRWmpV9vSZDnm3B9gaVCTf9UTg2b6+AD4R/OGWz3Z7o3oRfMBgBS9G0ddpQ9thOuP+OAZgEfpoixP3ITNtOucyRlcN80lDzFyjwecXvqgQEYkckE0a2B7oqKqVCz7hgeCmhDo2VoJyGb5kCGaITP3/kdjP1/quHBL9Y6NxEobIzSvzPeyUANm6i6YC9mqX+Ee1Kf2w28n2YCfS/rV/64XVRO/VWQFfRPEDtyQZRA0x20AcMX5cQeJEE/+NF7KoM5gQqIg58CJHEW1dIyQolws9SE2FzW7Ei4tEOH7Wkrnxo6HNqEUNCbf7J4TlJXmLltZy9j1WADrCFawXCrqG2fZlbF4+FsIBl3oArcTKl9zSWrufBqkmgZ5Mc0LsFn1B8TVPVGx7P64FJ9i3AlW0uH/Dmw3cVfLEDX2KynjKeL4F3K/nFEvVkL7FDFgKRP2hO8Wv7Yz44AwCpfJ6vGfOBYV/UjHmV75alSNiPogVTQYGnZLUeEh4="
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "MultiUserUpdateDisable",
+    "verb": "POST",
+    "path": "/api/User/MultiUserUpdateDisable",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Web_SM_Positive row 38 (provider WebSM)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "MultiUserUpdateCustomFields",
+    "verb": "POST",
+    "path": "/api/User/MultiUserUpdateCustomFields",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Web_SM_Positive row 39 (provider WebSM)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   }
+  ]
+ },
+ {
+  "id": "data_positive_websm_user_4",
+  "title": "WebSM-User - positive data-driven batch 4",
+  "why": "Executes the QA team's authored positive scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "positive",
+  "tier": 4,
+  "controller": "WebSM-User",
+  "hops": [
+   {
+    "name": "MultiUserUpdateSecurityDetails",
+    "verb": "POST",
+    "path": "/api/User/MultiUserUpdateSecurityDetails",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Web_SM_Positive row 40 (provider WebSM)",
+    "body": {
+     "encryptedBase64": "vOFLCZJLPFh9Npu/IFAWIu3IazMDOgbMlZJcBnI/cGV1usDHTzwmM5UkJQbgOe0kMAbfEU51cJ9Hx7b8uHFgyEmC+0XlkGWXmdIqCSO359nt8RfAYKeelv6YuJ8Y4pFDe+3CBn8A0B8UZ1BOa72pA0OuXyFTIUJyYpCq5N85o/R9188r9VNtG8VMtlbEsvIkvp4W3bjLMN93xVQ5Joi//o5dvXe1SoP6y46135U2RnXXypK8RuMMuDsNKAUT2x3G5jq2hFRZawId/s6CR/9uQ8Ac29+Y+OFQO4jcsQZYuA8="
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "OnBoardUserData",
+    "verb": "POST",
+    "path": "/api/User/OnBoardUserData",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Web_SM_Positive row 41 (provider WebSM)",
+    "body": {
+     "encryptedBase64": "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"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "SaveTicketing",
+    "verb": "POST",
+    "path": "/api/User/SaveTicketing",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Web_SM_Positive row 42 (provider WebSM)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetADUserDetails",
+    "verb": "POST",
+    "path": "/api/User/GetADUserDetails",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Web_SM_Positive row 43 (provider WebSM)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "Modify",
+    "verb": "PATCH",
+    "path": "/api/User/Modify",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Web_SM_Positive row 44 (provider WebSM)",
+    "body": {
+     "encryptedBase64": "HwYQjZe6bVuyj6tZ7PHWNkMnpbfDi2zurkZIioceANLFm6Wbq2/sKlSxtC8qVlHWgtIjj8q6vpH66VoaoLGyDjfCoijTYalYb0xDohFlXV8PyxvuHORSRnYCVspu81qg8kXbIR0enoDlirmw4/QpCJp3y8A0eYeyL3AxVGmr/DHTO4tMWIMjiOWLwNnFrqZ/VcXvlWbhD+FU0jsDSBJs3mmDZaYXiDbFHLWE6ctApKwAzN8IKk3VX7hQtI5XTt39myR2N05IFJJHp5uPRdav7KZAAuoWTikTqizWp9Px6EK9FGHSmxbAN/rgeo2bEmFd74LyElRhjw6zh5iFhVx79vYU5CFqjjmTHX37jhdC8vXP83UhVgfLYcii5yu1BJ6p9w1nH15zP6hXeUIfPI0pDZe7ZMcTLdPdto6TeeGggajEcYM52icGttK7wWVarEB/EKNkiVZ20FTs8/1d0WrF4O198Yp1RjiI1wImvRBNbddBMyMyND8KLBHRcG2Vx60YgwDMDGDr81JJswZNa+4pyFpr5y7SfIH8fU9Rb7mlCIgkcd2+UKC43IDzBzva+Nzp1pbPBJJON6ysqo9E73ndx3WijIIpYo1Xn+cZxQUQOoGWRfp+t3HoYvj0McNSY1qpKjrLrtL2YKJOPj6RySHupfx9S3iZAToW69FPb2JA8JwKgbEeq/jc4G+ymHpltN/mvK2SaPGnqmC8HJr1qb8KQ+9FZr74+YI5fy8PhJp5FL+MXH29cp4Bln8wLs4XoWRJSOOSbImJslyEy0PGOt5i2xmDys1hFFMAYACQxAZoMUAhWxieiiyyMnIp/8eYbAuro7AAOoe2q1jUWeQKTo+vhsh5lIGSLzwp2058vpesfnx/lya7K733hs/DDfe3dA97gbcIWCTraZhBA2BT53zETD8VehaZBN2g7aAZqQteN2aE7vkdrUUeAXP7kMj0buNp/kUNJk7nxFETw6obUOm5+E9TOijLC1eFYIXPss78qWHUh9mzr5tb7p0dpo8k4KLR+wtkstXH5nUt5Jp8yNAiPUY7KXrYGGk6lk0kXxQIAiNUtdNcbxakOJvlWlVSY1ZWzyvPjz1sfmKRQwT3s6ovCRfT5WevcOlyrQQ6GZ4cioOcg+HuMfPwykAdoyY7s3jhp95+7K4OVpf8UhWxeLfkYm290rczbShuoW+V2HApfcf776vRf+1y3rmhKiCGc5AXClWyKqbHEpXup4BFkV8Y85EEJC+2YYM0yFx9nKQEjz8u6C0AkJXSEpki9EGLiaJggEvI//X5Sk7blmJ4IuRg9QAx4gn1W086yhrg2jANgQ4mNYF9dzinZHy7ux3CxcDyFNYj4mltKul4YZiBqyZv+ppPB7v22xY9LTrGKM6j0oqG6h6wqhIPQ/INiDoKs+BclETTwBsIAOwA9NgflyNfcEkTYqkYF+t54CdWs9YME6CqWtjmDeBq6zB1IQZKRvVBe3zxRwDLHACOTnIiftn60ur+XGuj4agMkb/wRacyFzs7He/YufeT6VOgm1PgmYTUCD+xLN2cRPJLyuxQTKF6khm//8wL4nV77ZulXY8o5TUCDyRj2ewybAg2cjNEhzLs/Eearv5x6OYh5B4QghIBJtNKIiRWz5ETiuKi7rb1sL4jHl+jRzbUEmsBq093SR6nIK6mm6YiHLPW0UmPx2AXPzDKbBLZssk+XJmmhDf3jGMeAEHJm9MpuWk0lCqSfqAEvuyQcLzlIkGistFho1hKWifvUIO3EzydnRp/h03mmo27WPoRvPYJQ5Izt2Eo5II4JwAnHPZQQcR7+uCZLu3jITOUhQVcDMX1CzDLrBeowei3y2GH49nXcGrdjqrQIYb4NRMAhHzwZVR55pNuWEj1SiiVasefmIxRGGk0AfO/UumchRjVFc9D9L22I1+NZJ7oRmkXgNvYSW3OO36o0LWtqmSM83s2odM5GYfHLcF6ZV5L7e88ftDOotyi0TJiHaLGQA9e4yqxUaGoFJkmuL7e24peBO+tW/7lpjWXcuEQXGAaz3ALeg5kpg9eVvXmSh1RA1YmxUFtfpm0QdkHph4rzgHLrlf3bvY4sPpZmjfa3tDzvyq0/D3KVO4g+Uek+i6PlQrxUzooglCMqdYVhRN2274fp/cCzN1cKYwNzDPEDnvdNgTnZSkruB6cz4ho5beLBZ8apG5DLkpi07UwTSmJjbovZG298Oh0Jpbid1CAlaRs/4nC4V5m5kRtChPesmXkD0jmSuTa2DsBJXej86/9nANBVr+uf0kApM0NJ9n7QmA52ymC7z3nbzvT6mO4q8LMw0K0I/bcXzT5197pTriVCCQfjNoe2O1uexzkIDCb8UTOOcI1/myOopExHK3FMXQKMd9SPOH07izD54gVAOMzKTKIk7c8D55gxSAYGTxO/slhRsyTonb4FFASoebJ9t/4GWmciPjDs6mXBdEVh/+w1kamMBmxaIJgLzG0zMu3mRjcyOqBXgx7zxNaPYOStsIIfdmwW/Tn1FTncXzbM0dSzXluSvKrKzv6K1z8b88IIkJsW5TgctKNP7TlRhqOlt1Kp1Rnm4yNHausj1Xj73o1JWqPoK991ttTm3Pk2AQhgdkzzZHhYUdV0xSsX1WFOw2CuVNyAvAz0UVCQ8Av4uG8CzocKquigVTMyzvz3l5NMcTZduUVTH7kvv8Gt9TGf/thnLdl90aq5+kydxjcclBlPfJnqj/K+CtvetZlp27LXMxdsxiibb9gi6ophk3JY5UjoZT+jxHQXKYzT5wy3lJKHYZ40nby0zTv+c06+oQK3v666I0Dxm7DZBTbO9KyxdahpHDWVcwM7SxmMQbPjogtO/xy8pwACLjIj7OUAKhDpQEKIAGo22lc5iKHfzwfMYw0PkfnutS6KCoVHFG2O/TrNQeKSbZB13l100YXSC9iEbmZYHjsZDc+g1tbfGsDpdW4e1TFLBa2Pl2KDXgX1gPMpGckyZsm2pAIToQa+cdNqHARiJckVUx2sFaqOIJWm0Uo"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "SaveCloneUsers",
+    "verb": "PATCH",
+    "path": "/api/User/SaveCloneUsers",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Web_SM_Positive row 45 (provider WebSM)",
+    "body": {
+     "GridUserId": 35,
+     "UserGroupsChecked": true,
+     "ServicesChecked": true,
+     "PrivelegesChecked": true,
+     "IsUserGroupsReplace": "true",
+     "IsServicesReplace": "true",
+     "IsPrivelegesReplace": "true",
+     "LoggedInUserId": 0,
+     "LoggedInUserName": "",
+     "CloneUserIds": [
+      162
+     ]
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "ModifyESR",
+    "verb": "PATCH",
+    "path": "/api/User/ModifyESR",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Web_SM_Positive row 46 (provider WebSM)",
+    "body": {
+     "encryptedBase64": "l8ceTQ5NphmX6+sJWLKT7k9fdXAtN5W4LxEcAXM1zgbg3ZeafGAENWUtEX2dnJx3icjeEvZWf94tR+LCMU2VFetkaslkpXTvRL9y3KCCscpN52qwunYJI74KpRinnFBBvk67K6M0tdn57f3PVM+g4Q=="
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "RegisterMobileOTPMFA",
+    "verb": "PATCH",
+    "path": "/api/User/RegisterMobileOTPMFA",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Web_SM_Positive row 47 (provider WebSM)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "UpdateUserLogOutDetails",
+    "verb": "PATCH",
+    "path": "/api/User/UpdateUserLogOutDetails",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Web_SM_Positive row 48 (provider WebSM)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "UpdateUserStatus",
+    "verb": "PATCH",
+    "path": "/api/User/UpdateUserStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Web_SM_Positive row 49 (provider WebSM)",
+    "body": {
+     "encryptedBase64": "B2Y0Dpq9gtdHe4yHF3B9grsac9cH+1cuuZQUjdK83my2XTdM7wHeEjw6+9KGQ7yRjAL4HWQM1LGGzTmV9wHIEkw9ukhJ1R8YSnOwZq5eOjlcn59OuEv2bnYlPawhVd3QkQymAwfdnQHdl1pQhKu3cCrXyTUcPqP5jRdlB18YWu/ny7Fdf9xSQlleoRmsXaEnZE/erUWDwhXyUOpZWdeZ/LgrExC3DBHzer+itDH8VA9I9A4b8TQ8lsvFvNCE88HbhnvuuPCpiA0q6/iN+IUVVjnXM4lirF3MeCmtQJLEJ+k="
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetAutoMapGroups",
+    "verb": "POST",
+    "path": "/api/User/GetAutoMapGroups",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Web_SM_Positive row 50 (provider WebSM)",
+    "body": {
+     "LoggedInUserId": 0,
+     "CallFrom": "User",
+     "LOB": 0
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "SetUserDormancy",
+    "verb": "GET",
+    "path": "/api/User/SetUserDormancy",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Web_SM_Positive row 51 (provider WebSM)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   }
+  ]
+ },
+ {
+  "id": "data_positive_websm_user_5",
+  "title": "WebSM-User - positive data-driven batch 5",
+  "why": "Executes the QA team's authored positive scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "positive",
+  "tier": 4,
+  "controller": "WebSM-User",
+  "hops": [
+   {
+    "name": "GetUserAttributes",
+    "verb": "GET",
+    "path": "/api/User/GetUserAttributes",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Web_SM_Positive row 52 (provider WebSM)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "filedownload",
+    "verb": "GET",
+    "path": "/api/User/filedownload",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Web_SM_Positive row 53 (provider WebSM)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "UserToIdentityCreation",
+    "verb": "POST",
+    "path": "/api/User/UserToIdentityCreation",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Web_SM_Positive row 54 (provider WebSM)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetAllUsersDetailForCache",
+    "verb": "POST",
+    "path": "/api/User/GetAllUsersDetailForCache",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Web_SM_Positive row 55 (provider WebSM)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetUsersLobAndUserGroupList",
+    "verb": "POST",
+    "path": "/api/User/GetUsersLobAndUserGroupList",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Web_SM_Positive row 56 (provider WebSM)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetUserGroupUserMapping",
+    "verb": "GET",
+    "path": "/api/User/GetUserGroupUserMapping",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Web_SM_Positive row 57 (provider WebSM)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetLobUsersMapping",
+    "verb": "GET",
+    "path": "/api/User/GetLobUsersMapping",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Web_SM_Positive row 58 (provider WebSM)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetRoleUsersMapping",
+    "verb": "GET",
+    "path": "/api/User/GetRoleUsersMapping",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Web_SM_Positive row 59 (provider WebSM)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "UnAssignUserLobs",
+    "verb": "PATCH",
+    "path": "/api/User/UnAssignUserLobs",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Web_SM_Positive row 60 (provider WebSM)",
+    "body": {
+     "UserIds": [
+      1149
+     ],
+     "RemovableLobIds": [
+      2
+     ],
+     "LoginUserId": 0,
+     "LogInUserName": ""
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "UnAssignUserUG",
+    "verb": "PATCH",
+    "path": "/api/User/UnAssignUserUG",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Web_SM_Positive row 61 (provider WebSM)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "UnAssignUserServices",
+    "verb": "PATCH",
+    "path": "/api/User/UnAssignUserServices",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Web_SM_Positive row 62 (provider WebSM)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "IsAllowUserDisable",
+    "verb": "GET",
+    "path": "/api/User/IsAllowUserDisable",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Web_SM_Positive row 63 (provider WebSM)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   }
+  ]
+ },
+ {
+  "id": "data_positive_websm_user_6",
+  "title": "WebSM-User - positive data-driven batch 6",
+  "why": "Executes the QA team's authored positive scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "positive",
+  "tier": 4,
+  "controller": "WebSM-User",
+  "hops": [
+   {
+    "name": "GetUsersForBulkUpdateViaExcel",
+    "verb": "POST",
+    "path": "/api/User/GetUsersForBulkUpdateViaExcel",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Web_SM_Positive row 64 (provider WebSM)",
+    "body": {
+     "isMultiFilter": false,
+     "UserId": 0,
+     "Lobs": [
+      28
+     ],
+     "UserStatus": [
+      1
+     ],
+     "UserType": [],
+     "Domains": [],
+     "UserGroups": [],
+     "CreatedBy": [],
+     "ModifiedBy": [],
+     "PageSize": 50,
+     "PageNumber": 1,
+     "CreatedOnFromDate": "",
+     "CreatedOnToDate": "",
+     "ModifiedOnFromDate": "",
+     "ModifiedOnToDate": "",
+     "IsPAMSelected": true,
+     "AgGridQuickSearchText": "",
+     "sortModel": {
+      "sortColumn": "",
+      "sortOrder": ""
+     },
+     "FilterModel": [],
+     "GridColumnUserNameFilter": "",
+     "GridColumnUserDisplayNameFilter": "",
+     "GridColumnServerIPFilter": "",
+     "GridColumnUserTypeFilter": "",
+     "GridColumnDomainNameFilter": "",
+     "GridColumnUserRolesFilter": "",
+     "GridColumnUserGroupFilter": "",
+     "GridColumnUserLobFilter": "",
+     "GridColumnCreatedByFilter": "",
+     "GridColumnModifiedByFilter": "",
+     "GridColumnEmailFilter": "",
+     "SelectedColumnForUserUpdateViaExcel": [
+      "UserID",
+      "UserDisplayName",
+      "DomainName",
+      "Password",
+      "UserType",
+      "EmailID",
+      "MobileNumber",
+      "UserRole",
+      "LOB",
+      "UserGroup",
+      "ValidTillDate",
+      "Description1",
+      "Description2",
+      "Description3",
+      "Description4"
+     ]
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "UpdateBulkUserViaImport",
+    "verb": "POST",
+    "path": "/api/User/UpdateBulkUserViaImport",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Web_SM_Positive row 65 (provider WebSM)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "ValidateUserBinding",
+    "verb": "POST",
+    "path": "/api/User/ValidateUserBinding",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Web_SM_Positive row 66 (provider WebSM)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetPamInstance",
+    "verb": "POST",
+    "path": "/api/User/GetPamInstance",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Web_SM_Positive row 67 (provider WebSM)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   }
+  ]
+ }
+]

@@ -1,0 +1,130 @@
+# =============================================================================
+# Dynamic API Validator — root .gitignore                              (OBJ-024)
+#
+# This repository is rooted at the existing workspace. Nothing was moved to
+# create it, so every path referenced by the harness scripts, the .claude/rules
+# globs and both Windows scheduled tasks still resolves exactly as before.
+#
+# Nested .gitignore files remain in force and are NOT duplicated wholesale here:
+#   BLAST/.gitignore  ·  tools/jira/.gitignore  ·  tools/dashboard/.gitignore
+#   tools/dashboard-performance/.gitignore
+# The credential rules below are deliberately repeated as belt-and-braces.
+# =============================================================================
+
+# --- The two repositories that already have their own GitLab remotes ---------
+# Excluded so their history and 36.19 GB of content are never duplicated here.
+# Both stay fully intact on disk and keep working against their own origins;
+# git simply never traverses them. Do NOT remove these two lines.
+#   pam/                     -> repo.arconnet.com/root/pam.git (35.8.29_Hotfix)
+#   pam_automation_bootstrap -> Omkar.Kumbhar/pam_automation_bootstrap.git (Dev)
+#
+# NOTE: 'Automation gitlab repo/graphify-out.local-backup-OBJ007/' (150 MB,
+# 1,092 files) sits inside the excluded folder but belongs to NO git repo. It is
+# captured in the verified safety snapshot, so it is not at risk — but it stays
+# unversioned until its handling is decided separately.
+/pam/
+/Automation gitlab repo/
+
+# --- Credentials — never commit ----------------------------------------------
+# Git history cannot be un-published. Everything here must be excluded BEFORE
+# the first 'git add', not corrected afterwards.
+**/.env
+**/*.env
+!**/.env.sample
+!**/*.env.sample
+
+# Live PAM API bearer/refresh tokens written by token_guard.py.
+# OBJ-025: matched by '**/' rather than a literal directory, so they stay ignored
+# wherever the harness lands. A literal path here would silently stop ignoring a
+# live bearer token the moment the scripts moved.
+# These must stay in place on disk (an execution resume needs them) while being
+# permanently disqualified from version control.
+**/.token
+**/.token_cache.json
+**/.token_attempt_block.json
+
+# Key material
+*.pem
+*.pfx
+*.p12
+*.jks
+*.keystore
+id_rsa*
+id_ed25519*
+
+# --- Regenerable build output ------------------------------------------------
+# Measured at 107.57 MB / 10,145 files. Two byte-identical node_modules trees
+# account for 105 MB of that on their own.
+node_modules/
+dist/
+build/
+.vite/
+target/
+coverage/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+*.local
+
+# --- engage per-invocation state (OBJ-026) -----------------------------------
+# Deliberately ignored, unlike .daily/ .weekly/ .drift/ .perf/ below. Those record that an
+# UNATTENDED job ran and are the only evidence it did. `engage` is run by hand, often several
+# times a day, and rewrites all three files each time from state that is 10 seconds old and
+# fully regenerable - so tracking them would put churn in every commit and record nothing that
+# the repositories themselves do not already say.
+**/.engage/
+
+# --- Scratch and transient ---------------------------------------------------
+.tmp/
+*.tmp
+*.bak
+
+# --- OS / editor -------------------------------------------------------------
+Thumbs.db
+desktop.ini
+.DS_Store
+~$*
+*.swp
+*.orig
+*.rej
+
+# =============================================================================
+# Deliberately NOT ignored — recorded so a later edit does not remove them
+# by mistake:
+#
+#   artifacts/runs/**            Measured evidence. Generated but NOT reproducible
+#                              — each run is hours against a shared account, and
+#                              root CLAUDE.md states runs are retained, never
+#                              deleted. Includes the paused OBJ-023 run, whose
+#                              checkpoint.json is its only resume state.
+#   state/drift/**        facts.json, waivers.json and register.json are
+#   state/weekly/**       hand-authored, and OBJ-023-RESUME.md /
+#   state/perf/**         OBJ-019-STATE.md are the only record of how to
+#   state/daily/**        resume paused work. *.log files here total 69 KB
+#                              and are the audit trail.
+#   data/sources/*.pdf    Source documents (via Git-LFS, see
+#                              .gitattributes).
+#   data/analysis/*.json       Root CLAUDE.md: the JSON is the source of truth
+#                              and only the builder scripts write the .xlsx.
+#   *.xlsx / *.pptx            Deliverables. Marked binary in .gitattributes so
+#                              they never produce diff noise.
+# =============================================================================
+
+# =============================================================================
+#  GitHub first push (2026-09-25) - additions
+# =============================================================================
+# Workbook that embeds a customer login pasted into a ticket. The capture it is
+# built from was redacted before the first commit; rebuild it before re-tracking.
+artifacts/workbooks/PAM-Client-Ticket-Analysis.xlsx
+# More credential file types, at repo level so every clone is covered.
+**/.env.*
+!**/.env.sample
+!**/.env.example
+**/.mcp.json
+**/.claude/settings.local.json
+*.key
+*.ppk
+.git-credentials
+.netrc
+_netrc

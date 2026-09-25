@@ -1,0 +1,368 @@
+[
+ {
+  "id": "siem__setstatus",
+  "title": "SIEM lifecycle - SetStatus (no body defined)",
+  "why": "Generated lifecycle chain: discover LOB context, create, read the record back, then optionally update and remove it. This create has no payload defined in the framework, so it is probed with an empty body to document the gap.",
+  "generated": true,
+  "tier": 3,
+  "controller": "SIEM",
+  "hops": [
+   {
+    "name": "GetLOBList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetLOBList",
+    "body": {},
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LobName": "AUTOMATION_TEST_LOB"
+     },
+     "take": {
+      "LOB_ID": "LobId",
+      "LOB_NAME": "LobName"
+     }
+    },
+    "sla_ms": 8000
+   },
+   {
+    "name": "GetUserGroupList",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetUserGroupListWithoutMandateValue",
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LOBName": "${LOB_NAME}"
+     },
+     "take": {
+      "USER_GROUP_ID": "UserGroupId",
+      "USER_GROUP_NAME": "UserGroupName"
+     }
+    },
+    "sla_ms": 12000
+   },
+   {
+    "name": "GetServerGroupList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetServerGroupList",
+    "body": {
+     "LobId": "${LOB_ID}"
+    },
+    "extract": {
+     "SERVER_GROUP_ID": "Result[0].ServerGroupId"
+    },
+    "stop_on_fail": false,
+    "sla_ms": 8000
+   },
+   {
+    "name": "SetStatus",
+    "verb": "GET",
+    "path": "/api/SIEM/SetStatus",
+    "body": {},
+    "expect_created": false,
+    "extract_any_id": "NEW_ID",
+    "sla_ms": 20000,
+    "stop_on_fail": false,
+    "note": "generated from setStatusSIEM; NO request body defined in the framework - called with {} to record the gap"
+   },
+   {
+    "name": "GetStatus__verify",
+    "verb": "GET",
+    "path": "/api/SIEM/GetStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "verify_value_anywhere": {
+     "value": "${NEW_ID}",
+     "label": "created record id"
+    },
+    "note": "read-back chosen for entity 'status'"
+   }
+  ]
+ },
+ {
+  "id": "siem__reads_1",
+  "title": "SIEM read sweep 1",
+  "why": "Exercises read endpoints inside a chain, so each one is called with real LOB context rather than in isolation.",
+  "generated": true,
+  "tier": 2,
+  "controller": "SIEM",
+  "hops": [
+   {
+    "name": "GetLOBList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetLOBList",
+    "body": {},
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LobName": "AUTOMATION_TEST_LOB"
+     },
+     "take": {
+      "LOB_ID": "LobId",
+      "LOB_NAME": "LobName"
+     }
+    },
+    "sla_ms": 8000
+   },
+   {
+    "name": "GetUserGroupList",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetUserGroupListWithoutMandateValue",
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LOBName": "${LOB_NAME}"
+     },
+     "take": {
+      "USER_GROUP_ID": "UserGroupId",
+      "USER_GROUP_NAME": "UserGroupName"
+     }
+    },
+    "sla_ms": 12000
+   },
+   {
+    "name": "GetServerGroupList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetServerGroupList",
+    "body": {
+     "LobId": "${LOB_ID}"
+    },
+    "extract": {
+     "SERVER_GROUP_ID": "Result[0].ServerGroupId"
+    },
+    "stop_on_fail": false,
+    "sla_ms": 8000
+   },
+   {
+    "name": "GetUserLoginAttempt",
+    "verb": "POST",
+    "path": "/api/SIEM/GetUserLoginAttempt",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude",
+    "body": {
+     "FromDate": "2019-06-22T02:37:00",
+     "ToDate": "2020-04-22T02:37:00",
+     "NumberOfRecords": 2
+    }
+   },
+   {
+    "name": "GetFailedLoginAttempt",
+    "verb": "POST",
+    "path": "/api/SIEM/GetFailedLoginAttempt",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude",
+    "body": {
+     "FromDate": "2019-06-22T02:37:00",
+     "ToDate": "2019-06-26T12:37:00",
+     "NumberOfRecords": 2
+    }
+   },
+   {
+    "name": "GetServiceAccess",
+    "verb": "POST",
+    "path": "/api/SIEM/GetServiceAccess",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude",
+    "body": {
+     "FromDate": "2019-06-22T02:37:00",
+     "ToDate": "2020-04-22T02:37:00",
+     "NumberOfRecords": 3
+    }
+   },
+   {
+    "name": "GetServiceCommand",
+    "verb": "POST",
+    "path": "/api/SIEM/GetServiceCommand",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude",
+    "body": {
+     "FromDate": "2019-06-22T02:37:00",
+     "ToDate": "2020-04-22T02:37:00",
+     "NumberOfRecords": 3
+    }
+   },
+   {
+    "name": "GetPasswordView",
+    "verb": "POST",
+    "path": "/api/SIEM/GetPasswordView",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude",
+    "body": {
+     "FromDate": "2019-06-22T02:37:00",
+     "ToDate": "2020-04-22T02:37:00",
+     "NumberOfRecords": 3
+    }
+   },
+   {
+    "name": "GetServicePasswordChange",
+    "verb": "POST",
+    "path": "/api/SIEM/GetServicePasswordChange",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude",
+    "body": {
+     "FromDate": "2019-06-22T02:37:00",
+     "ToDate": "2020-07-22T02:37:00",
+     "NumberOfRecords": 2
+    }
+   },
+   {
+    "name": "GetServicePasswordEnvelopePrint",
+    "verb": "POST",
+    "path": "/api/SIEM/GetServicePasswordEnvelopePrint",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude",
+    "body": {
+     "FromDate": "2019-06-22T02:37:00",
+     "ToDate": "2020-04-22T02:37:00",
+     "NumberOfRecords": 3
+    }
+   },
+   {
+    "name": "GetArcosLog",
+    "verb": "POST",
+    "path": "/api/SIEM/GetArcosLog",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude",
+    "body": {
+     "FromDate": "2019-06-22T02:37:00",
+     "ToDate": "2020-07-22T02:37:00",
+     "NumberOfRecords": 2
+    }
+   },
+   {
+    "name": "GetProcessLog",
+    "verb": "POST",
+    "path": "/api/SIEM/GetProcessLog",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude",
+    "body": {}
+   },
+   {
+    "name": "GetServicePasswordStatus",
+    "verb": "POST",
+    "path": "/api/SIEM/GetServicePasswordStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude",
+    "body": {}
+   }
+  ]
+ },
+ {
+  "id": "siem__reads_2",
+  "title": "SIEM read sweep 2",
+  "why": "Exercises read endpoints inside a chain, so each one is called with real LOB context rather than in isolation.",
+  "generated": true,
+  "tier": 2,
+  "controller": "SIEM",
+  "hops": [
+   {
+    "name": "GetLOBList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetLOBList",
+    "body": {},
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LobName": "AUTOMATION_TEST_LOB"
+     },
+     "take": {
+      "LOB_ID": "LobId",
+      "LOB_NAME": "LobName"
+     }
+    },
+    "sla_ms": 8000
+   },
+   {
+    "name": "GetUserGroupList",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetUserGroupListWithoutMandateValue",
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LOBName": "${LOB_NAME}"
+     },
+     "take": {
+      "USER_GROUP_ID": "UserGroupId",
+      "USER_GROUP_NAME": "UserGroupName"
+     }
+    },
+    "sla_ms": 12000
+   },
+   {
+    "name": "GetServerGroupList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetServerGroupList",
+    "body": {
+     "LobId": "${LOB_ID}"
+    },
+    "extract": {
+     "SERVER_GROUP_ID": "Result[0].ServerGroupId"
+    },
+    "stop_on_fail": false,
+    "sla_ms": 8000
+   },
+   {
+    "name": "GetUserActivityLogSSM",
+    "verb": "POST",
+    "path": "/api/SIEM/GetUserActivityLogSSM",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude",
+    "body": {}
+   },
+   {
+    "name": "GetUserActivityLogOOA",
+    "verb": "POST",
+    "path": "/api/SIEM/GetUserActivityLogOOA",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude",
+    "body": {}
+   },
+   {
+    "name": "GetMetaDataLog",
+    "verb": "POST",
+    "path": "/api/SIEM/GetMetaDataLog",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude",
+    "body": {}
+   },
+   {
+    "name": "GetServicePasswordRequestLog",
+    "verb": "POST",
+    "path": "/api/SIEM/GetServicePasswordRequestLog",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude",
+    "body": {}
+   },
+   {
+    "name": "GetUserStatusLog",
+    "verb": "POST",
+    "path": "/api/SIEM/GetUserStatusLog",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude",
+    "body": {}
+   },
+   {
+    "name": "GetDatabaseStatus",
+    "verb": "GET",
+    "path": "/api/SIEM/GetDatabaseStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude"
+   }
+  ]
+ }
+]

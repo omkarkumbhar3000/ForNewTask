@@ -1,0 +1,74 @@
+[
+ {
+  "id": "data_positive_rdps_1",
+  "title": "RDPS - positive data-driven batch 1",
+  "why": "Executes the QA team's authored positive scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "positive",
+  "tier": 4,
+  "controller": "RDPS",
+  "hops": [
+   {
+    "name": "GetConfig",
+    "verb": "POST",
+    "path": "/api/v1.0/GetConfig",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / RDPS_positive row 1 (provider RDPS)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "ClientAuth",
+    "verb": "POST",
+    "path": "/api/RDPS/ClientAuth",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / RDPS_positive row 2 (provider RDPS)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetConfig",
+    "verb": "POST",
+    "path": "/api/RDPS/GetConfig",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / RDPS_positive row 3 (provider RDPS)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "RegisterClient",
+    "verb": "POST",
+    "path": "/api/RDPS/RegisterClient",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / RDPS_positive row 4 (provider RDPS)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "RegisterClient",
+    "verb": "POST",
+    "path": "/api/v1.0/RegisterClient",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / RDPS_positive row 5 (provider RDPS)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "ClientAuth",
+    "verb": "POST",
+    "path": "/api/v1.0/ClientAuth",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / RDPS_positive row 6 (provider RDPS)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   }
+  ]
+ }
+]

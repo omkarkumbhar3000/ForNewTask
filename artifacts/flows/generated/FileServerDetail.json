@@ -1,0 +1,381 @@
+[
+ {
+  "id": "fileserverdetail__insertfileserverconfiguration",
+  "title": "FileServerDetail lifecycle - InsertFileServerConfiguration",
+  "why": "Generated lifecycle chain: discover LOB context, create, read the record back, then optionally update and remove it.",
+  "generated": true,
+  "tier": 1,
+  "controller": "FileServerDetail",
+  "hops": [
+   {
+    "name": "GetLOBList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetLOBList",
+    "body": {},
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LobName": "AUTOMATION_TEST_LOB"
+     },
+     "take": {
+      "LOB_ID": "LobId",
+      "LOB_NAME": "LobName"
+     }
+    },
+    "sla_ms": 8000
+   },
+   {
+    "name": "GetUserGroupList",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetUserGroupListWithoutMandateValue",
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LOBName": "${LOB_NAME}"
+     },
+     "take": {
+      "USER_GROUP_ID": "UserGroupId",
+      "USER_GROUP_NAME": "UserGroupName"
+     }
+    },
+    "sla_ms": 12000
+   },
+   {
+    "name": "GetServerGroupList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetServerGroupList",
+    "body": {
+     "LobId": "${LOB_ID}"
+    },
+    "extract": {
+     "SERVER_GROUP_ID": "Result[0].ServerGroupId"
+    },
+    "stop_on_fail": false,
+    "sla_ms": 8000
+   },
+   {
+    "name": "InsertFileServerConfiguration",
+    "verb": "POST",
+    "path": "/api/FileServerDetail/InsertFileServerConfiguration",
+    "body": {
+     "fsd_filepathofserver": "ftpfiles",
+     "fsd_maxfilesize": "10",
+     "fsd_autocleanupindays": "30",
+     "fsd_createdby": "Admin",
+     "fsd_createdby_Id": "35",
+     "fsd_modified_by": "Admin",
+     "fsd_service_id": "1",
+     "fsd_isdeleted": 1
+    },
+    "expect_created": true,
+    "extract_any_id": "NEW_ID",
+    "sla_ms": 20000,
+    "stop_on_fail": true,
+    "note": "generated from insertFileServerConfiguration"
+   },
+   {
+    "name": "GetFileServerConfiguration__verify",
+    "verb": "POST",
+    "path": "/api/FileServerDetail/GetFileServerConfiguration",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "verify_value_anywhere": {
+     "value": "${NEW_ID}",
+     "label": "created record id"
+    },
+    "note": "read-back chosen for entity 'fileserverconfiguration'",
+    "body": {
+     "fsd_createdby": "Admin"
+    }
+   },
+   {
+    "name": "DeleteFileServerConfiguration",
+    "verb": "POST",
+    "path": "/api/FileServerDetail/DeleteFileServerConfiguration",
+    "body": {
+     "fsd_id": "1"
+    },
+    "sla_ms": 20000,
+    "stop_on_fail": false,
+    "teardown": true,
+    "note": "removes the record this flow created; requires --allow-teardown"
+   }
+  ]
+ },
+ {
+  "id": "fileserverdetail__insertuploadedfiledetails",
+  "title": "FileServerDetail lifecycle - InsertUploadedFileDetails",
+  "why": "Generated lifecycle chain: discover LOB context, create, read the record back, then optionally update and remove it.",
+  "generated": true,
+  "tier": 1,
+  "controller": "FileServerDetail",
+  "hops": [
+   {
+    "name": "GetLOBList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetLOBList",
+    "body": {},
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LobName": "AUTOMATION_TEST_LOB"
+     },
+     "take": {
+      "LOB_ID": "LobId",
+      "LOB_NAME": "LobName"
+     }
+    },
+    "sla_ms": 8000
+   },
+   {
+    "name": "GetUserGroupList",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetUserGroupListWithoutMandateValue",
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LOBName": "${LOB_NAME}"
+     },
+     "take": {
+      "USER_GROUP_ID": "UserGroupId",
+      "USER_GROUP_NAME": "UserGroupName"
+     }
+    },
+    "sla_ms": 12000
+   },
+   {
+    "name": "GetServerGroupList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetServerGroupList",
+    "body": {
+     "LobId": "${LOB_ID}"
+    },
+    "extract": {
+     "SERVER_GROUP_ID": "Result[0].ServerGroupId"
+    },
+    "stop_on_fail": false,
+    "sla_ms": 8000
+   },
+   {
+    "name": "InsertUploadedFileDetails",
+    "verb": "POST",
+    "path": "/api/FileServerDetail/InsertUploadedFileDetails",
+    "body": {
+     "FileStorageType": "2",
+     "StorageReferenceNo": "1318",
+     "FileName": "TestFile",
+     "FileExtension": ".txt",
+     "FileSize": "100",
+     "FileContent": "Test",
+     "OperationBy": "Admin",
+     "FileDeleteOn": "10/01/2020 01:52:00",
+     "FilePathOnFileServer": "ARCOSADMIN/2020Oct28162544695"
+    },
+    "expect_created": true,
+    "extract_any_id": "NEW_ID",
+    "sla_ms": 20000,
+    "stop_on_fail": true,
+    "note": "generated from insertUploadedFileDetails"
+   },
+   {
+    "name": "GetStatus__verify",
+    "verb": "GET",
+    "path": "/api/FileServerDetail/GetStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "verify_value_anywhere": {
+     "value": "${NEW_ID}",
+     "label": "created record id"
+    },
+    "note": "read-back chosen for entity 'uploadedfile'"
+   }
+  ]
+ },
+ {
+  "id": "fileserverdetail__setstatus",
+  "title": "FileServerDetail lifecycle - SetStatus (no body defined)",
+  "why": "Generated lifecycle chain: discover LOB context, create, read the record back, then optionally update and remove it. This create has no payload defined in the framework, so it is probed with an empty body to document the gap.",
+  "generated": true,
+  "tier": 3,
+  "controller": "FileServerDetail",
+  "hops": [
+   {
+    "name": "GetLOBList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetLOBList",
+    "body": {},
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LobName": "AUTOMATION_TEST_LOB"
+     },
+     "take": {
+      "LOB_ID": "LobId",
+      "LOB_NAME": "LobName"
+     }
+    },
+    "sla_ms": 8000
+   },
+   {
+    "name": "GetUserGroupList",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetUserGroupListWithoutMandateValue",
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LOBName": "${LOB_NAME}"
+     },
+     "take": {
+      "USER_GROUP_ID": "UserGroupId",
+      "USER_GROUP_NAME": "UserGroupName"
+     }
+    },
+    "sla_ms": 12000
+   },
+   {
+    "name": "GetServerGroupList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetServerGroupList",
+    "body": {
+     "LobId": "${LOB_ID}"
+    },
+    "extract": {
+     "SERVER_GROUP_ID": "Result[0].ServerGroupId"
+    },
+    "stop_on_fail": false,
+    "sla_ms": 8000
+   },
+   {
+    "name": "SetStatus",
+    "verb": "GET",
+    "path": "/api/FileServerDetail/SetStatus",
+    "body": {},
+    "expect_created": false,
+    "extract_any_id": "NEW_ID",
+    "sla_ms": 20000,
+    "stop_on_fail": false,
+    "note": "generated from setStatusFileServerDetail; NO request body defined in the framework - called with {} to record the gap"
+   },
+   {
+    "name": "GetStatus__verify",
+    "verb": "GET",
+    "path": "/api/FileServerDetail/GetStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "verify_value_anywhere": {
+     "value": "${NEW_ID}",
+     "label": "created record id"
+    },
+    "note": "read-back chosen for entity 'status'"
+   }
+  ]
+ },
+ {
+  "id": "fileserverdetail__reads_1",
+  "title": "FileServerDetail read sweep 1",
+  "why": "Exercises read endpoints inside a chain, so each one is called with real LOB context rather than in isolation.",
+  "generated": true,
+  "tier": 2,
+  "controller": "FileServerDetail",
+  "hops": [
+   {
+    "name": "GetLOBList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetLOBList",
+    "body": {},
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LobName": "AUTOMATION_TEST_LOB"
+     },
+     "take": {
+      "LOB_ID": "LobId",
+      "LOB_NAME": "LobName"
+     }
+    },
+    "sla_ms": 8000
+   },
+   {
+    "name": "GetUserGroupList",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetUserGroupListWithoutMandateValue",
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LOBName": "${LOB_NAME}"
+     },
+     "take": {
+      "USER_GROUP_ID": "UserGroupId",
+      "USER_GROUP_NAME": "UserGroupName"
+     }
+    },
+    "sla_ms": 12000
+   },
+   {
+    "name": "GetServerGroupList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetServerGroupList",
+    "body": {
+     "LobId": "${LOB_ID}"
+    },
+    "extract": {
+     "SERVER_GROUP_ID": "Result[0].ServerGroupId"
+    },
+    "stop_on_fail": false,
+    "sla_ms": 8000
+   },
+   {
+    "name": "GetFileUploadConfiguration",
+    "verb": "POST",
+    "path": "/api/FileServerDetail/GetFileUploadConfiguration",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude",
+    "body": {
+     "fsd_id": "1"
+    }
+   },
+   {
+    "name": "GetFileServerConfigJson",
+    "verb": "POST",
+    "path": "/api/FileServerDetail/GetFileServerConfigJson",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude",
+    "body": {
+     "fsd_createdby": "Admin"
+    }
+   },
+   {
+    "name": "GetFileServerConfigurationJson",
+    "verb": "POST",
+    "path": "/api/FileServerDetail/GetFileServerConfigurationJson",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude",
+    "body": {
+     "fsd_createdby": "Admin"
+    }
+   },
+   {
+    "name": "GetFileServerConfigurationforDownload",
+    "verb": "POST",
+    "path": "/api/FileServerDetail/GetFileServerConfigurationforDownload",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude",
+    "body": {
+     "afs_id": "1"
+    }
+   },
+   {
+    "name": "GetDatabaseStatus",
+    "verb": "GET",
+    "path": "/api/FileServerDetail/GetDatabaseStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude"
+   }
+  ]
+ }
+]

@@ -1,0 +1,1830 @@
+[
+ {
+  "id": "userdetailsv3__setuserdetails",
+  "title": "UserDetailsV3 lifecycle - SetUserDetails",
+  "why": "Generated lifecycle chain: discover LOB context, create, read the record back, then optionally update and remove it.",
+  "generated": true,
+  "tier": 1,
+  "controller": "UserDetailsV3",
+  "hops": [
+   {
+    "name": "GetLOBList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetLOBList",
+    "body": {},
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LobName": "AUTOMATION_TEST_LOB"
+     },
+     "take": {
+      "LOB_ID": "LobId",
+      "LOB_NAME": "LobName"
+     }
+    },
+    "sla_ms": 8000
+   },
+   {
+    "name": "GetUserGroupList",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetUserGroupListWithoutMandateValue",
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LOBName": "${LOB_NAME}"
+     },
+     "take": {
+      "USER_GROUP_ID": "UserGroupId",
+      "USER_GROUP_NAME": "UserGroupName"
+     }
+    },
+    "sla_ms": 12000
+   },
+   {
+    "name": "GetServerGroupList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetServerGroupList",
+    "body": {
+     "LobId": "${LOB_ID}"
+    },
+    "extract": {
+     "SERVER_GROUP_ID": "Result[0].ServerGroupId"
+    },
+    "stop_on_fail": false,
+    "sla_ms": 8000
+   },
+   {
+    "name": "SetUserDetails",
+    "verb": "POST",
+    "path": "/api/UserDetailsV3/SetUserDetails",
+    "body": {
+     "LOBID": "${LOB_ID}",
+     "UserGroupId": "${USER_GROUP_ID}",
+     "DomainName": "ARCOSAUTH",
+     "UserDisplayName": "${NEW_USERNAME}",
+     "UserId": "${NEW_USERNAME}",
+     "Password": "${NEW_USER_PASSWORD}",
+     "UserTypeId": 1,
+     "EmailId": "${NEW_USER_EMAIL}"
+    },
+    "expect_created": true,
+    "extract_any_id": "NEW_ID",
+    "sla_ms": 20000,
+    "stop_on_fail": true,
+    "note": "generated from setUserDetailsV3; chained: LOBID <- ${LOB_ID}, UserGroupId <- ${USER_GROUP_ID}, UserDisplayName <- ${NEW_USERNAME}, UserId <- ${NEW_USERNAME}, Password <- ${NEW_USER_PASSWORD}, EmailId <- ${NEW_USER_EMAIL}"
+   },
+   {
+    "name": "GetAllActiveUserList__verify",
+    "verb": "GET",
+    "path": "/api/UserDetailsV3/GetAllActiveUserList",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "verify_value_anywhere": {
+     "value": "${NEW_ID}",
+     "label": "created record id"
+    },
+    "note": "read-back chosen for entity 'user'"
+   },
+   {
+    "name": "UpdateUserPreferences",
+    "verb": "POST",
+    "path": "/api/UserDetailsV3/UpdateUserPreferences",
+    "body": {
+     "UserID": "${NEW_USERNAME}",
+     "ServiceTypeID": 141,
+     "LoggedInUserSessionID": 1,
+     "ServiceTypeDescription": "Test",
+     "userServicePreference": {
+      "ServiceRename": "TestService",
+      "IconString": "",
+      "Color": "",
+      "Description": "Test Service",
+      "ServiceID": 1
+     }
+    },
+    "sla_ms": 20000,
+    "stop_on_fail": false,
+    "note": "update against the record created above"
+   },
+   {
+    "name": "DisableUser",
+    "verb": "POST",
+    "path": "/api/UserDetailsV3/DisableUser",
+    "body": {
+     "UserId": "${NEW_USERNAME}"
+    },
+    "sla_ms": 20000,
+    "stop_on_fail": false,
+    "teardown": true,
+    "note": "removes the record this flow created; requires --allow-teardown"
+   }
+  ]
+ },
+ {
+  "id": "userdetailsv3__setserviceusermapping",
+  "title": "UserDetailsV3 lifecycle - SetServiceUserMapping",
+  "why": "Generated lifecycle chain: discover LOB context, create, read the record back, then optionally update and remove it.",
+  "generated": true,
+  "tier": 1,
+  "controller": "UserDetailsV3",
+  "hops": [
+   {
+    "name": "GetLOBList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetLOBList",
+    "body": {},
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LobName": "AUTOMATION_TEST_LOB"
+     },
+     "take": {
+      "LOB_ID": "LobId",
+      "LOB_NAME": "LobName"
+     }
+    },
+    "sla_ms": 8000
+   },
+   {
+    "name": "GetUserGroupList",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetUserGroupListWithoutMandateValue",
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LOBName": "${LOB_NAME}"
+     },
+     "take": {
+      "USER_GROUP_ID": "UserGroupId",
+      "USER_GROUP_NAME": "UserGroupName"
+     }
+    },
+    "sla_ms": 12000
+   },
+   {
+    "name": "GetServerGroupList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetServerGroupList",
+    "body": {
+     "LobId": "${LOB_ID}"
+    },
+    "extract": {
+     "SERVER_GROUP_ID": "Result[0].ServerGroupId"
+    },
+    "stop_on_fail": false,
+    "sla_ms": 8000
+   },
+   {
+    "name": "SetServiceUserMapping",
+    "verb": "POST",
+    "path": "/api/UserDetailsV3/SetServiceUserMapping",
+    "body": {
+     "userid": "${NEW_USERNAME}",
+     "serviceid": "5|126"
+    },
+    "expect_created": true,
+    "extract_any_id": "NEW_ID",
+    "sla_ms": 20000,
+    "stop_on_fail": true,
+    "note": "generated from setServiceUserMappingV3; chained: userid <- ${NEW_USERNAME}"
+   },
+   {
+    "name": "GetAllActiveUserList__verify",
+    "verb": "GET",
+    "path": "/api/UserDetailsV3/GetAllActiveUserList",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "verify_value_anywhere": {
+     "value": "${NEW_ID}",
+     "label": "created record id"
+    },
+    "note": "read-back chosen for entity 'serviceuser'"
+   }
+  ]
+ },
+ {
+  "id": "userdetailsv3__setserviceuserunmapping",
+  "title": "UserDetailsV3 lifecycle - SetServiceUserUnMapping (no body defined)",
+  "why": "Generated lifecycle chain: discover LOB context, create, read the record back, then optionally update and remove it. This create has no payload defined in the framework, so it is probed with an empty body to document the gap.",
+  "generated": true,
+  "tier": 3,
+  "controller": "UserDetailsV3",
+  "hops": [
+   {
+    "name": "GetLOBList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetLOBList",
+    "body": {},
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LobName": "AUTOMATION_TEST_LOB"
+     },
+     "take": {
+      "LOB_ID": "LobId",
+      "LOB_NAME": "LobName"
+     }
+    },
+    "sla_ms": 8000
+   },
+   {
+    "name": "GetUserGroupList",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetUserGroupListWithoutMandateValue",
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LOBName": "${LOB_NAME}"
+     },
+     "take": {
+      "USER_GROUP_ID": "UserGroupId",
+      "USER_GROUP_NAME": "UserGroupName"
+     }
+    },
+    "sla_ms": 12000
+   },
+   {
+    "name": "GetServerGroupList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetServerGroupList",
+    "body": {
+     "LobId": "${LOB_ID}"
+    },
+    "extract": {
+     "SERVER_GROUP_ID": "Result[0].ServerGroupId"
+    },
+    "stop_on_fail": false,
+    "sla_ms": 8000
+   },
+   {
+    "name": "SetServiceUserUnMapping",
+    "verb": "POST",
+    "path": "/api/UserDetailsV3/SetServiceUserUnMapping",
+    "body": {},
+    "expect_created": false,
+    "extract_any_id": "NEW_ID",
+    "sla_ms": 20000,
+    "stop_on_fail": false,
+    "note": "generated from setServiceUserUnMappingV3; NO request body defined in the framework - called with {} to record the gap"
+   },
+   {
+    "name": "GetAllActiveUserList__verify",
+    "verb": "GET",
+    "path": "/api/UserDetailsV3/GetAllActiveUserList",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "verify_value_anywhere": {
+     "value": "${NEW_ID}",
+     "label": "created record id"
+    },
+    "note": "read-back chosen for entity 'serviceuserun'"
+   }
+  ]
+ },
+ {
+  "id": "userdetailsv3__setusertousergroupmapping",
+  "title": "UserDetailsV3 lifecycle - SetUsertoUserGroupMapping (no body defined)",
+  "why": "Generated lifecycle chain: discover LOB context, create, read the record back, then optionally update and remove it. This create has no payload defined in the framework, so it is probed with an empty body to document the gap.",
+  "generated": true,
+  "tier": 3,
+  "controller": "UserDetailsV3",
+  "hops": [
+   {
+    "name": "GetLOBList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetLOBList",
+    "body": {},
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LobName": "AUTOMATION_TEST_LOB"
+     },
+     "take": {
+      "LOB_ID": "LobId",
+      "LOB_NAME": "LobName"
+     }
+    },
+    "sla_ms": 8000
+   },
+   {
+    "name": "GetUserGroupList",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetUserGroupListWithoutMandateValue",
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LOBName": "${LOB_NAME}"
+     },
+     "take": {
+      "USER_GROUP_ID": "UserGroupId",
+      "USER_GROUP_NAME": "UserGroupName"
+     }
+    },
+    "sla_ms": 12000
+   },
+   {
+    "name": "GetServerGroupList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetServerGroupList",
+    "body": {
+     "LobId": "${LOB_ID}"
+    },
+    "extract": {
+     "SERVER_GROUP_ID": "Result[0].ServerGroupId"
+    },
+    "stop_on_fail": false,
+    "sla_ms": 8000
+   },
+   {
+    "name": "SetUsertoUserGroupMapping",
+    "verb": "POST",
+    "path": "/api/UserDetailsV3/SetUsertoUserGroupMapping",
+    "body": {},
+    "expect_created": false,
+    "extract_any_id": "NEW_ID",
+    "sla_ms": 20000,
+    "stop_on_fail": false,
+    "note": "generated from setUsertoUserGroupMappingV3; NO request body defined in the framework - called with {} to record the gap"
+   },
+   {
+    "name": "GetAllActiveUserList__verify",
+    "verb": "GET",
+    "path": "/api/UserDetailsV3/GetAllActiveUserList",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "verify_value_anywhere": {
+     "value": "${NEW_ID}",
+     "label": "created record id"
+    },
+    "note": "read-back chosen for entity 'usertousergroup'"
+   }
+  ]
+ },
+ {
+  "id": "userdetailsv3__setusertousergroupmappingwithautomap",
+  "title": "UserDetailsV3 lifecycle - SetUsertoUserGroupMappingWithAutoMap (no body defined)",
+  "why": "Generated lifecycle chain: discover LOB context, create, read the record back, then optionally update and remove it. This create has no payload defined in the framework, so it is probed with an empty body to document the gap.",
+  "generated": true,
+  "tier": 3,
+  "controller": "UserDetailsV3",
+  "hops": [
+   {
+    "name": "GetLOBList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetLOBList",
+    "body": {},
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LobName": "AUTOMATION_TEST_LOB"
+     },
+     "take": {
+      "LOB_ID": "LobId",
+      "LOB_NAME": "LobName"
+     }
+    },
+    "sla_ms": 8000
+   },
+   {
+    "name": "GetUserGroupList",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetUserGroupListWithoutMandateValue",
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LOBName": "${LOB_NAME}"
+     },
+     "take": {
+      "USER_GROUP_ID": "UserGroupId",
+      "USER_GROUP_NAME": "UserGroupName"
+     }
+    },
+    "sla_ms": 12000
+   },
+   {
+    "name": "GetServerGroupList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetServerGroupList",
+    "body": {
+     "LobId": "${LOB_ID}"
+    },
+    "extract": {
+     "SERVER_GROUP_ID": "Result[0].ServerGroupId"
+    },
+    "stop_on_fail": false,
+    "sla_ms": 8000
+   },
+   {
+    "name": "SetUsertoUserGroupMappingWithAutoMap",
+    "verb": "POST",
+    "path": "/api/UserDetailsV3/SetUsertoUserGroupMappingWithAutoMap",
+    "body": {},
+    "expect_created": false,
+    "extract_any_id": "NEW_ID",
+    "sla_ms": 20000,
+    "stop_on_fail": false,
+    "note": "generated from setUsertoUserGroupMappingWithAutoMapV3; NO request body defined in the framework - called with {} to record the gap"
+   },
+   {
+    "name": "GetAllActiveUserList__verify",
+    "verb": "GET",
+    "path": "/api/UserDetailsV3/GetAllActiveUserList",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "verify_value_anywhere": {
+     "value": "${NEW_ID}",
+     "label": "created record id"
+    },
+    "note": "read-back chosen for entity 'usertousergroupmappingwithautomap'"
+   }
+  ]
+ },
+ {
+  "id": "userdetailsv3__setusertousergroupunmapping",
+  "title": "UserDetailsV3 lifecycle - SetUsertoUserGroupUNMapping (no body defined)",
+  "why": "Generated lifecycle chain: discover LOB context, create, read the record back, then optionally update and remove it. This create has no payload defined in the framework, so it is probed with an empty body to document the gap.",
+  "generated": true,
+  "tier": 3,
+  "controller": "UserDetailsV3",
+  "hops": [
+   {
+    "name": "GetLOBList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetLOBList",
+    "body": {},
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LobName": "AUTOMATION_TEST_LOB"
+     },
+     "take": {
+      "LOB_ID": "LobId",
+      "LOB_NAME": "LobName"
+     }
+    },
+    "sla_ms": 8000
+   },
+   {
+    "name": "GetUserGroupList",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetUserGroupListWithoutMandateValue",
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LOBName": "${LOB_NAME}"
+     },
+     "take": {
+      "USER_GROUP_ID": "UserGroupId",
+      "USER_GROUP_NAME": "UserGroupName"
+     }
+    },
+    "sla_ms": 12000
+   },
+   {
+    "name": "GetServerGroupList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetServerGroupList",
+    "body": {
+     "LobId": "${LOB_ID}"
+    },
+    "extract": {
+     "SERVER_GROUP_ID": "Result[0].ServerGroupId"
+    },
+    "stop_on_fail": false,
+    "sla_ms": 8000
+   },
+   {
+    "name": "SetUsertoUserGroupUNMapping",
+    "verb": "POST",
+    "path": "/api/UserDetailsV3/SetUsertoUserGroupUNMapping",
+    "body": {},
+    "expect_created": false,
+    "extract_any_id": "NEW_ID",
+    "sla_ms": 20000,
+    "stop_on_fail": false,
+    "note": "generated from setUsertoUserGroupUNMappingV3; NO request body defined in the framework - called with {} to record the gap"
+   },
+   {
+    "name": "GetAllActiveUserList__verify",
+    "verb": "GET",
+    "path": "/api/UserDetailsV3/GetAllActiveUserList",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "verify_value_anywhere": {
+     "value": "${NEW_ID}",
+     "label": "created record id"
+    },
+    "note": "read-back chosen for entity 'usertousergroupun'"
+   }
+  ]
+ },
+ {
+  "id": "userdetailsv3__setdualfactorauthorization",
+  "title": "UserDetailsV3 lifecycle - SetDualFactorAuthorization",
+  "why": "Generated lifecycle chain: discover LOB context, create, read the record back, then optionally update and remove it.",
+  "generated": true,
+  "tier": 1,
+  "controller": "UserDetailsV3",
+  "hops": [
+   {
+    "name": "GetLOBList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetLOBList",
+    "body": {},
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LobName": "AUTOMATION_TEST_LOB"
+     },
+     "take": {
+      "LOB_ID": "LobId",
+      "LOB_NAME": "LobName"
+     }
+    },
+    "sla_ms": 8000
+   },
+   {
+    "name": "GetUserGroupList",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetUserGroupListWithoutMandateValue",
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LOBName": "${LOB_NAME}"
+     },
+     "take": {
+      "USER_GROUP_ID": "UserGroupId",
+      "USER_GROUP_NAME": "UserGroupName"
+     }
+    },
+    "sla_ms": 12000
+   },
+   {
+    "name": "GetServerGroupList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetServerGroupList",
+    "body": {
+     "LobId": "${LOB_ID}"
+    },
+    "extract": {
+     "SERVER_GROUP_ID": "Result[0].ServerGroupId"
+    },
+    "stop_on_fail": false,
+    "sla_ms": 8000
+   },
+   {
+    "name": "SetDualFactorAuthorization",
+    "verb": "POST",
+    "path": "/api/UserDetailsV3/SetDualFactorAuthorization",
+    "body": {
+     "UserId": "${NEW_USERNAME}",
+     "DualFactorTypeId": 4,
+     "MobileNo": "${NEW_USER_MOBILE}"
+    },
+    "expect_created": true,
+    "extract_any_id": "NEW_ID",
+    "sla_ms": 20000,
+    "stop_on_fail": true,
+    "note": "generated from setDualFactorAuthorizationV3; chained: UserId <- ${NEW_USERNAME}, MobileNo <- ${NEW_USER_MOBILE}"
+   },
+   {
+    "name": "GetAllActiveUserList__verify",
+    "verb": "GET",
+    "path": "/api/UserDetailsV3/GetAllActiveUserList",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "verify_value_anywhere": {
+     "value": "${NEW_ID}",
+     "label": "created record id"
+    },
+    "note": "read-back chosen for entity 'dualfactorauthorization'"
+   }
+  ]
+ },
+ {
+  "id": "userdetailsv3__setusergroupservicegroupmapping",
+  "title": "UserDetailsV3 lifecycle - SetUserGroupServiceGroupMapping",
+  "why": "Generated lifecycle chain: discover LOB context, create, read the record back, then optionally update and remove it.",
+  "generated": true,
+  "tier": 1,
+  "controller": "UserDetailsV3",
+  "hops": [
+   {
+    "name": "GetLOBList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetLOBList",
+    "body": {},
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LobName": "AUTOMATION_TEST_LOB"
+     },
+     "take": {
+      "LOB_ID": "LobId",
+      "LOB_NAME": "LobName"
+     }
+    },
+    "sla_ms": 8000
+   },
+   {
+    "name": "GetUserGroupList",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetUserGroupListWithoutMandateValue",
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LOBName": "${LOB_NAME}"
+     },
+     "take": {
+      "USER_GROUP_ID": "UserGroupId",
+      "USER_GROUP_NAME": "UserGroupName"
+     }
+    },
+    "sla_ms": 12000
+   },
+   {
+    "name": "GetServerGroupList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetServerGroupList",
+    "body": {
+     "LobId": "${LOB_ID}"
+    },
+    "extract": {
+     "SERVER_GROUP_ID": "Result[0].ServerGroupId"
+    },
+    "stop_on_fail": false,
+    "sla_ms": 8000
+   },
+   {
+    "name": "SetUserGroupServiceGroupMapping",
+    "verb": "POST",
+    "path": "/api/UserDetailsV3/SetUserGroupServiceGroupMapping",
+    "body": {
+     "UserGroupId": "${USER_GROUP_ID}",
+     "ServiceGroupId": "${SERVICE_GROUP_ID}"
+    },
+    "expect_created": true,
+    "extract_any_id": "NEW_ID",
+    "sla_ms": 20000,
+    "stop_on_fail": true,
+    "note": "generated from setUserGroupServiceGroupMappingV3; chained: UserGroupId <- ${USER_GROUP_ID}, ServiceGroupId <- ${SERVICE_GROUP_ID}"
+   },
+   {
+    "name": "GetAllActiveUserList__verify",
+    "verb": "GET",
+    "path": "/api/UserDetailsV3/GetAllActiveUserList",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "verify_value_anywhere": {
+     "value": "${NEW_ID}",
+     "label": "created record id"
+    },
+    "note": "read-back chosen for entity 'usergroupservicegroup'"
+   }
+  ]
+ },
+ {
+  "id": "userdetailsv3__setuserandsinglelobmapping",
+  "title": "UserDetailsV3 lifecycle - SetUserAndSingleLOBMapping",
+  "why": "Generated lifecycle chain: discover LOB context, create, read the record back, then optionally update and remove it.",
+  "generated": true,
+  "tier": 1,
+  "controller": "UserDetailsV3",
+  "hops": [
+   {
+    "name": "GetLOBList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetLOBList",
+    "body": {},
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LobName": "AUTOMATION_TEST_LOB"
+     },
+     "take": {
+      "LOB_ID": "LobId",
+      "LOB_NAME": "LobName"
+     }
+    },
+    "sla_ms": 8000
+   },
+   {
+    "name": "GetUserGroupList",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetUserGroupListWithoutMandateValue",
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LOBName": "${LOB_NAME}"
+     },
+     "take": {
+      "USER_GROUP_ID": "UserGroupId",
+      "USER_GROUP_NAME": "UserGroupName"
+     }
+    },
+    "sla_ms": 12000
+   },
+   {
+    "name": "GetServerGroupList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetServerGroupList",
+    "body": {
+     "LobId": "${LOB_ID}"
+    },
+    "extract": {
+     "SERVER_GROUP_ID": "Result[0].ServerGroupId"
+    },
+    "stop_on_fail": false,
+    "sla_ms": 8000
+   },
+   {
+    "name": "SetUserAndSingleLOBMapping",
+    "verb": "POST",
+    "path": "/api/UserDetailsV3/SetUserAndSingleLOBMapping",
+    "body": {
+     "UserId": "${NEW_USERNAME}",
+     "LOBId": "${LOB_ID}"
+    },
+    "expect_created": true,
+    "extract_any_id": "NEW_ID",
+    "sla_ms": 20000,
+    "stop_on_fail": true,
+    "note": "generated from setUserAndSingleLOBMappingV3; chained: UserId <- ${NEW_USERNAME}, LOBId <- ${LOB_ID}"
+   },
+   {
+    "name": "GetAllActiveUserList__verify",
+    "verb": "GET",
+    "path": "/api/UserDetailsV3/GetAllActiveUserList",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "verify_value_anywhere": {
+     "value": "${NEW_ID}",
+     "label": "created record id"
+    },
+    "note": "read-back chosen for entity 'userandsinglelob'"
+   }
+  ]
+ },
+ {
+  "id": "userdetailsv3__setuserandmultiplelobmapping",
+  "title": "UserDetailsV3 lifecycle - SetUserAndMultipleLOBMapping",
+  "why": "Generated lifecycle chain: discover LOB context, create, read the record back, then optionally update and remove it.",
+  "generated": true,
+  "tier": 1,
+  "controller": "UserDetailsV3",
+  "hops": [
+   {
+    "name": "GetLOBList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetLOBList",
+    "body": {},
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LobName": "AUTOMATION_TEST_LOB"
+     },
+     "take": {
+      "LOB_ID": "LobId",
+      "LOB_NAME": "LobName"
+     }
+    },
+    "sla_ms": 8000
+   },
+   {
+    "name": "GetUserGroupList",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetUserGroupListWithoutMandateValue",
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LOBName": "${LOB_NAME}"
+     },
+     "take": {
+      "USER_GROUP_ID": "UserGroupId",
+      "USER_GROUP_NAME": "UserGroupName"
+     }
+    },
+    "sla_ms": 12000
+   },
+   {
+    "name": "GetServerGroupList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetServerGroupList",
+    "body": {
+     "LobId": "${LOB_ID}"
+    },
+    "extract": {
+     "SERVER_GROUP_ID": "Result[0].ServerGroupId"
+    },
+    "stop_on_fail": false,
+    "sla_ms": 8000
+   },
+   {
+    "name": "SetUserAndMultipleLOBMapping",
+    "verb": "POST",
+    "path": "/api/UserDetailsV3/SetUserAndMultipleLOBMapping",
+    "body": {
+     "UserId": "${NEW_USERNAME}",
+     "LOBId": "${LOB_ID}"
+    },
+    "expect_created": true,
+    "extract_any_id": "NEW_ID",
+    "sla_ms": 20000,
+    "stop_on_fail": true,
+    "note": "generated from setUserAndMultipleLOBMappingV3; chained: UserId <- ${NEW_USERNAME}, LOBId <- ${LOB_ID}"
+   },
+   {
+    "name": "GetAllActiveUserList__verify",
+    "verb": "GET",
+    "path": "/api/UserDetailsV3/GetAllActiveUserList",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "verify_value_anywhere": {
+     "value": "${NEW_ID}",
+     "label": "created record id"
+    },
+    "note": "read-back chosen for entity 'userandmultiplelob'"
+   }
+  ]
+ },
+ {
+  "id": "userdetailsv3__setuserprivilegesmapping",
+  "title": "UserDetailsV3 lifecycle - SetUserPrivilegesMapping",
+  "why": "Generated lifecycle chain: discover LOB context, create, read the record back, then optionally update and remove it.",
+  "generated": true,
+  "tier": 1,
+  "controller": "UserDetailsV3",
+  "hops": [
+   {
+    "name": "GetLOBList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetLOBList",
+    "body": {},
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LobName": "AUTOMATION_TEST_LOB"
+     },
+     "take": {
+      "LOB_ID": "LobId",
+      "LOB_NAME": "LobName"
+     }
+    },
+    "sla_ms": 8000
+   },
+   {
+    "name": "GetUserGroupList",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetUserGroupListWithoutMandateValue",
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LOBName": "${LOB_NAME}"
+     },
+     "take": {
+      "USER_GROUP_ID": "UserGroupId",
+      "USER_GROUP_NAME": "UserGroupName"
+     }
+    },
+    "sla_ms": 12000
+   },
+   {
+    "name": "GetServerGroupList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetServerGroupList",
+    "body": {
+     "LobId": "${LOB_ID}"
+    },
+    "extract": {
+     "SERVER_GROUP_ID": "Result[0].ServerGroupId"
+    },
+    "stop_on_fail": false,
+    "sla_ms": 8000
+   },
+   {
+    "name": "SetUserPrivilegesMapping",
+    "verb": "POST",
+    "path": "/api/UserDetailsV3/SetUserPrivilegesMapping",
+    "body": {
+     "UserId": "${NEW_USERNAME}",
+     "RoleId": [
+      1,
+      2,
+      3
+     ]
+    },
+    "expect_created": true,
+    "extract_any_id": "NEW_ID",
+    "sla_ms": 20000,
+    "stop_on_fail": true,
+    "note": "generated from setUserPrivilegesMappingV3; chained: UserId <- ${NEW_USERNAME}"
+   },
+   {
+    "name": "GetUserPrivilegesMapping__verify",
+    "verb": "GET",
+    "path": "/api/UserDetailsV3/GetUserPrivilegesMapping",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "verify_value_anywhere": {
+     "value": "${NEW_ID}",
+     "label": "created record id"
+    },
+    "note": "read-back chosen for entity 'userprivileges'"
+   }
+  ]
+ },
+ {
+  "id": "userdetailsv3__setuserprivilegesunmapping",
+  "title": "UserDetailsV3 lifecycle - SetUserPrivilegesUnMapping",
+  "why": "Generated lifecycle chain: discover LOB context, create, read the record back, then optionally update and remove it.",
+  "generated": true,
+  "tier": 1,
+  "controller": "UserDetailsV3",
+  "hops": [
+   {
+    "name": "GetLOBList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetLOBList",
+    "body": {},
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LobName": "AUTOMATION_TEST_LOB"
+     },
+     "take": {
+      "LOB_ID": "LobId",
+      "LOB_NAME": "LobName"
+     }
+    },
+    "sla_ms": 8000
+   },
+   {
+    "name": "GetUserGroupList",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetUserGroupListWithoutMandateValue",
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LOBName": "${LOB_NAME}"
+     },
+     "take": {
+      "USER_GROUP_ID": "UserGroupId",
+      "USER_GROUP_NAME": "UserGroupName"
+     }
+    },
+    "sla_ms": 12000
+   },
+   {
+    "name": "GetServerGroupList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetServerGroupList",
+    "body": {
+     "LobId": "${LOB_ID}"
+    },
+    "extract": {
+     "SERVER_GROUP_ID": "Result[0].ServerGroupId"
+    },
+    "stop_on_fail": false,
+    "sla_ms": 8000
+   },
+   {
+    "name": "SetUserPrivilegesUnMapping",
+    "verb": "POST",
+    "path": "/api/UserDetailsV3/SetUserPrivilegesUnMapping",
+    "body": {
+     "UserId": "${NEW_USERNAME}",
+     "RoleId": [
+      1,
+      2
+     ]
+    },
+    "expect_created": true,
+    "extract_any_id": "NEW_ID",
+    "sla_ms": 20000,
+    "stop_on_fail": true,
+    "note": "generated from setUserPrivilegesUnMappingV3; chained: UserId <- ${NEW_USERNAME}"
+   },
+   {
+    "name": "GetAllActiveUserList__verify",
+    "verb": "GET",
+    "path": "/api/UserDetailsV3/GetAllActiveUserList",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "verify_value_anywhere": {
+     "value": "${NEW_ID}",
+     "label": "created record id"
+    },
+    "note": "read-back chosen for entity 'userprivilegesun'"
+   }
+  ]
+ },
+ {
+  "id": "userdetailsv3__setserverservergroupmapping",
+  "title": "UserDetailsV3 lifecycle - SetServerServerGroupMapping (no body defined)",
+  "why": "Generated lifecycle chain: discover LOB context, create, read the record back, then optionally update and remove it. This create has no payload defined in the framework, so it is probed with an empty body to document the gap.",
+  "generated": true,
+  "tier": 3,
+  "controller": "UserDetailsV3",
+  "hops": [
+   {
+    "name": "GetLOBList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetLOBList",
+    "body": {},
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LobName": "AUTOMATION_TEST_LOB"
+     },
+     "take": {
+      "LOB_ID": "LobId",
+      "LOB_NAME": "LobName"
+     }
+    },
+    "sla_ms": 8000
+   },
+   {
+    "name": "GetUserGroupList",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetUserGroupListWithoutMandateValue",
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LOBName": "${LOB_NAME}"
+     },
+     "take": {
+      "USER_GROUP_ID": "UserGroupId",
+      "USER_GROUP_NAME": "UserGroupName"
+     }
+    },
+    "sla_ms": 12000
+   },
+   {
+    "name": "GetServerGroupList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetServerGroupList",
+    "body": {
+     "LobId": "${LOB_ID}"
+    },
+    "extract": {
+     "SERVER_GROUP_ID": "Result[0].ServerGroupId"
+    },
+    "stop_on_fail": false,
+    "sla_ms": 8000
+   },
+   {
+    "name": "SetServerServerGroupMapping",
+    "verb": "POST",
+    "path": "/api/UserDetailsV3/SetServerServerGroupMapping",
+    "body": {},
+    "expect_created": false,
+    "extract_any_id": "NEW_ID",
+    "sla_ms": 20000,
+    "stop_on_fail": false,
+    "note": "generated from setServerServerGroupMappingV3; NO request body defined in the framework - called with {} to record the gap"
+   },
+   {
+    "name": "GetAllActiveUserList__verify",
+    "verb": "GET",
+    "path": "/api/UserDetailsV3/GetAllActiveUserList",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "verify_value_anywhere": {
+     "value": "${NEW_ID}",
+     "label": "created record id"
+    },
+    "note": "read-back chosen for entity 'serverservergroup'"
+   }
+  ]
+ },
+ {
+  "id": "userdetailsv3__setserverservergroupunmapping",
+  "title": "UserDetailsV3 lifecycle - SetServerServerGroupUnMapping (no body defined)",
+  "why": "Generated lifecycle chain: discover LOB context, create, read the record back, then optionally update and remove it. This create has no payload defined in the framework, so it is probed with an empty body to document the gap.",
+  "generated": true,
+  "tier": 3,
+  "controller": "UserDetailsV3",
+  "hops": [
+   {
+    "name": "GetLOBList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetLOBList",
+    "body": {},
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LobName": "AUTOMATION_TEST_LOB"
+     },
+     "take": {
+      "LOB_ID": "LobId",
+      "LOB_NAME": "LobName"
+     }
+    },
+    "sla_ms": 8000
+   },
+   {
+    "name": "GetUserGroupList",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetUserGroupListWithoutMandateValue",
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LOBName": "${LOB_NAME}"
+     },
+     "take": {
+      "USER_GROUP_ID": "UserGroupId",
+      "USER_GROUP_NAME": "UserGroupName"
+     }
+    },
+    "sla_ms": 12000
+   },
+   {
+    "name": "GetServerGroupList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetServerGroupList",
+    "body": {
+     "LobId": "${LOB_ID}"
+    },
+    "extract": {
+     "SERVER_GROUP_ID": "Result[0].ServerGroupId"
+    },
+    "stop_on_fail": false,
+    "sla_ms": 8000
+   },
+   {
+    "name": "SetServerServerGroupUnMapping",
+    "verb": "POST",
+    "path": "/api/UserDetailsV3/SetServerServerGroupUnMapping",
+    "body": {},
+    "expect_created": false,
+    "extract_any_id": "NEW_ID",
+    "sla_ms": 20000,
+    "stop_on_fail": false,
+    "note": "generated from setServerServerGroupUnMappingV3; NO request body defined in the framework - called with {} to record the gap"
+   },
+   {
+    "name": "GetAllActiveUserList__verify",
+    "verb": "GET",
+    "path": "/api/UserDetailsV3/GetAllActiveUserList",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "verify_value_anywhere": {
+     "value": "${NEW_ID}",
+     "label": "created record id"
+    },
+    "note": "read-back chosen for entity 'serverservergroupun'"
+   }
+  ]
+ },
+ {
+  "id": "userdetailsv3__setstatus",
+  "title": "UserDetailsV3 lifecycle - SetStatus (no body defined)",
+  "why": "Generated lifecycle chain: discover LOB context, create, read the record back, then optionally update and remove it. This create has no payload defined in the framework, so it is probed with an empty body to document the gap.",
+  "generated": true,
+  "tier": 3,
+  "controller": "UserDetailsV3",
+  "hops": [
+   {
+    "name": "GetLOBList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetLOBList",
+    "body": {},
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LobName": "AUTOMATION_TEST_LOB"
+     },
+     "take": {
+      "LOB_ID": "LobId",
+      "LOB_NAME": "LobName"
+     }
+    },
+    "sla_ms": 8000
+   },
+   {
+    "name": "GetUserGroupList",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetUserGroupListWithoutMandateValue",
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LOBName": "${LOB_NAME}"
+     },
+     "take": {
+      "USER_GROUP_ID": "UserGroupId",
+      "USER_GROUP_NAME": "UserGroupName"
+     }
+    },
+    "sla_ms": 12000
+   },
+   {
+    "name": "GetServerGroupList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetServerGroupList",
+    "body": {
+     "LobId": "${LOB_ID}"
+    },
+    "extract": {
+     "SERVER_GROUP_ID": "Result[0].ServerGroupId"
+    },
+    "stop_on_fail": false,
+    "sla_ms": 8000
+   },
+   {
+    "name": "SetStatus",
+    "verb": "GET",
+    "path": "/api/UserDetailsV3/SetStatus",
+    "body": {},
+    "expect_created": false,
+    "extract_any_id": "NEW_ID",
+    "sla_ms": 20000,
+    "stop_on_fail": false,
+    "note": "generated from setStatusUserDetailsV3; NO request body defined in the framework - called with {} to record the gap"
+   },
+   {
+    "name": "GetStatus__verify",
+    "verb": "GET",
+    "path": "/api/UserDetailsV3/GetStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "verify_value_anywhere": {
+     "value": "${NEW_ID}",
+     "label": "created record id"
+    },
+    "note": "read-back chosen for entity 'status'"
+   }
+  ]
+ },
+ {
+  "id": "userdetailsv3__reads_1",
+  "title": "UserDetailsV3 read sweep 1",
+  "why": "Exercises read endpoints inside a chain, so each one is called with real LOB context rather than in isolation.",
+  "generated": true,
+  "tier": 2,
+  "controller": "UserDetailsV3",
+  "hops": [
+   {
+    "name": "GetLOBList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetLOBList",
+    "body": {},
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LobName": "AUTOMATION_TEST_LOB"
+     },
+     "take": {
+      "LOB_ID": "LobId",
+      "LOB_NAME": "LobName"
+     }
+    },
+    "sla_ms": 8000
+   },
+   {
+    "name": "GetUserGroupList",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetUserGroupListWithoutMandateValue",
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LOBName": "${LOB_NAME}"
+     },
+     "take": {
+      "USER_GROUP_ID": "UserGroupId",
+      "USER_GROUP_NAME": "UserGroupName"
+     }
+    },
+    "sla_ms": 12000
+   },
+   {
+    "name": "GetServerGroupList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetServerGroupList",
+    "body": {
+     "LobId": "${LOB_ID}"
+    },
+    "extract": {
+     "SERVER_GROUP_ID": "Result[0].ServerGroupId"
+    },
+    "stop_on_fail": false,
+    "sla_ms": 8000
+   },
+   {
+    "name": "GetUserList",
+    "verb": "GET",
+    "path": "/api/UserDetailsV3/GetUserList",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude"
+   },
+   {
+    "name": "GetAssignedServiceListToUsr",
+    "verb": "GET",
+    "path": "/api/UserDetailsV3/GetAssignedServiceListToUsr",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude"
+   },
+   {
+    "name": "GetUserListByName",
+    "verb": "POST",
+    "path": "/api/UserDetailsV3/GetUserListByName",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude",
+    "body": {}
+   },
+   {
+    "name": "CheckMobileNumberFromAD",
+    "verb": "POST",
+    "path": "/api/UserDetailsV3/CheckMobileNumberFromAD",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude",
+    "body": {}
+   },
+   {
+    "name": "CheckEmailIdFromAD",
+    "verb": "POST",
+    "path": "/api/UserDetailsV3/CheckEmailIdFromAD",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude",
+    "body": {}
+   },
+   {
+    "name": "CheckDisplayNameFromAD",
+    "verb": "POST",
+    "path": "/api/UserDetailsV3/CheckDisplayNameFromAD",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude",
+    "body": {}
+   },
+   {
+    "name": "GetUserDetailsBySession",
+    "verb": "POST",
+    "path": "/api/UserDetailsV3/GetUserDetailsBySession",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude",
+    "body": {}
+   },
+   {
+    "name": "GetUserAppPreference",
+    "verb": "POST",
+    "path": "/api/UserDetailsV3/GetUserAppPreference",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude",
+    "body": {}
+   },
+   {
+    "name": "GetUserPreference",
+    "verb": "POST",
+    "path": "/api/UserDetailsV3/GetUserPreference",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude",
+    "body": {}
+   },
+   {
+    "name": "GetLOBList",
+    "verb": "POST",
+    "path": "/api/UserDetailsV3/GetLOBList",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude",
+    "body": {}
+   }
+  ]
+ },
+ {
+  "id": "userdetailsv3__reads_2",
+  "title": "UserDetailsV3 read sweep 2",
+  "why": "Exercises read endpoints inside a chain, so each one is called with real LOB context rather than in isolation.",
+  "generated": true,
+  "tier": 2,
+  "controller": "UserDetailsV3",
+  "hops": [
+   {
+    "name": "GetLOBList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetLOBList",
+    "body": {},
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LobName": "AUTOMATION_TEST_LOB"
+     },
+     "take": {
+      "LOB_ID": "LobId",
+      "LOB_NAME": "LobName"
+     }
+    },
+    "sla_ms": 8000
+   },
+   {
+    "name": "GetUserGroupList",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetUserGroupListWithoutMandateValue",
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LOBName": "${LOB_NAME}"
+     },
+     "take": {
+      "USER_GROUP_ID": "UserGroupId",
+      "USER_GROUP_NAME": "UserGroupName"
+     }
+    },
+    "sla_ms": 12000
+   },
+   {
+    "name": "GetServerGroupList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetServerGroupList",
+    "body": {
+     "LobId": "${LOB_ID}"
+    },
+    "extract": {
+     "SERVER_GROUP_ID": "Result[0].ServerGroupId"
+    },
+    "stop_on_fail": false,
+    "sla_ms": 8000
+   },
+   {
+    "name": "GetDormantUsers",
+    "verb": "GET",
+    "path": "/api/UserDetailsV3/GetDormantUsers",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude"
+   },
+   {
+    "name": "GetUserType",
+    "verb": "POST",
+    "path": "/api/UserDetailsV3/GetUserType",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude",
+    "body": {}
+   },
+   {
+    "name": "GetUserGroupList",
+    "verb": "POST",
+    "path": "/api/UserDetailsV3/GetUserGroupList",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude",
+    "body": {
+     "LOBId": "${LOB_ID}"
+    }
+   },
+   {
+    "name": "GetMobileAuthDetails",
+    "verb": "POST",
+    "path": "/api/UserDetailsV3/GetMobileAuthDetails",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude",
+    "body": {}
+   },
+   {
+    "name": "GetDomains",
+    "verb": "POST",
+    "path": "/api/UserDetailsV3/GetDomains",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude",
+    "body": {}
+   },
+   {
+    "name": "GetServiceTypeList",
+    "verb": "POST",
+    "path": "/api/UserDetailsV3/GetServiceTypeList",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude",
+    "body": {}
+   },
+   {
+    "name": "GetServerGroupList",
+    "verb": "POST",
+    "path": "/api/UserDetailsV3/GetServerGroupList",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude",
+    "body": {
+     "LOBID": "${LOB_ID}"
+    }
+   },
+   {
+    "name": "GetPasswordPolicyList",
+    "verb": "POST",
+    "path": "/api/UserDetailsV3/GetPasswordPolicyList",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude",
+    "body": {}
+   },
+   {
+    "name": "GetAssignedServiceTypesToUser",
+    "verb": "POST",
+    "path": "/api/UserDetailsV3/GetAssignedServiceTypesToUser",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude",
+    "body": {}
+   },
+   {
+    "name": "GetNotAssignedServiceListToUsr",
+    "verb": "POST",
+    "path": "/api/UserDetailsV3/GetNotAssignedServiceListToUsr",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude",
+    "body": {}
+   }
+  ]
+ },
+ {
+  "id": "userdetailsv3__reads_3",
+  "title": "UserDetailsV3 read sweep 3",
+  "why": "Exercises read endpoints inside a chain, so each one is called with real LOB context rather than in isolation.",
+  "generated": true,
+  "tier": 2,
+  "controller": "UserDetailsV3",
+  "hops": [
+   {
+    "name": "GetLOBList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetLOBList",
+    "body": {},
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LobName": "AUTOMATION_TEST_LOB"
+     },
+     "take": {
+      "LOB_ID": "LobId",
+      "LOB_NAME": "LobName"
+     }
+    },
+    "sla_ms": 8000
+   },
+   {
+    "name": "GetUserGroupList",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetUserGroupListWithoutMandateValue",
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LOBName": "${LOB_NAME}"
+     },
+     "take": {
+      "USER_GROUP_ID": "UserGroupId",
+      "USER_GROUP_NAME": "UserGroupName"
+     }
+    },
+    "sla_ms": 12000
+   },
+   {
+    "name": "GetServerGroupList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetServerGroupList",
+    "body": {
+     "LobId": "${LOB_ID}"
+    },
+    "extract": {
+     "SERVER_GROUP_ID": "Result[0].ServerGroupId"
+    },
+    "stop_on_fail": false,
+    "sla_ms": 8000
+   },
+   {
+    "name": "GetUserServiceDetails",
+    "verb": "POST",
+    "path": "/api/UserDetailsV3/GetUserServiceDetails",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude",
+    "body": {}
+   },
+   {
+    "name": "GetdualFactorType",
+    "verb": "POST",
+    "path": "/api/UserDetailsV3/GetdualFactorType",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude",
+    "body": {}
+   },
+   {
+    "name": "GetUserPreferences",
+    "verb": "POST",
+    "path": "/api/UserDetailsV3/GetUserPreferences",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude",
+    "body": {
+     "UserID": "${NEW_USERNAME}",
+     "ServiceTypeID": 141,
+     "ServiceID": 1
+    }
+   },
+   {
+    "name": "GetPreferencesMaster",
+    "verb": "POST",
+    "path": "/api/UserDetailsV3/GetPreferencesMaster",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude",
+    "body": {}
+   },
+   {
+    "name": "GetPreferencesMasterDetails",
+    "verb": "POST",
+    "path": "/api/UserDetailsV3/GetPreferencesMasterDetails",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude",
+    "body": {
+     "UserID": "${NEW_USERNAME}",
+     "ServiceTypeID": "7"
+    }
+   },
+   {
+    "name": "GetAllServerGroups",
+    "verb": "POST",
+    "path": "/api/UserDetailsV3/GetAllServerGroups",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude",
+    "body": {}
+   },
+   {
+    "name": "GetUserPreferenceByServiceTypeId",
+    "verb": "POST",
+    "path": "/api/UserDetailsV3/GetUserPreferenceByServiceTypeId",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude",
+    "body": {}
+   },
+   {
+    "name": "GetIndividualUserDetails",
+    "verb": "POST",
+    "path": "/api/UserDetailsV3/GetIndividualUserDetails",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude",
+    "body": {}
+   },
+   {
+    "name": "GetAllUserDetails",
+    "verb": "GET",
+    "path": "/api/UserDetailsV3/GetAllUserDetails",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude"
+   },
+   {
+    "name": "GetAllActiveUserDetailsMapping",
+    "verb": "POST",
+    "path": "/api/UserDetailsV3/GetAllActiveUserDetailsMapping",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude",
+    "body": {}
+   }
+  ]
+ },
+ {
+  "id": "userdetailsv3__reads_4",
+  "title": "UserDetailsV3 read sweep 4",
+  "why": "Exercises read endpoints inside a chain, so each one is called with real LOB context rather than in isolation.",
+  "generated": true,
+  "tier": 2,
+  "controller": "UserDetailsV3",
+  "hops": [
+   {
+    "name": "GetLOBList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetLOBList",
+    "body": {},
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LobName": "AUTOMATION_TEST_LOB"
+     },
+     "take": {
+      "LOB_ID": "LobId",
+      "LOB_NAME": "LobName"
+     }
+    },
+    "sla_ms": 8000
+   },
+   {
+    "name": "GetUserGroupList",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetUserGroupListWithoutMandateValue",
+    "find_extract": {
+     "in": "Result",
+     "where": {
+      "LOBName": "${LOB_NAME}"
+     },
+     "take": {
+      "USER_GROUP_ID": "UserGroupId",
+      "USER_GROUP_NAME": "UserGroupName"
+     }
+    },
+    "sla_ms": 12000
+   },
+   {
+    "name": "GetServerGroupList",
+    "verb": "POST",
+    "path": "/api/ADbridging/GetServerGroupList",
+    "body": {
+     "LobId": "${LOB_ID}"
+    },
+    "extract": {
+     "SERVER_GROUP_ID": "Result[0].ServerGroupId"
+    },
+    "stop_on_fail": false,
+    "sla_ms": 8000
+   },
+   {
+    "name": "GetLOBDetailsByUserId",
+    "verb": "POST",
+    "path": "/api/UserDetailsV3/GetLOBDetailsByUserId",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude",
+    "body": {}
+   },
+   {
+    "name": "GetUserGroupListWithoutMandateValue",
+    "verb": "GET",
+    "path": "/api/UserDetailsV3/GetUserGroupListWithoutMandateValue",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude"
+   },
+   {
+    "name": "GetUserListByNameNew",
+    "verb": "POST",
+    "path": "/api/UserDetailsV3/GetUserListByNameNew",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude",
+    "body": {
+     "UserName": "${NEW_USERNAME}"
+    }
+   },
+   {
+    "name": "GetUserListByUserName",
+    "verb": "POST",
+    "path": "/api/UserDetailsV3/GetUserListByUserName",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude",
+    "body": {}
+   },
+   {
+    "name": "GetAllActiveUserDetailsNew",
+    "verb": "GET",
+    "path": "/api/UserDetailsV3/GetAllActiveUserDetailsNew",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude"
+   },
+   {
+    "name": "GetSecretKey",
+    "verb": "POST",
+    "path": "/api/UserDetailsV3/GetSecretKey",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude",
+    "body": {}
+   },
+   {
+    "name": "GetDisabledUsers",
+    "verb": "POST",
+    "path": "/api/UserDetailsV3/GetDisabledUsers",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude",
+    "body": {}
+   },
+   {
+    "name": "GetDatabaseStatus",
+    "verb": "GET",
+    "path": "/api/UserDetailsV3/GetDatabaseStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "read sweep; LOB context supplied by the prelude"
+   }
+  ]
+ }
+]

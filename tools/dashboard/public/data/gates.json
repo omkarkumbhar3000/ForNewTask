@@ -1,0 +1,59 @@
+{
+ "runId": "2026-08-16_100005",
+ "networkCallsIssued": 0,
+ "checklist": [
+  {
+   "item": "Executed through the dynamic framework only",
+   "verdict": "PASS",
+   "detail": "chain_runner.py over generate_flows.py + generate_data_flows.py output. No mvn, no TestNG, no suite XML. The bootstrap repo was read as a generation input only."
+  },
+  {
+   "item": "Scripts generated dynamically",
+   "verdict": "PASS",
+   "detail": "747 flows / 5590 hops generated from APIConfig.java, the payload helpers and the three Excel workbooks"
+  },
+  {
+   "item": "Every planned flow accounted for",
+   "verdict": "PASS",
+   "detail": "747 of 747 planned flows present in the run output"
+  },
+  {
+   "item": "No unplanned flow in the output",
+   "verdict": "PASS",
+   "detail": "0 unexpected flow ids"
+  },
+  {
+   "item": "Every module executed",
+   "verdict": "PASS",
+   "detail": "122 of 122 modules reached"
+  },
+  {
+   "item": "Excel corpus fully accounted for",
+   "verdict": "PASS",
+   "detail": "3523 generated as hops + 2596 withheld as Blocked = 6119 (expected 6119 executable API rows)"
+  },
+  {
+   "item": "Nothing silently skipped",
+   "verdict": "PASS",
+   "detail": "14 hops withheld at call time and 2596 Excel rows withheld at generation time, each with a recorded reason"
+  },
+  {
+   "item": "All validations run on every executed hop",
+   "verdict": "PASS",
+   "detail": "5382 executed hops, every one carrying its layer verdicts"
+  },
+  {
+   "item": "No flow left ABORTED",
+   "verdict": "PASS",
+   "detail": "every flow either executed or was withheld with a reason"
+  },
+  {
+   "item": "Run complete",
+   "verdict": "PASS",
+   "detail": "results.json (run complete)"
+  }
+ ],
+ "passed": 10,
+ "total": 10,
+ "source": "artifacts/runs/2026-08-16_100005/validation.json"
+}

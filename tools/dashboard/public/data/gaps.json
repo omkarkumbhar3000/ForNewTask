@@ -1,0 +1,52 @@
+[
+ {
+  "item": "Authored analysis for the current execution",
+  "why": "the benchmark narrative, the overall-trend line and the three headline findings were written about run 2026-08-05_114315, not 2026-08-16_100005. They describe a different execution and are withheld rather than reattached",
+  "wouldClose": "an analysis of run 2026-08-16_100005 written into docs/management/summary/, then re-run this generator"
+ },
+ {
+  "item": "Run 2026-07-29_181419 metrics",
+  "why": "the run produced no results.json",
+  "wouldClose": "nothing — the run aborted; kept for completeness"
+ },
+ {
+  "item": "Run 2026-08-05_110615 metrics",
+  "why": "the run produced no results.json",
+  "wouldClose": "nothing — the run aborted; kept for completeness"
+ },
+ {
+  "item": "Run 2026-08-05_113842 metrics",
+  "why": "the run produced no results.json",
+  "wouldClose": "nothing — the run aborted; kept for completeness"
+ },
+ {
+  "item": "Run 2026-08-19_133400 metrics",
+  "why": "the run produced no results.json",
+  "wouldClose": "nothing — the run aborted; kept for completeness"
+ },
+ {
+  "item": "A single endpoint-coverage percentage",
+  "why": "the 1,388 endpoints reached and the 1,306 declared in APIConfig.java are different populations — 248 reached endpoints are not declared anywhere in the catalogue, so their raw ratio reads over 100%",
+  "wouldClose": "a reconciled endpoint catalogue that includes the endpoints present only in the QA Excel corpus"
+ },
+ {
+  "item": "Per-run findings attribution beyond LH-01…13",
+  "why": "findings are pinned to a source run by LoopholeSpec.run_id, and only two runs are cited",
+  "wouldClose": "a finding→run index emitted by build_lh_pack.py"
+ },
+ {
+  "item": "Second project",
+  "why": "only data/profiles/pam.json exists — no other project has been onboarded or executed",
+  "wouldClose": "an onboarding profile plus at least one run for the new project"
+ },
+ {
+  "item": "N-1 negative dimension",
+  "why": "run N-1's generator emitted positive flows only, so its negative pass rate was never measured",
+  "wouldClose": "nothing — it is a genuine property of the baseline, shown as N/A"
+ },
+ {
+  "item": "Per-module figures for the baseline run",
+  "why": "the module and performance breakdowns come from a run's own workbook, and only 2026-08-16_100005 has one",
+  "wouldClose": "run obj010_build_workbook.py against the 2026-08-05_114315 run folder"
+ }
+]

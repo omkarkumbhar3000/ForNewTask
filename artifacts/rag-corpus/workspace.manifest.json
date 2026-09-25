@@ -1,0 +1,376 @@
+{
+ "_schema": "obj013-workspace-index/1",
+ "_note": "Sibling to the PDF corpus. Rebuild: obj013_rag_ingest.py --apply",
+ "sources": 45,
+ "sections": 595,
+ "by_group": {
+  "issues": 12,
+  "loopholes": 13,
+  "analysis": 7,
+  "summary": 3,
+  "history": 6,
+  "brief": 4
+ },
+ "files": {
+  "docs/findings/issues/ISSUE-001-status-code-contract-gap.md": {
+   "group": "issues",
+   "label": "ISSUE-001-status-code-contract-gap",
+   "sha256": "68acb427a5cdfae3",
+   "bytes": 5274,
+   "lines": 113,
+   "sections": 9
+  },
+  "docs/findings/issues/ISSUE-002-error-response-not-json.md": {
+   "group": "issues",
+   "label": "ISSUE-002-error-response-not-json",
+   "sha256": "ade1df37f7a4d540",
+   "bytes": 4093,
+   "lines": 96,
+   "sections": 7
+  },
+  "docs/findings/issues/ISSUE-003-contradictory-envelope.md": {
+   "group": "issues",
+   "label": "ISSUE-003-contradictory-envelope",
+   "sha256": "afac6ad27b638e91",
+   "bytes": 3597,
+   "lines": 91,
+   "sections": 7
+  },
+  "docs/findings/issues/ISSUE-004-sdlc-adherence.md": {
+   "group": "issues",
+   "label": "ISSUE-004-sdlc-adherence",
+   "sha256": "de43546eb551c309",
+   "bytes": 4806,
+   "lines": 75,
+   "sections": 7
+  },
+  "docs/findings/issues/ISSUE-005-api-coverage-gap.md": {
+   "group": "issues",
+   "label": "ISSUE-005-api-coverage-gap",
+   "sha256": "c52a755ec001485f",
+   "bytes": 5050,
+   "lines": 90,
+   "sections": 7
+  },
+  "docs/findings/issues/ISSUE-006-latency-and-timeouts.md": {
+   "group": "issues",
+   "label": "ISSUE-006-latency-and-timeouts",
+   "sha256": "40e50c2ba44dbf36",
+   "bytes": 3636,
+   "lines": 84,
+   "sections": 6
+  },
+  "docs/findings/issues/ISSUE-007-spec-sheet-quality.md": {
+   "group": "issues",
+   "label": "ISSUE-007-spec-sheet-quality",
+   "sha256": "8a7b04f9fb05ec73",
+   "bytes": 4856,
+   "lines": 96,
+   "sections": 7
+  },
+  "docs/findings/issues/ISSUE-008-unused-scrap-code.md": {
+   "group": "issues",
+   "label": "ISSUE-008-unused-scrap-code",
+   "sha256": "ce4e75e96fca3652",
+   "bytes": 5514,
+   "lines": 94,
+   "sections": 8
+  },
+  "docs/findings/issues/ISSUE-009-qa-mssql-token-generation-fails.md": {
+   "group": "issues",
+   "label": "ISSUE-009-qa-mssql-token-generation-fails",
+   "sha256": "c53d71861ab21058",
+   "bytes": 9899,
+   "lines": 198,
+   "sections": 12
+  },
+  "docs/findings/issues/ISSUE-010-qa-mssql-apppool-crash.md": {
+   "group": "issues",
+   "label": "ISSUE-010-qa-mssql-apppool-crash",
+   "sha256": "c215b81ddf98a0f1",
+   "bytes": 9173,
+   "lines": 159,
+   "sections": 11
+  },
+  "docs/findings/issues/ISSUE-011-state-mutation-over-get.md": {
+   "group": "issues",
+   "label": "ISSUE-011-state-mutation-over-get",
+   "sha256": "68e907bc74628626",
+   "bytes": 4811,
+   "lines": 97,
+   "sections": 9
+  },
+  "docs/findings/issues/ISSUE-012-sanity-module-failures-and-session-ownership.md": {
+   "group": "issues",
+   "label": "ISSUE-012-sanity-module-failures-and-session-ownership",
+   "sha256": "a42eccdfb837b7fe",
+   "bytes": 12663,
+   "lines": 205,
+   "sections": 15
+  },
+  "artifacts/loopholes/LH-01-http-200-application-failures/JIRA-TICKET.md": {
+   "group": "loopholes",
+   "label": "LH-01-http-200-application-failures",
+   "sha256": "d611cf354896e3b5",
+   "bytes": 16255,
+   "lines": 359,
+   "sections": 10
+  },
+  "artifacts/loopholes/LH-02-success-true-nothing-created/JIRA-TICKET.md": {
+   "group": "loopholes",
+   "label": "LH-02-success-true-nothing-created",
+   "sha256": "8d66be6629262e21",
+   "bytes": 8108,
+   "lines": 201,
+   "sections": 11
+  },
+  "artifacts/loopholes/LH-03-multiple-response-shapes/JIRA-TICKET.md": {
+   "group": "loopholes",
+   "label": "LH-03-multiple-response-shapes",
+   "sha256": "41b900c2ec8e348b",
+   "bytes": 7626,
+   "lines": 188,
+   "sections": 13
+  },
+  "artifacts/loopholes/LH-04-error-code-register-incomplete/JIRA-TICKET.md": {
+   "group": "loopholes",
+   "label": "LH-04-error-code-register-incomplete",
+   "sha256": "f697ff0d7da190d1",
+   "bytes": 8056,
+   "lines": 197,
+   "sections": 11
+  },
+  "artifacts/loopholes/LH-05-declared-endpoints-return-404/JIRA-TICKET.md": {
+   "group": "loopholes",
+   "label": "LH-05-declared-endpoints-return-404",
+   "sha256": "e730248180c9074e",
+   "bytes": 6780,
+   "lines": 175,
+   "sections": 11
+  },
+  "artifacts/loopholes/LH-06-mutation-over-http-get/JIRA-TICKET.md": {
+   "group": "loopholes",
+   "label": "LH-06-mutation-over-http-get",
+   "sha256": "29082a3c88bff668",
+   "bytes": 8145,
+   "lines": 188,
+   "sections": 11
+  },
+  "artifacts/loopholes/LH-07-inconsistent-field-naming-and-types/JIRA-TICKET.md": {
+   "group": "loopholes",
+   "label": "LH-07-inconsistent-field-naming-and-types",
+   "sha256": "1821d2e6dee18ad6",
+   "bytes": 7921,
+   "lines": 193,
+   "sections": 11
+  },
+  "artifacts/loopholes/LH-08-endpoints-stop-iis-app-pool/JIRA-TICKET.md": {
+   "group": "loopholes",
+   "label": "LH-08-endpoints-stop-iis-app-pool",
+   "sha256": "d038fcd76dda5252",
+   "bytes": 10694,
+   "lines": 221,
+   "sections": 11
+  },
+  "artifacts/loopholes/LH-09-credentials-returned-in-responses/JIRA-TICKET.md": {
+   "group": "loopholes",
+   "label": "LH-09-credentials-returned-in-responses",
+   "sha256": "163b46544e8c9e47",
+   "bytes": 7699,
+   "lines": 193,
+   "sections": 11
+  },
+  "artifacts/loopholes/LH-10-no-validation-attributes-on-models/JIRA-TICKET.md": {
+   "group": "loopholes",
+   "label": "LH-10-no-validation-attributes-on-models",
+   "sha256": "10bb7a0f7b3746fe",
+   "bytes": 9130,
+   "lines": 209,
+   "sections": 11
+  },
+  "artifacts/loopholes/LH-11-internal-detail-leaked-in-errors/JIRA-TICKET.md": {
+   "group": "loopholes",
+   "label": "LH-11-internal-detail-leaked-in-errors",
+   "sha256": "93df07e2a6d273fb",
+   "bytes": 8053,
+   "lines": 193,
+   "sections": 11
+  },
+  "artifacts/loopholes/LH-12-unfiltered-full-datasets/JIRA-TICKET.md": {
+   "group": "loopholes",
+   "label": "LH-12-unfiltered-full-datasets",
+   "sha256": "15d6e5c48689644e",
+   "bytes": 7284,
+   "lines": 183,
+   "sections": 11
+  },
+  "artifacts/loopholes/LH-13-endpoints-accept-invalid-auth-token/JIRA-TICKET.md": {
+   "group": "loopholes",
+   "label": "LH-13-endpoints-accept-invalid-auth-token",
+   "sha256": "1d3041879ffccf59",
+   "bytes": 8478,
+   "lines": 197,
+   "sections": 11
+  },
+  "docs/analysis/A1-chaining-analysis.md": {
+   "group": "analysis",
+   "label": "A1-chaining-analysis",
+   "sha256": "bb874d8a2f4ca375",
+   "bytes": 28536,
+   "lines": 465,
+   "sections": 19
+  },
+  "docs/analysis/A2-positive-validation.md": {
+   "group": "analysis",
+   "label": "A2-positive-validation",
+   "sha256": "17002c38870d70cc",
+   "bytes": 30396,
+   "lines": 423,
+   "sections": 19
+  },
+  "docs/analysis/A3-negative-validation.md": {
+   "group": "analysis",
+   "label": "A3-negative-validation",
+   "sha256": "1865dd1b7bd9a241",
+   "bytes": 23137,
+   "lines": 314,
+   "sections": 15
+  },
+  "docs/analysis/A4-l6-read-back.md": {
+   "group": "analysis",
+   "label": "A4-l6-read-back",
+   "sha256": "cd7bacceeebe1533",
+   "bytes": 17462,
+   "lines": 243,
+   "sections": 11
+  },
+  "docs/analysis/A5-mandatory-field-analysis.md": {
+   "group": "analysis",
+   "label": "A5-mandatory-field-analysis",
+   "sha256": "df0d3f907c03d8be",
+   "bytes": 34478,
+   "lines": 522,
+   "sections": 32
+  },
+  "docs/analysis/A6-developer-repo-analysis.md": {
+   "group": "analysis",
+   "label": "A6-developer-repo-analysis",
+   "sha256": "ed5bc05da62f7b10",
+   "bytes": 20146,
+   "lines": 301,
+   "sections": 19
+  },
+  "docs/analysis/A7-documentation-gap-analysis.md": {
+   "group": "analysis",
+   "label": "A7-documentation-gap-analysis",
+   "sha256": "8b0c78c319797e11",
+   "bytes": 26587,
+   "lines": 457,
+   "sections": 23
+  },
+  "docs/management/summary/API-Chaining-Feasibility-Demo.md": {
+   "group": "summary",
+   "label": "API-Chaining-Feasibility-Demo",
+   "sha256": "d2213a627130f1d7",
+   "bytes": 10669,
+   "lines": 205,
+   "sections": 15
+  },
+  "docs/management/summary/Full-Generated-Run-2026-07-29.md": {
+   "group": "summary",
+   "label": "Full-Generated-Run-2026-07-29",
+   "sha256": "b96d318a8611b1ea",
+   "bytes": 8065,
+   "lines": 175,
+   "sections": 11
+  },
+  "docs/management/summary/OBJ-010-Execution-Benchmark.md": {
+   "group": "summary",
+   "label": "OBJ-010-Execution-Benchmark",
+   "sha256": "b85e8db539abffb9",
+   "bytes": 13141,
+   "lines": 225,
+   "sections": 13
+  },
+  "docs/history/01-objective-records.md": {
+   "group": "history",
+   "label": "01-objective-records",
+   "sha256": "9a60ff14c143da60",
+   "bytes": 154483,
+   "lines": 2068,
+   "sections": 33
+  },
+  "docs/history/02-origin-and-constraints.md": {
+   "group": "history",
+   "label": "02-origin-and-constraints",
+   "sha256": "26c05177f794dc34",
+   "bytes": 3534,
+   "lines": 55,
+   "sections": 3
+  },
+  "docs/history/03-decisions.md": {
+   "group": "history",
+   "label": "03-decisions",
+   "sha256": "a080f01a2f39d221",
+   "bytes": 40616,
+   "lines": 67,
+   "sections": 2
+  },
+  "docs/history/04-narrative-log.md": {
+   "group": "history",
+   "label": "04-narrative-log",
+   "sha256": "98b95d22656a9d92",
+   "bytes": 100951,
+   "lines": 1300,
+   "sections": 26
+  },
+  "docs/history/05-archived-requirements.md": {
+   "group": "history",
+   "label": "05-archived-requirements",
+   "sha256": "819b6717551e58f3",
+   "bytes": 13031,
+   "lines": 198,
+   "sections": 10
+  },
+  "docs/history/README.md": {
+   "group": "history",
+   "label": "README",
+   "sha256": "8ea5785b7a641dc6",
+   "bytes": 30935,
+   "lines": 174,
+   "sections": 6
+  },
+  "docs/briefs/developer-loopholes.md": {
+   "group": "brief",
+   "label": "developer-loopholes",
+   "sha256": "375536e2fcece899",
+   "bytes": 20639,
+   "lines": 403,
+   "sections": 18
+  },
+  "docs/briefs/document-gap.md": {
+   "group": "brief",
+   "label": "document-gap",
+   "sha256": "8402538aa5e8fd60",
+   "bytes": 9785,
+   "lines": 199,
+   "sections": 12
+  },
+  "docs/briefs/overview.md": {
+   "group": "brief",
+   "label": "overview",
+   "sha256": "da495132edf0872c",
+   "bytes": 16528,
+   "lines": 317,
+   "sections": 20
+  },
+  "docs/briefs/new-project-implementation.md": {
+   "group": "brief",
+   "label": "new-project-implementation",
+   "sha256": "7e93be3543ed65c6",
+   "bytes": 46997,
+   "lines": 651,
+   "sections": 39
+  }
+ }
+}

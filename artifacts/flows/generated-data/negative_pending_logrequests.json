@@ -1,0 +1,74 @@
+[
+ {
+  "id": "data_negative_pending_logrequests_1",
+  "title": "Pending_LogRequests - negative data-driven batch 1",
+  "why": "Executes the QA team's authored negative scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status and error code.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "negative",
+  "tier": 4,
+  "controller": "Pending_LogRequests",
+  "hops": [
+   {
+    "name": "GetServiceAccessPendingLogRequest",
+    "verb": "GET",
+    "path": "/api/Pending_LogRequests/GetServiceAccessPendingLogRequest",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / Pending_LogRequests_Negative / Pending_LogRequests_MethodNotAllowed row 1 (provider Pending_LogRequests_MethodNotAllowed)",
+    "body": {
+     "UserID": "35",
+     "Type": "All"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetServicePasswordPendingLogRequest",
+    "verb": "GET",
+    "path": "/api/Pending_LogRequests/GetServicePasswordPendingLogRequest",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / Pending_LogRequests_Negative / Pending_LogRequests_MethodNotAllowed row 2 (provider Pending_LogRequests_MethodNotAllowed)",
+    "body": {
+     "UserID": "35",
+     "Type": "All"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetTicketdPendingLogRequest",
+    "verb": "GET",
+    "path": "/api/Pending_LogRequests/GetTicketdPendingLogRequest",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / Pending_LogRequests_Negative / Pending_LogRequests_MethodNotAllowed row 3 (provider Pending_LogRequests_MethodNotAllowed)",
+    "body": {
+     "UserID": "35",
+     "Type": "All"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "ViewServiceAccessPendingLogRequest",
+    "verb": "GET",
+    "path": "/api/Pending_LogRequests/ViewServiceAccessPendingLogRequest",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / Pending_LogRequests_Negative / Pending_LogRequests_MethodNotAllowed row 4 (provider Pending_LogRequests_MethodNotAllowed)",
+    "body": {
+     "UserID": "35",
+     "WFID": "379"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   }
+  ]
+ }
+]

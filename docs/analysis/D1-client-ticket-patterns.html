@@ -1,0 +1,3768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>D1 - Client Ticket Patterns</title>
+<style>
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; max-width: 1100px; margin: 40px auto; padding: 0 20px; line-height: 1.6; color: #1a1a1a; }
+h1 { border-bottom: 3px solid #2563eb; padding-bottom: 8px; }
+h2 { border-bottom: 1px solid #cbd5e1; padding-bottom: 4px; margin-top: 2em; }
+h3 { color: #1e40af; }
+table { border-collapse: collapse; width: 100%%; margin: 1em 0; font-size: 0.9em; }
+th, td { border: 1px solid #d1d5db; padding: 6px 10px; text-align: left; }
+th { background: #f1f5f9; font-weight: 600; }
+tr:nth-child(even) { background: #f8fafc; }
+code { background: #f1f5f9; padding: 2px 5px; border-radius: 3px; font-size: 0.9em; }
+pre { background: #1e293b; color: #e2e8f0; padding: 12px; border-radius: 6px; overflow-x: auto; }
+pre code { background: none; color: inherit; }
+blockquote { border-left: 4px solid #2563eb; margin: 1em 0; padding: 0.5em 1em; background: #eff6ff; }
+a { color: #2563eb; }
+hr { border: none; border-top: 1px solid #e2e8f0; margin: 2em 0; }
+</style>
+</head>
+<body>
+<h1 id="client-raised-pamit-ticket-analysis-the-full-picture">Client-raised PAMIT ticket analysis — the full picture</h1>
+<p><strong>Generated:</strong> 2026-09-03 17:37
+<strong>Updated:</strong> 2026-09-03 17:37</p>
+<p><strong>Current build:</strong> <code>35.8.29 HF13</code> · <strong>Source:</strong> Jira <code>PAMIT</code>, read-only · <strong>Objective:</strong> <code>OBJ-029</code> <em>(engine, population rules D38-D41 and taxonomy from OBJ-028)</em></p>
+<blockquote>
+<p><strong><code>Generated</code></strong> is when the Jira data behind these figures was captured. <strong><code>Updated</code></strong> is when this file was last written. They differ whenever the report is re-rendered from a cached capture (<code>--offline</code>) — which is precisely when a reader needs to know that the figures are older than the file they are reading.</p>
+<p>Four populations, four denominators, never mixed: the <strong>build line</strong> (2040 client tickets across 20 versions), the <strong>focus builds</strong> (192 client / 120 defects), the <strong>last 30 days</strong> (409), and <strong>Query C</strong> (167). Linked tickets outside a window are evidence only, never population (<code>D39</code>).</p>
+</blockquote>
+<h2 id="0-build-wise-methodology-which-jira-field-and-why">0. Build-wise methodology — which Jira field, and why</h2>
+<p><strong>The build axis is <code>Affected Milestone</code> (<code>customfield_10092</code>). Not <code>Fix versions</code>. Not <code>Milestone</code>.</strong> Owner ruling <code>D42</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Field</th>
+<th style="text-align: right;">Populated</th>
+<th>What it actually means</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Where was the defect found?</strong> ← the build-wise axis</td>
+<td><code>Affected Milestone</code> (<code>cf[10092]</code>)</td>
+<td style="text-align: right;"><strong>97.3%</strong> (1,346/1,384)</td>
+<td>The build the <strong>client was running</strong> when they hit it. A build's count is therefore <em>the defects that escaped into it</em></td>
+</tr>
+<tr>
+<td>Where was the fix shipped?</td>
+<td><code>Fix versions</code> (native)</td>
+<td style="text-align: right;">100% of the versioned slice</td>
+<td>The release the fix <strong>lands in</strong>. A hotfix accumulates fixes for defects found on earlier builds, so this counts release content, not build quality</td>
+</tr>
+<tr>
+<td><em>(no usable field)</em></td>
+<td>the <code>Milestone</code>-named fields</td>
+<td style="text-align: right;">0–9%</td>
+<td>Every milestone-shaped field in this instance was measured and rejected — §0.2 has the table</td>
+</tr>
+</tbody>
+</table>
+<h3 id="01-why-the-previous-methodology-was-wrong">0.1 Why the previous methodology was wrong</h3>
+<p>Until this revision every build-wise count keyed on <code>fixVersion</code>. That was <strong>incorrect</strong>, and the error changes conclusions rather than decimal places:</p>
+<table>
+<thead>
+<tr>
+<th>Measured on the same 20 versions</th>
+<th style="text-align: right;">By <code>fixVersion</code></th>
+<th>By <code>Affected Milestone</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Client tickets placed on the build line</td>
+<td style="text-align: right;">1,384</td>
+<td><strong>2,010</strong> (+45%)</td>
+</tr>
+<tr>
+<td>Tickets the other field cannot see</td>
+<td style="text-align: right;">38 carry a fix version and no Affected Milestone</td>
+<td><strong>1,369</strong> carry an Affected Milestone and <em>no fix version at all</em> — structurally invisible to the old query</td>
+</tr>
+<tr>
+<td>Heaviest build</td>
+<td style="text-align: right;"><code>base</code> (262)</td>
+<td><code>HF6</code> (399) and <code>HF1</code> (388) — <code>base</code> is only 69</td>
+</tr>
+<tr>
+<td>The two newest released-line builds HF12 / HF13</td>
+<td style="text-align: right;">55 / 27</td>
+<td><strong>3 / 2</strong> — almost nothing has been <em>reported against</em> them yet</td>
+</tr>
+</tbody>
+</table>
+<p>The last row is the one that matters operationally. Under the old methodology the current build <code>HF13</code> appeared to carry <strong>27 client tickets</strong>; that figure was <em>27 fixes scheduled into HF13</em>, and it was being read as <em>27 client problems found in HF13</em>. The Affected-Milestone count for HF13 is <strong>2</strong>.</p>
+<p><em>The <code>fixVersion</code> figures in the table above are quoted from the superseded revision of this report, which enumerated that basis directly. They are </em><em>not</em><em> the <code>Fixed here (same pop.)</code> column in §2 — that column re-counts the Affected-Milestone population by fix version and is a different, smaller set by construction.</em></p>
+<p>The root cause is recorded so it cannot be repeated. The previous revision checked the <strong>native</strong> <code>affectedVersion</code> field, measured it at 0% project-wide, and concluded that no field records the build a client was on — then recovered the fact from build tokens clients had typed into ticket titles. PAMIT does record it, in a custom field, on 97% of the population. §7 is the cost of that miss: <strong>9</strong> escaped defects found by the title heuristic against <strong>367</strong> measured from the field.</p>
+<h3 id="02-the-milestone-fields-all-of-them-measured">0.2 The <code>Milestone</code> fields — all of them, measured</h3>
+<p>⚠ <strong>Three fields in this Jira instance are named <code>Affected Milestone</code>-something and two of them are empty on PAMIT.</strong> Selecting one of those returns an empty build line, which reads as a clean result rather than as a wrong query — so the whole set is recorded here.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Name as shown in Jira</th>
+<th style="text-align: right;">On the PAMIT client population</th>
+<th>Verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>customfield_10092</code></td>
+<td><code>Affected Milestone.</code> <em>(trailing period)</em></td>
+<td style="text-align: right;"><strong>1,346 / 1,384 — 97.3%</strong></td>
+<td>✅ <strong>the axis</strong></td>
+</tr>
+<tr>
+<td><code>customfield_10214</code></td>
+<td><code>Affected Milestone</code></td>
+<td style="text-align: right;">0 / 1,384</td>
+<td>⛔ not on the PAMIT screen</td>
+</tr>
+<tr>
+<td><code>customfield_10219</code></td>
+<td><code>Affected Milestone</code></td>
+<td style="text-align: right;">0 / 1,384</td>
+<td>⛔ not on the PAMIT screen</td>
+</tr>
+<tr>
+<td><code>customfield_10143</code> · <code>customfield_10174</code></td>
+<td><code>Custom Affected Milestone (**Only use if …)</code></td>
+<td style="text-align: right;">0 / 1,384</td>
+<td>⛔ free-text escape hatch, unused</td>
+</tr>
+<tr>
+<td><code>versions</code></td>
+<td><code>Affects versions</code> <em>(native)</em></td>
+<td style="text-align: right;">0 / 1,384</td>
+<td>⛔ unused project-wide — <strong>this is the field the old analysis checked</strong></td>
+</tr>
+<tr>
+<td><code>customfield_10100</code></td>
+<td><code>Release Milestone.</code></td>
+<td style="text-align: right;">9%</td>
+<td>⛔ legacy — values are unrelated old lines (<code>35.8.13 HF 7</code>, <code>4.8.5.0_U16SP2_B35.8.21</code>), all singletons</td>
+</tr>
+<tr>
+<td><code>customfield_10238</code></td>
+<td><code>Forward Merge Milestone</code></td>
+<td style="text-align: right;">63%</td>
+<td>⛔ <strong>344 of 388 values are the literal string <code>None</code></strong> — no signal</td>
+</tr>
+<tr>
+<td><code>customfield_10131</code> · <code>10221</code> · <code>10223</code></td>
+<td><code>Release Milestone</code> · <code>PAM_Release Milestone</code> · <code>CI_Release_Milestone</code></td>
+<td style="text-align: right;">0%</td>
+<td>⛔ unused</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Conclusion on <code>Milestone</code>: PAMIT has no usable <code>Milestone</code> axis.</strong> The only two build fields carrying data are <code>Affected Milestone</code> (found) and <code>Fix versions</code> (fixed). Every build-wise count in this report keys on the first; the second appears only as the second axis of escape latency.</p>
+<h3 id="03-multi-value-and-out-of-family-handling">0.3 Multi-value and out-of-family handling</h3>
+<p><code>Affected Milestone</code> is a multiselect. Measured on the 2,010-ticket population: <strong>1,955</strong> tickets carry one value, <strong>49</strong> carry two, <strong>6</strong> carry three or more, and <strong>41</strong> carry a value from a different build line alongside an in-family one. Three rules, applied consistently:</p>
+<ul>
+<li><strong>A ticket is attributed to the <em>earliest</em> in-family build it names.</strong> A defect reported against both HF5 and HF9 escaped from HF5. Crediting HF9 would blame the later build for an inherited defect and understate the escape gap.</li>
+<li><strong>Out-of-family values are reported, never silently dropped.</strong> A ticket affecting <code>35.8.28</code> and <code>35.8.29 HF6</code> sits on the HF6 row, and its other value travels with it into the workbook.</li>
+<li><strong>Per-build counts sum above the ticket total</strong> where one ticket names two in-family builds. The de-duplicated ticket total is the population figure, and it is the one quoted as the denominator.</li>
+</ul>
+<h2 id="1-release-date-context">1. Release-date context</h2>
+<p><strong>Current build:</strong> <code>35.8.29 HF13</code> — owner-stated. <strong>Previous:</strong> <code>35.8.29 HF12</code>.</p>
+<blockquote>
+<p>⚠️ Jira <code>releaseDate</code> is a planned date, not confirmed client availability. In this project it is non-monotonic against build number and none of the in-flight builds is flagged released, so ordering and grouping use the build/fix version, never the date.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>Build</th>
+<th>Jira release date</th>
+<th>Flagged released</th>
+<th style="text-align: right;">Client tickets</th>
+<th style="text-align: right;">Defects</th>
+<th>First client ticket</th>
+<th>Latest client ticket</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>35.8.29 HF12</code></td>
+<td>2026-07-31</td>
+<td><strong>no</strong></td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3</td>
+<td>2026-06-11</td>
+<td>2026-07-29</td>
+</tr>
+<tr>
+<td><code>35.8.29 HF13</code> ← current</td>
+<td>2026-06-22</td>
+<td><strong>no</strong></td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td>2026-08-12</td>
+<td>2026-08-24</td>
+</tr>
+</tbody>
+</table>
+<p>The <code>releaseDate</code> values are <strong>not</strong> in build order (<code>HF12</code> 2026-07-31 vs <code>HF13</code> 2026-06-22), which is why every table below is ordered by build number and the date is reported as context only.</p>
+<h2 id="2-the-whole-build-line">2. The whole build line</h2>
+<table>
+<thead>
+<tr>
+<th>Build</th>
+<th>Jira release date</th>
+<th style="text-align: center;">Rel.</th>
+<th style="text-align: right;">Found (AM)</th>
+<th style="text-align: right;">Fixed here (same pop.)</th>
+<th style="text-align: right;">Defects</th>
+<th style="text-align: right;">SS</th>
+<th style="text-align: right;">Clients</th>
+<th style="text-align: right;">Reg. stated</th>
+<th style="text-align: right;">Reg. confirmed</th>
+<th style="text-align: right;">Reopen=Yes</th>
+<th>First ticket</th>
+<th>Latest ticket</th>
+<th>Top module</th>
+<th>Top named category</th>
+<th style="text-align: right;">Uncat.</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>base</code></td>
+<td>2025-10-18</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: right;">69</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">44</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td>2025-08-06</td>
+<td>2026-04-23</td>
+<td>ACMO</td>
+<td>Session Recording &amp; Audit Ev</td>
+<td style="text-align: right;">36.4%</td>
+</tr>
+<tr>
+<td><code>HF1</code></td>
+<td>2025-11-10</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: right;">388</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">293</td>
+<td style="text-align: right;">72</td>
+<td style="text-align: right;">61</td>
+<td style="text-align: right;">27</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">2</td>
+<td>2025-09-23</td>
+<td>2026-09-02</td>
+<td>Connector</td>
+<td>Third-Party Tool &amp; Platform</td>
+<td style="text-align: right;">20.5%</td>
+</tr>
+<tr>
+<td><code>HF2</code></td>
+<td>2025-11-26</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: right;">293</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: right;">217</td>
+<td style="text-align: right;">81</td>
+<td style="text-align: right;">48</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">5</td>
+<td>2025-09-23</td>
+<td>2026-08-28</td>
+<td>Connector</td>
+<td>Reporting &amp; Scheduling</td>
+<td style="text-align: right;">24.9%</td>
+</tr>
+<tr>
+<td><code>HF3</code></td>
+<td>2026-02-06</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: right;">89</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">75</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">27</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td>2025-10-16</td>
+<td>2026-08-11</td>
+<td>Connector</td>
+<td>Third-Party Tool &amp; Platform</td>
+<td style="text-align: right;">25.3%</td>
+</tr>
+<tr>
+<td><code>HF4</code></td>
+<td>2026-02-11</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: right;">46</td>
+<td style="text-align: right;">43</td>
+<td style="text-align: right;">34</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td>2026-02-05</td>
+<td>2026-07-01</td>
+<td>PAM API</td>
+<td>API &amp; Integration</td>
+<td style="text-align: right;">35.3%</td>
+</tr>
+<tr>
+<td><code>HF5</code></td>
+<td>2026-03-05</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: right;">274</td>
+<td style="text-align: right;">52</td>
+<td style="text-align: right;">228</td>
+<td style="text-align: right;">73</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">71</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">11</td>
+<td>2025-09-02</td>
+<td>2026-09-03</td>
+<td>Connector</td>
+<td>Session Recording &amp; Audit Ev</td>
+<td style="text-align: right;">27.6%</td>
+</tr>
+<tr>
+<td><code>HF6</code></td>
+<td>2026-03-30</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: right;">404</td>
+<td style="text-align: right;">89</td>
+<td style="text-align: right;">284</td>
+<td style="text-align: right;">92</td>
+<td style="text-align: right;">46</td>
+<td style="text-align: right;">102</td>
+<td style="text-align: right;">41</td>
+<td style="text-align: right;">12</td>
+<td>2025-12-29</td>
+<td>2026-09-03</td>
+<td>ACMO</td>
+<td>Third-Party Tool &amp; Platform</td>
+<td style="text-align: right;">25.7%</td>
+</tr>
+<tr>
+<td><code>HF7</code></td>
+<td>2026-03-05</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: right;">145</td>
+<td style="text-align: right;">47</td>
+<td style="text-align: right;">108</td>
+<td style="text-align: right;">37</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">44</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">4</td>
+<td>2025-12-09</td>
+<td>2026-09-01</td>
+<td>Connector</td>
+<td>Third-Party Tool &amp; Platform</td>
+<td style="text-align: right;">29.6%</td>
+</tr>
+<tr>
+<td><code>HF8</code></td>
+<td>2026-05-20</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">46</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td>2026-05-06</td>
+<td>2026-09-02</td>
+<td>All Modules</td>
+<td>Session Recording &amp; Audit Ev</td>
+<td style="text-align: right;">8.3%</td>
+</tr>
+<tr>
+<td><code>HF9</code></td>
+<td>2026-05-25</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: right;">125</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">86</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">36</td>
+<td style="text-align: right;">70</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">3</td>
+<td>2024-10-21</td>
+<td>2026-09-03</td>
+<td>Connector</td>
+<td>Authentication &amp; Identity In</td>
+<td style="text-align: right;">22.1%</td>
+</tr>
+<tr>
+<td><code>HF9 Patch1</code></td>
+<td>2026-08-06</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr>
+<td><code>HF9 P2</code></td>
+<td>2026-09-25</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr>
+<td><code>HF10</code></td>
+<td>2026-07-07</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: right;">27</td>
+<td style="text-align: right;">34</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">3</td>
+<td>2026-04-27</td>
+<td>2026-09-02</td>
+<td>Connector</td>
+<td>Reporting &amp; Scheduling</td>
+<td style="text-align: right;">38.1%</td>
+</tr>
+<tr>
+<td><code>HF11</code></td>
+<td>2026-07-15</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: right;">172</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">130</td>
+<td style="text-align: right;">36</td>
+<td style="text-align: right;">44</td>
+<td style="text-align: right;">156</td>
+<td style="text-align: right;">108</td>
+<td style="text-align: right;">7</td>
+<td>2026-04-22</td>
+<td>2026-09-03</td>
+<td>Server Manager</td>
+<td>Third-Party Tool &amp; Platform</td>
+<td style="text-align: right;">23.8%</td>
+</tr>
+<tr>
+<td><code>HF11 P2</code></td>
+<td>2026-08-21</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">29</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr>
+<td><code>HF11 P3</code></td>
+<td>—</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr>
+<td><code>HF12</code></td>
+<td>2026-07-31</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">49</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td>2026-06-11</td>
+<td>2026-07-29</td>
+<td>Connector</td>
+<td>Access Control, Workflow &amp; A</td>
+<td style="text-align: right;">0.0%</td>
+</tr>
+<tr>
+<td><code>HF13</code> <strong>← current</strong></td>
+<td>2026-06-22</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td>2026-08-12</td>
+<td>2026-08-24</td>
+<td>Server Manager</td>
+<td>Service &amp; Asset Management (</td>
+<td style="text-align: right;">0.0%</td>
+</tr>
+<tr>
+<td><code>HF14</code></td>
+<td>2026-07-10</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td>2026-08-12</td>
+<td>2026-08-12</td>
+<td>Server Manager</td>
+<td>Session Recording &amp; Audit Ev</td>
+<td style="text-align: right;">0.0%</td>
+</tr>
+<tr>
+<td><code>HF15</code></td>
+<td>2026-09-25</td>
+<td style="text-align: center;">🟡</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td style="text-align: right;">—</td>
+</tr>
+</tbody>
+</table>
+<p><em>⛔ </em><em><code>Found (AM)</code> is the build-wise count</em><em> — tickets whose <code>Affected Milestone</code> names this build, i.e. where the client </em><em>found</em><em> the defect (<code>D42</code>).</em></p>
+<p><em>⚠ </em><em><code>Fixed here (same pop.)</code> is not the old build line.</em><em> It counts tickets </em><em>within this same Affected-Milestone population</em><em> whose fix version names this build — so the two columns describe the same 2,010 tickets from both ends, which is what makes the found-vs-fixed divergence visible per row. It is </em><em>not</em><em> the standalone <code>fixVersion</code> population the superseded methodology used: that was a different 1,384-ticket set, and its figures are in §0.1, not in this column.</em></p>
+<p><em><code>Reg. stated</code> / <code>Reg. confirmed</code> / <code>Reopen=Yes</code> come from the three regression fields, which sit at ~25% population. <code>Reg. stated</code> </em><em>is</em><em> the denominator for <code>Reg. confirmed</code> — never the <code>Found (AM)</code> count.</em></p>
+<p><em><code>Uncat.</code> is the share of that build's defects the derived taxonomy could not name. It is a </em><em>coverage figure, not a finding</em><em>. It runs higher on the released builds for two measured reasons: the trend query fetches light records without the description fallback, and the taxonomy was derived from current-build tickets, so older vocabulary is under-covered.</em></p>
+<p><strong>Reported deliberately:</strong> <code>HF9 P2</code>, <code>HF11 P2</code>, <code>HF11 P3</code>, <code>HF15</code> currently carries <strong>zero</strong> client tickets. An empty release is information; omitting the row would hide it.</p>
+<h2 id="3-focus-builds-overall-summary">3. Focus builds — overall summary</h2>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th style="text-align: right;">Count</th>
+<th style="text-align: right;">Percentage</th>
+<th>Observation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tickets on focus builds, all clients</td>
+<td style="text-align: right;">391</td>
+<td style="text-align: right;">—</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Client-raised</strong></td>
+<td style="text-align: right;"><strong>192</strong></td>
+<td style="text-align: right;">100% (base)</td>
+<td><code>Primary Client</code> is 100% populated; no ticket is lost to an empty field</td>
+</tr>
+<tr>
+<td>Internal</td>
+<td style="text-align: right;">199</td>
+<td style="text-align: right;">50.9%</td>
+<td>Excluded</td>
+</tr>
+<tr>
+<td><strong>Client-raised defects</strong></td>
+<td style="text-align: right;"><strong>120</strong></td>
+<td style="text-align: right;">62.5%</td>
+<td>The defect denominator (<code>D38</code>)</td>
+</tr>
+<tr>
+<td>Non-defects</td>
+<td style="text-align: right;">71</td>
+<td style="text-align: right;">37.0%</td>
+<td>Story / Task / Sub-task</td>
+</tr>
+<tr>
+<td><code>Duplicate</code>, held out</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.5%</td>
+<td>Same defect counted twice</td>
+</tr>
+<tr>
+<td>In a multi-ticket repeat group</td>
+<td style="text-align: right;">47</td>
+<td style="text-align: right;">39.2%</td>
+<td>23 group(s)</td>
+</tr>
+<tr>
+<td>Cross-release lineage</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">10.0%</td>
+<td>Clone family spans 2+ hotfixes</td>
+</tr>
+<tr>
+<td>Clone-tracked only</td>
+<td style="text-align: right;">52</td>
+<td style="text-align: right;">43.3%</td>
+<td>Workflow, <strong>not</strong> recurrence</td>
+</tr>
+<tr>
+<td>One-time</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">7.5%</td>
+<td>No lineage, single report</td>
+</tr>
+<tr>
+<td>Context tickets read outside the windows</td>
+<td style="text-align: right;">152</td>
+<td style="text-align: right;">—</td>
+<td>Evidence only</td>
+</tr>
+</tbody>
+</table>
+<h2 id="4-module-wise-every-module">4. Module-wise — every module</h2>
+<table>
+<thead>
+<tr>
+<th>Module</th>
+<th style="text-align: right;">Tickets</th>
+<th style="text-align: right;">Percentage</th>
+<th>Major pattern</th>
+<th>Repeat frequency</th>
+<th style="text-align: right;">Clients</th>
+<th style="text-align: right;">SS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Connector</code></td>
+<td style="text-align: right;">37</td>
+<td style="text-align: right;">30.8%</td>
+<td>Third-Party Tool &amp; Platform Compat</td>
+<td>5 group(s)</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">12</td>
+</tr>
+<tr>
+<td><code>Server Manager</code></td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">21.7%</td>
+<td>Service &amp; Asset Management (CRUD/B</td>
+<td>6 group(s)</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr>
+<td><code>ACMO</code></td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">13.3%</td>
+<td>Access Control, Workflow &amp; Approva</td>
+<td>2 group(s)</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr>
+<td><code>Password Vault</code></td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">10.0%</td>
+<td>Password &amp; Credential Lifecycle</td>
+<td>4 group(s)</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td><code>Settings</code></td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">9.2%</td>
+<td>Input Validation &amp; Error Handling</td>
+<td>4 group(s)</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr>
+<td><code>Application &amp; Audit Logs</code></td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">5.0%</td>
+<td>Session Recording &amp; Audit Evidence</td>
+<td>1 group(s)</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td><code>Password</code></td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">3.3%</td>
+<td>Password &amp; Credential Lifecycle</td>
+<td>1 group(s)</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr>
+<td><code>All Modules</code></td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2.5%</td>
+<td>Security Hardening &amp; Exposure</td>
+<td>—</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr>
+<td><code>Arcon Service / Agent</code></td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2.5%</td>
+<td>Password &amp; Credential Lifecycle</td>
+<td>1 group(s)</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td><code>PAM API</code></td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1.7%</td>
+<td>Session Lifecycle &amp; Connectivity</td>
+<td>—</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td><code>Access Control</code></td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1.7%</td>
+<td>Input Validation &amp; Error Handling</td>
+<td>1 group(s)</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td><code>User Discovery</code></td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1.7%</td>
+<td>Service &amp; Asset Management (CRUD/B</td>
+<td>—</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td><code>SSO</code></td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1.7%</td>
+<td>Authentication &amp; Identity Integrat</td>
+<td>—</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td><code>UAG</code></td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1.7%</td>
+<td>Platform Services, Agent &amp; Gateway</td>
+<td>—</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td><code>Report / Dashboard</code></td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.8%</td>
+<td>Reporting &amp; Scheduling</td>
+<td>—</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td><code>VA</code></td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.8%</td>
+<td>Security Hardening &amp; Exposure</td>
+<td>—</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td><code>Auto onboarding</code></td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.8%</td>
+<td>Service &amp; Asset Management (CRUD/B</td>
+<td>—</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td><code>PYCLI</code></td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.8%</td>
+<td>Session Lifecycle &amp; Connectivity</td>
+<td>—</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td><code>AGW</code></td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.8%</td>
+<td>Session Recording &amp; Audit Evidence</td>
+<td>—</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td><code>Browser Plugin</code></td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.8%</td>
+<td>Authentication &amp; Identity Integrat</td>
+<td>—</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td><code>RTSM</code></td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.8%</td>
+<td>Session Recording &amp; Audit Evidence</td>
+<td>—</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td><code>Workflow</code></td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.8%</td>
+<td>Access Control, Workflow &amp; Approva</td>
+<td>—</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+</tr>
+</tbody>
+</table>
+<h2 id="5-issue-category-every-category">5. Issue category — every category</h2>
+<table>
+<thead>
+<tr>
+<th>Issue category</th>
+<th style="text-align: right;">Count</th>
+<th style="text-align: right;">Percentage</th>
+<th style="text-align: right;">Clients</th>
+<th style="text-align: right;">Modules</th>
+<th style="text-align: right;">SS</th>
+<th>Sample tickets</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Password &amp; Credential Lifecycle</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">15.0%</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">5</td>
+<td><code>PAMIT-42115</code> <code>PAMIT-42168</code> <code>PAMIT-42369</code></td>
+</tr>
+<tr>
+<td>Service &amp; Asset Management (CRUD/Bulk)</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">14.2%</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">2</td>
+<td><code>PAMIT-38793</code> <code>PAMIT-39917</code> <code>PAMIT-40505</code></td>
+</tr>
+<tr>
+<td>Session Recording &amp; Audit Evidence</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">14.2%</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">4</td>
+<td><code>PAMIT-41273</code> <code>PAMIT-41749</code> <code>PAMIT-41944</code></td>
+</tr>
+<tr>
+<td>Session Lifecycle &amp; Connectivity</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">10.0%</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">6</td>
+<td><code>PAMIT-39276</code> <code>PAMIT-40583</code> <code>PAMIT-41949</code></td>
+</tr>
+<tr>
+<td>Third-Party Tool &amp; Platform Compatibility</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">10.0%</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">6</td>
+<td><code>PAMIT-40903</code> <code>PAMIT-41274</code> <code>PAMIT-41958</code></td>
+</tr>
+<tr>
+<td>Access Control, Workflow &amp; Approval</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">9.2%</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">3</td>
+<td><code>PAMIT-41384</code> <code>PAMIT-42054</code> <code>PAMIT-42189</code></td>
+</tr>
+<tr>
+<td>Authentication &amp; Identity Integration</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">7.5%</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">3</td>
+<td><code>PAMIT-39984</code> <code>PAMIT-40770</code> <code>PAMIT-41129</code></td>
+</tr>
+<tr>
+<td>Input Validation &amp; Error Handling</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">6.7%</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">1</td>
+<td><code>PAMIT-39694</code> <code>PAMIT-39696</code> <code>PAMIT-42492</code></td>
+</tr>
+<tr>
+<td>Reporting &amp; Scheduling</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">3.3%</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0</td>
+<td><code>PAMIT-26092</code> <code>PAMIT-42594</code> <code>PAMIT-42886</code></td>
+</tr>
+<tr>
+<td>Security Hardening &amp; Exposure</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">3.3%</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1</td>
+<td><code>PAMIT-33981</code> <code>PAMIT-37067</code> <code>PAMIT-41055</code></td>
+</tr>
+<tr>
+<td>Platform Services, Agent &amp; Gateway</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2.5%</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1</td>
+<td><code>PAMIT-42059</code> <code>PAMIT-42514</code> <code>PAMIT-42895</code></td>
+</tr>
+<tr>
+<td>Performance &amp; Responsiveness</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1.7%</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td><code>PAMIT-40271</code> <code>PAMIT-42623</code></td>
+</tr>
+<tr>
+<td>API &amp; Integration</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.8%</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td><code>PAMIT-42463</code></td>
+</tr>
+<tr>
+<td>Uncategorised</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.8%</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td><code>PAMIT-42478</code></td>
+</tr>
+<tr>
+<td>UI Field &amp; Control Defects</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.8%</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td><code>PAMIT-42878</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="6-recurring-patterns-every-qualifying-group">6. Recurring patterns — every qualifying group</h2>
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>Tickets</th>
+<th style="text-align: right;">n</th>
+<th>Modules</th>
+<th>Clients</th>
+<th>Release</th>
+<th style="text-align: right;">Older linked</th>
+<th>Classification</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ITD-MC Delta Image Capture Issue Third-Party Connector (Mo</td>
+<td><code>PAMIT-42577</code> <code>PAMIT-42793</code> <code>PAMIT-43057</code></td>
+<td style="text-align: right;">3</td>
+<td><code>Application &amp; Audit Logs</code>, <code>Connector</code></td>
+<td>ITD-MC</td>
+<td>?</td>
+<td style="text-align: right;">0</td>
+<td>repeated in scope; cross-module; release-specific (?)</td>
+</tr>
+<tr>
+<td>P2 - ICICI Bank IPC Service Not Triggering Password Closur</td>
+<td><code>PAMIT-42115</code> <code>PAMIT-42942</code></td>
+<td style="text-align: right;">2</td>
+<td><code>Arcon Service / Agent</code></td>
+<td>ICICI Bank</td>
+<td>?/HF12</td>
+<td style="text-align: right;">3</td>
+<td>repeated in scope; cross-release; config/environment-sensitive</td>
+</tr>
+<tr>
+<td>ICICI Bank Bulk import failed with large values in paramet</td>
+<td><code>PAMIT-40505</code> <code>PAMIT-43186</code></td>
+<td style="text-align: right;">2</td>
+<td><code>Server Manager</code></td>
+<td>ICICI Bank</td>
+<td>?/HF12</td>
+<td style="text-align: right;">2</td>
+<td>repeated in scope; cross-release; config/environment-sensitive</td>
+</tr>
+<tr>
+<td>BM - Issue with dbeaver connection</td>
+<td><code>PAMIT-40903</code> <code>PAMIT-43013</code></td>
+<td style="text-align: right;">2</td>
+<td><code>Connector</code></td>
+<td>Bank Muscat</td>
+<td>HF12/HF13</td>
+<td style="text-align: right;">2</td>
+<td>repeated in scope; cross-release; client-reopened</td>
+</tr>
+<tr>
+<td>Session Extension Workflow</td>
+<td><code>PAMIT-41384</code> <code>PAMIT-42677</code></td>
+<td style="text-align: right;">2</td>
+<td><code>Connector</code></td>
+<td>Catholic Syrian Bank</td>
+<td>?/HF12</td>
+<td style="text-align: right;">2</td>
+<td>repeated in scope; cross-release; config/environment-sensitive</td>
+</tr>
+<tr>
+<td>ICICI Bank U16SP2 Unable to Modify or Create Service Due t</td>
+<td><code>PAMIT-42754</code> <code>PAMIT-43182</code></td>
+<td style="text-align: right;">2</td>
+<td><code>Server Manager</code></td>
+<td>ICICI Bank</td>
+<td>?/HF12</td>
+<td style="text-align: right;">2</td>
+<td>repeated in scope; cross-release</td>
+</tr>
+<tr>
+<td>Kotak Bank New Modify Service Type Missing 26 Available Co</td>
+<td><code>PAMIT-43091</code> <code>PAMIT-43111</code></td>
+<td style="text-align: right;">2</td>
+<td><code>Connector</code></td>
+<td>Kotak Bank</td>
+<td>?</td>
+<td style="text-align: right;">2</td>
+<td>repeated in scope; release-specific (?); config/environment-sensitive</td>
+</tr>
+<tr>
+<td>ICICI Bank U16SP2 VA Application accepts special character</td>
+<td><code>PAMIT-39696</code> <code>PAMIT-43191</code></td>
+<td style="text-align: right;">2</td>
+<td><code>Access Control</code>, <code>Password Vault</code></td>
+<td>ICICI Bank</td>
+<td>?/HF12</td>
+<td style="text-align: right;">1</td>
+<td>repeated in scope; cross-module; cross-release</td>
+</tr>
+<tr>
+<td>29HF12 - ICICI Bank U16SP2 Error (System.OutOfMemoryExcept</td>
+<td><code>PAMIT-42369</code> <code>PAMIT-42917</code></td>
+<td style="text-align: right;">2</td>
+<td><code>Password Vault</code></td>
+<td>ICICI Bank</td>
+<td>?/HF12</td>
+<td style="text-align: right;">1</td>
+<td>repeated in scope; cross-release</td>
+</tr>
+<tr>
+<td>Renew Unexpected Script Detected error while updating sche</td>
+<td><code>PAMIT-42594</code> <code>PAMIT-42898</code></td>
+<td style="text-align: right;">2</td>
+<td><code>Settings</code></td>
+<td>Renew</td>
+<td>?/HF12</td>
+<td style="text-align: right;">1</td>
+<td>repeated in scope; cross-release</td>
+</tr>
+<tr>
+<td>DILIGENTA SLOC 29HF6 PASSWORD ROTATION/CHANGE NOT WORKING</td>
+<td><code>PAMIT-42931</code> <code>PAMIT-43084</code></td>
+<td style="text-align: right;">2</td>
+<td><code>Password</code></td>
+<td>Diligenta Limited</td>
+<td>?/HF13</td>
+<td style="text-align: right;">1</td>
+<td>repeated in scope; cross-release; config/environment-sensitive</td>
+</tr>
+<tr>
+<td>ICICI Bank U16SP2 Incorrect Password Update Behavior for A</td>
+<td><code>PAMIT-42941</code> <code>PAMIT-43178</code></td>
+<td style="text-align: right;">2</td>
+<td><code>Server Manager</code></td>
+<td>ICICI Bank</td>
+<td>?/HF12</td>
+<td style="text-align: right;">1</td>
+<td>repeated in scope; cross-release</td>
+</tr>
+<tr>
+<td>IIFL SSMS Studio not working Ver PAM Ver. 29_HF11</td>
+<td><code>PAMIT-42988</code> <code>PAMIT-43030</code></td>
+<td style="text-align: right;">2</td>
+<td><code>Connector</code></td>
+<td>IIFL</td>
+<td>?/HF12</td>
+<td style="text-align: right;">1</td>
+<td>repeated in scope; cross-release</td>
+</tr>
+<tr>
+<td>ICICI Bank U16SP2 Unable to view service details when sele</td>
+<td><code>PAMIT-42999</code> <code>PAMIT-43175</code></td>
+<td style="text-align: right;">2</td>
+<td><code>Server Manager</code></td>
+<td>ICICI Bank</td>
+<td>?/HF12</td>
+<td style="text-align: right;">1</td>
+<td>repeated in scope; cross-release; config/environment-sensitive; client-reopened</td>
+</tr>
+<tr>
+<td>TCS CSP U16SP2 Unable to apply command profiler from Setti</td>
+<td><code>PAMIT-43207</code> <code>PAMIT-43209</code></td>
+<td style="text-align: right;">2</td>
+<td><code>Settings</code></td>
+<td>TCS Cyber Security</td>
+<td>?/HF12</td>
+<td style="text-align: right;">1</td>
+<td>repeated in scope; cross-release; config/environment-sensitive</td>
+</tr>
+<tr>
+<td>ICICI Bank U16SP2 Server Manager fails to launch from end-</td>
+<td><code>PAMIT-42689</code> <code>PAMIT-43183</code></td>
+<td style="text-align: right;">2</td>
+<td><code>ACMO</code></td>
+<td>ICICI Bank</td>
+<td>?/HF12</td>
+<td style="text-align: right;">0</td>
+<td>repeated in scope; cross-release; config/environment-sensitive</td>
+</tr>
+<tr>
+<td>Muscat - Thales HSM iintegration with PAM</td>
+<td><code>PAMIT-42711</code> <code>PAMIT-43007</code></td>
+<td style="text-align: right;">2</td>
+<td><code>Password Vault</code></td>
+<td>Bank Muscat</td>
+<td>?/HF13</td>
+<td style="text-align: right;">0</td>
+<td>repeated in scope; cross-release; config/environment-sensitive</td>
+</tr>
+<tr>
+<td>ICICI Bank U16SP2 Bulk Password Update Does Not Accept &lt;DN</td>
+<td><code>PAMIT-42751</code> <code>PAMIT-42756</code></td>
+<td style="text-align: right;">2</td>
+<td><code>Server Manager</code></td>
+<td>ICICI Bank</td>
+<td>?</td>
+<td style="text-align: right;">0</td>
+<td>repeated in scope; release-specific (?); config/environment-sensitive</td>
+</tr>
+<tr>
+<td>ICICI Bank U16SP2 Unable to Add or Edit Gateway Configurat</td>
+<td><code>PAMIT-42795</code> <code>PAMIT-43181</code></td>
+<td style="text-align: right;">2</td>
+<td><code>Settings</code></td>
+<td>ICICI Bank</td>
+<td>?/HF12</td>
+<td style="text-align: right;">0</td>
+<td>repeated in scope; cross-release; config/environment-sensitive</td>
+</tr>
+<tr>
+<td>ICICI BANK Unable to Modify Service Parameters from Server</td>
+<td><code>PAMIT-42920</code> <code>PAMIT-43179</code></td>
+<td style="text-align: right;">2</td>
+<td><code>Server Manager</code></td>
+<td>ICICI Bank</td>
+<td>?/HF12</td>
+<td style="text-align: right;">0</td>
+<td>repeated in scope; cross-release; config/environment-sensitive; client-reopened</td>
+</tr>
+<tr>
+<td>ICICI Bank User is unexpectedly logged out when clicking o</td>
+<td><code>PAMIT-42977</code> <code>PAMIT-43176</code></td>
+<td style="text-align: right;">2</td>
+<td><code>ACMO</code></td>
+<td>ICICI Bank</td>
+<td>?/HF12</td>
+<td style="text-align: right;">0</td>
+<td>repeated in scope; cross-release; config/environment-sensitive</td>
+</tr>
+<tr>
+<td>ICICI BANK VPC Service issue</td>
+<td><code>PAMIT-43154</code> <code>PAMIT-43224</code></td>
+<td style="text-align: right;">2</td>
+<td><code>Password Vault</code></td>
+<td>ICICI Bank</td>
+<td>?/HF13</td>
+<td style="text-align: right;">0</td>
+<td>repeated in scope; cross-release</td>
+</tr>
+<tr>
+<td>UNABLE TO SCHEDULE IDLE USERS REPORT</td>
+<td><code>PAMIT-43295</code> <code>PAMIT-43403</code></td>
+<td style="text-align: right;">2</td>
+<td><code>Settings</code></td>
+<td>PSS</td>
+<td>?/HF13</td>
+<td style="text-align: right;">0</td>
+<td>repeated in scope; cross-release; config/environment-sensitive</td>
+</tr>
+<tr>
+<td>Mashreq Bank Issue with User Discovery Functionality – Dup</td>
+<td><code>PAMIT-41302</code></td>
+<td style="text-align: right;">1</td>
+<td><code>User Discovery</code></td>
+<td>MashreqBank</td>
+<td>HF12</td>
+<td style="text-align: right;">3</td>
+<td>cross-release lineage; release-specific (HF12)</td>
+</tr>
+<tr>
+<td>Paytm Payments PYCLI ssh not working</td>
+<td><code>PAMIT-39276</code></td>
+<td style="text-align: right;">1</td>
+<td><code>ACMO</code>, <code>PAM API</code></td>
+<td>Paytm Payment Services Ltd - PPSL</td>
+<td>?</td>
+<td style="text-align: right;">2</td>
+<td>cross-release lineage; cross-module; release-specific (?); config/environment-sensitive</td>
+</tr>
+<tr>
+<td>ICICI Bank Child Services Missing in Rotate Tab API Change</td>
+<td><code>PAMIT-42168</code></td>
+<td style="text-align: right;">1</td>
+<td><code>PAM API</code></td>
+<td>ICICI Bank</td>
+<td>HF12</td>
+<td style="text-align: right;">2</td>
+<td>cross-release lineage; release-specific (HF12)</td>
+</tr>
+<tr>
+<td>Kotak Bank New Import Server Connection Validation Restric</td>
+<td><code>PAMIT-42492</code></td>
+<td style="text-align: right;">1</td>
+<td><code>Server Manager</code></td>
+<td>Kotak Bank</td>
+<td>?</td>
+<td style="text-align: right;">2</td>
+<td>cross-release lineage; release-specific (?); client-reopened</td>
+</tr>
+<tr>
+<td>Kotak Bank New Issue with Bulk User Service Mapping for In</td>
+<td><code>PAMIT-42528</code></td>
+<td style="text-align: right;">1</td>
+<td><code>Server Manager</code></td>
+<td>Kotak Bank</td>
+<td>?</td>
+<td style="text-align: right;">2</td>
+<td>cross-release lineage; release-specific (?)</td>
+</tr>
+<tr>
+<td>Kotak Bank New Server Manger performance issue.</td>
+<td><code>PAMIT-42623</code></td>
+<td style="text-align: right;">1</td>
+<td><code>Server Manager</code></td>
+<td>Kotak Bank</td>
+<td>?</td>
+<td style="text-align: right;">2</td>
+<td>cross-release lineage; release-specific (?)</td>
+</tr>
+<tr>
+<td>CCIL Envelope Module Displays 500 Internal Server Error U1</td>
+<td><code>PAMIT-42886</code></td>
+<td style="text-align: right;">1</td>
+<td><code>Password</code>, <code>Password Vault</code></td>
+<td>CCIL</td>
+<td>?</td>
+<td style="text-align: right;">2</td>
+<td>cross-release lineage; cross-module; release-specific (?); config/environment-sensitive</td>
+</tr>
+<tr>
+<td>Video logs issue with web gateway</td>
+<td><code>PAMIT-42889</code></td>
+<td style="text-align: right;">1</td>
+<td><code>All Modules</code></td>
+<td>Bank Muscat</td>
+<td>HF12</td>
+<td style="text-align: right;">2</td>
+<td>cross-release lineage; release-specific (HF12); config/environment-sensitive</td>
+</tr>
+<tr>
+<td>ICICI Bank U16SP2 Dormant User Report</td>
+<td><code>PAMIT-26092</code></td>
+<td style="text-align: right;">1</td>
+<td><code>Report / Dashboard</code></td>
+<td>ICICI Bank</td>
+<td>?</td>
+<td style="text-align: right;">1</td>
+<td>cross-release lineage; release-specific (?)</td>
+</tr>
+<tr>
+<td>ICICI Bank Facing slowness issue on RA instances</td>
+<td><code>PAMIT-40271</code></td>
+<td style="text-align: right;">1</td>
+<td><code>ACMO</code></td>
+<td>ICICI Bank</td>
+<td>?</td>
+<td style="text-align: right;">1</td>
+<td>cross-release lineage; release-specific (?); config/environment-sensitive</td>
+</tr>
+<tr>
+<td>BM - issue with SIEM logs</td>
+<td><code>PAMIT-42946</code></td>
+<td style="text-align: right;">1</td>
+<td><code>Application &amp; Audit Logs</code></td>
+<td>Bank Muscat</td>
+<td>HF13</td>
+<td style="text-align: right;">1</td>
+<td>cross-release lineage; release-specific (HF13)</td>
+</tr>
+<tr>
+<td>BM - Unable to access (one time and time based) service th</td>
+<td><code>PAMIT-43020</code></td>
+<td style="text-align: right;">1</td>
+<td><code>ACMO</code>, <code>Workflow</code></td>
+<td>Bank Muscat</td>
+<td>HF12</td>
+<td style="text-align: right;">1</td>
+<td>cross-release lineage; cross-module; release-specific (HF12); config/environment-sensitive</td>
+</tr>
+</tbody>
+</table>
+<h2 id="7-escape-latency-found-on-build-vs-fixed-in-build">7. Escape latency — found-on build vs fixed-in build</h2>
+<h3 id="71-the-census">7.1 The census</h3>
+<p><em><code>Affected Milestone</code> says which build the client was running; <code>fixVersion</code> says which build the fix shipped in. The gap is how many hotfixes the defect survived undetected. Both are fields, so this is a </em><em>census over the tickets carrying both</em><em>, not a sample.</em></p>
+<table>
+<thead>
+<tr>
+<th>Measure</th>
+<th style="text-align: right;">Tickets</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Carry an in-family <code>Affected Milestone</code> <strong>and</strong> an in-family <code>fixVersion</code></td>
+<td style="text-align: right;"><strong>492</strong></td>
+<td>the population this section can measure</td>
+</tr>
+<tr>
+<td><strong>Escaped</strong> — fixed in a <em>later</em> hotfix than reported against</td>
+<td style="text-align: right;"><strong>367</strong></td>
+<td>the finding</td>
+</tr>
+<tr>
+<td>Reported and fixed in the same hotfix</td>
+<td style="text-align: right;">122</td>
+<td>caught within the release — no escape</td>
+</tr>
+<tr>
+<td>Fix version <em>earlier</em> than the affected build</td>
+<td style="text-align: right;">3</td>
+<td>data anomaly, not an escape — listed in the workbook for correction</td>
+</tr>
+</tbody>
+</table>
+<p>⛔ <strong>The previous revision reported 9 rows here.</strong> It recovered the found-on build from build tokens clients had typed into ticket titles, which fired on 9 tickets and was labelled <em>"a floor, not a census"</em>. The field gives 367 — 41x the sample. Where both methods fire they agree (<code>PAMIT-41274</code>: found HF1, fixed HF12, +11 on each), so the heuristic was accurate and simply blind.</p>
+<p><strong>Hotfix-gap distribution</strong> — how many releases each defect survived:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Hotfixes late</th>
+<th style="text-align: right;">Defects</th>
+<th>Reading</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;"><strong>0</strong> (same release)</td>
+<td style="text-align: right;">122</td>
+<td>caught before shipping onward</td>
+</tr>
+<tr>
+<td style="text-align: right;"><strong>+1</strong></td>
+<td style="text-align: right;">51</td>
+<td>one release missed</td>
+</tr>
+<tr>
+<td style="text-align: right;"><strong>+2</strong></td>
+<td style="text-align: right;">83</td>
+<td>survived 2 releases undetected</td>
+</tr>
+<tr>
+<td style="text-align: right;"><strong>+3</strong></td>
+<td style="text-align: right;">67</td>
+<td>survived 3 releases undetected</td>
+</tr>
+<tr>
+<td style="text-align: right;"><strong>+4</strong></td>
+<td style="text-align: right;">47</td>
+<td>survived 4 releases undetected</td>
+</tr>
+<tr>
+<td style="text-align: right;"><strong>+5</strong></td>
+<td style="text-align: right;">42</td>
+<td>survived 5 releases undetected</td>
+</tr>
+<tr>
+<td style="text-align: right;"><strong>+6</strong></td>
+<td style="text-align: right;">28</td>
+<td>survived 6 releases undetected</td>
+</tr>
+<tr>
+<td style="text-align: right;"><strong>+7</strong></td>
+<td style="text-align: right;">20</td>
+<td>survived 7 releases undetected</td>
+</tr>
+<tr>
+<td style="text-align: right;"><strong>+8</strong></td>
+<td style="text-align: right;">9</td>
+<td>survived 8 releases undetected</td>
+</tr>
+<tr>
+<td style="text-align: right;"><strong>+9</strong></td>
+<td style="text-align: right;">15</td>
+<td>survived 9 releases undetected</td>
+</tr>
+<tr>
+<td style="text-align: right;"><strong>+10</strong></td>
+<td style="text-align: right;">1</td>
+<td>survived 10 releases undetected</td>
+</tr>
+<tr>
+<td style="text-align: right;"><strong>+11</strong></td>
+<td style="text-align: right;">4</td>
+<td>survived 11 releases undetected</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Worst escapes</strong> — every row is traceable in the workbook <code>Escape Latency</code> sheet:</p>
+<table>
+<thead>
+<tr>
+<th>Ticket</th>
+<th>Client</th>
+<th>Module</th>
+<th>Category</th>
+<th>Priority</th>
+<th>Found on</th>
+<th>Fixed in</th>
+<th style="text-align: right;">Late</th>
+<th>Regression signal</th>
+<th>Title</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>PAMIT-39276</code></td>
+<td>Paytm Payment Services Ltd - PPSL</td>
+<td><code>ACMO</code></td>
+<td>Session Lifecycle &amp; Conn</td>
+<td>ShowStopper</td>
+<td>35.8.29 HF3</td>
+<td>HF14</td>
+<td style="text-align: right;">+11</td>
+<td>unstated</td>
+<td>Paytm Payments PYCLI ssh not working</td>
+</tr>
+<tr>
+<td><code>PAMIT-41274</code></td>
+<td>Piramal Finance</td>
+<td><code>Connector</code></td>
+<td>Third-Party Tool &amp; Platf</td>
+<td>High</td>
+<td>35.8.29 HF1</td>
+<td>HF12</td>
+<td style="text-align: right;">+11</td>
+<td>unstated</td>
+<td>Piramal Finance U16 SP2 SSH MYSQL service not ac</td>
+</tr>
+<tr>
+<td><code>PAMIT-41949</code></td>
+<td>IIBX</td>
+<td><code>Connector</code></td>
+<td>Session Lifecycle &amp; Conn</td>
+<td>High</td>
+<td>35.8.29 HF1</td>
+<td>HF12</td>
+<td style="text-align: right;">+11</td>
+<td>not-a-regression</td>
+<td>IIBX getting all connectors logged out after som</td>
+</tr>
+<tr>
+<td><code>PAMIT-43035</code></td>
+<td>NSDL</td>
+<td><code>Connector</code></td>
+<td>Uncategorised</td>
+<td>High</td>
+<td>35.8.29 HF3</td>
+<td>HF14</td>
+<td style="text-align: right;">+11</td>
+<td>not-a-regression</td>
+<td>NSDL PB Service Access Issue U16SP235.8.29HF3</td>
+</tr>
+<tr>
+<td><code>PAMIT-41588</code></td>
+<td>TATA Motors CV,PV</td>
+<td><code>Connector</code></td>
+<td>Session Lifecycle &amp; Conn</td>
+<td>High</td>
+<td>35.8.29 HF1</td>
+<td>HF11</td>
+<td style="text-align: right;">+10</td>
+<td>unstated</td>
+<td>TATA MOTORS CV-PV Issue with Image Size Despite</td>
+</tr>
+<tr>
+<td><code>PAMIT-37134</code></td>
+<td>MashreqBank</td>
+<td><code>Password Vault</code></td>
+<td>Password &amp; Credential Li</td>
+<td>High</td>
+<td>35.8.29 HF1</td>
+<td>HF10</td>
+<td style="text-align: right;">+9</td>
+<td>unstated</td>
+<td>Mashreq Password change not successful through R</td>
+</tr>
+<tr>
+<td><code>PAMIT-37411</code></td>
+<td>Star Health &amp; Allied Insurance Company Limited</td>
+<td><code>Server Manager</code></td>
+<td>Performance &amp; Responsive</td>
+<td>High</td>
+<td>35.8.29 HF1</td>
+<td>HF10</td>
+<td style="text-align: right;">+9</td>
+<td>unstated</td>
+<td>Star Health Slowness in Command Profile</td>
+</tr>
+<tr>
+<td><code>PAMIT-39917</code></td>
+<td>ICICI Bank</td>
+<td><code>User Discovery</code></td>
+<td>Service &amp; Asset Manageme</td>
+<td>High</td>
+<td>35.8.29 HF5</td>
+<td>HF14</td>
+<td style="text-align: right;">+9</td>
+<td>unstated</td>
+<td>ICICI Bank U16SP2 Error during User Discovery</td>
+</tr>
+<tr>
+<td><code>PAMIT-40772</code></td>
+<td>Piramal Finance</td>
+<td><code>Report / Dashboard</code></td>
+<td>Reporting &amp; Scheduling</td>
+<td>High</td>
+<td>35.8.29 HF1</td>
+<td>HF10</td>
+<td style="text-align: right;">+9</td>
+<td>unstated</td>
+<td>Piramal Finance U16 SP2 Duplicate Entries of Use</td>
+</tr>
+<tr>
+<td><code>PAMIT-41015</code></td>
+<td>ERNET</td>
+<td><code>Administrative Console</code></td>
+<td>Session Lifecycle &amp; Conn</td>
+<td>High</td>
+<td>35.8.29 HF1</td>
+<td>HF10</td>
+<td style="text-align: right;">+9</td>
+<td>unstated</td>
+<td>ERNET Command restriction is not working</td>
+</tr>
+<tr>
+<td><code>PAMIT-41141</code></td>
+<td>Star Health &amp; Allied Insurance Company Limited</td>
+<td><code>Connector</code></td>
+<td>Third-Party Tool &amp; Platf</td>
+<td>High</td>
+<td>35.8.29 HF1</td>
+<td>HF10</td>
+<td style="text-align: right;">+9</td>
+<td>unstated</td>
+<td>Star Health .29HF1 Issue while accessing MySql W</td>
+</tr>
+<tr>
+<td><code>PAMIT-41363</code></td>
+<td>SBI Life Insurance co Ltd</td>
+<td><code>Connector</code></td>
+<td>Session Lifecycle &amp; Conn</td>
+<td>High</td>
+<td>35.8.29 HF2</td>
+<td>HF11</td>
+<td style="text-align: right;">+9</td>
+<td>unstated</td>
+<td>SBI LIFE - U16 SP2 - SFTP FILE TRANSFER DOWNLOAD</td>
+</tr>
+<tr>
+<td><code>PAMIT-41389</code></td>
+<td>Kotak Bank</td>
+<td><code>Server Manager</code></td>
+<td>Service &amp; Asset Manageme</td>
+<td>High</td>
+<td>35.8.29 HF5</td>
+<td>HF14</td>
+<td style="text-align: right;">+9</td>
+<td>unstated</td>
+<td>Kotak Bank - U16 SP2 Issue with Auto-Mapping Fea</td>
+</tr>
+<tr>
+<td><code>PAMIT-41749</code></td>
+<td>Kotak Bank</td>
+<td><code>Server Manager</code></td>
+<td>Session Recording &amp; Audi</td>
+<td>High</td>
+<td>35.8.29 HF5</td>
+<td>HF14</td>
+<td style="text-align: right;">+9</td>
+<td>unstated</td>
+<td>Kotak Bank New Inconsistent Audit Log Entries fo</td>
+</tr>
+<tr>
+<td><code>PAMIT-42492</code></td>
+<td>Kotak Bank</td>
+<td><code>Server Manager</code></td>
+<td>Input Validation &amp; Error</td>
+<td>Medium</td>
+<td>35.8.29 HF5</td>
+<td>HF14</td>
+<td style="text-align: right;">+9</td>
+<td>not-a-regression</td>
+<td>Kotak Bank New Import Server Connection Validati</td>
+</tr>
+<tr>
+<td><code>PAMIT-42528</code></td>
+<td>Kotak Bank</td>
+<td><code>Server Manager</code></td>
+<td>Uncategorised</td>
+<td>High</td>
+<td>35.8.29 HF5</td>
+<td>HF14</td>
+<td style="text-align: right;">+9</td>
+<td>not-a-regression</td>
+<td>Kotak Bank New Issue with Bulk User Service Mapp</td>
+</tr>
+<tr>
+<td><code>PAMIT-42623</code></td>
+<td>Kotak Bank</td>
+<td><code>Server Manager</code></td>
+<td>Performance &amp; Responsive</td>
+<td>High</td>
+<td>35.8.29 HF5</td>
+<td>HF14</td>
+<td style="text-align: right;">+9</td>
+<td>confirmed-regression</td>
+<td>Kotak Bank New Server Manger performance issue.</td>
+</tr>
+<tr>
+<td><code>PAMIT-42884</code></td>
+<td>Royal Hashemite Court, Jordan</td>
+<td><code>RTSM</code></td>
+<td>Session Recording &amp; Audi</td>
+<td>ShowStopper</td>
+<td>35.8.29 HF5</td>
+<td>HF14</td>
+<td style="text-align: right;">+9</td>
+<td>not-a-regression</td>
+<td>RHC U16 SP2 ThickClient terminates while closing</td>
+</tr>
+<tr>
+<td><code>PAMIT-43091</code></td>
+<td>Kotak Bank</td>
+<td><code>Connector</code></td>
+<td>Service &amp; Asset Manageme</td>
+<td>High</td>
+<td>35.8.29 HF5</td>
+<td>HF14</td>
+<td style="text-align: right;">+9</td>
+<td>confirmed-regression</td>
+<td>Kotak Bank New Modify Service Type Missing 26 Av</td>
+</tr>
+<tr>
+<td><code>PAMIT-43111</code></td>
+<td>Kotak Bank</td>
+<td><code>Connector</code></td>
+<td>Service &amp; Asset Manageme</td>
+<td>High</td>
+<td>35.8.29 HF5</td>
+<td>HF14</td>
+<td style="text-align: right;">+9</td>
+<td>confirmed-regression</td>
+<td>Kotak Bank New Modify Service Type Missing 26 Av</td>
+</tr>
+<tr>
+<td><code>PAMIT-39984</code></td>
+<td>ICICI Bank</td>
+<td><code>ACMO</code></td>
+<td>Authentication &amp; Identit</td>
+<td>ShowStopper</td>
+<td>35.8.29 HF6</td>
+<td>HF14</td>
+<td style="text-align: right;">+8</td>
+<td>unstated</td>
+<td>ICICI Bank U16SP2 SSH SSO via RA fails when SSH</td>
+</tr>
+<tr>
+<td><code>PAMIT-40124</code></td>
+<td>State Bank of Mauritius (India)</td>
+<td><code>Password</code></td>
+<td>Password &amp; Credential Li</td>
+<td>High</td>
+<td>35.8.29 HF1</td>
+<td>HF9</td>
+<td style="text-align: right;">+8</td>
+<td>unstated</td>
+<td>State Bank of Mauritius (India) U16 SP2 Getting</td>
+</tr>
+<tr>
+<td><code>PAMIT-40344</code></td>
+<td>Royal Hashemite Court, Jordan</td>
+<td><code>ACMO</code></td>
+<td>Session Recording &amp; Audi</td>
+<td>ShowStopper</td>
+<td>35.8.29</td>
+<td>HF8</td>
+<td style="text-align: right;">+8</td>
+<td>unstated</td>
+<td>RHC U16 SP2 B. Filter Button On Session Monitori</td>
+</tr>
+<tr>
+<td><code>PAMIT-40556</code></td>
+<td>Star Health &amp; Allied Insurance Company Limited</td>
+<td><code>Connector</code></td>
+<td>Third-Party Tool &amp; Platf</td>
+<td>High</td>
+<td>35.8.29 HF1</td>
+<td>HF9</td>
+<td style="text-align: right;">+8</td>
+<td>unstated</td>
+<td>Star Health Connection history showing while acc</td>
+</tr>
+<tr>
+<td><code>PAMIT-40876</code></td>
+<td>Indian Bank Ltd</td>
+<td><code>Connector</code></td>
+<td>Platform Services, Agent</td>
+<td>High</td>
+<td>35.8.29 HF2</td>
+<td>HF10</td>
+<td style="text-align: right;">+8</td>
+<td>unstated</td>
+<td>Indian Bank Request for Restrict Multiple Tab Ac</td>
+</tr>
+</tbody>
+</table>
+<p><em>25 of 367 shown. All 367 are in the workbook — §15 states the traceability rule.</em></p>
+<h3 id="72-regression-signal-the-three-client-facing-fields">7.2 Regression signal — the three client-facing fields</h3>
+<p><em>The owner asked for <code>Is reopen from customer</code>, <code>Functionality working in previous version</code> and <code>Previous working version</code> to be brought into the analysis. All three exist; all three are select fields. The first was already captured but never used in a view, the other two are new here.</em></p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>ID</th>
+<th style="text-align: right;">Populated on the build line</th>
+<th>What it means</th>
+<th>How it is used</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Is reopen from customer</code></td>
+<td><code>customfield_10780</code></td>
+<td style="text-align: right;">534 / 2040</td>
+<td>The customer re-opened the ticket after a delivered fix. A <code>Yes</code> is a <strong>failed fix</strong>, not a new defect</td>
+<td>Escalates the weak spot that produced it; already used as a <code>client-reopened</code> tag on recurring groups</td>
+</tr>
+<tr>
+<td><code>Functionality working in previous version</code></td>
+<td><code>customfield_11253</code></td>
+<td style="text-align: right;">521 / 2040</td>
+<td><code>Yes</code> = the feature worked before, so the defect is a <strong>regression</strong>. <code>No</code> = pre-existing or never worked</td>
+<td>The regression gate. <code>Yes</code> promotes a ticket into the regression population</td>
+</tr>
+<tr>
+<td><code>Previous working version</code></td>
+<td><code>customfield_11254</code></td>
+<td style="text-align: right;">377 / 2040 <em>(naming a real version)</em></td>
+<td>The last build where it worked. Bounds the breakage to the interval <code>(previous working, affected milestone]</code></td>
+<td>Turns a regression into a <strong>bisect range</strong> — the actionable form for a developer</td>
+</tr>
+</tbody>
+</table>
+<p>⛔ <strong>The three regression fields are populated on ~25% of the build line, so every regression figure is quoted over the </strong>populated subset<strong> with that subset's size beside it, never over the full population. An <code>unstated</code> ticket is not evidence of 'no regression' — it is evidence of an unfilled field, and the two must never be merged.</strong></p>
+<p>⚠ <strong><code>Previous working version</code> is a select field whose option list includes the literal string <code>None</code>.</strong> That is a real value meaning <em>there is no previously working version</em> — not an empty field. 491 tickets carry something, of which <strong>130 carry <code>None</code></strong>, so the figure above counts the 361 that name an actual version. Counting <code>None</code> as populated overstates coverage; treating it as a version corrupts every bisect range, because <code>None</code> has no position in the build order.</p>
+<table>
+<thead>
+<tr>
+<th>Regression class</th>
+<th style="text-align: right;">Tickets</th>
+<th style="text-align: right;">Share of <em>stated</em></th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>unstated</code></td>
+<td style="text-align: right;">1512</td>
+<td style="text-align: right;">—</td>
+<td>None of the three fields is populated</td>
+</tr>
+<tr>
+<td><code>confirmed-regression</code></td>
+<td style="text-align: right;">262</td>
+<td style="text-align: right;">49.6%</td>
+<td>Worked in a previous version and that version is named</td>
+</tr>
+<tr>
+<td><code>not-a-regression</code></td>
+<td style="text-align: right;">236</td>
+<td style="text-align: right;">44.7%</td>
+<td>Did not work in the previous version — pre-existing or new feature gap</td>
+</tr>
+<tr>
+<td><code>likely-regression</code></td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">4.4%</td>
+<td>Worked in a previous version; the version is not named</td>
+</tr>
+<tr>
+<td><code>customer-reopen</code></td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">1.3%</td>
+<td>Reopened by the customer, regression status not stated</td>
+</tr>
+</tbody>
+</table>
+<p><strong>528 of 2040 tickets (25.9%) state a regression signal at all</strong>, and of those <strong>262 (49.6% of stated)</strong> are confirmed regressions with a named previous working version. <strong>48</strong> tickets are customer re-opens.</p>
+<p><strong>Where confirmed regressions were last working</strong> — the build that broke is the one <em>after</em> this:</p>
+<table>
+<thead>
+<tr>
+<th>Previous working version</th>
+<th style="text-align: right;">Confirmed regressions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>35.8.29 HF6</code></td>
+<td style="text-align: right;">44</td>
+</tr>
+<tr>
+<td><code>35.8.29 HF1</code></td>
+<td style="text-align: right;">24</td>
+</tr>
+<tr>
+<td><code>35.8.29 HF5</code></td>
+<td style="text-align: right;">17</td>
+</tr>
+<tr>
+<td><code>35.8.29 HF7</code></td>
+<td style="text-align: right;">15</td>
+</tr>
+<tr>
+<td><code>35.8.29 HF9</code></td>
+<td style="text-align: right;">13</td>
+</tr>
+<tr>
+<td><code>35.8.29 HF10</code></td>
+<td style="text-align: right;">12</td>
+</tr>
+<tr>
+<td><code>35.8.24</code></td>
+<td style="text-align: right;">11</td>
+</tr>
+<tr>
+<td><code>4.8.5.0_U16SP2_B35.8.23</code></td>
+<td style="text-align: right;">11</td>
+</tr>
+<tr>
+<td><code>35.8.29 HF2</code></td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr>
+<td><code>4.8.5.0_U16SP2_B35.8.16</code></td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr>
+<td><code>35.8.28</code></td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr>
+<td><code>35.8.29 HF3</code></td>
+<td style="text-align: right;">6</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Confirmed regressions by testing area</strong> — a regression is a <em>coverage</em> failure by definition: the feature worked, so a test that existed and ran would have caught it.</p>
+<p>⚠ <strong><code>«unmapped»</code> is the largest row and that is a measurement limit, not a finding.</strong> The build line is fetched with light records to keep 2,010 tickets affordable, so it carries no <code>description</code> — and the testing-area axis matches on title <strong>plus</strong> description. On the build line it therefore runs on the title alone and maps fewer tickets. The area figures to quote are the ones in §11, which are computed over the three full-record pools. Read this table as <em>the relative shape of confirmed regressions</em>, not as area counts comparable with §11.</p>
+<table>
+<thead>
+<tr>
+<th>Testing area</th>
+<th style="text-align: right;">Confirmed regressions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>«unmapped»</td>
+<td style="text-align: right;">107</td>
+</tr>
+<tr>
+<td>Authentication / Authorization</td>
+<td style="text-align: right;">37</td>
+</tr>
+<tr>
+<td>Environment Compatibility</td>
+<td style="text-align: right;">30</td>
+</tr>
+<tr>
+<td>Third-Party Compatibility</td>
+<td style="text-align: right;">21</td>
+</tr>
+<tr>
+<td>Configuration</td>
+<td style="text-align: right;">13</td>
+</tr>
+<tr>
+<td>Boundary Testing</td>
+<td style="text-align: right;">13</td>
+</tr>
+<tr>
+<td>API / Integration</td>
+<td style="text-align: right;">12</td>
+</tr>
+<tr>
+<td>Session Recording</td>
+<td style="text-align: right;">12</td>
+</tr>
+<tr>
+<td>UI / Browser Compatibility</td>
+<td style="text-align: right;">11</td>
+</tr>
+<tr>
+<td>Negative Testing</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr>
+<td>Logging / Monitoring</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr>
+<td>Upgrade / Migration</td>
+<td style="text-align: right;">8</td>
+</tr>
+</tbody>
+</table>
+<h3 id="73-root-cause-jiras-own-taxonomy-81-populated">7.3 Root cause — Jira's own taxonomy, 81% populated</h3>
+<p>⛔ <strong>This report previously stated that Jira held no root-cause categorisation. That was wrong, and wrong in the same way §0.1 was.</strong> §13 read <em>"<code>Root Cause</code> … 0 / 376 … Jira holds no categorisation to cross-check it against"</em> — having measured <code>customfield_10113</code> (<em>Root Cause</em>, 0.2%) and <code>customfield_10199</code> (<em>Root cause</em>, 0.1%). Neither is the live field. <strong><code>customfield_10245</code> (<em>RCA</em>) is 81.1% populated</strong> — 1655 of 2040 tickets — with a structured taxonomy of 33 values in 14 families. It is the most populated analytical field in the project and it had never been used.</p>
+<p><strong>By family:</strong></p>
+<table>
+<thead>
+<tr>
+<th>RCA family</th>
+<th style="text-align: right;">Tickets</th>
+<th style="text-align: right;">Share of stated</th>
+<th>Reading</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Code</td>
+<td style="text-align: right;">450</td>
+<td style="text-align: right;">27.2%</td>
+<td>product code</td>
+</tr>
+<tr>
+<td>Environment</td>
+<td style="text-align: right;">373</td>
+<td style="text-align: right;">22.5%</td>
+<td>environment / deployment, not the product binary</td>
+</tr>
+<tr>
+<td>Others</td>
+<td style="text-align: right;">311</td>
+<td style="text-align: right;">18.8%</td>
+<td>closed without a product change</td>
+</tr>
+<tr>
+<td>Requests</td>
+<td style="text-align: right;">208</td>
+<td style="text-align: right;">12.6%</td>
+<td><strong>not a defect</strong> — enhancement or information request</td>
+</tr>
+<tr>
+<td>Analysis</td>
+<td style="text-align: right;">150</td>
+<td style="text-align: right;">9.1%</td>
+<td><strong>analysis / design / coverage failure</strong></td>
+</tr>
+<tr>
+<td>Documentation</td>
+<td style="text-align: right;">91</td>
+<td style="text-align: right;">5.5%</td>
+<td>documentation, not code</td>
+</tr>
+<tr>
+<td>Not a bug</td>
+<td style="text-align: right;">34</td>
+<td style="text-align: right;">2.1%</td>
+<td></td>
+</tr>
+<tr>
+<td>Missing Code / DB Scripts</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">1.3%</td>
+<td></td>
+</tr>
+<tr>
+<td>Insufficient Unit Test case</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0.3%</td>
+<td></td>
+</tr>
+<tr>
+<td>Deployment Issue</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0.2%</td>
+<td></td>
+</tr>
+<tr>
+<td>Miscommunication</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0.2%</td>
+<td></td>
+</tr>
+<tr>
+<td>Data Issue</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0.2%</td>
+<td></td>
+</tr>
+<tr>
+<td>Code not checked-in</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.1%</td>
+<td></td>
+</tr>
+<tr>
+<td>Insufficient Data</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.1%</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Every RCA value:</strong></p>
+<table>
+<thead>
+<tr>
+<th>RCA</th>
+<th style="text-align: right;">Tickets</th>
+<th style="text-align: center;">Class</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Code - Logic Issue</td>
+<td style="text-align: right;">303</td>
+<td style="text-align: center;">product-defect</td>
+</tr>
+<tr>
+<td>Others - Resolved Issue</td>
+<td style="text-align: right;">229</td>
+<td style="text-align: center;">product-defect</td>
+</tr>
+<tr>
+<td>Environment - Misconfiguration</td>
+<td style="text-align: right;">188</td>
+<td style="text-align: center;">product-defect</td>
+</tr>
+<tr>
+<td>Analysis - Inadequate Technical Design</td>
+<td style="text-align: right;">113</td>
+<td style="text-align: center;">testing-failure</td>
+</tr>
+<tr>
+<td>Requests - Enhancement</td>
+<td style="text-align: right;">104</td>
+<td style="text-align: center;">non-defect</td>
+</tr>
+<tr>
+<td>Others - Working as expected</td>
+<td style="text-align: right;">82</td>
+<td style="text-align: center;">non-defect</td>
+</tr>
+<tr>
+<td>Documentation - Administrator / User Guide</td>
+<td style="text-align: right;">73</td>
+<td style="text-align: center;">product-defect</td>
+</tr>
+<tr>
+<td>Environment - 3rd Party compatibility</td>
+<td style="text-align: right;">67</td>
+<td style="text-align: center;">product-defect</td>
+</tr>
+<tr>
+<td>Requests - APEM Tool</td>
+<td style="text-align: right;">64</td>
+<td style="text-align: center;">non-defect</td>
+</tr>
+<tr>
+<td>Environment - Non replicated</td>
+<td style="text-align: right;">52</td>
+<td style="text-align: center;">testing-failure</td>
+</tr>
+<tr>
+<td>Environment- Env unavailable</td>
+<td style="text-align: right;">48</td>
+<td style="text-align: center;">product-defect</td>
+</tr>
+<tr>
+<td>Code - Packaging Issue</td>
+<td style="text-align: right;">34</td>
+<td style="text-align: center;">product-defect</td>
+</tr>
+<tr>
+<td>Not a bug</td>
+<td style="text-align: right;">34</td>
+<td style="text-align: center;">non-defect</td>
+</tr>
+<tr>
+<td>Code - Incorrect Standards</td>
+<td style="text-align: right;">28</td>
+<td style="text-align: center;">product-defect</td>
+</tr>
+<tr>
+<td>Code - Performance Issue</td>
+<td style="text-align: right;">27</td>
+<td style="text-align: center;">product-defect</td>
+</tr>
+<tr>
+<td>Requests - Information Request</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: center;">non-defect</td>
+</tr>
+<tr>
+<td>Code - Security Issue</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: center;">product-defect</td>
+</tr>
+<tr>
+<td>Missing Code / DB Scripts</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: center;">product-defect</td>
+</tr>
+<tr>
+<td>Analysis - Incomplete Requirement</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: center;">testing-failure</td>
+</tr>
+<tr>
+<td>Code - Code Merge</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: center;">product-defect</td>
+</tr>
+<tr>
+<td>Analysis - Inadequate Test Coverage</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: center;">testing-failure</td>
+</tr>
+<tr>
+<td>Documentation - Deployment Guide Inadequate</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: center;">product-defect</td>
+</tr>
+<tr>
+<td>Code - UI/UX Issue</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: center;">product-defect</td>
+</tr>
+<tr>
+<td>Requests - Script Request</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: center;">non-defect</td>
+</tr>
+<tr>
+<td>Environment - Network</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: center;">product-defect</td>
+</tr>
+<tr>
+<td>Insufficient Unit Test case</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: center;">testing-failure</td>
+</tr>
+<tr>
+<td>Environment - Resource Unavailability</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: center;">product-defect</td>
+</tr>
+<tr>
+<td>Deployment Issue</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: center;">product-defect</td>
+</tr>
+<tr>
+<td>Miscommunication</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: center;">non-defect</td>
+</tr>
+<tr>
+<td>Data Issue</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: center;">product-defect</td>
+</tr>
+<tr>
+<td>Environment - Hardware failure</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: center;">product-defect</td>
+</tr>
+<tr>
+<td>Code not checked-in</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: center;">product-defect</td>
+</tr>
+<tr>
+<td>Insufficient Data</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: center;">product-defect</td>
+</tr>
+</tbody>
+</table>
+<p>Two consequences worth acting on:</p>
+<ul>
+<li>⛔ <strong>327 tickets are classified by the product team as <em>not a product defect</em></strong> — <code>Requests - Enhancement</code>, <code>Requests - Information Request</code>, <code>Requests - APEM Tool</code>, <code>Requests - Script Request</code>, <code>Others - Working as expected</code>, <code>Not a bug</code>, <code>Miscommunication</code>. A testing weak spot attributed to one of those is a <strong>false finding</strong>. ⚠ This is <strong>reported, not silently applied</strong>: the defect population stays keyed on issue type (<code>D38</code>), because re-cutting a denominator on a field that is 19% empty would be a worse error than the one it corrects. The workbook flags every such ticket so a reader can exclude them deliberately.</li>
+<li>✅ <strong>207 tickets name a testing or analysis failure as the root cause</strong> — <code>Analysis - Inadequate Test Coverage</code>, <code>Insufficient Unit Test case</code>, <code>Analysis - Incomplete Requirement</code>, <code>Analysis - Inadequate Technical Design</code>, <code>Environment - Non replicated</code>. <strong>This is the strongest evidence in the analysis for a testing gap</strong>, because the product team recorded the cause — this report did not infer it.</li>
+</ul>
+<p><strong>Why fixes failed</strong> — <code>Reopen RCA</code>, populated on 149 tickets:</p>
+<table>
+<thead>
+<tr>
+<th>Reopen RCA</th>
+<th style="text-align: right;">Tickets</th>
+<th>Reading</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Code Fix</td>
+<td style="text-align: right;">48</td>
+<td>the fix itself was wrong</td>
+</tr>
+<tr>
+<td>Dependency failure</td>
+<td style="text-align: right;">29</td>
+<td>an upstream component broke it</td>
+</tr>
+<tr>
+<td>Audit</td>
+<td style="text-align: right;">25</td>
+<td></td>
+</tr>
+<tr>
+<td>Hosting Issue</td>
+<td style="text-align: right;">22</td>
+<td>environment, not the fix</td>
+</tr>
+<tr>
+<td>Tester Understanding</td>
+<td style="text-align: right;">17</td>
+<td><strong>a QA misunderstanding, not a product failure</strong></td>
+</tr>
+<tr>
+<td>Data Issue</td>
+<td style="text-align: right;">8</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><code>ReOpen Date</code> is set on <strong>82</strong> tickets, and <code>ReOpen Time Spent</code> totals <strong>0 hours</strong> of recorded rework across this population.</p>
+<p>⚠ <strong>507 tickets carry an RCA while the derived category axis could not name them.</strong> Those are the clearest targets for improving the derived taxonomy, because an authored answer already exists to check against.</p>
+<h3 id="74-regression-facts-jira-cannot-supply">7.4 Regression facts Jira cannot supply</h3>
+<p>⛔ <strong>Owner requirement: where a regression field or fact is not available in Jira, say so explicitly rather than leaving it ambiguous or inferring it.</strong> The sentinel used throughout this report and the workbook is <strong><code>Info not available in JIRA</code></strong>. It is never replaced by a blank cell, a dash, or a derived guess.</p>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Why it cannot be answered</th>
+<th>Consequence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Defect injection phase</td>
+<td><code>Phase</code> (<code>cf 10164</code>) exists but is 0% populated</td>
+<td>Cannot say whether a defect was introduced in requirements, design, code or test. Deriving it from the RCA family would be an inference presented as a fact — <code>Code - *</code> is where the defect was <em>found in code</em>, not necessarily where it was <em>introduced</em></td>
+</tr>
+<tr>
+<td>Reopen count per ticket</td>
+<td><code>ReopenCount</code> (<code>cf 11018</code>) exists but is 0%</td>
+<td>A reopen is visible as a boolean (<code>Is reopen from customer</code>, <code>ReOpen Date</code>), not as a count. 'Reopened three times' is not answerable</td>
+</tr>
+<tr>
+<td>Regression test executed / suite name</td>
+<td>no such field exists in PAMIT</td>
+<td>Cannot link a defect to the test that should have caught it, so 'was this covered?' is answered by the derived testing-area axis, not by Jira</td>
+</tr>
+<tr>
+<td>Requirement or user-story link</td>
+<td>no requirement link field is populated</td>
+<td>Scenario gaps cannot cite a requirement, which is why the gap provenance table marks requirements as NOT USED</td>
+</tr>
+<tr>
+<td>Detected-by / found-in-testing stage</td>
+<td>no such field exists in PAMIT</td>
+<td>Every ticket in this population is client-raised by definition, so internal-vs-external detection ratio is not measurable here</td>
+</tr>
+</tbody>
+</table>
+<p>Fields that <strong>exist in the Jira schema but are never populated</strong>, so any value derived from them would be invented:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>ID</th>
+<th style="text-align: right;">Populated</th>
+<th>Verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Root Cause</td>
+<td><code>customfield_10113</code></td>
+<td style="text-align: right;">5 (0.2%)</td>
+<td>⛔ Effectively empty — and this is the field whose emptiness was previously read as 'Jira holds no root-cause categorisation'. Use RCA (10245)</td>
+</tr>
+<tr>
+<td>Root cause</td>
+<td><code>customfield_10199</code></td>
+<td style="text-align: right;">3 (0.1%)</td>
+<td>⛔ Effectively empty. A second same-named decoy alongside 10113</td>
+</tr>
+<tr>
+<td>Hotfix Release Date</td>
+<td><code>customfield_10147</code></td>
+<td style="text-align: right;">1 (0.0%)</td>
+<td>⛔ One value, dated 2022. Unusable</td>
+</tr>
+<tr>
+<td>ReopenCount</td>
+<td><code>customfield_11018</code></td>
+<td style="text-align: right;">0 (0.0%)</td>
+<td>⛔ EXISTS BUT IS NEVER POPULATED. A reopen count must be derived from ReOpen Date / Reopen RCA presence instead</td>
+</tr>
+<tr>
+<td>Phase</td>
+<td><code>customfield_10164</code></td>
+<td style="text-align: right;">0 (0.0%)</td>
+<td>⛔ EXISTS BUT IS NEVER POPULATED. Defect-injection phase (requirement / design / code / test) is therefore NOT ANSWERABLE from Jira</td>
+</tr>
+<tr>
+<td>Module</td>
+<td><code>customfield_10065</code></td>
+<td style="text-align: right;">0 (0.0%)</td>
+<td>⛔ Never populated</td>
+</tr>
+<tr>
+<td>Category</td>
+<td><code>customfield_10051</code></td>
+<td style="text-align: right;">0 (0.0%)</td>
+<td>⛔ Never populated</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Every regression-shaped field measured, in population order:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>ID</th>
+<th style="text-align: right;">Populated</th>
+<th style="text-align: center;">Available</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RCA</td>
+<td><code>customfield_10245</code></td>
+<td style="text-align: right;">1622 (80.7%)</td>
+<td style="text-align: center;">✅</td>
+<td>Structured root-cause taxonomy — 33 values in 15 families. THE most populated analytical field in the project and previously unused</td>
+</tr>
+<tr>
+<td>RCA Details (Impact Analysis)</td>
+<td><code>customfield_10567</code></td>
+<td style="text-align: right;">1591 (79.2%)</td>
+<td style="text-align: center;">✅</td>
+<td>Free-text impact analysis behind the RCA value</td>
+</tr>
+<tr>
+<td>Fixed Date</td>
+<td><code>customfield_10249</code></td>
+<td style="text-align: right;">1026 (51.0%)</td>
+<td style="text-align: center;">✅</td>
+<td>When the fix was recorded — the second half of a fix-latency measure</td>
+</tr>
+<tr>
+<td>Is reopen from customer</td>
+<td><code>customfield_10780</code></td>
+<td style="text-align: right;">512 (25.5%)</td>
+<td style="text-align: center;">✅</td>
+<td>A Yes is a FAILED FIX, not a new defect</td>
+</tr>
+<tr>
+<td>Functionality working in previous version</td>
+<td><code>customfield_11253</code></td>
+<td style="text-align: right;">499 (24.8%)</td>
+<td style="text-align: center;">✅</td>
+<td>The regression gate</td>
+</tr>
+<tr>
+<td>Previous working version</td>
+<td><code>customfield_11254</code></td>
+<td style="text-align: right;">491 (24.4%)</td>
+<td style="text-align: center;">✅</td>
+<td>The last working build. 130 of these carry the literal string 'None', leaving 361 that name a real version</td>
+</tr>
+<tr>
+<td>Reopen RCA details</td>
+<td><code>customfield_10600</code></td>
+<td style="text-align: right;">152 (7.6%)</td>
+<td style="text-align: center;">✅</td>
+<td>Free text on why a reopen happened</td>
+</tr>
+<tr>
+<td>Reopen RCA</td>
+<td><code>customfield_10741</code></td>
+<td style="text-align: right;">147 (7.3%)</td>
+<td style="text-align: center;">✅</td>
+<td>Why the fix failed — Code Fix (48), Dependency failure (29), Audit (23), Hosting Issue (22), Tester Understanding (17), Data Issue (8)</td>
+</tr>
+<tr>
+<td>Reopen Original Ticket ID</td>
+<td><code>customfield_10781</code></td>
+<td style="text-align: right;">142 (7.1%)</td>
+<td style="text-align: center;">✅</td>
+<td>The original ticket a reopen descends from. ⚠️ 64 of 142 values are junk ('No', 'NONE', 'na') — see FIELD_SENTINELS</td>
+</tr>
+<tr>
+<td>ReOpen Date</td>
+<td><code>customfield_10236</code></td>
+<td style="text-align: right;">82 (4.1%)</td>
+<td style="text-align: center;">✅</td>
+<td>When the reopen happened</td>
+</tr>
+<tr>
+<td>ReOpen Time Spent</td>
+<td><code>customfield_10235</code></td>
+<td style="text-align: right;">72 (3.6%)</td>
+<td style="text-align: center;">✅</td>
+<td>Hours spent on the reopen — rework cost</td>
+</tr>
+<tr>
+<td>RCA Category / Description updated?</td>
+<td><code>customfield_11353</code></td>
+<td style="text-align: right;">25 (1.2%)</td>
+<td style="text-align: center;">✅</td>
+<td>RCA review hygiene flag. Too sparse for a rate</td>
+</tr>
+<tr>
+<td>RCA Review Remarks</td>
+<td><code>customfield_11355</code></td>
+<td style="text-align: right;">24 (1.2%)</td>
+<td style="text-align: center;">✅</td>
+<td>Reviewer commentary on the RCA. Too sparse for a rate</td>
+</tr>
+<tr>
+<td>Affected QA Build</td>
+<td><code>customfield_10136</code></td>
+<td style="text-align: right;">9 (0.4%)</td>
+<td style="text-align: center;">✅</td>
+<td>Near-empty; all nine read 'Build 35.8.29'</td>
+</tr>
+<tr>
+<td>QA Build/Drop</td>
+<td><code>customfield_10150</code></td>
+<td style="text-align: right;">9 (0.4%)</td>
+<td style="text-align: center;">✅</td>
+<td>Near-empty</td>
+</tr>
+<tr>
+<td>Root Cause</td>
+<td><code>customfield_10113</code></td>
+<td style="text-align: right;">5 (0.2%)</td>
+<td style="text-align: center;">⛔</td>
+<td>⛔ Effectively empty — and this is the field whose emptiness was previously read as 'Jira holds no root-cause categorisation'. Use RCA (10245)</td>
+</tr>
+<tr>
+<td>Root cause</td>
+<td><code>customfield_10199</code></td>
+<td style="text-align: right;">3 (0.1%)</td>
+<td style="text-align: center;">⛔</td>
+<td>⛔ Effectively empty. A second same-named decoy alongside 10113</td>
+</tr>
+<tr>
+<td>Hotfix Release Date</td>
+<td><code>customfield_10147</code></td>
+<td style="text-align: right;">1 (0.0%)</td>
+<td style="text-align: center;">⛔</td>
+<td>⛔ One value, dated 2022. Unusable</td>
+</tr>
+<tr>
+<td>ReopenCount</td>
+<td><code>customfield_11018</code></td>
+<td style="text-align: right;">0 (0.0%)</td>
+<td style="text-align: center;">⛔</td>
+<td>⛔ EXISTS BUT IS NEVER POPULATED. A reopen count must be derived from ReOpen Date / Reopen RCA presence instead</td>
+</tr>
+<tr>
+<td>Phase</td>
+<td><code>customfield_10164</code></td>
+<td style="text-align: right;">0 (0.0%)</td>
+<td style="text-align: center;">⛔</td>
+<td>⛔ EXISTS BUT IS NEVER POPULATED. Defect-injection phase (requirement / design / code / test) is therefore NOT ANSWERABLE from Jira</td>
+</tr>
+<tr>
+<td>Module</td>
+<td><code>customfield_10065</code></td>
+<td style="text-align: right;">0 (0.0%)</td>
+<td style="text-align: center;">⛔</td>
+<td>⛔ Never populated</td>
+</tr>
+<tr>
+<td>Category</td>
+<td><code>customfield_10051</code></td>
+<td style="text-align: right;">0 (0.0%)</td>
+<td style="text-align: center;">⛔</td>
+<td>⛔ Never populated</td>
+</tr>
+</tbody>
+</table>
+<p>⚠ <strong>These fields do not change any count in §§2–12.</strong> They classify tickets already in the population; they never add or remove one. Nothing in the build-wise, module, category or weak-spot analysis needed restating because of them — the restatement in this revision comes entirely from the <code>fixVersion</code> → <code>Affected Milestone</code> axis change (§0.1).</p>
+<h2 id="8-client-concentration">8. Client concentration</h2>
+<table>
+<thead>
+<tr>
+<th>Client</th>
+<th style="text-align: right;">Tickets</th>
+<th style="text-align: right;">% of client base</th>
+<th style="text-align: right;">of which defects</th>
+<th style="text-align: right;">Modules touched</th>
+<th>Dominant category</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ICICI Bank</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">26.0%</td>
+<td style="text-align: right;">36</td>
+<td style="text-align: right;">14</td>
+<td>Password &amp; Credential Lifecycl</td>
+</tr>
+<tr>
+<td>Kotak Bank</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">11.5%</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">7</td>
+<td>Session Recording &amp; Audit Evid</td>
+</tr>
+<tr>
+<td>ITD-MC</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">7.3%</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">7</td>
+<td>Authentication &amp; Identity Inte</td>
+</tr>
+<tr>
+<td>Bank Muscat</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">5.7%</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">9</td>
+<td>Password &amp; Credential Lifecycl</td>
+</tr>
+<tr>
+<td>Canara Bank</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">3.1%</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">5</td>
+<td>Third-Party Tool &amp; Platform Co</td>
+</tr>
+<tr>
+<td>TCS Cyber Security</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">2.6%</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">3</td>
+<td>Access Control, Workflow &amp; App</td>
+</tr>
+<tr>
+<td>MashreqBank</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">2.1%</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">4</td>
+<td>Password &amp; Credential Lifecycl</td>
+</tr>
+<tr>
+<td>Renew</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1.6%</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td>Reporting &amp; Scheduling</td>
+</tr>
+<tr>
+<td>IIFL</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1.6%</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2</td>
+<td>Third-Party Tool &amp; Platform Co</td>
+</tr>
+<tr>
+<td>Edelweiss</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1.0%</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td>Access Control, Workflow &amp; App</td>
+</tr>
+<tr>
+<td>Bangladesh Election Commission</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1.0%</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td>Connector Development &amp; New In</td>
+</tr>
+<tr>
+<td>Ujjivan Financial Services</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1.0%</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td>Session Lifecycle &amp; Connectivi</td>
+</tr>
+<tr>
+<td>HDB Financial Services Limited</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1.0%</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td>Access Control, Workflow &amp; App</td>
+</tr>
+<tr>
+<td>IDFC</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1.0%</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+<td>Access Control, Workflow &amp; App</td>
+</tr>
+<tr>
+<td>Banque Libano-Française(Lebanon)</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1.0%</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td>Service &amp; Asset Management (CR</td>
+</tr>
+</tbody>
+</table>
+<h2 id="9-last-30-days-the-current-client-picture">9. Last 30 days — the current client picture</h2>
+<p><em>Basis: 409 client tickets created since 2026-08-04, any fix version, any status.</em></p>
+<table>
+<thead>
+<tr>
+<th>Issue / pattern</th>
+<th style="text-align: right;">Count</th>
+<th>Modules</th>
+<th>First reported</th>
+<th>Latest reported</th>
+<th>Current status</th>
+<th>Version state</th>
+<th>Commonest state</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Third-Party Tool &amp; Platform Compatibility</td>
+<td style="text-align: right;">48</td>
+<td>ACMO, AGW, Connector</td>
+<td>2026-08-05</td>
+<td>2026-08-31</td>
+<td>31 open / 48</td>
+<td>40 unversioned</td>
+<td>Closed</td>
+</tr>
+<tr>
+<td>Password &amp; Credential Lifecycle</td>
+<td style="text-align: right;">29</td>
+<td>ACMO, All Modules, Arcon Service / Agent</td>
+<td>2026-08-05</td>
+<td>2026-09-02</td>
+<td>23 open / 29</td>
+<td>16 unversioned</td>
+<td>Awaiting Response</td>
+</tr>
+<tr>
+<td>Session Recording &amp; Audit Evidence</td>
+<td style="text-align: right;">29</td>
+<td>ACMO, AGW, All Modules</td>
+<td>2026-08-05</td>
+<td>2026-09-02</td>
+<td>24 open / 29</td>
+<td>22 unversioned</td>
+<td>Awaiting Response</td>
+</tr>
+<tr>
+<td>Service &amp; Asset Management (CRUD/Bulk)</td>
+<td style="text-align: right;">24</td>
+<td>ACMO, AGW, Connector</td>
+<td>2026-08-05</td>
+<td>2026-09-02</td>
+<td>12 open / 24</td>
+<td>14 unversioned</td>
+<td>Closed</td>
+</tr>
+<tr>
+<td>Reporting &amp; Scheduling</td>
+<td style="text-align: right;">22</td>
+<td>ACMO, AGW, Arcon Service / Agent</td>
+<td>2026-08-05</td>
+<td>2026-09-03</td>
+<td>18 open / 22</td>
+<td>19 unversioned</td>
+<td>Awaiting Response</td>
+</tr>
+<tr>
+<td>Uncategorised</td>
+<td style="text-align: right;">20</td>
+<td>ACMO, AGW, Arcon Service / Agent</td>
+<td>2026-08-06</td>
+<td>2026-09-02</td>
+<td>14 open / 20</td>
+<td>18 unversioned</td>
+<td>Awaiting Response</td>
+</tr>
+<tr>
+<td>Access Control, Workflow &amp; Approval</td>
+<td style="text-align: right;">20</td>
+<td>ACMO, Connector, Mobile Application</td>
+<td>2026-08-07</td>
+<td>2026-09-01</td>
+<td>15 open / 20</td>
+<td>14 unversioned</td>
+<td>Development Analys</td>
+</tr>
+<tr>
+<td>Vulnerability Assessment (VA / VAPT)</td>
+<td style="text-align: right;">19</td>
+<td>ACMO, All Modules, VA</td>
+<td>2026-08-05</td>
+<td>2026-09-01</td>
+<td>13 open / 19</td>
+<td>19 unversioned</td>
+<td>Open</td>
+</tr>
+<tr>
+<td>Session Lifecycle &amp; Connectivity</td>
+<td style="text-align: right;">16</td>
+<td>ACMO, AGW, All Modules</td>
+<td>2026-08-04</td>
+<td>2026-09-02</td>
+<td>10 open / 16</td>
+<td>11 unversioned</td>
+<td>Closed</td>
+</tr>
+<tr>
+<td>Input Validation &amp; Error Handling</td>
+<td style="text-align: right;">16</td>
+<td>ACMO, Access Control, Arcon Service / Agent</td>
+<td>2026-08-04</td>
+<td>2026-09-02</td>
+<td>12 open / 16</td>
+<td>12 unversioned</td>
+<td>Development Analys</td>
+</tr>
+<tr>
+<td>Authentication &amp; Identity Integration</td>
+<td style="text-align: right;">16</td>
+<td>ACMO, AGW, Application &amp; Audit Logs</td>
+<td>2026-08-07</td>
+<td>2026-09-03</td>
+<td>9 open / 16</td>
+<td>14 unversioned</td>
+<td>Closed</td>
+</tr>
+<tr>
+<td>Performance &amp; Responsiveness</td>
+<td style="text-align: right;">11</td>
+<td>ACMO, All Modules, Connector</td>
+<td>2026-08-05</td>
+<td>2026-09-02</td>
+<td>9 open / 11</td>
+<td>11 unversioned</td>
+<td>Awaiting Response</td>
+</tr>
+<tr>
+<td>Platform Services, Agent &amp; Gateway</td>
+<td style="text-align: right;">10</td>
+<td>AGW, Connector, UAG</td>
+<td>2026-08-05</td>
+<td>2026-08-31</td>
+<td>8 open / 10</td>
+<td>9 unversioned</td>
+<td>Awaiting Response</td>
+</tr>
+<tr>
+<td>Security Hardening &amp; Exposure</td>
+<td style="text-align: right;">6</td>
+<td>All Modules, Arcon Service / Agent, Research</td>
+<td>2026-08-05</td>
+<td>2026-09-02</td>
+<td>4 open / 6</td>
+<td>6 unversioned</td>
+<td>Closed</td>
+</tr>
+<tr>
+<td>UI Field &amp; Control Defects</td>
+<td style="text-align: right;">3</td>
+<td>Connector, Server Manager, UI</td>
+<td>2026-08-05</td>
+<td>2026-09-02</td>
+<td>3 open / 3</td>
+<td>2 unversioned</td>
+<td>Development Analys</td>
+</tr>
+<tr>
+<td>API &amp; Integration</td>
+<td style="text-align: right;">3</td>
+<td>Arcon Service / Agent, PAM API, Password</td>
+<td>2026-08-12</td>
+<td>2026-08-28</td>
+<td>2 open / 3</td>
+<td>2 unversioned</td>
+<td>Awaiting Response</td>
+</tr>
+<tr>
+<td>LOB / Organisation Mapping</td>
+<td style="text-align: right;">2</td>
+<td>Server Manager</td>
+<td>2026-08-06</td>
+<td>2026-08-12</td>
+<td>0 open / 2</td>
+<td>2 unversioned</td>
+<td>Closed</td>
+</tr>
+<tr>
+<td>Log Viewing &amp; Audit Reports</td>
+<td style="text-align: right;">1</td>
+<td>Connector</td>
+<td>2026-08-10</td>
+<td>2026-08-10</td>
+<td>0 open / 1</td>
+<td>1 unversioned</td>
+<td>Closed</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Module split (30-day defects):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Module</th>
+<th style="text-align: right;">Tickets</th>
+<th style="text-align: right;">Percentage</th>
+<th>Major pattern</th>
+<th>Repeat frequency</th>
+<th style="text-align: right;">Clients</th>
+<th style="text-align: right;">SS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Connector</code></td>
+<td style="text-align: right;">78</td>
+<td style="text-align: right;">26.4%</td>
+<td>Third-Party Tool &amp; Platform Compat</td>
+<td>—</td>
+<td style="text-align: right;">53</td>
+<td style="text-align: right;">19</td>
+</tr>
+<tr>
+<td><code>Server Manager</code></td>
+<td style="text-align: right;">53</td>
+<td style="text-align: right;">18.0%</td>
+<td>Service &amp; Asset Management (CRUD/B</td>
+<td>—</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">22</td>
+</tr>
+<tr>
+<td><code>ACMO</code></td>
+<td style="text-align: right;">41</td>
+<td style="text-align: right;">13.9%</td>
+<td>Access Control, Workflow &amp; Approva</td>
+<td>—</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">17</td>
+</tr>
+<tr>
+<td><code>Password Vault</code></td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">8.5%</td>
+<td>Password &amp; Credential Lifecycle</td>
+<td>—</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr>
+<td><code>VA</code></td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">5.8%</td>
+<td>Vulnerability Assessment (VA / VAP</td>
+<td>—</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr>
+<td><code>All Modules</code></td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">5.1%</td>
+<td>Vulnerability Assessment (VA / VAP</td>
+<td>—</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr>
+<td><code>AGW</code></td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">4.7%</td>
+<td>Platform Services, Agent &amp; Gateway</td>
+<td>—</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr>
+<td><code>Arcon Service / Agent</code></td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">4.1%</td>
+<td>Session Recording &amp; Audit Evidence</td>
+<td>—</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr>
+<td><code>Report / Dashboard</code></td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">4.1%</td>
+<td>Reporting &amp; Scheduling</td>
+<td>—</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr>
+<td><code>Settings</code></td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">3.7%</td>
+<td>Access Control, Workflow &amp; Approva</td>
+<td>—</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">7</td>
+</tr>
+</tbody>
+</table>
+<h2 id="10-query-c-167-open-client-defects-with-no-fix-version">10. Query C — 167 open client defects with no fix version</h2>
+<p><em>These are structurally invisible to any release-scoped query: nothing has scheduled them into a build. Own denominator throughout.</em></p>
+<table>
+<thead>
+<tr>
+<th>Cut</th>
+<th>Breakdown</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>By module</td>
+<td><code>Connector</code> 40 · <code>ACMO</code> 27 · <code>Server Manager</code> 25 · <code>VA</code> 13 · <code>Report / Dashboard</code> 11 · <code>All Modules</code> 10 · <code>Password Vault</code> 10 · <code>AGW</code> 9 · <code>Arcon Service / Agent</code> 8 · <code>Workflow</code> 6</td>
+</tr>
+<tr>
+<td>By category</td>
+<td>Third-Party Tool &amp; Platform Compatibility 27 · Session Recording &amp; Audit Evidence 18 · Reporting &amp; Scheduling 17 · Password &amp; Credential Lifecycle 14 · Vulnerability Assessment (VA / VAPT) 13 · Uncategorised 12 · Access Control, Workflow &amp; Approval 12 · Input Validation &amp; Error Handling 9</td>
+</tr>
+<tr>
+<td>By priority</td>
+<td>High 89 · ShowStopper 66 · Medium 6 · Low 6</td>
+</tr>
+<tr>
+<td>By status</td>
+<td>Awaiting Response 85 · Development Analysis 31 · Open 24 · Awaiting Session 13 · Under Observation (No Code Change) 9 · Patch Shared 3 · Business Analysis 2</td>
+</tr>
+<tr>
+<td>By client</td>
+<td>ICICI Bank 7 · Indusind Bank Ltd 6 · ITD-MC 6 · Union Bank Of India 5 · Bharti Airtel 5 · Vodafone 4 · Kotak Bank 4 · Moro Hub 4</td>
+</tr>
+<tr>
+<td>Created span</td>
+<td>2026-08-04 → 2026-09-03</td>
+</tr>
+</tbody>
+</table>
+<h2 id="11-testing-weak-spots-every-area">11. Testing weak spots — every area</h2>
+<table>
+<thead>
+<tr>
+<th>Testing area</th>
+<th style="text-align: right;">Tickets</th>
+<th style="text-align: right;">Share</th>
+<th style="text-align: center;">Focus/30d/QC</th>
+<th style="text-align: right;">Clients</th>
+<th style="text-align: right;">Modules</th>
+<th style="text-align: right;">ShowStopper</th>
+<th style="text-align: center;">Shape</th>
+<th>Gap identified</th>
+<th style="text-align: center;">Priority</th>
+<th>Confidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Authentication / Authorization</td>
+<td style="text-align: right;">103</td>
+<td style="text-align: right;">28.4%</td>
+<td style="text-align: center;">15/36/52</td>
+<td style="text-align: right;">60</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">31 (30%)</td>
+<td style="text-align: center;">broad</td>
+<td>Federated identity and privilege boundaries are not in the regression suite</td>
+<td style="text-align: center;"><strong>High</strong></td>
+<td>measured</td>
+</tr>
+<tr>
+<td>Environment Compatibility</td>
+<td style="text-align: right;">101</td>
+<td style="text-align: right;">27.8%</td>
+<td style="text-align: center;">13/33/55</td>
+<td style="text-align: right;">63</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">36 (36%)</td>
+<td style="text-align: center;">broad</td>
+<td>One reference environment; client OS/DB/deployment variants untested</td>
+<td style="text-align: center;"><strong>High</strong></td>
+<td>measured</td>
+</tr>
+<tr>
+<td>Configuration</td>
+<td style="text-align: right;">94</td>
+<td style="text-align: right;">25.9%</td>
+<td style="text-align: center;">15/32/47</td>
+<td style="text-align: right;">58</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">36 (38%)</td>
+<td style="text-align: center;">broad</td>
+<td>Configuration screens tested on defaults only</td>
+<td style="text-align: center;"><strong>High</strong></td>
+<td>measured</td>
+</tr>
+<tr>
+<td>Logging / Monitoring</td>
+<td style="text-align: right;">52</td>
+<td style="text-align: right;">14.3%</td>
+<td style="text-align: center;">12/16/24</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">18 (35%)</td>
+<td style="text-align: center;">narrow</td>
+<td>Log content is not asserted, only that the action completed</td>
+<td style="text-align: center;">Medium</td>
+<td>measured</td>
+</tr>
+<tr>
+<td>Session Recording</td>
+<td style="text-align: right;">46</td>
+<td style="text-align: right;">12.7%</td>
+<td style="text-align: center;">11/14/21</td>
+<td style="text-align: right;">33</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">15 (33%)</td>
+<td style="text-align: center;">narrow</td>
+<td>Recording asserted as session-opened, not as evidence-correct-and-retrievable</td>
+<td style="text-align: center;">Medium</td>
+<td>measured</td>
+</tr>
+<tr>
+<td>UI / Browser Compatibility</td>
+<td style="text-align: right;">42</td>
+<td style="text-align: right;">11.6%</td>
+<td style="text-align: center;">6/13/23</td>
+<td style="text-align: right;">28</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">19 (45%)</td>
+<td style="text-align: center;">acute</td>
+<td>Single-browser UI coverage</td>
+<td style="text-align: center;"><strong>High</strong></td>
+<td>measured</td>
+</tr>
+<tr>
+<td>Boundary Testing</td>
+<td style="text-align: right;">41</td>
+<td style="text-align: right;">11.3%</td>
+<td style="text-align: center;">9/15/17</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">17 (41%)</td>
+<td style="text-align: center;">narrow</td>
+<td>Field limits and bulk volumes are not exercised</td>
+<td style="text-align: center;">Medium</td>
+<td>measured</td>
+</tr>
+<tr>
+<td>Third-Party Compatibility</td>
+<td style="text-align: right;">41</td>
+<td style="text-align: right;">11.3%</td>
+<td style="text-align: center;">10/15/16</td>
+<td style="text-align: right;">28</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">17 (41%)</td>
+<td style="text-align: center;">narrow</td>
+<td>No client-tool/OS version matrix in the regression suite</td>
+<td style="text-align: center;">Medium</td>
+<td>measured</td>
+</tr>
+<tr>
+<td>Upgrade / Migration</td>
+<td style="text-align: right;">34</td>
+<td style="text-align: right;">9.4%</td>
+<td style="text-align: center;">3/16/15</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">15 (44%)</td>
+<td style="text-align: center;">narrow</td>
+<td>No post-upgrade regression pass on an upgraded instance</td>
+<td style="text-align: center;">Medium</td>
+<td>measured</td>
+</tr>
+<tr>
+<td>API / Integration</td>
+<td style="text-align: right;">28</td>
+<td style="text-align: right;">7.7%</td>
+<td style="text-align: center;">6/8/14</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">7 (25%)</td>
+<td style="text-align: center;">narrow</td>
+<td>API assertions check transport, not application semantics</td>
+<td style="text-align: center;">Medium</td>
+<td>measured</td>
+</tr>
+<tr>
+<td>Negative Testing</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">7.2%</td>
+<td style="text-align: center;">5/9/12</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">9 (35%)</td>
+<td style="text-align: center;">narrow</td>
+<td>Invalid and unexpected input is under-tested; raw exceptions reach the user</td>
+<td style="text-align: center;">Medium</td>
+<td>measured</td>
+</tr>
+<tr>
+<td>Workflow / Approval</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">6.6%</td>
+<td style="text-align: center;">5/6/13</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">11 (46%)</td>
+<td style="text-align: center;">acute</td>
+<td>Approval paths tested on the happy path only</td>
+<td style="text-align: center;"><strong>High</strong></td>
+<td>measured</td>
+</tr>
+<tr>
+<td>Performance</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">6.1%</td>
+<td style="text-align: center;">3/6/13</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">13 (59%)</td>
+<td style="text-align: center;">acute</td>
+<td>No load or endurance testing on the affected journeys</td>
+<td style="text-align: center;"><strong>High</strong></td>
+<td>measured</td>
+</tr>
+<tr>
+<td>Security</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">5.8%</td>
+<td style="text-align: center;">5/5/11</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">6 (29%)</td>
+<td style="text-align: center;">narrow</td>
+<td>Security findings arrive from client audits rather than internal scans</td>
+<td style="text-align: center;">Low</td>
+<td>measured</td>
+</tr>
+<tr>
+<td>Data Integrity / Consistency</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">4.4%</td>
+<td style="text-align: center;">6/7/3</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">5 (31%)</td>
+<td style="text-align: center;">narrow</td>
+<td>Reads asserted for success, not for agreement with the source of truth</td>
+<td style="text-align: center;">Low</td>
+<td>measured</td>
+</tr>
+</tbody>
+</table>
+<p><em>Share is of the 363 distinct tickets across all three pools. Areas are multi-label, so shares sum past 100% — a ticket that is both a boundary and a compatibility failure is counted in both, because both kinds of testing would have had to catch it.</em></p>
+<h2 id="12-test-scenario-gaps">12. Test scenario gaps</h2>
+<table>
+<thead>
+<tr>
+<th>Observed client issue</th>
+<th>Testing area</th>
+<th>Evidence</th>
+<th>Recommended scenario</th>
+<th style="text-align: center;">Priority</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Federated identity and privilege boundaries are not</td>
+<td>Authentication / Authorization</td>
+<td><code>PAMIT-26092</code> <code>PAMIT-39696</code> <code>PAMIT-39917</code></td>
+<td>SAML/Azure AD login, JIT provisioning, AD-bridging toggle, and a negative privilege test per role</td>
+<td style="text-align: center;"><strong>High</strong></td>
+</tr>
+<tr>
+<td>One reference environment; client OS/DB/deployment v</td>
+<td>Environment Compatibility</td>
+<td><code>PAMIT-38793</code> <code>PAMIT-39696</code> <code>PAMIT-39917</code></td>
+<td>Matrix the supported OS and deployment shapes for the affected journeys</td>
+<td style="text-align: center;"><strong>High</strong></td>
+</tr>
+<tr>
+<td>Configuration screens tested on defaults only</td>
+<td>Configuration</td>
+<td><code>PAMIT-39276</code> <code>PAMIT-39694</code> <code>PAMIT-39984</code></td>
+<td>Save and reload each configuration page, including duplicate-name and already-exists paths</td>
+<td style="text-align: center;"><strong>High</strong></td>
+</tr>
+<tr>
+<td>Log content is not asserted, only that the action co</td>
+<td>Logging / Monitoring</td>
+<td><code>PAMIT-37067</code> <code>PAMIT-39276</code> <code>PAMIT-39984</code></td>
+<td>Assert log presence, correctness and SIEM forwarding for each audited action</td>
+<td style="text-align: center;">Medium</td>
+</tr>
+<tr>
+<td>Recording asserted as session-opened, not as evidenc</td>
+<td>Session Recording</td>
+<td><code>PAMIT-41055</code> <code>PAMIT-41273</code> <code>PAMIT-41274</code></td>
+<td>Per connector type: assert the artefact exists, plays, maps to the correct session, and displays the banner</td>
+<td style="text-align: center;">Medium</td>
+</tr>
+<tr>
+<td>Single-browser UI coverage</td>
+<td>UI / Browser Compatibility</td>
+<td><code>PAMIT-41958</code> <code>PAMIT-41990</code> <code>PAMIT-42168</code></td>
+<td>Run the core journeys across the supported browser set and assert rendering, not just navigation</td>
+<td style="text-align: center;"><strong>High</strong></td>
+</tr>
+<tr>
+<td>Field limits and bulk volumes are not exercised</td>
+<td>Boundary Testing</td>
+<td><code>PAMIT-38793</code> <code>PAMIT-40505</code> <code>PAMIT-41389</code></td>
+<td>Oversized parameter values, bulk import/update at client volume, and min/max boundaries per field</td>
+<td style="text-align: center;">Medium</td>
+</tr>
+<tr>
+<td>No client-tool/OS version matrix in the regression s</td>
+<td>Third-Party Compatibility</td>
+<td><code>PAMIT-39694</code> <code>PAMIT-40583</code> <code>PAMIT-40903</code></td>
+<td>Pin a supported matrix (DBeaver, WinSCP, SSMS, Chrome driver, RDP post-patch, HSM) and run the launch plus core journey per entry every hotfix</td>
+<td style="text-align: center;">Medium</td>
+</tr>
+<tr>
+<td>No post-upgrade regression pass on an upgraded insta</td>
+<td>Upgrade / Migration</td>
+<td><code>PAMIT-40271</code> <code>PAMIT-42686</code> <code>PAMIT-42689</code></td>
+<td>Upgrade a seeded instance from N-2, then run the core journeys against the migrated data</td>
+<td style="text-align: center;">Medium</td>
+</tr>
+<tr>
+<td>API assertions check transport, not application sema</td>
+<td>API / Integration</td>
+<td><code>PAMIT-42117</code> <code>PAMIT-42168</code> <code>PAMIT-42189</code></td>
+<td>Assert the application-level errorCode and payload semantics; never status==200 alone</td>
+<td style="text-align: center;">Medium</td>
+</tr>
+<tr>
+<td>Invalid and unexpected input is under-tested; raw ex</td>
+<td>Negative Testing</td>
+<td><code>PAMIT-39694</code> <code>PAMIT-39696</code> <code>PAMIT-42492</code></td>
+<td>Negative matrix per input, asserting a product error code rather than a framework exception string</td>
+<td style="text-align: center;">Medium</td>
+</tr>
+<tr>
+<td>Approval paths tested on the happy path only</td>
+<td>Workflow / Approval</td>
+<td><code>PAMIT-41384</code> <code>PAMIT-42054</code> <code>PAMIT-42189</code></td>
+<td>Time-based and one-time grants, delegation add/approve, revocation at expiry</td>
+<td style="text-align: center;"><strong>High</strong></td>
+</tr>
+<tr>
+<td>No load or endurance testing on the affected journey</td>
+<td>Performance</td>
+<td><code>PAMIT-40271</code> <code>PAMIT-42576</code> <code>PAMIT-42623</code></td>
+<td>Memory and endurance runs on vault load and bulk operations at client data volumes</td>
+<td style="text-align: center;"><strong>High</strong></td>
+</tr>
+<tr>
+<td>Security findings arrive from client audits rather t</td>
+<td>Security</td>
+<td><code>PAMIT-33981</code> <code>PAMIT-37067</code> <code>PAMIT-39696</code></td>
+<td>Add cipher/TLS posture, direct-object and unauthenticated-resource checks to the pre-release gate</td>
+<td style="text-align: center;">Low</td>
+</tr>
+<tr>
+<td>Reads asserted for success, not for agreement with t</td>
+<td>Data Integrity / Consistency</td>
+<td><code>PAMIT-38793</code> <code>PAMIT-41302</code> <code>PAMIT-41749</code></td>
+<td>Cross-check list, report and counter values against the database after each mutating action</td>
+<td style="text-align: center;">Low</td>
+</tr>
+</tbody>
+</table>
+<h2 id="13-data-quality-limitations">13. Data-quality limitations</h2>
+<p><em>Each measured, not assumed. These bound what the analysis can claim.</em></p>
+<table>
+<thead>
+<tr>
+<th>Limitation</th>
+<th style="text-align: right;">Measured</th>
+<th>Consequence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>⛔ <strong><code>Root Cause</code> — THIS ROW WAS WRONG.</strong> <code>Module</code>, <code>Category</code>, <code>Sub-Category</code> and <code>Product/Operational categorization</code> are genuinely unpopulated, but <strong><code>RCA</code> (<code>cf 10245</code>) is 80.7% populated</strong> with a 33-value taxonomy</td>
+<td style="text-align: right;">0 for <code>cf 10113</code>/<code>10199</code> · <strong>1,622 for <code>cf 10245</code></strong></td>
+<td>The previous wording — <em>"the whole taxonomy is derived from ticket text; Jira holds no categorisation to cross-check it against"</em> — measured two decoy fields and missed the live one. Jira <strong>does</strong> hold an authored root-cause classification, and §7.3 now uses it. The derived text taxonomy remains, with a cross-check it never had</td>
+</tr>
+<tr>
+<td><strong><code>affectedVersion</code> (native) unused — but <code>Affected Milestone</code> (<code>cf[10092]</code>) is not</strong></td>
+<td style="text-align: right;">0 native / <strong>97.3%</strong> custom</td>
+<td>⛔ <strong>This row previously read "no field records the build a client was on" and was wrong.</strong> The native field is empty; the custom field carries the fact on 97.3% of the population and is now the build axis (<code>D42</code>, §0)</td>
+</tr>
+<tr>
+<td><code>Severity</code> sparsely populated</td>
+<td style="text-align: right;">69 / 391</td>
+<td><code>priority</code> (100%) is used for impact; severity-based views unavailable</td>
+</tr>
+<tr>
+<td><code>environment</code> and <code>resolution</code> never set</td>
+<td style="text-align: right;">0 / 391</td>
+<td>Environment classification leans on <code>Hosting Environment</code> (238/391) and title text</td>
+</tr>
+<tr>
+<td><code>Primary Client</code> holds alias duplicates</td>
+<td style="text-align: right;">—</td>
+<td>ICICI splits across two values (21 + 4); TCL Global and ITD-MC likewise. Merged by rule — unmerged, 'most affected client' is wrong</td>
+</tr>
+<tr>
+<td>Clone-driven workflow displaces dates</td>
+<td style="text-align: right;">—</td>
+<td>Most focus-build summaries begin with <code>CLONE</code>, so <code>created</code> is when the clone was cut for the hotfix, not when the client reported. This is why the 30-day view exists as a separate population</td>
+</tr>
+<tr>
+<td>Jira <code>releaseDate</code> is planned, and non-monotonic</td>
+<td style="text-align: right;">—</td>
+<td>HF13 2026-06-22 &lt; HF14 2026-07-10 &lt; HF11 2026-07-15 &lt; HF12 2026-07-31, and no in-flight build is flagged released. Ordering uses build number</td>
+</tr>
+<tr>
+<td><code>/search/approximate-count</code> is inaccurate</td>
+<td style="text-align: right;">190 vs 201</td>
+<td>A 5.5% undercount on this population. Every figure here comes from full enumeration</td>
+</tr>
+<tr>
+<td><code>All Modules</code> used as a component</td>
+<td style="text-align: right;">54 / 391</td>
+<td>A non-answer for module attribution; those tickets cannot be assigned</td>
+</tr>
+<tr>
+<td>Fix-version scope is a small slice of client reporting</td>
+<td style="text-align: right;">19,296 unversioned</td>
+<td>Client tickets with no fix version, all time. Build-based analysis covers <strong>fix-scheduled</strong> defects, not everything clients report</td>
+</tr>
+</tbody>
+</table>
+<h2 id="14-how-this-was-produced">14. How this was produced</h2>
+<p>Read-only Jira enumeration through <code>tools/jira/jira_query.ReadOnlyJira</code>, which permits GET on a fixed path list plus POST to the two search endpoints and refuses everything else — 16 guard assertions cover it, including <code>GET /transitions</code>. Classification rules, client aliases and the testing-area axis are in <code>tools/jira/pamit_analysis_rules.py</code>; grouping is union-find over explicit clone links plus word-boundary title-signature similarity. Rendering is <code>tools/jira/pamit_report.py</code>.</p>
+<pre class="codehilite"><code class="language-powershell">python tools\jira\pamit_client_analysis.py            # fetch, analyse, write
+python tools\jira\pamit_client_analysis.py --no-write # analyse only
+python tools\jira\pamit_client_analysis.py --offline  # zero HTTP, last capture
+python tools\jira\pamit_workbook.py                   # build the workbook
+python tools\jira\pamit_workbook.py --refetch         # re-query Jira first
+</code></pre>
+
+<h2 id="15-ticket-level-traceability-no-count-without-its-tickets">15. Ticket-level traceability — no count without its tickets</h2>
+<p><strong>Owner ruling <code>D43</code>: every reported count must be traceable to the individual tickets behind it.</strong> A total, a percentage and a summary are not an answer on their own — if the analysis says <em>Environment Compatibility: 101 tickets</em>, all 101 keys must be listed.</p>
+<p>How that is enforced rather than promised:</p>
+<table>
+<thead>
+<tr>
+<th>Mechanism</th>
+<th>Where</th>
+<th>What it guarantees</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Sheet <code>04 Ticket Details</code></strong></td>
+<td>the workbook</td>
+<td>One row per ticket in the union of every counted pool, with each pool and each testing area as a Yes/No column. <strong>Filtering that sheet reproduces any reported figure exactly</strong> — the count is a view over the data, not a separate assertion</td>
+</tr>
+<tr>
+<td><strong>Sheet <code>09 Count Reconciliation</code></strong></td>
+<td>the workbook</td>
+<td>Every headline count restated as a live <code>COUNTIFS</code> over sheet 04, beside the value this analysis computed, beside a <code>PASS</code>/<code>FAIL</code> comparison. <strong>Excel recomputes it on open</strong>, so the reader verifies the totals without trusting the generator</td>
+</tr>
+<tr>
+<td><strong><code>verify()</code> gate</strong></td>
+<td><code>tools/jira/pamit_workbook.py</code></td>
+<td>Reconciles every pool count and every area count against the ticket universe <em>before</em> the workbook is declared good, and exits non-zero on any mismatch. A figure that cannot be reproduced from its tickets fails the build instead of shipping</td>
+</tr>
+<tr>
+<td><strong><code>members</code> on every area row</strong></td>
+<td><code>pamit_client_analysis.py</code></td>
+<td>Each testing area carries <strong>every</strong> backing key, not a sample of six. The sample is still shown in §12 for readability; the full list is in the workbook</td>
+</tr>
+</tbody>
+</table>
+<p>⚠ <strong>Two places where counts legitimately do not add up, and why.</strong> Both are stated wherever the figure appears:</p>
+<ul>
+<li><strong>Per-build counts sum above the ticket total.</strong> <code>Affected Milestone</code> is a multiselect and 55 tickets name two in-family builds. The de-duplicated ticket total is the population; the per-build sum is not.</li>
+<li><strong>Testing-area counts sum past 100%.</strong> The area axis is multi-label — a defect that is both a boundary failure and a compatibility failure is a gap in both kinds of testing, so it is counted in both. Sheet 01 therefore has more rows than distinct tickets, and both figures are reported.</li>
+</ul>
+<h2 id="16-the-consolidated-workbook">16. The consolidated workbook</h2>
+<p><strong>Owner ruling <code>D44</code>: one workbook, many worksheets.</strong> All ticket-level detail lands in a single file and a new analysis area becomes a <strong>new worksheet in it</strong>, never a new <code>.xlsx</code>.</p>
+<p><code>artifacts/workbooks/PAM-Client-Ticket-Analysis.xlsx</code></p>
+<table>
+<thead>
+<tr>
+<th>Sheet</th>
+<th>Holds</th>
+<th>How its counts are verified</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>00 README</code></td>
+<td>Methodology, headline totals, sheet manifest, the rules the workbook obeys</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>01 Testing Weak Spots</code></td>
+<td><strong>One row per ticket per weak spot</strong> with the full 20-column JIRA-oriented structure: ticket, gap, description, module, build, severity, priority, impact, root cause, existing and missing coverage, precaution, solution, PAM-specific recommendation, suggested coverage, automation, evidence, JIRA link, status</td>
+<td>Filter by <em>Testing Weak Spot</em> → row count equals the reported area count</td>
+</tr>
+<tr>
+<td><code>02 Weak Spot Summary</code></td>
+<td>One row per testing area with the same recommendation columns aggregated</td>
+<td><em>Tickets</em> column reconciles against sheet 01 and sheet 09</td>
+</tr>
+<tr>
+<td><code>03 Test Scenario Gaps</code></td>
+<td>One row per gap with expected behaviour, existing and missing coverage, risk, <strong>source of identification</strong> and <strong>derivation method</strong></td>
+<td><em>Related Ticket Number(s)</em> lists every backing key</td>
+</tr>
+<tr>
+<td><code>04 Ticket Details</code></td>
+<td><strong>The source data</strong> — every ticket, every analysis field, every pool and area flag</td>
+<td>Every other sheet's count is a filter over this one</td>
+</tr>
+<tr>
+<td><code>05 Build-wise</code></td>
+<td>Per build: found-count beside fixed-count, defects, ShowStoppers, regression signal</td>
+<td><em>Found here</em> reconciles via <code>COUNTIF</code> on sheet 04</td>
+</tr>
+<tr>
+<td><code>06 Escape Latency</code></td>
+<td>Every ticket whose affected build precedes its fix build</td>
+<td>One row per ticket; the gap is measured, not estimated</td>
+</tr>
+<tr>
+<td><code>07 Regression Signal</code></td>
+<td>The three client-facing fields per ticket, the derived class, and the bisect range</td>
+<td>One row per ticket stating any signal</td>
+</tr>
+<tr>
+<td><code>08 Module &amp; Category</code></td>
+<td>Module-wise and category-wise counts</td>
+<td>Both reconcile via <code>COUNTIF</code> on sheet 04</td>
+</tr>
+<tr>
+<td><code>09 Count Reconciliation</code></td>
+<td><strong>Every headline count beside a live <code>COUNTIFS</code> and a <code>PASS</code>/<code>FAIL</code></strong></td>
+<td>This sheet <em>is</em> the validation</td>
+</tr>
+<tr>
+<td><code>10 Field Audit</code></td>
+<td>Every milestone-shaped and regression-shaped field measured, with population and verdict</td>
+<td>Explains why <code>cf[10092]</code> is the axis and the rest are not</td>
+</tr>
+</tbody>
+</table>
+<p>⛔ <strong>Do not create a second file for a new analysis.</strong> Add a <code>sheet_*</code> builder to <code>build()</code> in <code>tools/jira/pamit_workbook.py</code> and a matching row to the manifest in <code>sheet_readme()</code>, and the analysis becomes a worksheet here. ⚠ Those two are hand-kept in step — add the builder and forget the manifest row and sheet <code>00 README</code> will describe a workbook that is not the one on disk.</p>
+<h2 id="17-methodology-for-the-two-derived-axes">17. Methodology for the two derived axes</h2>
+<h3 id="171-testing-weak-spots">17.1 Testing weak spots</h3>
+<p>A weak spot is <strong>derived, not authored</strong>. Four ordered steps:</p>
+<ol>
+<li>Every client ticket in the three full-record pools is matched against the testing-area axis in <code>pamit_analysis_rules.testing_areas()</code> — a <strong>word-boundary</strong> term match over title plus the first 1,500 characters of description, multi-label.</li>
+<li>An area qualifies at <strong>≥3 tickets from ≥2 distinct clients</strong> (<code>confidence = measured</code>). One client's tickets are an incident, not a coverage gap. Areas below the threshold are reported as <em>insufficient evidence</em> rather than dropped.</li>
+<li>Priority is <strong>density-based, not volume-based</strong>: High at ≥15% share, or ≥10 tickets with ≥45% ShowStopper. An absolute-count rule marked every area High, because ShowStopper is not rare in this data.</li>
+<li>The gap statement and recommended scenario come from <code>AREA_GAP</code>; the root cause, existing and missing coverage, precaution, PAM-specific recommendation, suggested coverage and automation advice come from <code>AREA_DETAIL</code>. Both are keyed on the area, so a filtered view of sheet 01 is self-contained.</li>
+</ol>
+<p>⛔ <strong>Word boundaries are load-bearing.</strong> Substring matching tagged <em>"Login with SAML"</em> as a <strong>Logging</strong> issue (<code>log</code> ⊂ <code>login</code>); the word-boundary fix then silently dropped plurals (<code>cipher</code> misses <em>ciphers</em>). Both are fixed and both are the kind of defect that produces a confident wrong answer.</p>
+<h3 id="172-test-scenario-gaps-and-where-each-one-came-from">17.2 Test scenario gaps — and where each one came from</h3>
+<p>Every gap names its <strong>source of identification</strong>, because a gap whose provenance cannot be traced is an opinion:</p>
+<table>
+<thead>
+<tr>
+<th>Source of identification</th>
+<th style="text-align: center;">Used?</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Client-raised JIRA tickets</strong> (production / customer issues)</td>
+<td style="text-align: center;">✅ <strong>primary</strong></td>
+<td>The population itself, placed on builds by <code>Affected Milestone</code>. Every gap row carries its backing keys and the client count</td>
+</tr>
+<tr>
+<td><strong>Previous build/version behaviour</strong></td>
+<td style="text-align: center;">✅ secondary</td>
+<td>The three regression fields, where populated. A confirmed regression is the strongest possible evidence of a coverage gap: the feature demonstrably worked before</td>
+</tr>
+<tr>
+<td><strong>Existing automation coverage</strong></td>
+<td style="text-align: center;">✅ tertiary</td>
+<td>The bootstrap suite inventory — specifically the gap between what the framework <em>can</em> do (20 environment files, five browser targets, a k6 harness) and what it is actually <em>run</em> with</td>
+</tr>
+<tr>
+<td><strong>Defect recurrence</strong></td>
+<td style="text-align: center;">✅ supporting</td>
+<td>Union-find grouping over clone links plus title-signature similarity. ⛔ A clone edge alone is <strong>not</strong> recurrence here: cloning is how a fix is carried into a hotfix, so only families spanning 2+ hotfixes count</td>
+</tr>
+<tr>
+<td>Requirements · user stories · functional specifications</td>
+<td style="text-align: center;">⛔ <strong>not used</strong></td>
+<td>PAMIT holds no requirement links, and the product documentation is confirmed not up to date (70% of endpoints undocumented). A gap claiming a requirements source would be unfounded, so none does</td>
+</tr>
+<tr>
+<td>Existing manual test cases</td>
+<td style="text-align: center;">⛔ not used as a denominator</td>
+<td>The available manual corpus is 63 cases covering Login and Dashboard only. Absence there proves nothing about coverage, so it is not treated as evidence either way</td>
+</tr>
+</tbody>
+</table>
+<h2 id="18-the-daily-process">18. The daily process</h2>
+<p><strong>Owner ruling <code>D45</code>: the master workbook is refreshed as part of the daily run, in place. A second <code>.xlsx</code> is never created.</strong></p>
+<p>The scheduled task <strong><code>PAM-Client-Ticket-Analysis</code></strong> runs at <strong>09:00 daily</strong> and now performs all four steps in one process:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Step</th>
+<th>What happens</th>
+<th>Output</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td>Read-only Jira enumeration of all four populations</td>
+<td><code>artifacts/client-tickets/snapshots/_raw-latest.json</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td>Analyse — build line on <code>Affected Milestone</code>, escape latency, regression signal, RCA, testing areas</td>
+<td>in memory</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td>Write the report and the dated summary</td>
+<td><strong>this file</strong> (<code>Updated</code> timestamp moves) · <code>summary/summary_&lt;date&gt;.md</code> · <code>&lt;date&gt;.json</code> · the CSVs</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td><strong>Refresh the master workbook in place</strong></td>
+<td><code>artifacts/workbooks/PAM-Client-Ticket-Analysis.xlsx</code></td>
+</tr>
+</tbody>
+</table>
+<p>⚠️ <strong>Step 4 lives inside the analysis script, not in a second scheduled task.</strong> That is deliberate: two tasks could run at different times and leave the workbook describing yesterday's analysis while the report described today's. One process cannot drift from itself.</p>
+<p>⚠️ <strong>A workbook failure never fails the analysis.</strong> The report, the snapshot and the CSVs are written first and are the primary deliverable. The likeliest failure is the file being open in Excel — a desk-level problem, not an analysis problem — so it is reported loudly and the exit code is unchanged. Rebuild with <code>python tools\jira\pamit_workbook.py</code>.</p>
+<h3 id="181-history-across-daily-refreshes">18.1 History across daily refreshes</h3>
+<p>The workbook is <strong>overwritten</strong> each day, so history cannot live in its sheets. It lives where it cannot be lost:</p>
+<table>
+<thead>
+<tr>
+<th>What</th>
+<th>Where</th>
+<th>Retention</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Per-day headline counts and full ticket state</td>
+<td><code>artifacts/client-tickets/snapshots/&lt;date&gt;.json</code></td>
+<td><strong>Never deleted.</strong> The history's source of truth</td>
+</tr>
+<tr>
+<td>Per-day narrative summary</td>
+<td><code>docs/analysis/summary/summary_&lt;date&gt;.md</code></td>
+<td>Never overwritten across days; a same-day re-run replaces only that day's file</td>
+</tr>
+<tr>
+<td>Day-over-day deltas, read at a glance</td>
+<td>workbook sheet <code>12 Daily History</code></td>
+<td><strong>Derived</strong> from the snapshots on every refresh</td>
+</tr>
+<tr>
+<td>What changed since the last run</td>
+<td>§<em>What changed</em> in the dated summary</td>
+<td>Computed against the previous snapshot</td>
+</tr>
+</tbody>
+</table>
+<p>⛔ <strong>Sheet 12 is derived, not appended.</strong> An appended sheet would be lost the first time the workbook was rebuilt from scratch, and could silently disagree with the snapshots. A break in its date sequence means the job did not run that day — the gap is shown rather than smoothed over.</p>
+<h3 id="182-info-not-available-in-jira">18.2 <code>Info not available in JIRA</code></h3>
+<p><strong>Owner ruling: never leave an unavailable fact ambiguous, and never infer one without labelling it.</strong> The sentinel is used in three distinct situations, all of which a blank cell would have flattened into one:</p>
+<table>
+<thead>
+<tr>
+<th>Situation</th>
+<th>Example</th>
+<th>Where it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>The field does not exist in PAMIT</td>
+<td>regression-test-executed, requirement link, detected-by</td>
+<td>§7.4 and workbook sheet <code>10 Field Audit</code></td>
+</tr>
+<tr>
+<td>The field exists but is <strong>never</strong> populated</td>
+<td><code>Phase</code> (<code>cf 10164</code>) · <code>ReopenCount</code> (<code>cf 11018</code>) · <code>Module</code> · <code>Category</code></td>
+<td>an explicit workbook column reading the sentinel all the way down — a <em>missing</em> column would read as 'not analysed'</td>
+</tr>
+<tr>
+<td>The field is populated in general but empty on <strong>this ticket</strong></td>
+<td><code>RCA</code> on 486 of 2,169 · <code>Previous working version</code> on 1,744</td>
+<td>that ticket's cell on sheet <code>04 Ticket Details</code></td>
+</tr>
+</tbody>
+</table>
+<p>⛔ <strong>Nothing in this report infers a value for an unavailable field.</strong> The clearest case is defect-injection phase: the RCA family looks like an answer (<code>Code - *</code>, <code>Analysis - *</code>, <code>Environment - *</code>) and is not one — <code>Code - Logic Issue</code> records where the defect was <strong>found in code</strong>, not the phase in which it was <strong>introduced</strong>. Mapping one to the other would produce a phase-containment metric that reads as measured and would drive real test-strategy decisions. <code>Phase</code> is 0% populated, so the honest answer is the sentinel.</p>
+</body>
+</html>

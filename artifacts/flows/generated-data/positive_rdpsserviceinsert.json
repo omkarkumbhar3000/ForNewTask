@@ -1,0 +1,258 @@
+[
+ {
+  "id": "data_positive_rdpsserviceinsert_1",
+  "title": "RDPSServiceInsert - positive data-driven batch 1",
+  "why": "Executes the QA team's authored positive scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "positive",
+  "tier": 4,
+  "controller": "RDPSServiceInsert",
+  "hops": [
+   {
+    "name": "InsertRDPSServiceDetails",
+    "verb": "POST",
+    "path": "/api/RDPSServiceInsert/InsertRDPSServiceDetails",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / RDPSServiceInsert_positive row 1 (provider RDPSServiceInsert)",
+    "body": {
+     "rsd_username": "Admin",
+     "rsd_domain_name": "Domain1",
+     "rsd_host_name": "Admin\\11.10.1.11",
+     "rsd_server_ip": "11.10.1.11",
+     "rsd_mac_address": "10:CE:1B:00:1A:90",
+     "rsd_rdps_session_id": "100",
+     "rsd_reason": "Test",
+     "rsd_status": "success",
+     "rsd_duration_mm": "10"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "UpdateRDPSSessionStatus",
+    "verb": "POST",
+    "path": "/api/RDPSServiceInsert/UpdateRDPSSessionStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / RDPSServiceInsert_positive row 2 (provider RDPSServiceInsert)",
+    "body": {
+     "rsd_id": "1",
+     "rsd_rdps_session_id": "100",
+     "rsd_status": "completed",
+     "rsd_comment": "Test"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetAllPendingRequests",
+    "verb": "POST",
+    "path": "/api/RDPSServiceInsert/GetAllPendingRequests",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / RDPSServiceInsert_positive row 3 (provider RDPSServiceInsert)",
+    "body": {
+     "rsd_rdps_session_id": "100"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "UpdateExtendedSessionRequest",
+    "verb": "POST",
+    "path": "/api/RDPSServiceInsert/UpdateExtendedSessionRequest",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / RDPSServiceInsert_positive row 4 (provider RDPSServiceInsert)",
+    "body": {
+     "rsd_rdps_session_id": "100",
+     "rsd_id": "1",
+     "rsd_end_time": "2020-11-10 03:01:00",
+     "rsd_duration_mm": "10"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetRDPSConfig",
+    "verb": "POST",
+    "path": "/api/RDPSServiceInsert/GetRDPSConfig",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / RDPSServiceInsert_positive row 5 (provider RDPSServiceInsert)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "InsertParticipantsLog",
+    "verb": "POST",
+    "path": "/api/RDPSServiceInsert/InsertParticipantsLog",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / RDPSServiceInsert_positive row 6 (provider RDPSServiceInsert)",
+    "body": {
+     "ServiceId": "1",
+     "RdpsId": "10",
+     "SessionId": "100",
+     "ParticipantName": "User12",
+     "ParticipantConnectedOn": "11.10.1.11",
+     "ParticipantIP": "11.10.1.11",
+     "ParticipantHostName": "Admin\\11.10.1.11",
+     "ParticipantDomain": "ArcosDev"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "UpdateParticipantsLog",
+    "verb": "POST",
+    "path": "/api/RDPSServiceInsert/UpdateParticipantsLog",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / RDPSServiceInsert_positive row 7 (provider RDPSServiceInsert)",
+    "body": {
+     "ServiceId": "1",
+     "RdpsId": "10",
+     "SessionId": "100",
+     "ParticipantName": "User12",
+     "ParticipantConnectedOn": "11.10.1.11",
+     "ParticipantIP": "11.10.1.11",
+     "ParticipantHostName": "Admin\\11.10.1.11",
+     "ParticipantDomain": "ArcosDev"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "UploadVideoLog",
+    "verb": "POST",
+    "path": "/api/RDPSServiceInsert/UploadVideoLog",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / RDPSServiceInsert_positive row 8 (provider RDPSServiceInsert)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "SendAgentKeepalive",
+    "verb": "POST",
+    "path": "/api/RDPSServiceInsert/SendAgentKeepalive",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / RDPSServiceInsert_positive row 9 (provider RDPSServiceInsert)",
+    "body": {
+     "Ipaddress": "10.11.1.11",
+     "Hostname": "H0123",
+     "Username": "Admin",
+     "Agentversion": "4.8.5.0",
+     "createdby": "Deskinsight Service",
+     "modifiedby": ""
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetDeskinsightServiceDetails",
+    "verb": "POST",
+    "path": "/api/RDPSServiceInsert/GetDeskinsightServiceDetails",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / RDPSServiceInsert_positive row 10 (provider RDPSServiceInsert)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetServicePwdChangeflag",
+    "verb": "POST",
+    "path": "/api/RDPSServiceInsert/GetServicePwdChangeflag",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / RDPSServiceInsert_positive row 11 (provider RDPSServiceInsert)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "UpdateDeskinsightPwdStatus",
+    "verb": "POST",
+    "path": "/api/RDPSServiceInsert/UpdateDeskinsightPwdStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / RDPSServiceInsert_positive row 12 (provider RDPSServiceInsert)",
+    "body": {
+     "Serviceid": "113321",
+     "Lastpasswordchangestatus": 0,
+     "Lastpasswordchangedby": "ARCOSADMIN",
+     "freefield2": ""
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   }
+  ]
+ },
+ {
+  "id": "data_positive_rdpsserviceinsert_2",
+  "title": "RDPSServiceInsert - positive data-driven batch 2",
+  "why": "Executes the QA team's authored positive scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "positive",
+  "tier": 4,
+  "controller": "RDPSServiceInsert",
+  "hops": [
+   {
+    "name": "UpdateRequesterStatus",
+    "verb": "POST",
+    "path": "/api/RDPSServiceInsert/UpdateRequesterStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / RDPSServiceInsert_positive row 13 (provider RDPSServiceInsert)",
+    "body": {
+     "Ipaddress": "11.10.1.11",
+     "Hostname": "Admin\\11.10.1.11",
+     "Macaddress": "10:CE:1B:00:1A:90",
+     "Username": "Admin",
+     "createdby": "",
+     "createdon": "",
+     "modifiedby": "",
+     "modifiedon": "",
+     "RequesterStatus": true,
+     "RequesterId": 1
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetStatus",
+    "verb": "GET",
+    "path": "/api/RDPSServiceInsert/GetStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / RDPSServiceInsert_positive row 14 (provider RDPSServiceInsert)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "SetStatus",
+    "verb": "GET",
+    "path": "/api/RDPSServiceInsert/SetStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / RDPSServiceInsert_positive row 15 (provider RDPSServiceInsert)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetDatabaseStatus",
+    "verb": "GET",
+    "path": "/api/RDPSServiceInsert/GetDatabaseStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / RDPSServiceInsert_positive row 16 (provider RDPSServiceInsert)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   }
+  ]
+ }
+]

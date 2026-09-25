@@ -1,0 +1,33 @@
+[
+ {
+  "id": "data_positive_adbridgingv23_1",
+  "title": "ADbridgingV23 - positive data-driven batch 1",
+  "why": "Executes the QA team's authored positive scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "positive",
+  "tier": 4,
+  "controller": "ADbridgingV23",
+  "hops": [
+   {
+    "name": "UpdateRuleAssocUserStatus",
+    "verb": "POST",
+    "path": "/api/ADbridgingV2/UpdateRuleAssocUserStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / ADbridgingV2_positive row 22 (provider ADbridgingV2)",
+    "body": {
+     "Id": "3",
+     "RuleTypeId": "1",
+     "RuleId": "1",
+     "UserId": "user1",
+     "IsConnected": "true",
+     "ServiceId": "6",
+     "ServerIP": "10.11.1.11"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   }
+  ]
+ }
+]

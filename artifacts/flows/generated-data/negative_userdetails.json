@@ -1,0 +1,1782 @@
+[
+ {
+  "id": "data_negative_userdetails_1",
+  "title": "UserDetails - negative data-driven batch 1",
+  "why": "Executes the QA team's authored negative scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status and error code.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "negative",
+  "tier": 4,
+  "controller": "UserDetails",
+  "hops": [
+   {
+    "name": "GetUserDetailsBySession",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetUserDetailsBySession",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_MethodNotAllowed row 1 (provider UserDetails_MethodNotAllowed)",
+    "body": {
+     "__raw__": "http://localhost:55560/api/UserDetails/GetUserDetailsBySession?sessionId=1"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetUserAppPreference",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetUserAppPreference",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_MethodNotAllowed row 2 (provider UserDetails_MethodNotAllowed)",
+    "body": {
+     "__raw__": "Not Found On Confluence"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetUserPreference",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetUserPreference",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_MethodNotAllowed row 3 (provider UserDetails_MethodNotAllowed)",
+    "body": {
+     "__raw__": "http://localhost:55560/api/UserDetails/GetUserPreference?preferenceId=141&userId=35"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetLOBList",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetLOBList",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_MethodNotAllowed row 4 (provider UserDetails_MethodNotAllowed)",
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetDormantUsers",
+    "verb": "POST",
+    "path": "/api/UserDetails/GetDormantUsers",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_MethodNotAllowed row 5 (provider UserDetails_MethodNotAllowed)",
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetUserType",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetUserType",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_MethodNotAllowed row 6 (provider UserDetails_MethodNotAllowed)",
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetUserGroupList",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetUserGroupList",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_MethodNotAllowed row 7 (provider UserDetails_MethodNotAllowed)",
+    "body": {
+     "UserGroupID": 64
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetMobileAuthDetails",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetMobileAuthDetails",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_MethodNotAllowed row 8 (provider UserDetails_MethodNotAllowed)",
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "SetUserDetails",
+    "verb": "GET",
+    "path": "/api/UserDetails/SetUserDetails",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_MethodNotAllowed row 9 (provider UserDetails_MethodNotAllowed)",
+    "body": {
+     "LOBID": 1,
+     "UserGroupId": 1,
+     "DomainName": "ARCOSAUTH",
+     "UserDisplayName": "MAJID4567",
+     "UserId": "MAJID4567",
+     "Password": "pass@123",
+     "UserTypeId": 1,
+     "EmailId": "majid4567@majid.com"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetDomains",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetDomains",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_MethodNotAllowed row 10 (provider UserDetails_MethodNotAllowed)",
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetServiceTypeList",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetServiceTypeList",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_MethodNotAllowed row 11 (provider UserDetails_MethodNotAllowed)",
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetUserList",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetUserList",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_MethodNotAllowed row 12 (provider UserDetails_MethodNotAllowed)",
+    "body": {
+     "UserGroupId": 1
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   }
+  ]
+ },
+ {
+  "id": "data_negative_userdetails_2",
+  "title": "UserDetails - negative data-driven batch 2",
+  "why": "Executes the QA team's authored negative scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status and error code.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "negative",
+  "tier": 4,
+  "controller": "UserDetails",
+  "hops": [
+   {
+    "name": "GetServerGroupList",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetServerGroupList",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_MethodNotAllowed row 13 (provider UserDetails_MethodNotAllowed)",
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetPasswordPolicyList",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetPasswordPolicyList",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_MethodNotAllowed row 14 (provider UserDetails_MethodNotAllowed)",
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetAssignedServiceListToUsr",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetAssignedServiceListToUsr",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_MethodNotAllowed row 15 (provider UserDetails_MethodNotAllowed)",
+    "body": {
+     "UserId": 35
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetAssignedServiceTypesToUser",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetAssignedServiceTypesToUser",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_MethodNotAllowed row 16 (provider UserDetails_MethodNotAllowed)",
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetNotAssignedServiceListToUsr",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetNotAssignedServiceListToUsr",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_MethodNotAllowed row 17 (provider UserDetails_MethodNotAllowed)",
+    "body": {
+     "UserId": 35
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "SetServiceUserMapping",
+    "verb": "GET",
+    "path": "/api/UserDetails/SetServiceUserMapping",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_MethodNotAllowed row 18 (provider UserDetails_MethodNotAllowed)",
+    "body": {
+     "usrid": 35,
+     "serviceid": "5|126"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "SetServiceUserUnMapping",
+    "verb": "GET",
+    "path": "/api/UserDetails/SetServiceUserUnMapping",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_MethodNotAllowed row 19 (provider UserDetails_MethodNotAllowed)",
+    "body": {
+     "usrid": 35,
+     "serviceid": "5|126"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "SetUsertoUserGroupMapping",
+    "verb": "GET",
+    "path": "/api/UserDetails/SetUsertoUserGroupMapping",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_MethodNotAllowed row 20 (provider UserDetails_MethodNotAllowed)",
+    "body": {
+     "UserId": 35,
+     "UserGroupId": 7,
+     "LOBId": "1|2"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "SetUsertoUserGroupMappingWithAutoMap",
+    "verb": "GET",
+    "path": "/api/UserDetails/SetUsertoUserGroupMappingWithAutoMap",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_MethodNotAllowed row 21 (provider UserDetails_MethodNotAllowed)",
+    "body": {
+     "UserGroupId": 64,
+     "UserId": 35,
+     "LobId": 1
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "SetUsertoUserGroupUNMapping",
+    "verb": "GET",
+    "path": "/api/UserDetails/SetUsertoUserGroupUNMapping",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_MethodNotAllowed row 22 (provider UserDetails_MethodNotAllowed)",
+    "body": {
+     "__raw__": "{\nUserGroupId:64,\nUserId:35\n}"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetUserListByName",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetUserListByName",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_MethodNotAllowed row 23 (provider UserDetails_MethodNotAllowed)",
+    "body": {
+     "UserId": 23255,
+     "UserName": "Sachin"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetdualFactorType",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetdualFactorType",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_MethodNotAllowed row 24 (provider UserDetails_MethodNotAllowed)",
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   }
+  ]
+ },
+ {
+  "id": "data_negative_userdetails_3",
+  "title": "UserDetails - negative data-driven batch 3",
+  "why": "Executes the QA team's authored negative scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status and error code.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "negative",
+  "tier": 4,
+  "controller": "UserDetails",
+  "hops": [
+   {
+    "name": "SetDualFactorAuthorization",
+    "verb": "GET",
+    "path": "/api/UserDetails/SetDualFactorAuthorization",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_MethodNotAllowed row 25 (provider UserDetails_MethodNotAllowed)",
+    "body": {
+     "UserId": 1,
+     "DualFactorTypeId": 4,
+     "MobileNo": "9876543210"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "UpdateUserPreferences",
+    "verb": "GET",
+    "path": "/api/UserDetails/UpdateUserPreferences",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_MethodNotAllowed row 26 (provider UserDetails_MethodNotAllowed)",
+    "body": {
+     "UserID": 35,
+     "ServiceTypeID": 141,
+     "LoggedInUserSessionID": 1,
+     "ServiceTypeDescription": "Test",
+     "userServicePreference": {
+      "ServiceRename": "TestService",
+      "IconString": "",
+      "Color": "",
+      "Description": "Test Service",
+      "ServiceID": 1
+     }
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetUserPreferences",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetUserPreferences",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_MethodNotAllowed row 27 (provider UserDetails_MethodNotAllowed)",
+    "body": {
+     "UserID": 35,
+     "ServiceTypeID": 141,
+     "ServiceID": 1
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetPreferencesMaster",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetPreferencesMaster",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_MethodNotAllowed row 28 (provider UserDetails_MethodNotAllowed)",
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetPreferencesMasterDetails",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetPreferencesMasterDetails",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_MethodNotAllowed row 29 (provider UserDetails_MethodNotAllowed)",
+    "body": {
+     "UserID": "35",
+     "ServiceTypeID": "7"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetAllServerGroups",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetAllServerGroups",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_MethodNotAllowed row 33 (provider UserDetails_MethodNotAllowed)",
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "SetUserGroupServiceGroupMapping",
+    "verb": "GET",
+    "path": "/api/UserDetails/SetUserGroupServiceGroupMapping",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_MethodNotAllowed row 34 (provider UserDetails_MethodNotAllowed)",
+    "body": {
+     "UserGroupId": 7,
+     "ServiceGroupId": 3
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "UpdateUserDetails",
+    "verb": "GET",
+    "path": "/api/UserDetails/UpdateUserDetails",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_MethodNotAllowed row 35 (provider UserDetails_MethodNotAllowed)",
+    "body": {
+     "UserId": 35,
+     "UserDisplayName": "ARCOSADMIN",
+     "EmailId": "test@gmail.com",
+     "UserType": 1
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "SetUserAndSingleLOBMapping",
+    "verb": "GET",
+    "path": "/api/UserDetails/SetUserAndSingleLOBMapping",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_MethodNotAllowed row 37 (provider UserDetails_MethodNotAllowed)",
+    "body": {
+     "UserId": 35,
+     "LOBId": 3
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "SetUserAndMultipleLOBMapping",
+    "verb": "GET",
+    "path": "/api/UserDetails/SetUserAndMultipleLOBMapping",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_MethodNotAllowed row 38 (provider UserDetails_MethodNotAllowed)",
+    "body": {
+     "UserId": 35,
+     "LOBId": "9|10|11"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "UpdateUserInfo",
+    "verb": "GET",
+    "path": "/api/UserDetails/UpdateUserInfo",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_MethodNotAllowed row 39 (provider UserDetails_MethodNotAllowed)",
+    "body": {
+     "UserId": 35,
+     "UserDisplayName": "USER01",
+     "DomainName": "ARCOS01",
+     "ValidTill": "01/01/2059 11:59:00",
+     "ARCOSUserType": "Client",
+     "Status": 1,
+     "UserLOBId": "1|6",
+     "UserGroupId": "10|12",
+     "EmailId": "test@gmail.com",
+     "MobileNo": 9876543210,
+     "UserTypeId": 0,
+     "DualFactorTypeId": ""
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "EnableUser",
+    "verb": "GET",
+    "path": "/api/UserDetails/EnableUser",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_MethodNotAllowed row 40 (provider UserDetails_MethodNotAllowed)",
+    "body": {
+     "UserId": 35
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   }
+  ]
+ },
+ {
+  "id": "data_negative_userdetails_4",
+  "title": "UserDetails - negative data-driven batch 4",
+  "why": "Executes the QA team's authored negative scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status and error code.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "negative",
+  "tier": 4,
+  "controller": "UserDetails",
+  "hops": [
+   {
+    "name": "EnableUser_New",
+    "verb": "GET",
+    "path": "/api/UserDetails/EnableUser_New",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_MethodNotAllowed row 41 (provider UserDetails_MethodNotAllowed)",
+    "body": {
+     "__raw__": "Not Found On Confluence"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetUserPreferenceByServiceTypeId",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetUserPreferenceByServiceTypeId",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_MethodNotAllowed row 42 (provider UserDetails_MethodNotAllowed)",
+    "body": {
+     "__raw__": "http://localhost:55560/api/UserDetails/GetUserPreferenceByServiceTypeId?serviceTypeId=2&userId=35"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetIndividualUserDetails",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetIndividualUserDetails",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_MethodNotAllowed row 43 (provider UserDetails_MethodNotAllowed)",
+    "body": {
+     "UserID": 35,
+     "UserDisplayName": "ARCOSADMIN"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetAllUserDetails",
+    "verb": "POST",
+    "path": "/api/UserDetails/GetAllUserDetails",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_MethodNotAllowed row 44 (provider UserDetails_MethodNotAllowed)",
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetUserPrivilegesMapping",
+    "verb": "POST",
+    "path": "/api/UserDetails/GetUserPrivilegesMapping",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_MethodNotAllowed row 46 (provider UserDetails_MethodNotAllowed)",
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "SetUserPrivilegesMapping",
+    "verb": "GET",
+    "path": "/api/UserDetails/SetUserPrivilegesMapping",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_MethodNotAllowed row 47 (provider UserDetails_MethodNotAllowed)",
+    "body": {
+     "UserId": 31,
+     "RoleId": [
+      1,
+      2,
+      3
+     ]
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "SetUserPrivilegesUnMapping",
+    "verb": "GET",
+    "path": "/api/UserDetails/SetUserPrivilegesUnMapping",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_MethodNotAllowed row 48 (provider UserDetails_MethodNotAllowed)",
+    "body": {
+     "usrid": 35,
+     "serviceid": "5|126"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetLOBDetailsByUserId",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetLOBDetailsByUserId",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_MethodNotAllowed row 49 (provider UserDetails_MethodNotAllowed)",
+    "body": {
+     "__raw__": "http://localhost:55560/api/UserDetails/GetLOBDetailsByUserId?UserID=35"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "SetServerServerGroupMapping",
+    "verb": "GET",
+    "path": "/api/UserDetails/SetServerServerGroupMapping",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_MethodNotAllowed row 50 (provider UserDetails_MethodNotAllowed)",
+    "body": {
+     "ServiceId": 114955,
+     "ServiceGroupId": 520,
+     "ApiUserName": "APIUser",
+     "LOBId": 1
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "SetServerServerGroupUnMapping",
+    "verb": "GET",
+    "path": "/api/UserDetails/SetServerServerGroupUnMapping",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_MethodNotAllowed row 51 (provider UserDetails_MethodNotAllowed)",
+    "body": {
+     "UserId": 35,
+     "UserGroupId": 7,
+     "LOBId": "1|2"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetUserGroupListWithoutMandateValue",
+    "verb": "POST",
+    "path": "/api/UserDetails/GetUserGroupListWithoutMandateValue",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_MethodNotAllowed row 52 (provider UserDetails_MethodNotAllowed)",
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetUserListByNameNew",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetUserListByNameNew",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_MethodNotAllowed row 53 (provider UserDetails_MethodNotAllowed)",
+    "body": {
+     "UserName": "ARCOSADMIN"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   }
+  ]
+ },
+ {
+  "id": "data_negative_userdetails_5",
+  "title": "UserDetails - negative data-driven batch 5",
+  "why": "Executes the QA team's authored negative scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status and error code.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "negative",
+  "tier": 4,
+  "controller": "UserDetails",
+  "hops": [
+   {
+    "name": "GetUserListByUserName",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetUserListByUserName",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_MethodNotAllowed row 54 (provider UserDetails_MethodNotAllowed)",
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetSecretKey",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetSecretKey",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_MethodNotAllowed row 55 (provider UserDetails_MethodNotAllowed)",
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "EnableUsersbyUserGroup",
+    "verb": "GET",
+    "path": "/api/UserDetails/EnableUsersbyUserGroup",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_MethodNotAllowed row 56 (provider UserDetails_MethodNotAllowed)",
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetDisabledUsers",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetDisabledUsers",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_MethodNotAllowed row 58 (provider UserDetails_MethodNotAllowed)",
+    "body": {
+     "LOBID": 1
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "UpdateUserInfo_New",
+    "verb": "GET",
+    "path": "/api/UserDetails/UpdateUserInfo_New",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_MethodNotAllowed row 59 (provider UserDetails_MethodNotAllowed)",
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetStatus",
+    "verb": "POST",
+    "path": "/api/UserDetails/GetStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_MethodNotAllowed row 60 (provider UserDetails_MethodNotAllowed)",
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "SetStatus",
+    "verb": "POST",
+    "path": "/api/UserDetails/SetStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_MethodNotAllowed row 61 (provider UserDetails_MethodNotAllowed)",
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetDatabaseStatus",
+    "verb": "POST",
+    "path": "/api/UserDetails/GetDatabaseStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_MethodNotAllowed row 62 (provider UserDetails_MethodNotAllowed)",
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetUserServiceDetails",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetUserServiceDetails",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_MethodNotAllowed row 65 (provider UserDetails_MethodNotAllowed)",
+    "body": {
+     "LOBId": 1
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetAllActiveUserList",
+    "verb": "POST",
+    "path": "/api/UserDetails/GetAllActiveUserList",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_MethodNotAllowed row 67 (provider UserDetails_MethodNotAllowed)",
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetUserDetailsBySession",
+    "verb": "POST",
+    "path": "/api/UserDetails/GetUserDetailsBySession",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_UnauthorizedAccess row 1 (provider UserDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "__raw__": "http://localhost:55560/api/UserDetails/GetUserDetailsBySession?sessionId=1"
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "GetUserAppPreference",
+    "verb": "POST",
+    "path": "/api/UserDetails/GetUserAppPreference",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_UnauthorizedAccess row 2 (provider UserDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "__raw__": "Not Found On Confluence"
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   }
+  ]
+ },
+ {
+  "id": "data_negative_userdetails_6",
+  "title": "UserDetails - negative data-driven batch 6",
+  "why": "Executes the QA team's authored negative scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status and error code.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "negative",
+  "tier": 4,
+  "controller": "UserDetails",
+  "hops": [
+   {
+    "name": "GetUserPreference",
+    "verb": "POST",
+    "path": "/api/UserDetails/GetUserPreference",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_UnauthorizedAccess row 3 (provider UserDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "__raw__": "http://localhost:55560/api/UserDetails/GetUserPreference?preferenceId=141&userId=35"
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "GetLOBList",
+    "verb": "POST",
+    "path": "/api/UserDetails/GetLOBList",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_UnauthorizedAccess row 4 (provider UserDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "GetDormantUsers",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetDormantUsers",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_UnauthorizedAccess row 5 (provider UserDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "GetUserType",
+    "verb": "POST",
+    "path": "/api/UserDetails/GetUserType",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_UnauthorizedAccess row 6 (provider UserDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "GetUserGroupList",
+    "verb": "POST",
+    "path": "/api/UserDetails/GetUserGroupList",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_UnauthorizedAccess row 7 (provider UserDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "UserGroupID": 64
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "GetMobileAuthDetails",
+    "verb": "POST",
+    "path": "/api/UserDetails/GetMobileAuthDetails",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_UnauthorizedAccess row 8 (provider UserDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "SetUserDetails",
+    "verb": "POST",
+    "path": "/api/UserDetails/SetUserDetails",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_UnauthorizedAccess row 9 (provider UserDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "LOBID": 1,
+     "UserGroupId": 1,
+     "DomainName": "ARCOSAUTH",
+     "UserDisplayName": "MAJID4567",
+     "UserId": "MAJID4567",
+     "Password": "pass@123",
+     "UserTypeId": 1,
+     "EmailId": "majid4567@majid.com"
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "GetDomains",
+    "verb": "POST",
+    "path": "/api/UserDetails/GetDomains",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_UnauthorizedAccess row 10 (provider UserDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "GetServiceTypeList",
+    "verb": "POST",
+    "path": "/api/UserDetails/GetServiceTypeList",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_UnauthorizedAccess row 11 (provider UserDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "GetUserList",
+    "verb": "POST",
+    "path": "/api/UserDetails/GetUserList",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_UnauthorizedAccess row 12 (provider UserDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "UserGroupId": 1
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "GetServerGroupList",
+    "verb": "POST",
+    "path": "/api/UserDetails/GetServerGroupList",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_UnauthorizedAccess row 13 (provider UserDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "GetPasswordPolicyList",
+    "verb": "POST",
+    "path": "/api/UserDetails/GetPasswordPolicyList",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_UnauthorizedAccess row 14 (provider UserDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   }
+  ]
+ },
+ {
+  "id": "data_negative_userdetails_7",
+  "title": "UserDetails - negative data-driven batch 7",
+  "why": "Executes the QA team's authored negative scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status and error code.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "negative",
+  "tier": 4,
+  "controller": "UserDetails",
+  "hops": [
+   {
+    "name": "GetAssignedServiceListToUsr",
+    "verb": "POST",
+    "path": "/api/UserDetails/GetAssignedServiceListToUsr",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_UnauthorizedAccess row 15 (provider UserDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "UserId": 35
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "GetAssignedServiceTypesToUser",
+    "verb": "POST",
+    "path": "/api/UserDetails/GetAssignedServiceTypesToUser",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_UnauthorizedAccess row 16 (provider UserDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "GetNotAssignedServiceListToUsr",
+    "verb": "POST",
+    "path": "/api/UserDetails/GetNotAssignedServiceListToUsr",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_UnauthorizedAccess row 17 (provider UserDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "UserId": 35
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "SetServiceUserMapping",
+    "verb": "POST",
+    "path": "/api/UserDetails/SetServiceUserMapping",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_UnauthorizedAccess row 18 (provider UserDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "usrid": 35,
+     "serviceid": "5|126"
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "SetServiceUserUnMapping",
+    "verb": "POST",
+    "path": "/api/UserDetails/SetServiceUserUnMapping",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_UnauthorizedAccess row 19 (provider UserDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "usrid": 35,
+     "serviceid": "5|126"
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "SetUsertoUserGroupMapping",
+    "verb": "POST",
+    "path": "/api/UserDetails/SetUsertoUserGroupMapping",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_UnauthorizedAccess row 20 (provider UserDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "UserId": 35,
+     "UserGroupId": 7,
+     "LOBId": "1|2"
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "SetUsertoUserGroupMappingWithAutoMap",
+    "verb": "POST",
+    "path": "/api/UserDetails/SetUsertoUserGroupMappingWithAutoMap",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_UnauthorizedAccess row 21 (provider UserDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "UserGroupId": 64,
+     "UserId": 35,
+     "LobId": 1
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "SetUsertoUserGroupUNMapping",
+    "verb": "POST",
+    "path": "/api/UserDetails/SetUsertoUserGroupUNMapping",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_UnauthorizedAccess row 22 (provider UserDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "__raw__": "{\nUserGroupId:64,\nUserId:35\n}"
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "GetUserListByName",
+    "verb": "POST",
+    "path": "/api/UserDetails/GetUserListByName",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_UnauthorizedAccess row 23 (provider UserDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "UserId": 23255,
+     "UserName": "Sachin"
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "GetdualFactorType",
+    "verb": "POST",
+    "path": "/api/UserDetails/GetdualFactorType",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_UnauthorizedAccess row 24 (provider UserDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "SetDualFactorAuthorization",
+    "verb": "POST",
+    "path": "/api/UserDetails/SetDualFactorAuthorization",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_UnauthorizedAccess row 25 (provider UserDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "UserId": 1,
+     "DualFactorTypeId": 4,
+     "MobileNo": "9876543210"
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "UpdateUserPreferences",
+    "verb": "POST",
+    "path": "/api/UserDetails/UpdateUserPreferences",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_UnauthorizedAccess row 26 (provider UserDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "UserID": 35,
+     "ServiceTypeID": 141,
+     "LoggedInUserSessionID": 1,
+     "ServiceTypeDescription": "Test",
+     "userServicePreference": {
+      "ServiceRename": "TestService",
+      "IconString": "",
+      "Color": "",
+      "Description": "Test Service",
+      "ServiceID": 1
+     }
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   }
+  ]
+ },
+ {
+  "id": "data_negative_userdetails_8",
+  "title": "UserDetails - negative data-driven batch 8",
+  "why": "Executes the QA team's authored negative scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status and error code.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "negative",
+  "tier": 4,
+  "controller": "UserDetails",
+  "hops": [
+   {
+    "name": "GetUserPreferences",
+    "verb": "POST",
+    "path": "/api/UserDetails/GetUserPreferences",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_UnauthorizedAccess row 27 (provider UserDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "UserID": 35,
+     "ServiceTypeID": 141,
+     "ServiceID": 1
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "GetPreferencesMaster",
+    "verb": "POST",
+    "path": "/api/UserDetails/GetPreferencesMaster",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_UnauthorizedAccess row 28 (provider UserDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "GetPreferencesMasterDetails",
+    "verb": "POST",
+    "path": "/api/UserDetails/GetPreferencesMasterDetails",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_UnauthorizedAccess row 29 (provider UserDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "UserID": "35",
+     "ServiceTypeID": "7"
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "GetAllServerGroups",
+    "verb": "POST",
+    "path": "/api/UserDetails/GetAllServerGroups",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_UnauthorizedAccess row 33 (provider UserDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "SetUserGroupServiceGroupMapping",
+    "verb": "POST",
+    "path": "/api/UserDetails/SetUserGroupServiceGroupMapping",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_UnauthorizedAccess row 34 (provider UserDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "UserGroupId": 7,
+     "ServiceGroupId": 3
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "UpdateUserDetails",
+    "verb": "POST",
+    "path": "/api/UserDetails/UpdateUserDetails",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_UnauthorizedAccess row 35 (provider UserDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "UserId": 35,
+     "UserDisplayName": "ARCOSADMIN",
+     "EmailId": "test@gmail.com",
+     "UserType": 1
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "SetUserAndSingleLOBMapping",
+    "verb": "POST",
+    "path": "/api/UserDetails/SetUserAndSingleLOBMapping",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_UnauthorizedAccess row 37 (provider UserDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "UserId": 35,
+     "LOBId": 3
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "SetUserAndMultipleLOBMapping",
+    "verb": "POST",
+    "path": "/api/UserDetails/SetUserAndMultipleLOBMapping",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_UnauthorizedAccess row 38 (provider UserDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "UserId": 35,
+     "LOBId": "9|10|11"
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "UpdateUserInfo",
+    "verb": "POST",
+    "path": "/api/UserDetails/UpdateUserInfo",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_UnauthorizedAccess row 39 (provider UserDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "UserId": 35,
+     "UserDisplayName": "USER01",
+     "DomainName": "ARCOS01",
+     "ValidTill": "01/01/2059 11:59:00",
+     "ARCOSUserType": "Client",
+     "Status": 1,
+     "UserLOBId": "1|6",
+     "UserGroupId": "10|12",
+     "EmailId": "test@gmail.com",
+     "MobileNo": 9876543210,
+     "UserTypeId": 0,
+     "DualFactorTypeId": ""
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "EnableUser",
+    "verb": "POST",
+    "path": "/api/UserDetails/EnableUser",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_UnauthorizedAccess row 40 (provider UserDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "UserId": 35
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "EnableUser_New",
+    "verb": "POST",
+    "path": "/api/UserDetails/EnableUser_New",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_UnauthorizedAccess row 41 (provider UserDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "__raw__": "Not Found On Confluence"
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "GetUserPreferenceByServiceTypeId",
+    "verb": "POST",
+    "path": "/api/UserDetails/GetUserPreferenceByServiceTypeId",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_UnauthorizedAccess row 42 (provider UserDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "__raw__": "http://localhost:55560/api/UserDetails/GetUserPreferenceByServiceTypeId?serviceTypeId=2&userId=35"
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   }
+  ]
+ },
+ {
+  "id": "data_negative_userdetails_9",
+  "title": "UserDetails - negative data-driven batch 9",
+  "why": "Executes the QA team's authored negative scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status and error code.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "negative",
+  "tier": 4,
+  "controller": "UserDetails",
+  "hops": [
+   {
+    "name": "GetIndividualUserDetails",
+    "verb": "POST",
+    "path": "/api/UserDetails/GetIndividualUserDetails",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_UnauthorizedAccess row 43 (provider UserDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "UserID": 35,
+     "UserDisplayName": "ARCOSADMIN"
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "GetAllUserDetails",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetAllUserDetails",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_UnauthorizedAccess row 44 (provider UserDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "GetUserPrivilegesMapping",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetUserPrivilegesMapping",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_UnauthorizedAccess row 46 (provider UserDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "SetUserPrivilegesMapping",
+    "verb": "POST",
+    "path": "/api/UserDetails/SetUserPrivilegesMapping",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_UnauthorizedAccess row 47 (provider UserDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "UserId": 31,
+     "RoleId": [
+      1,
+      2,
+      3
+     ]
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "SetUserPrivilegesUnMapping",
+    "verb": "POST",
+    "path": "/api/UserDetails/SetUserPrivilegesUnMapping",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_UnauthorizedAccess row 48 (provider UserDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "usrid": 35,
+     "serviceid": "5|126"
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "GetLOBDetailsByUserId",
+    "verb": "POST",
+    "path": "/api/UserDetails/GetLOBDetailsByUserId",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_UnauthorizedAccess row 49 (provider UserDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "__raw__": "http://localhost:55560/api/UserDetails/GetLOBDetailsByUserId?UserID=35"
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "SetServerServerGroupMapping",
+    "verb": "POST",
+    "path": "/api/UserDetails/SetServerServerGroupMapping",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_UnauthorizedAccess row 50 (provider UserDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "ServiceId": 114955,
+     "ServiceGroupId": 520,
+     "ApiUserName": "APIUser",
+     "LOBId": 1
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "SetServerServerGroupUnMapping",
+    "verb": "POST",
+    "path": "/api/UserDetails/SetServerServerGroupUnMapping",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_UnauthorizedAccess row 51 (provider UserDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "UserId": 35,
+     "UserGroupId": 7,
+     "LOBId": "1|2"
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "GetUserGroupListWithoutMandateValue",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetUserGroupListWithoutMandateValue",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_UnauthorizedAccess row 52 (provider UserDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "GetUserListByNameNew",
+    "verb": "POST",
+    "path": "/api/UserDetails/GetUserListByNameNew",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_UnauthorizedAccess row 53 (provider UserDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "UserName": "ARCOSADMIN"
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "GetUserListByUserName",
+    "verb": "POST",
+    "path": "/api/UserDetails/GetUserListByUserName",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_UnauthorizedAccess row 54 (provider UserDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "GetSecretKey",
+    "verb": "POST",
+    "path": "/api/UserDetails/GetSecretKey",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_UnauthorizedAccess row 55 (provider UserDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   }
+  ]
+ },
+ {
+  "id": "data_negative_userdetails_10",
+  "title": "UserDetails - negative data-driven batch 10",
+  "why": "Executes the QA team's authored negative scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status and error code.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "negative",
+  "tier": 4,
+  "controller": "UserDetails",
+  "hops": [
+   {
+    "name": "EnableUsersbyUserGroup",
+    "verb": "POST",
+    "path": "/api/UserDetails/EnableUsersbyUserGroup",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_UnauthorizedAccess row 56 (provider UserDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "GetDisabledUsers",
+    "verb": "POST",
+    "path": "/api/UserDetails/GetDisabledUsers",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_UnauthorizedAccess row 58 (provider UserDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "LOBID": 1
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "UpdateUserInfo_New",
+    "verb": "POST",
+    "path": "/api/UserDetails/UpdateUserInfo_New",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_UnauthorizedAccess row 59 (provider UserDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "GetStatus",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_UnauthorizedAccess row 60 (provider UserDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "SetStatus",
+    "verb": "GET",
+    "path": "/api/UserDetails/SetStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_UnauthorizedAccess row 61 (provider UserDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "GetDatabaseStatus",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetDatabaseStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_UnauthorizedAccess row 62 (provider UserDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "GetUserServiceDetails",
+    "verb": "POST",
+    "path": "/api/UserDetails/GetUserServiceDetails",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_UnauthorizedAccess row 65 (provider UserDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "LOBId": 1
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "GetAllActiveUserList",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetAllActiveUserList",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserDetails_Negative / UserDetails_UnauthorizedAccess row 67 (provider UserDetails_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   }
+  ]
+ }
+]

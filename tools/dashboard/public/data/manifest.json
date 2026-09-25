@@ -1,0 +1,74 @@
+{
+ "generator": "tools/obj015_build_dashboard_data.py",
+ "objective": "OBJ-015 (run resolution and authored-analysis gating added under OBJ-017)",
+ "currentRunId": "2026-08-16_100005",
+ "previousRunId": "2026-08-05_114315",
+ "runsResolved": "newest substantive run is N; the one before it is N-1. Never hardcoded.",
+ "authoredAnalysisRun": "2026-08-05_114315",
+ "authoredAnalysisApplies": false,
+ "httpCallsIssued": 0,
+ "sources": [
+  {
+   "path": "artifacts/runs/2026-08-16_100005/QA_MsSQL_API_Execution.xlsx",
+   "provides": "run N results, benchmark, modules, performance",
+   "bytes": 533718,
+   "exists": true
+  },
+  {
+   "path": "artifacts/runs/2026-08-16_100005/validation.json",
+   "provides": "10-gate validation checklist, failing-layer counts",
+   "bytes": 2274,
+   "exists": true
+  },
+  {
+   "path": "state/obj010/segments-2026-08-16_100005.json",
+   "provides": "measured segment totals for 2026-08-16_100005",
+   "bytes": 1694,
+   "exists": true
+  },
+  {
+   "path": "docs/management/summary/OBJ-010-Execution-Benchmark.md",
+   "provides": "authored benchmark narrative, trend, recommendations",
+   "bytes": 13141,
+   "exists": true
+  },
+  {
+   "path": "data/profiles/pam.json",
+   "provides": "project identity and catalogue basis",
+   "bytes": 12563,
+   "exists": true
+  },
+  {
+   "path": "docs/findings/FINDINGS-SUMMARY-AND-PRIORITY.md",
+   "provides": "13 API findings with severity, effort, priority, Jira",
+   "bytes": 10376,
+   "exists": true
+  },
+  {
+   "path": "docs/findings/repository/findings.csv",
+   "provides": "14 developer-repository size findings with severity",
+   "bytes": 10405,
+   "exists": true
+  },
+  {
+   "path": "data/analysis/management-findings.json",
+   "provides": "16 management-level findings",
+   "bytes": 22036,
+   "exists": true
+  },
+  {
+   "path": "data/analysis/observations.json",
+   "provides": "50 engineering observations",
+   "bytes": 57443,
+   "exists": true
+  },
+  {
+   "path": "Automation gitlab repo/pam_automation_bootstrap/src/test/java/com/arcon/autoconfigs/APIConfig.java",
+   "provides": "declared endpoint catalogue, for true coverage",
+   "bytes": 134323,
+   "exists": true
+  }
+ ],
+ "warnings": [],
+ "principle": "Every figure traces to a source file listed here. A figure that was never measured is the string \"N/A\" and appears in gaps.json — it is never estimated."
+}

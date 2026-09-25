@@ -1,0 +1,517 @@
+[
+ {
+  "id": "data_negative_deviceonboarding_1",
+  "title": "DeviceOnboarding - negative data-driven batch 1",
+  "why": "Executes the QA team's authored negative scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status and error code.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "negative",
+  "tier": 4,
+  "controller": "DeviceOnboarding",
+  "hops": [
+   {
+    "name": "CreateGenericIds",
+    "verb": "GET",
+    "path": "/api/DeviceOnboarding/CreateGenericIds",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / DeviceOnboarding_Negative / DeviceOnboarding_MethodNotAllowed row 1 (provider DeviceOnboarding_MethodNotAllowed)",
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "ReconcileGenericIds",
+    "verb": "GET",
+    "path": "/api/DeviceOnboarding/ReconcileGenericIds",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / DeviceOnboarding_Negative / DeviceOnboarding_MethodNotAllowed row 3 (provider DeviceOnboarding_MethodNotAllowed)",
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "SetDefaultGenericIds",
+    "verb": "GET",
+    "path": "/api/DeviceOnboarding/SetDefaultGenericIds",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / DeviceOnboarding_Negative / DeviceOnboarding_MethodNotAllowed row 5 (provider DeviceOnboarding_MethodNotAllowed)",
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetLOBList",
+    "verb": "POST",
+    "path": "/api/DeviceOnboarding/GetLOBList",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / DeviceOnboarding_Negative / DeviceOnboarding_MethodNotAllowed row 6 (provider DeviceOnboarding_MethodNotAllowed)",
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "CallBack",
+    "verb": "GET",
+    "path": "/api/DeviceOnboarding/CallBack",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / DeviceOnboarding_Negative / DeviceOnboarding_MethodNotAllowed row 8 (provider DeviceOnboarding_MethodNotAllowed)",
+    "body": {
+     "status": "SUCCESS",
+     "message": "User Testuser added successfully. Setting password for user Testuser is SUCCESS. ",
+     "uuid": "2915abb8-xxx-4d66-xxx-695xxxb0a93f\\24581",
+     "auid": "a80d9f70-7ff1-xx58-axx43-5xxxxx7166",
+     "action": "AddUser"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "CreateGenericIdsV2",
+    "verb": "GET",
+    "path": "/api/DeviceOnboarding/CreateGenericIdsV2",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / DeviceOnboarding_Negative / DeviceOnboarding_MethodNotAllowed row 9 (provider DeviceOnboarding_MethodNotAllowed)",
+    "body": [
+     {
+      "ServerIP": "10.11.0.11",
+      "ServerHostname": "10.11.0.11",
+      "ServerDomainname": "domain",
+      "HostUserGroup": "Performance Monitor Users",
+      "OSorDB": "OS",
+      "NameOfOSorDB": "Linux",
+      "InstanceName": "",
+      "DBName": "",
+      "UserToBeCreated": "root",
+      "DBRole": "",
+      "ARCOSFlag": "Y",
+      "SourceDetails": "",
+      "HomeDirectory": "",
+      "Port": "",
+      "ARCOSLOB": "2",
+      "ARCOSServerGroup": "SG",
+      "UniqueId": "",
+      "PrivilegedIDDomainName": "",
+      "RequesterUsername": "Username",
+      "RoleTemplate": "",
+      "IsSafe": "True",
+      "Script": "",
+      "Emailid": "",
+      "MapAllAssignedServiceGroups": "false",
+      "TicketId": "123",
+      "IsCreateArcosServerGroup": "true",
+      "NewServerGroupName": "NewServerGroup",
+      "CallingApplicationName": "thirdpartyapplicationname",
+      "UserGroupId": "7,4,",
+      "ValidUntil": "2021-12-31T23:59:59.511Z",
+      "Description1": "Test Provisioning",
+      "Description2": "Test Provisioning",
+      "Description3": "DA",
+      "Description4": "<PTY>",
+      "UseRootServicePasswordPolicy": "true",
+      "Minimumpasswordage": "10",
+      "Maximumpasswordage": "60",
+      "UserOrganizationalUnit": "ARCOS|TESTOU",
+      "AdEntity": "user"
+     }
+    ],
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "ReconcileGenericIdsV2",
+    "verb": "GET",
+    "path": "/api/DeviceOnboarding/ReconcileGenericIdsV2",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / DeviceOnboarding_Negative / DeviceOnboarding_MethodNotAllowed row 10 (provider DeviceOnboarding_MethodNotAllowed)",
+    "body": [
+     {
+      "ServerIP": "10.11.1.99",
+      "ServerHostname": "HostABC",
+      "OSorDB": "OS",
+      "NameOfOSorDB": "LINUX",
+      "DBName": "",
+      "TargetUser": [
+       "GenAB12",
+       "Root",
+       "SYS"
+      ]
+     },
+     {
+      "ServerIP": "10.11.9.11",
+      "ServerHostname": "HostABC",
+      "OSorDB": "DB",
+      "NameOfOSorDB": "ORACLE",
+      "DBName": "DBtest",
+      "TargetUser": [
+       "Ora1234"
+      ]
+     }
+    ],
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "SetDefaultGenericIdsV2",
+    "verb": "GET",
+    "path": "/api/DeviceOnboarding/SetDefaultGenericIdsV2",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / DeviceOnboarding_Negative / DeviceOnboarding_MethodNotAllowed row 11 (provider DeviceOnboarding_MethodNotAllowed)",
+    "body": [
+     {
+      "NameOfOSorDB": "sql",
+      "DefaultUsername": "sa"
+     }
+    ],
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "AssignGroup",
+    "verb": "GET",
+    "path": "/api/DeviceOnboarding/AssignGroup",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / DeviceOnboarding_Negative / DeviceOnboarding_MethodNotAllowed row 14 (provider DeviceOnboarding_MethodNotAllowed)",
+    "body": {
+     "__raw__": "[\n{\n\"ServerIP\": \"10.10.0.XX\",\n\"ServerHostname\": \"10.10.0.XX\",\n\"ServerDomainname\": \"domain\",\n\"HostUserGroup\": \"Performance Monitor Users\",\n\"OSorDB\": \"OS\",\n\"NameOfOSorDB\": \"Linux\",\n\"InstanceName\": \"\",\n\"DBName\": \"\",\n\"UserToBeCreated\": \"root\",\n\"DBRole\": \"\",\n\"ARCOSFlag\": \"N\", // [Set this flag to 'N' when service not to be created in ARCON PAM]\n\"Port\": \"\",\n\"UniqueId\":\"\",\n\"RequesterUsername\": \"Username\",\n\"CallingApplicationName\": \"thirdpartyapplicationname\",\n\"UserOrganizationalUnit\": \"ARCOS|TESTOU\",\n\"AdEntity\": \"user\",\n\"OuGroup\": \"Builtin\"\n},\n{\n\"ServerIP\": \"10.10.0.XX\",\n\"ServerHostname\": \"10.10.0.XX\",\n\"ServerDomainname\": \"domain\",\n\"HostUserGroup\": \"Backup Operators\",\n\"OSorDB\": \"OS\",\n\"NameOfOSorDB\": \"Linux\",\n\"InstanceName\": \"\",\n\"DBName\": \"\",\n\"UserToBeCreated\": \"Test1\",\n\"DBRole\": \"\",\n\"ARCOSFlag\": \"N\", // [Set this flag to 'N' when service not to be created in ARCON PAM]\n\"Port\": \"\",\n\"UniqueId\":\"\",\n\"RequesterUsername\": \"Username\",\n\"CallingApplicationName\": \"thirdpartyapplicationname\",\n\"UserOrganizationalUnit\": \"ARCOS|TESTOU\",\n\"AdEntity\": \"user\",\n\"OuGroup\": \"Builtin\"\n}\n]"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetProvisioningReport",
+    "verb": "GET",
+    "path": "/api/DeviceOnboarding/GetProvisioningReport",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / DeviceOnboarding_Negative / DeviceOnboarding_MethodNotAllowed row 17 (provider DeviceOnboarding_MethodNotAllowed)",
+    "body": {
+     "Reporttype": "provisioning",
+     "Reportstatus": "success",
+     "Servicetype": "Windows",
+     "Datefrom": "2020-05-26 11:50:56.700",
+     "Dateto": "2020-06-30 11:50:56.700"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetStatus",
+    "verb": "POST",
+    "path": "/api/DeviceOnboarding/GetStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / DeviceOnboarding_Negative / DeviceOnboarding_MethodNotAllowed row 18 (provider DeviceOnboarding_MethodNotAllowed)",
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "SetStatus",
+    "verb": "POST",
+    "path": "/api/DeviceOnboarding/SetStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / DeviceOnboarding_Negative / DeviceOnboarding_MethodNotAllowed row 19 (provider DeviceOnboarding_MethodNotAllowed)",
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   }
+  ]
+ },
+ {
+  "id": "data_negative_deviceonboarding_2",
+  "title": "DeviceOnboarding - negative data-driven batch 2",
+  "why": "Executes the QA team's authored negative scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status and error code.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "negative",
+  "tier": 4,
+  "controller": "DeviceOnboarding",
+  "hops": [
+   {
+    "name": "GetDatabaseStatus",
+    "verb": "POST",
+    "path": "/api/DeviceOnboarding/GetDatabaseStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / DeviceOnboarding_Negative / DeviceOnboarding_MethodNotAllowed row 20 (provider DeviceOnboarding_MethodNotAllowed)",
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "CreateGenericIds",
+    "verb": "POST",
+    "path": "/api/DeviceOnboarding/CreateGenericIds",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / DeviceOnboarding_Negative / DeviceOnboarding_UnauthorizedAccess row 1 (provider DeviceOnboarding_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "ReconcileGenericIds",
+    "verb": "POST",
+    "path": "/api/DeviceOnboarding/ReconcileGenericIds",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / DeviceOnboarding_Negative / DeviceOnboarding_UnauthorizedAccess row 3 (provider DeviceOnboarding_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "SetDefaultGenericIds",
+    "verb": "POST",
+    "path": "/api/DeviceOnboarding/SetDefaultGenericIds",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / DeviceOnboarding_Negative / DeviceOnboarding_UnauthorizedAccess row 5 (provider DeviceOnboarding_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "GetLOBList",
+    "verb": "GET",
+    "path": "/api/DeviceOnboarding/GetLOBList",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / DeviceOnboarding_Negative / DeviceOnboarding_UnauthorizedAccess row 6 (provider DeviceOnboarding_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "CallBack",
+    "verb": "POST",
+    "path": "/api/DeviceOnboarding/CallBack",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / DeviceOnboarding_Negative / DeviceOnboarding_UnauthorizedAccess row 8 (provider DeviceOnboarding_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "status": "SUCCESS",
+     "message": "User Testuser added successfully. Setting password for user Testuser is SUCCESS. ",
+     "uuid": "2915abb8-xxx-4d66-xxx-695xxxb0a93f\\24581",
+     "auid": "a80d9f70-7ff1-xx58-axx43-5xxxxx7166",
+     "action": "AddUser"
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "CreateGenericIdsV2",
+    "verb": "POST",
+    "path": "/api/DeviceOnboarding/CreateGenericIdsV2",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / DeviceOnboarding_Negative / DeviceOnboarding_UnauthorizedAccess row 9 (provider DeviceOnboarding_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": [
+     {
+      "ServerIP": "10.11.0.11",
+      "ServerHostname": "10.11.0.11",
+      "ServerDomainname": "domain",
+      "HostUserGroup": "Performance Monitor Users",
+      "OSorDB": "OS",
+      "NameOfOSorDB": "Linux",
+      "InstanceName": "",
+      "DBName": "",
+      "UserToBeCreated": "root",
+      "DBRole": "",
+      "ARCOSFlag": "Y",
+      "SourceDetails": "",
+      "HomeDirectory": "",
+      "Port": "",
+      "ARCOSLOB": "2",
+      "ARCOSServerGroup": "SG",
+      "UniqueId": "",
+      "PrivilegedIDDomainName": "",
+      "RequesterUsername": "Username",
+      "RoleTemplate": "",
+      "IsSafe": "True",
+      "Script": "",
+      "Emailid": "",
+      "MapAllAssignedServiceGroups": "false",
+      "TicketId": "123",
+      "IsCreateArcosServerGroup": "true",
+      "NewServerGroupName": "NewServerGroup",
+      "CallingApplicationName": "thirdpartyapplicationname",
+      "UserGroupId": "7,4,",
+      "ValidUntil": "2021-12-31T23:59:59.511Z",
+      "Description1": "Test Provisioning",
+      "Description2": "Test Provisioning",
+      "Description3": "DA",
+      "Description4": "<PTY>",
+      "UseRootServicePasswordPolicy": "true",
+      "Minimumpasswordage": "10",
+      "Maximumpasswordage": "60",
+      "UserOrganizationalUnit": "ARCOS|TESTOU",
+      "AdEntity": "user"
+     }
+    ],
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "ReconcileGenericIdsV2",
+    "verb": "POST",
+    "path": "/api/DeviceOnboarding/ReconcileGenericIdsV2",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / DeviceOnboarding_Negative / DeviceOnboarding_UnauthorizedAccess row 10 (provider DeviceOnboarding_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": [
+     {
+      "ServerIP": "10.11.1.99",
+      "ServerHostname": "HostABC",
+      "OSorDB": "OS",
+      "NameOfOSorDB": "LINUX",
+      "DBName": "",
+      "TargetUser": [
+       "GenAB12",
+       "Root",
+       "SYS"
+      ]
+     },
+     {
+      "ServerIP": "10.11.9.11",
+      "ServerHostname": "HostABC",
+      "OSorDB": "DB",
+      "NameOfOSorDB": "ORACLE",
+      "DBName": "DBtest",
+      "TargetUser": [
+       "Ora1234"
+      ]
+     }
+    ],
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "SetDefaultGenericIdsV2",
+    "verb": "POST",
+    "path": "/api/DeviceOnboarding/SetDefaultGenericIdsV2",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / DeviceOnboarding_Negative / DeviceOnboarding_UnauthorizedAccess row 11 (provider DeviceOnboarding_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": [
+     {
+      "NameOfOSorDB": "sql",
+      "DefaultUsername": "sa"
+     }
+    ],
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "AssignGroup",
+    "verb": "POST",
+    "path": "/api/DeviceOnboarding/AssignGroup",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / DeviceOnboarding_Negative / DeviceOnboarding_UnauthorizedAccess row 14 (provider DeviceOnboarding_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "__raw__": "[\n{\n\"ServerIP\": \"10.10.0.XX\",\n\"ServerHostname\": \"10.10.0.XX\",\n\"ServerDomainname\": \"domain\",\n\"HostUserGroup\": \"Performance Monitor Users\",\n\"OSorDB\": \"OS\",\n\"NameOfOSorDB\": \"Linux\",\n\"InstanceName\": \"\",\n\"DBName\": \"\",\n\"UserToBeCreated\": \"root\",\n\"DBRole\": \"\",\n\"ARCOSFlag\": \"N\", // [Set this flag to 'N' when service not to be created in ARCON PAM]\n\"Port\": \"\",\n\"UniqueId\":\"\",\n\"RequesterUsername\": \"Username\",\n\"CallingApplicationName\": \"thirdpartyapplicationname\",\n\"UserOrganizationalUnit\": \"ARCOS|TESTOU\",\n\"AdEntity\": \"user\",\n\"OuGroup\": \"Builtin\"\n},\n{\n\"ServerIP\": \"10.10.0.XX\",\n\"ServerHostname\": \"10.10.0.XX\",\n\"ServerDomainname\": \"domain\",\n\"HostUserGroup\": \"Backup Operators\",\n\"OSorDB\": \"OS\",\n\"NameOfOSorDB\": \"Linux\",\n\"InstanceName\": \"\",\n\"DBName\": \"\",\n\"UserToBeCreated\": \"Test1\",\n\"DBRole\": \"\",\n\"ARCOSFlag\": \"N\", // [Set this flag to 'N' when service not to be created in ARCON PAM]\n\"Port\": \"\",\n\"UniqueId\":\"\",\n\"RequesterUsername\": \"Username\",\n\"CallingApplicationName\": \"thirdpartyapplicationname\",\n\"UserOrganizationalUnit\": \"ARCOS|TESTOU\",\n\"AdEntity\": \"user\",\n\"OuGroup\": \"Builtin\"\n}\n]"
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "GetProvisioningReport",
+    "verb": "POST",
+    "path": "/api/DeviceOnboarding/GetProvisioningReport",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / DeviceOnboarding_Negative / DeviceOnboarding_UnauthorizedAccess row 17 (provider DeviceOnboarding_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "Reporttype": "provisioning",
+     "Reportstatus": "success",
+     "Servicetype": "Windows",
+     "Datefrom": "2020-05-26 11:50:56.700",
+     "Dateto": "2020-06-30 11:50:56.700"
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "GetStatus",
+    "verb": "GET",
+    "path": "/api/DeviceOnboarding/GetStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / DeviceOnboarding_Negative / DeviceOnboarding_UnauthorizedAccess row 18 (provider DeviceOnboarding_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   }
+  ]
+ },
+ {
+  "id": "data_negative_deviceonboarding_3",
+  "title": "DeviceOnboarding - negative data-driven batch 3",
+  "why": "Executes the QA team's authored negative scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status and error code.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "negative",
+  "tier": 4,
+  "controller": "DeviceOnboarding",
+  "hops": [
+   {
+    "name": "SetStatus",
+    "verb": "GET",
+    "path": "/api/DeviceOnboarding/SetStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / DeviceOnboarding_Negative / DeviceOnboarding_UnauthorizedAccess row 19 (provider DeviceOnboarding_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   },
+   {
+    "name": "GetDatabaseStatus",
+    "verb": "GET",
+    "path": "/api/DeviceOnboarding/GetDatabaseStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / DeviceOnboarding_Negative / DeviceOnboarding_UnauthorizedAccess row 20 (provider DeviceOnboarding_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   }
+  ]
+ }
+]

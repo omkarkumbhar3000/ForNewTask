@@ -1,0 +1,74 @@
+[
+ {
+  "id": "data_positive_azurekeyvault_1",
+  "title": "AzureKeyVault - positive data-driven batch 1",
+  "why": "Executes the QA team's authored positive scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "positive",
+  "tier": 4,
+  "controller": "AzureKeyVault",
+  "hops": [
+   {
+    "name": "CheckConnectionToAzureKeyVault",
+    "verb": "POST",
+    "path": "/api/AzureKeyVault/CheckConnectionToAzureKeyVault",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / AzureKeyVault_positive row 1 (provider AzureKeyVault)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "ReadDataFromAzureKeyVault",
+    "verb": "POST",
+    "path": "/api/AzureKeyVault/ReadDataFromAzureKeyVault",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / AzureKeyVault_positive row 2 (provider AzureKeyVault)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "WriteDataToAKV",
+    "verb": "POST",
+    "path": "/api/AzureKeyVault/WriteDataToAKV",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / AzureKeyVault_positive row 3 (provider AzureKeyVault)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetStatus",
+    "verb": "GET",
+    "path": "/api/AzureKeyVault/GetStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / AzureKeyVault_positive row 4 (provider AzureKeyVault)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "SetStatus",
+    "verb": "GET",
+    "path": "/api/AzureKeyVault/SetStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / AzureKeyVault_positive row 5 (provider AzureKeyVault)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetDatabaseStatus",
+    "verb": "GET",
+    "path": "/api/AzureKeyVault/GetDatabaseStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / AzureKeyVault_positive row 6 (provider AzureKeyVault)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   }
+  ]
+ }
+]

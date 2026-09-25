@@ -1,0 +1,89 @@
+[
+ {
+  "id": "data_positive_hsmentrust_1",
+  "title": "HSMEntrust - positive data-driven batch 1",
+  "why": "Executes the QA team's authored positive scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "positive",
+  "tier": 4,
+  "controller": "HSMEntrust",
+  "hops": [
+   {
+    "name": "CheckConnectionToHSMEntrust",
+    "verb": "POST",
+    "path": "/api/HSMEntrust/CheckConnectionToHSMEntrust",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / HSMEntrust_positive row 1 (provider HSMEntrust)",
+    "body": {
+     "HSMLabel": "Test",
+     "HSMPwd": "pass@123",
+     "HSMSlot": "2"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "WriteDataToHSMEntrust",
+    "verb": "POST",
+    "path": "/api/HSMEntrust/WriteDataToHSMEntrust",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / HSMEntrust_positive row 2 (provider HSMEntrust)",
+    "body": {
+     "HSMLabel": "Test",
+     "HSMPwd": "pass@123",
+     "HSMSlot": "2"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "ReadDataFromHSMEntrust",
+    "verb": "POST",
+    "path": "/api/HSMEntrust/ReadDataFromHSMEntrust",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / HSMEntrust_positive row 3 (provider HSMEntrust)",
+    "body": {
+     "HSMLabel": "Test",
+     "HSMPwd": "pass@123",
+     "HSMSlot": "2"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetStatus",
+    "verb": "GET",
+    "path": "/api/HSMEntrust/GetStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / HSMEntrust_positive row 4 (provider HSMEntrust)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "SetStatus",
+    "verb": "GET",
+    "path": "/api/HSMEntrust/SetStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / HSMEntrust_positive row 5 (provider HSMEntrust)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetDatabaseStatus",
+    "verb": "GET",
+    "path": "/api/HSMEntrust/GetDatabaseStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / HSMEntrust_positive row 6 (provider HSMEntrust)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   }
+  ]
+ }
+]

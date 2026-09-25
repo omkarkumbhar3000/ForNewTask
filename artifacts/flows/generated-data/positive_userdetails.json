@@ -1,0 +1,805 @@
+[
+ {
+  "id": "data_positive_userdetails_1",
+  "title": "UserDetails - positive data-driven batch 1",
+  "why": "Executes the QA team's authored positive scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "positive",
+  "tier": 4,
+  "controller": "UserDetails",
+  "hops": [
+   {
+    "name": "GetUserDetailsBySession",
+    "verb": "POST",
+    "path": "/api/UserDetails/GetUserDetailsBySession",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / UserDetails_positive row 1 (provider UserDetails)",
+    "body": {
+     "__raw__": "http://localhost:55560/api/UserDetails/GetUserDetailsBySession?sessionId=1"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetUserAppPreference",
+    "verb": "POST",
+    "path": "/api/UserDetails/GetUserAppPreference",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / UserDetails_positive row 2 (provider UserDetails)",
+    "body": {
+     "__raw__": "Not Found On Confluence"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetUserPreference",
+    "verb": "POST",
+    "path": "/api/UserDetails/GetUserPreference",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / UserDetails_positive row 3 (provider UserDetails)",
+    "body": {
+     "__raw__": "http://localhost:55560/api/UserDetails/GetUserPreference?preferenceId=141&userId=35"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetLOBList",
+    "verb": "POST",
+    "path": "/api/UserDetails/GetLOBList",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / UserDetails_positive row 4 (provider UserDetails)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetDormantUsers",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetDormantUsers",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / UserDetails_positive row 5 (provider UserDetails)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetUserType",
+    "verb": "POST",
+    "path": "/api/UserDetails/GetUserType",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / UserDetails_positive row 6 (provider UserDetails)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetUserGroupList",
+    "verb": "POST",
+    "path": "/api/UserDetails/GetUserGroupList",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / UserDetails_positive row 7 (provider UserDetails)",
+    "body": {
+     "UserGroupID": 64
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetMobileAuthDetails",
+    "verb": "POST",
+    "path": "/api/UserDetails/GetMobileAuthDetails",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / UserDetails_positive row 8 (provider UserDetails)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "SetUserDetails",
+    "verb": "POST",
+    "path": "/api/UserDetails/SetUserDetails",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / UserDetails_positive row 9 (provider UserDetails)",
+    "body": {
+     "LOBID": 1,
+     "UserGroupId": 1,
+     "DomainName": "ARCOSAUTH",
+     "UserDisplayName": "MAJID4567",
+     "UserId": "MAJID4567",
+     "Password": "pass@123",
+     "UserTypeId": 1,
+     "EmailId": "majid4567@majid.com"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetDomains",
+    "verb": "POST",
+    "path": "/api/UserDetails/GetDomains",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / UserDetails_positive row 10 (provider UserDetails)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetServiceTypeList",
+    "verb": "POST",
+    "path": "/api/UserDetails/GetServiceTypeList",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / UserDetails_positive row 11 (provider UserDetails)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetUserList",
+    "verb": "POST",
+    "path": "/api/UserDetails/GetUserList",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / UserDetails_positive row 12 (provider UserDetails)",
+    "body": {
+     "UserGroupId": 1
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   }
+  ]
+ },
+ {
+  "id": "data_positive_userdetails_2",
+  "title": "UserDetails - positive data-driven batch 2",
+  "why": "Executes the QA team's authored positive scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "positive",
+  "tier": 4,
+  "controller": "UserDetails",
+  "hops": [
+   {
+    "name": "GetServerGroupList",
+    "verb": "POST",
+    "path": "/api/UserDetails/GetServerGroupList",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / UserDetails_positive row 13 (provider UserDetails)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetPasswordPolicyList",
+    "verb": "POST",
+    "path": "/api/UserDetails/GetPasswordPolicyList",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / UserDetails_positive row 14 (provider UserDetails)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetAssignedServiceListToUsr",
+    "verb": "POST",
+    "path": "/api/UserDetails/GetAssignedServiceListToUsr",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / UserDetails_positive row 15 (provider UserDetails)",
+    "body": {
+     "UserId": 35
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetAssignedServiceTypesToUser",
+    "verb": "POST",
+    "path": "/api/UserDetails/GetAssignedServiceTypesToUser",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / UserDetails_positive row 16 (provider UserDetails)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetNotAssignedServiceListToUsr",
+    "verb": "POST",
+    "path": "/api/UserDetails/GetNotAssignedServiceListToUsr",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / UserDetails_positive row 17 (provider UserDetails)",
+    "body": {
+     "UserId": 35
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "SetServiceUserMapping",
+    "verb": "POST",
+    "path": "/api/UserDetails/SetServiceUserMapping",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / UserDetails_positive row 18 (provider UserDetails)",
+    "body": {
+     "usrid": 35,
+     "serviceid": "5|126"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "SetServiceUserUnMapping",
+    "verb": "POST",
+    "path": "/api/UserDetails/SetServiceUserUnMapping",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / UserDetails_positive row 19 (provider UserDetails)",
+    "body": {
+     "usrid": 35,
+     "serviceid": "5|126"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "SetUsertoUserGroupMapping",
+    "verb": "POST",
+    "path": "/api/UserDetails/SetUsertoUserGroupMapping",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / UserDetails_positive row 20 (provider UserDetails)",
+    "body": {
+     "UserId": 35,
+     "UserGroupId": 7,
+     "LOBId": "1|2"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "SetUsertoUserGroupMappingWithAutoMap",
+    "verb": "POST",
+    "path": "/api/UserDetails/SetUsertoUserGroupMappingWithAutoMap",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / UserDetails_positive row 21 (provider UserDetails)",
+    "body": {
+     "UserGroupId": 64,
+     "UserId": 35,
+     "LobId": 1
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "SetUsertoUserGroupUNMapping",
+    "verb": "POST",
+    "path": "/api/UserDetails/SetUsertoUserGroupUNMapping",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / UserDetails_positive row 22 (provider UserDetails)",
+    "body": {
+     "__raw__": "{\nUserGroupId:64,\nUserId:35\n}"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetUserListByName",
+    "verb": "POST",
+    "path": "/api/UserDetails/GetUserListByName",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / UserDetails_positive row 23 (provider UserDetails)",
+    "body": {
+     "UserId": 23255,
+     "UserName": "Sachin"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetdualFactorType",
+    "verb": "POST",
+    "path": "/api/UserDetails/GetdualFactorType",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / UserDetails_positive row 24 (provider UserDetails)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   }
+  ]
+ },
+ {
+  "id": "data_positive_userdetails_3",
+  "title": "UserDetails - positive data-driven batch 3",
+  "why": "Executes the QA team's authored positive scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "positive",
+  "tier": 4,
+  "controller": "UserDetails",
+  "hops": [
+   {
+    "name": "SetDualFactorAuthorization",
+    "verb": "POST",
+    "path": "/api/UserDetails/SetDualFactorAuthorization",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / UserDetails_positive row 25 (provider UserDetails)",
+    "body": {
+     "UserId": 1,
+     "DualFactorTypeId": 4,
+     "MobileNo": "9876543210"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "UpdateUserPreferences",
+    "verb": "POST",
+    "path": "/api/UserDetails/UpdateUserPreferences",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / UserDetails_positive row 26 (provider UserDetails)",
+    "body": {
+     "UserID": 35,
+     "ServiceTypeID": 141,
+     "LoggedInUserSessionID": 1,
+     "ServiceTypeDescription": "Test",
+     "userServicePreference": {
+      "ServiceRename": "TestService",
+      "IconString": "",
+      "Color": "",
+      "Description": "Test Service",
+      "ServiceID": 1
+     }
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetUserPreferences",
+    "verb": "POST",
+    "path": "/api/UserDetails/GetUserPreferences",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / UserDetails_positive row 27 (provider UserDetails)",
+    "body": {
+     "UserID": 35,
+     "ServiceTypeID": 141,
+     "ServiceID": 1
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetPreferencesMaster",
+    "verb": "POST",
+    "path": "/api/UserDetails/GetPreferencesMaster",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / UserDetails_positive row 28 (provider UserDetails)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetPreferencesMasterDetails",
+    "verb": "POST",
+    "path": "/api/UserDetails/GetPreferencesMasterDetails",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / UserDetails_positive row 29 (provider UserDetails)",
+    "body": {
+     "UserID": "35",
+     "ServiceTypeID": "7"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetAllServerGroups",
+    "verb": "POST",
+    "path": "/api/UserDetails/GetAllServerGroups",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / UserDetails_positive row 33 (provider UserDetails)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "SetUserGroupServiceGroupMapping",
+    "verb": "POST",
+    "path": "/api/UserDetails/SetUserGroupServiceGroupMapping",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / UserDetails_positive row 34 (provider UserDetails)",
+    "body": {
+     "UserGroupId": 7,
+     "ServiceGroupId": 3
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "UpdateUserDetails",
+    "verb": "POST",
+    "path": "/api/UserDetails/UpdateUserDetails",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / UserDetails_positive row 35 (provider UserDetails)",
+    "body": {
+     "UserId": 35,
+     "UserDisplayName": "ARCOSADMIN",
+     "EmailId": "test@gmail.com",
+     "UserType": 1
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "SetUserAndSingleLOBMapping",
+    "verb": "POST",
+    "path": "/api/UserDetails/SetUserAndSingleLOBMapping",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / UserDetails_positive row 37 (provider UserDetails)",
+    "body": {
+     "UserId": 35,
+     "LOBId": 3
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "SetUserAndMultipleLOBMapping",
+    "verb": "POST",
+    "path": "/api/UserDetails/SetUserAndMultipleLOBMapping",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / UserDetails_positive row 38 (provider UserDetails)",
+    "body": {
+     "UserId": 35,
+     "LOBId": "9|10|11"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "UpdateUserInfo",
+    "verb": "POST",
+    "path": "/api/UserDetails/UpdateUserInfo",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / UserDetails_positive row 39 (provider UserDetails)",
+    "body": {
+     "UserId": 35,
+     "UserDisplayName": "USER01",
+     "DomainName": "ARCOS01",
+     "ValidTill": "01/01/2059 11:59:00",
+     "ARCOSUserType": "Client",
+     "Status": 1,
+     "UserLOBId": "1|6",
+     "UserGroupId": "10|12",
+     "EmailId": "test@gmail.com",
+     "MobileNo": 9876543210,
+     "UserTypeId": 0,
+     "DualFactorTypeId": ""
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "EnableUser",
+    "verb": "POST",
+    "path": "/api/UserDetails/EnableUser",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / UserDetails_positive row 40 (provider UserDetails)",
+    "body": {
+     "UserId": 35
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   }
+  ]
+ },
+ {
+  "id": "data_positive_userdetails_4",
+  "title": "UserDetails - positive data-driven batch 4",
+  "why": "Executes the QA team's authored positive scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "positive",
+  "tier": 4,
+  "controller": "UserDetails",
+  "hops": [
+   {
+    "name": "EnableUser_New",
+    "verb": "POST",
+    "path": "/api/UserDetails/EnableUser_New",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / UserDetails_positive row 41 (provider UserDetails)",
+    "body": {
+     "__raw__": "Not Found On Confluence"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetUserPreferenceByServiceTypeId",
+    "verb": "POST",
+    "path": "/api/UserDetails/GetUserPreferenceByServiceTypeId",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / UserDetails_positive row 42 (provider UserDetails)",
+    "body": {
+     "__raw__": "http://localhost:55560/api/UserDetails/GetUserPreferenceByServiceTypeId?serviceTypeId=2&userId=35"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetIndividualUserDetails",
+    "verb": "POST",
+    "path": "/api/UserDetails/GetIndividualUserDetails",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / UserDetails_positive row 43 (provider UserDetails)",
+    "body": {
+     "UserID": 35,
+     "UserDisplayName": "ARCOSADMIN"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetAllUserDetails",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetAllUserDetails",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / UserDetails_positive row 44 (provider UserDetails)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetUserPrivilegesMapping",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetUserPrivilegesMapping",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / UserDetails_positive row 46 (provider UserDetails)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "SetUserPrivilegesMapping",
+    "verb": "POST",
+    "path": "/api/UserDetails/SetUserPrivilegesMapping",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / UserDetails_positive row 47 (provider UserDetails)",
+    "body": {
+     "UserId": 31,
+     "RoleId": [
+      1,
+      2,
+      3
+     ]
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "SetUserPrivilegesUnMapping",
+    "verb": "POST",
+    "path": "/api/UserDetails/SetUserPrivilegesUnMapping",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / UserDetails_positive row 48 (provider UserDetails)",
+    "body": {
+     "usrid": 35,
+     "serviceid": "5|126"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetLOBDetailsByUserId",
+    "verb": "POST",
+    "path": "/api/UserDetails/GetLOBDetailsByUserId",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / UserDetails_positive row 49 (provider UserDetails)",
+    "body": {
+     "__raw__": "http://localhost:55560/api/UserDetails/GetLOBDetailsByUserId?UserID=35"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "SetServerServerGroupMapping",
+    "verb": "POST",
+    "path": "/api/UserDetails/SetServerServerGroupMapping",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / UserDetails_positive row 50 (provider UserDetails)",
+    "body": {
+     "ServiceId": 114955,
+     "ServiceGroupId": 520,
+     "ApiUserName": "APIUser",
+     "LOBId": 1
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "SetServerServerGroupUnMapping",
+    "verb": "POST",
+    "path": "/api/UserDetails/SetServerServerGroupUnMapping",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / UserDetails_positive row 51 (provider UserDetails)",
+    "body": {
+     "UserId": 35,
+     "UserGroupId": 7,
+     "LOBId": "1|2"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetUserGroupListWithoutMandateValue",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetUserGroupListWithoutMandateValue",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / UserDetails_positive row 52 (provider UserDetails)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetUserListByNameNew",
+    "verb": "POST",
+    "path": "/api/UserDetails/GetUserListByNameNew",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / UserDetails_positive row 53 (provider UserDetails)",
+    "body": {
+     "UserName": "ARCOSADMIN"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   }
+  ]
+ },
+ {
+  "id": "data_positive_userdetails_5",
+  "title": "UserDetails - positive data-driven batch 5",
+  "why": "Executes the QA team's authored positive scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "positive",
+  "tier": 4,
+  "controller": "UserDetails",
+  "hops": [
+   {
+    "name": "GetUserListByUserName",
+    "verb": "POST",
+    "path": "/api/UserDetails/GetUserListByUserName",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / UserDetails_positive row 54 (provider UserDetails)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetSecretKey",
+    "verb": "POST",
+    "path": "/api/UserDetails/GetSecretKey",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / UserDetails_positive row 55 (provider UserDetails)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "EnableUsersbyUserGroup",
+    "verb": "POST",
+    "path": "/api/UserDetails/EnableUsersbyUserGroup",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / UserDetails_positive row 56 (provider UserDetails)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetDisabledUsers",
+    "verb": "POST",
+    "path": "/api/UserDetails/GetDisabledUsers",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / UserDetails_positive row 58 (provider UserDetails)",
+    "body": {
+     "LOBID": 1
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "UpdateUserInfo_New",
+    "verb": "POST",
+    "path": "/api/UserDetails/UpdateUserInfo_New",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / UserDetails_positive row 59 (provider UserDetails)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetStatus",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / UserDetails_positive row 60 (provider UserDetails)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "SetStatus",
+    "verb": "GET",
+    "path": "/api/UserDetails/SetStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / UserDetails_positive row 61 (provider UserDetails)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetDatabaseStatus",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetDatabaseStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / UserDetails_positive row 62 (provider UserDetails)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetUserServiceDetails",
+    "verb": "POST",
+    "path": "/api/UserDetails/GetUserServiceDetails",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / UserDetails_positive row 65 (provider UserDetails)",
+    "body": {
+     "LOBId": 1
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetAllActiveUserList",
+    "verb": "GET",
+    "path": "/api/UserDetails/GetAllActiveUserList",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / UserDetails_positive row 67 (provider UserDetails)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   }
+  ]
+ }
+]

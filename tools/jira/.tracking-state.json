@@ -1,0 +1,13 @@
+{
+ "checked_utc": "2026-08-11T11:07:56+00:00",
+ "tickets": {
+  "PAMIT-42744": {
+   "status": "Open",
+   "assignee": "Trupti A Shirdhankar"
+  },
+  "PAMIT-43050": {
+   "status": "Open",
+   "assignee": "Somesh Hinduja"
+  }
+ }
+}

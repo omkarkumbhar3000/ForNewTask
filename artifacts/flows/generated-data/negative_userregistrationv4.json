@@ -1,0 +1,71 @@
+[
+ {
+  "id": "data_negative_userregistrationv4_1",
+  "title": "UserRegistrationV4 - negative data-driven batch 1",
+  "why": "Executes the QA team's authored negative scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status and error code.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "negative",
+  "tier": 4,
+  "controller": "UserRegistrationV4",
+  "hops": [
+   {
+    "name": "InsertUser",
+    "verb": "GET",
+    "path": "/api/UserRegistrationV2/InsertUser",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserRegistrationV2_Negative / UserRegistrationV2_MethodNotAllowed row 2 (provider UserRegistrationV2_MethodNotAllowed)",
+    "body": {
+     "Username": "user67",
+     "UsernameOld": "user13",
+     "Password": "user@123",
+     "Email": "user@gmail.com",
+     "CreatedOn": "",
+     "CreatedBy": "35",
+     "IsDefault": "",
+     "Active": "1",
+     "AccessType": "User",
+     "AccessRowIds": "",
+     "AccessRowNames": "",
+     "UserSecret": "",
+     "UserKey": "",
+     "CreatedByUserId": "35",
+     "UpdatedByUserId": ""
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "InsertUser",
+    "verb": "POST",
+    "path": "/api/UserRegistrationV2/InsertUser",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / UserRegistrationV2_Negative / UserRegistrationV2_UnauthorizedAccess row 2 (provider UserRegistrationV2_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "Username": "user67",
+     "UsernameOld": "user13",
+     "Password": "user@123",
+     "Email": "user@gmail.com",
+     "CreatedOn": "",
+     "CreatedBy": "35",
+     "IsDefault": "",
+     "Active": "1",
+     "AccessType": "User",
+     "AccessRowIds": "",
+     "AccessRowNames": "",
+     "UserSecret": "",
+     "UserKey": "",
+     "CreatedByUserId": "35",
+     "UpdatedByUserId": ""
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid",
+    "negative": true
+   }
+  ]
+ }
+]

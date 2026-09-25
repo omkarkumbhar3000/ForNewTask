@@ -1,0 +1,89 @@
+{
+ "note": "Which validation layer caught each failure. A status-only check would have caught none of the envelope or message-semantics failures.",
+ "layers": [
+  {
+   "layer": "envelope",
+   "hops": 1475,
+   "topEndpoints": [
+    "/api/UserDetailsV2/GetAllActiveUserList (7)",
+    "/api/ServiceDetails/GetAllActiveServices (4)",
+    "/api/ServiceDetailsV2/GetAllActiveServices (4)",
+    "/api/ServiceDetailsV3/GetAllActiveServices (4)",
+    "/api/UserDetailsV2/GetUserGroupList (3)"
+   ]
+  },
+  {
+   "layer": "http-status",
+   "hops": 1027,
+   "topEndpoints": [
+    "/api/ServiceDetails/GetUsersServicesTimebased (7)",
+    "/api/ServiceDetails/GetServicesParamByServiceID (7)",
+    "/api/ServiceDetails/GetCriticalCommands (7)",
+    "/api/ServiceDetails/GetCriticalRestrictedCommands (7)",
+    "/api/ServiceDetails/GetServiceDetailsBySessionId_AcmoCLI (7)"
+   ]
+  },
+  {
+   "layer": "message-semantics",
+   "hops": 927,
+   "topEndpoints": [
+    "/api/UserDetailsV2/GetAllActiveUserList (7)",
+    "/api/ServiceDetails/GetAllActiveServices (4)",
+    "/api/ServiceDetailsV2/GetAllActiveServices (4)",
+    "/api/ServiceDetailsV3/GetAllActiveServices (4)",
+    "/api/UserDetailsV2/GetUserGroupList (3)"
+   ]
+  },
+  {
+   "layer": "chain-key-extracted",
+   "hops": 191,
+   "topEndpoints": [
+    "/api/ADbridging/GetLOBList (3)",
+    "/api/ADbridging/InsertLOBDetails (1)",
+    "/api/ADbridging/InsertServerDomainMapping (1)",
+    "/api/ADbridgingV2/InsertLOBDetails (1)",
+    "/api/ADbridgingV2/InsertServerDomainMapping (1)"
+   ]
+  },
+  {
+   "layer": "record-exists",
+   "hops": 98,
+   "topEndpoints": [
+    "/api/UserDetailsV2/GetAllActiveUserList (6)",
+    "/api/LobandService/GetLOBandServiceTypeList (4)",
+    "/api/UserDetails/GetAllActiveUserList (4)",
+    "/api/UserDetailsV3/GetAllActiveUserList (4)",
+    "/api/UserDetailsV4/GetAllActiveUserList (4)"
+   ]
+  },
+  {
+   "layer": "content-type",
+   "hops": 34,
+   "topEndpoints": [
+    "/api/ADbridging/GetLOBList (3)",
+    "/api/UserDetailsV4/GetAllActiveUserList (1)",
+    "/api/UserRegistration/GetAllUsers (1)",
+    "/api/CustomErrorHandler/WriteErrorLog (1)",
+    "/api/DeviceOnboarding/CallBack (1)"
+   ]
+  },
+  {
+   "layer": "latency",
+   "hops": 13,
+   "topEndpoints": [
+    "/api/ADbridging/GetLOBList (11)",
+    "/api/ServiceCreation/SetServiceDetails (1)",
+    "/api/ADbridging/GetServerGroupList (1)"
+   ]
+  }
+ ],
+ "validationLayers": {
+  "latency": 13,
+  "envelope": 1475,
+  "message-semantics": 927,
+  "record-exists": 98,
+  "chain-key-extracted": 191,
+  "http-status": 1027,
+  "content-type": 34
+ }
+}

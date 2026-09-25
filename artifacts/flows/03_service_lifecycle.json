@@ -1,0 +1,87 @@
+{
+  "id": "service_lifecycle",
+  "title": "Service lifecycle - create a service in a discovered LOB, fetch it, confirm it under the LOB",
+  "why": "Five real levels: LOB -> server group -> create service -> fetch that service by its returned id -> confirm it now appears in the LOB's active service list. The last hop is the strongest assertion available, because it proves the product registered the service against the LOB rather than merely accepting the request.",
+  "hops": [
+    {
+      "name": "GetLOBList",
+      "verb": "POST",
+      "path": "/api/ADbridging/GetLOBList",
+      "body": {},
+      "find_extract": {
+        "in": "Result",
+        "where": { "LobName": "AUTOMATION_TEST_LOB" },
+        "take": { "LOB_ID": "LobId", "LOB_NAME": "LobName" }
+      }
+    },
+    {
+      "name": "GetServerGroupList",
+      "verb": "POST",
+      "path": "/api/ADbridging/GetServerGroupList",
+      "body": { "LobId": "${LOB_ID}" },
+      "extract": {
+        "SERVER_GROUP_ID": "Result[0].ServerGroupId",
+        "SERVER_GROUP_NAME": "Result[0].ServerGroupName"
+      }
+    },
+    {
+      "name": "SetServiceDetails",
+      "verb": "POST",
+      "path": "/api/ServiceCreation/SetServiceDetails",
+      "body": {
+        "LOBID": "${LOB_ID}",
+        "ServerGroupId": "${SERVER_GROUP_ID}",
+        "Hostname": "${NEW_SERVICE_HOST}",
+        "IPAddress": "${NEW_SERVICE_HOST}",
+        "Domain": "2",
+        "ServiceTypeId": 1,
+        "DBInstanceName": "",
+        "ServiceUserName": "${NEW_SERVICE_USER}",
+        "ServicePassword": "${NEW_SERVICE_PASSWORD}",
+        "Description1": "",
+        "Description2": "",
+        "Description3": "",
+        "Parameter": "1",
+        "Port": "${NEW_SERVICE_PORT}",
+        "AllowPasswordChange": 1,
+        "Vault_Password_Immediately": 1
+      },
+      "expect_created": true,
+      "extract": { "NEW_SERVICE_ID": "Result[0].ServiceId" },
+      "cast": { "NEW_SERVICE_ID": "int" },
+      "sla_ms": 8000,
+      "note": "The owner's verified payload returned Success:true with Message:'Already Exists' - it created nothing. Host, IP, service user and port are randomised per run so this is a genuine insert. ServiceId comes back as a STRING and is cast to int, because the next hop's request expects a number."
+    },
+    {
+      "name": "GetServiceDetails",
+      "verb": "POST",
+      "path": "/api/ServiceDetails/GetServiceDetails",
+      "body": {
+        "ServiceId": "${NEW_SERVICE_ID}",
+        "ServiceTypeId": 1,
+        "UserId": 35,
+        "UserSessionId": 1
+      },
+      "extract": {
+        "SERVICE_SESSION_ID": "Result.ServiceSessionId",
+        "FETCHED_HOSTNAME": "Result.HostName",
+        "SERVICE_WINDOW_TITLE": "Result.ServiceWindowTitle"
+      },
+      "sla_ms": 8000,
+      "note": "Result is an OBJECT here, while SetServiceDetails returns Result as an ARRAY - the extractor handles both. UserId 35 / UserSessionId 1 are the session context from the owner's verified call. This response returns the service password in cleartext; the evidence writer redacts it."
+    },
+    {
+      "name": "GetActiveServicesByLOBId",
+      "verb": "POST",
+      "path": "/api/ServiceDetails/GetActiveServicesByLOBId",
+      "body": { "LOBID": "${LOB_ID}" },
+      "verify_present": {
+        "in": "Result",
+        "match_field": "ServiceId",
+        "value": "${NEW_SERVICE_ID}"
+      },
+      "sla_ms": 8000,
+      "note": "Closes the loop back to the LOB the chain started from: the service created in hop 3 must now appear in this LOB's active service list."
+    }
+  ]
+}

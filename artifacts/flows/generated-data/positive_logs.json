@@ -1,0 +1,288 @@
+[
+ {
+  "id": "data_positive_logs_1",
+  "title": "Logs - positive data-driven batch 1",
+  "why": "Executes the QA team's authored positive scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "positive",
+  "tier": 4,
+  "controller": "Logs",
+  "hops": [
+   {
+    "name": "InsertLog",
+    "verb": "POST",
+    "path": "/api/Logs/InsertLog",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Logs_positive row 1 (provider Logs)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetLogDetails",
+    "verb": "POST",
+    "path": "/api/Logs/GetLogDetails",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Logs_positive row 2 (provider Logs)",
+    "body": {
+     "StartDate": "2020-01-22T02:37:00",
+     "EndDate": "2021-02-22T02:37:00",
+     "LogTypeId": 1
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetAllObjectType",
+    "verb": "GET",
+    "path": "/api/Logs/GetAllObjectType",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Logs_positive row 3 (provider Logs)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetAllObjectOperationType",
+    "verb": "GET",
+    "path": "/api/Logs/GetAllObjectOperationType",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Logs_positive row 4 (provider Logs)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "{ID}",
+    "verb": "POST",
+    "path": "/api/Logs/GetAuditLog/{ID}",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Logs_positive row 5 (provider Logs)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetServiceIDFromLog",
+    "verb": "POST",
+    "path": "/api/Logs/GetServiceIDFromLog",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Logs_positive row 6 (provider Logs)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetServiceUserLog",
+    "verb": "POST",
+    "path": "/api/Logs/GetServiceUserLog",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Logs_positive row 7 (provider Logs)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetServiceLog",
+    "verb": "POST",
+    "path": "/api/Logs/GetServiceLog",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Logs_positive row 8 (provider Logs)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "CommandSessionLog",
+    "verb": "POST",
+    "path": "/api/Logs/CommandSessionLog",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Logs_positive row 9 (provider Logs)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetStatus",
+    "verb": "GET",
+    "path": "/api/Logs/GetStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Logs_positive row 10 (provider Logs)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "SetStatus",
+    "verb": "GET",
+    "path": "/api/Logs/SetStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Logs_positive row 11 (provider Logs)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetDatabaseStatus",
+    "verb": "GET",
+    "path": "/api/Logs/GetDatabaseStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Logs_positive row 12 (provider Logs)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   }
+  ]
+ },
+ {
+  "id": "data_positive_logs_2",
+  "title": "Logs - positive data-driven batch 2",
+  "why": "Executes the QA team's authored positive scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "positive",
+  "tier": 4,
+  "controller": "Logs",
+  "hops": [
+   {
+    "name": "InsertLog",
+    "verb": "POST",
+    "path": "/api/Logs/InsertLog",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from Negative_API_ExcelDataProviderFileName / Logs_Negative / Logs_UnauthorizedAccess row 1 (provider Logs_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid"
+   },
+   {
+    "name": "GetLogDetails",
+    "verb": "POST",
+    "path": "/api/Logs/GetLogDetails",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from Negative_API_ExcelDataProviderFileName / Logs_Negative / Logs_UnauthorizedAccess row 2 (provider Logs_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "body": {
+     "StartDate": "2020-01-22T02:37:00",
+     "EndDate": "2021-02-22T02:37:00",
+     "LogTypeId": 1
+    },
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid"
+   },
+   {
+    "name": "GetAllObjectType",
+    "verb": "GET",
+    "path": "/api/Logs/GetAllObjectType",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from Negative_API_ExcelDataProviderFileName / Logs_Negative / Logs_UnauthorizedAccess row 3 (provider Logs_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid"
+   },
+   {
+    "name": "GetAllObjectOperationType",
+    "verb": "GET",
+    "path": "/api/Logs/GetAllObjectOperationType",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from Negative_API_ExcelDataProviderFileName / Logs_Negative / Logs_UnauthorizedAccess row 4 (provider Logs_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid"
+   },
+   {
+    "name": "{ID}",
+    "verb": "POST",
+    "path": "/api/Logs/GetAuditLog/{ID}",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from Negative_API_ExcelDataProviderFileName / Logs_Negative / Logs_UnauthorizedAccess row 5 (provider Logs_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid"
+   },
+   {
+    "name": "GetServiceIDFromLog",
+    "verb": "POST",
+    "path": "/api/Logs/GetServiceIDFromLog",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from Negative_API_ExcelDataProviderFileName / Logs_Negative / Logs_UnauthorizedAccess row 6 (provider Logs_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid"
+   },
+   {
+    "name": "GetServiceUserLog",
+    "verb": "POST",
+    "path": "/api/Logs/GetServiceUserLog",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from Negative_API_ExcelDataProviderFileName / Logs_Negative / Logs_UnauthorizedAccess row 7 (provider Logs_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid"
+   },
+   {
+    "name": "GetServiceLog",
+    "verb": "POST",
+    "path": "/api/Logs/GetServiceLog",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from Negative_API_ExcelDataProviderFileName / Logs_Negative / Logs_UnauthorizedAccess row 8 (provider Logs_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid"
+   },
+   {
+    "name": "CommandSessionLog",
+    "verb": "POST",
+    "path": "/api/Logs/CommandSessionLog",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from Negative_API_ExcelDataProviderFileName / Logs_Negative / Logs_UnauthorizedAccess row 9 (provider Logs_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid"
+   },
+   {
+    "name": "GetStatus",
+    "verb": "GET",
+    "path": "/api/Logs/GetStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from Negative_API_ExcelDataProviderFileName / Logs_Negative / Logs_UnauthorizedAccess row 10 (provider Logs_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid"
+   },
+   {
+    "name": "SetStatus",
+    "verb": "GET",
+    "path": "/api/Logs/SetStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from Negative_API_ExcelDataProviderFileName / Logs_Negative / Logs_UnauthorizedAccess row 11 (provider Logs_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid"
+   },
+   {
+    "name": "GetDatabaseStatus",
+    "verb": "GET",
+    "path": "/api/Logs/GetDatabaseStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from Negative_API_ExcelDataProviderFileName / Logs_Negative / Logs_UnauthorizedAccess row 12 (provider Logs_UnauthorizedAccess); dynamic framework supplies an INVALID credential - the source row does not, so the reference test cannot exercise unauthorized access",
+    "expect_status": 401,
+    "scenario": "UnauthorizedAccess",
+    "auth": "invalid"
+   }
+  ]
+ }
+]

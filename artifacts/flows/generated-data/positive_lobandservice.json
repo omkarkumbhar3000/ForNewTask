@@ -1,0 +1,158 @@
+[
+ {
+  "id": "data_positive_lobandservice_1",
+  "title": "LobandService - positive data-driven batch 1",
+  "why": "Executes the QA team's authored positive scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "positive",
+  "tier": 4,
+  "controller": "LobandService",
+  "hops": [
+   {
+    "name": "GetLOBandServiceTypeList",
+    "verb": "POST",
+    "path": "/api/LobandService/GetLOBandServiceTypeList",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / LobandService_positive row 1 (provider LobandService)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetDomainServices",
+    "verb": "POST",
+    "path": "/api/LobandService/GetDomainServices",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / LobandService_positive row 2 (provider LobandService)",
+    "body": {
+     "domain": "10.10.0.38"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "CreateAWSService",
+    "verb": "POST",
+    "path": "/api/LobandService/CreateAWSService",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / LobandService_positive row 3 (provider LobandService)",
+    "body": {
+     "serviceparam": "{}"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "CreatePamService",
+    "verb": "POST",
+    "path": "/api/LobandService/CreatePamService",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / LobandService_positive row 4 (provider LobandService)",
+    "body": {
+     "serviceparam": "{}"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "CreateAzureUserService",
+    "verb": "POST",
+    "path": "/api/LobandService/CreateAzureUserService",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / LobandService_positive row 5 (provider LobandService)",
+    "body": {
+     "serviceparam": "{}"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "getUserByGroup",
+    "verb": "POST",
+    "path": "/api/LobandService/getUserByGroup",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / LobandService_positive row 7 (provider LobandService)",
+    "body": {
+     "serviceparam": "TEST_SG1,TEST_SG2"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetDiscoveryServices",
+    "verb": "POST",
+    "path": "/api/LobandService/GetDiscoveryServices",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / LobandService_positive row 8 (provider LobandService)",
+    "body": {
+     "servicetype": "1,7"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetStatus",
+    "verb": "GET",
+    "path": "/api/LobandService/GetStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / LobandService_positive row 9 (provider LobandService)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "SetStatus",
+    "verb": "GET",
+    "path": "/api/LobandService/SetStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / LobandService_positive row 10 (provider LobandService)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetDatabaseStatus",
+    "verb": "GET",
+    "path": "/api/LobandService/GetDatabaseStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / LobandService_positive row 11 (provider LobandService)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetDomainServicesBytype",
+    "verb": "POST",
+    "path": "/api/LobandService/GetDomainServicesBytype",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / LobandService_positive row 14 (provider LobandService)",
+    "body": {
+     "stype": "0,7,1"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "CreateAzureService",
+    "verb": "POST",
+    "path": "/api/LobandService/CreateAzureService",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / LobandService_positive row 15 (provider LobandService)",
+    "body": {
+     "serviceparam": "{}"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   }
+  ]
+ }
+]

@@ -1,0 +1,398 @@
+[
+ {
+  "id": "data_positive_access_control_1",
+  "title": "Access Control - positive data-driven batch 1",
+  "why": "Executes the QA team's authored positive scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "positive",
+  "tier": 4,
+  "controller": "Access Control",
+  "hops": [
+   {
+    "name": "GetAllProfiles",
+    "verb": "POST",
+    "path": "/api/AccessControl/GetAllProfiles",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Access_Control_positive row 1 (provider AccessControl)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetCommandProfileTypes",
+    "verb": "POST",
+    "path": "/api/AccessControl/GetCommandProfileTypes",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Access_Control_positive row 2 (provider AccessControl)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetProcessProfileTypes",
+    "verb": "POST",
+    "path": "/api/AccessControl/GetProcessProfileTypes",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Access_Control_positive row 3 (provider AccessControl)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetProcessProfileScopes",
+    "verb": "POST",
+    "path": "/api/AccessControl/GetProcessProfileScopes",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Access_Control_positive row 4 (provider AccessControl)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetProfilesById",
+    "verb": "POST",
+    "path": "/api/AccessControl/GetProfilesById",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Access_Control_positive row 5 (provider AccessControl)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetProfilesByServiceTypeAndLobId",
+    "verb": "POST",
+    "path": "/api/AccessControl/GetProfilesByServiceTypeAndLobId",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Access_Control_positive row 6 (provider AccessControl)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "AddProfile",
+    "verb": "POST",
+    "path": "/api/AccessControl/AddProfile",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Access_Control_positive row 7 (provider AccessControl)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "UpdateProfile",
+    "verb": "POST",
+    "path": "/api/AccessControl/UpdateProfile",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Access_Control_positive row 8 (provider AccessControl)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "CloneProfile",
+    "verb": "POST",
+    "path": "/api/AccessControl/CloneProfile",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Access_Control_positive row 10 (provider AccessControl)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "MapProfileToUserAndService",
+    "verb": "POST",
+    "path": "/api/AccessControl/MapProfileToUserAndService",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Access_Control_positive row 11 (provider AccessControl)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "UnMapProfileFromUserAndService",
+    "verb": "POST",
+    "path": "/api/AccessControl/UnMapProfileFromUserAndService",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Access_Control_positive row 12 (provider AccessControl)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "UnMapProfileFromLOB",
+    "verb": "POST",
+    "path": "/api/AccessControl/UnMapProfileFromLOB",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Access_Control_positive row 13 (provider AccessControl)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   }
+  ]
+ },
+ {
+  "id": "data_positive_access_control_2",
+  "title": "Access Control - positive data-driven batch 2",
+  "why": "Executes the QA team's authored positive scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "positive",
+  "tier": 4,
+  "controller": "Access Control",
+  "hops": [
+   {
+    "name": "GetCommandProfileMappedToUser",
+    "verb": "POST",
+    "path": "/api/AccessControl/GetCommandProfileMappedToUser",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Access_Control_positive row 14 (provider AccessControl)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetCommandProfileMappedToService",
+    "verb": "POST",
+    "path": "/api/AccessControl/GetCommandProfileMappedToService",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Access_Control_positive row 15 (provider AccessControl)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetCommandProfileMappedToUserAndService",
+    "verb": "POST",
+    "path": "/api/AccessControl/GetCommandProfileMappedToUserAndService",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Access_Control_positive row 16 (provider AccessControl)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetUserServicesMappedToCommandProfile",
+    "verb": "POST",
+    "path": "/api/AccessControl/GetUserServicesMappedToCommandProfile",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Access_Control_positive row 17 (provider AccessControl)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetCommandList",
+    "verb": "POST",
+    "path": "/api/AccessControl/GetCommandList",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Access_Control_positive row 18 (provider AccessControl)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetMappedCommandList",
+    "verb": "POST",
+    "path": "/api/AccessControl/GetMappedCommandList",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Access_Control_positive row 19 (provider AccessControl)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetMappedCommandListToProfile",
+    "verb": "POST",
+    "path": "/api/AccessControl/GetMappedCommandListToProfile",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Access_Control_positive row 20 (provider AccessControl)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetMappedCommandsForConnectorSession",
+    "verb": "POST",
+    "path": "/api/AccessControl/GetMappedCommandsForConnectorSession",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Access_Control_positive row 21 (provider AccessControl)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "AddCommand",
+    "verb": "POST",
+    "path": "/api/AccessControl/AddCommand",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Access_Control_positive row 22 (provider AccessControl)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "UpdateCommand",
+    "verb": "POST",
+    "path": "/api/AccessControl/UpdateCommand",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Access_Control_positive row 23 (provider AccessControl)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "MapCommandsToProfile",
+    "verb": "POST",
+    "path": "/api/AccessControl/MapCommandsToProfile",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Access_Control_positive row 25 (provider AccessControl)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "UnmapcommandFromProfile",
+    "verb": "POST",
+    "path": "/api/AccessControl/UnmapcommandFromProfile",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Access_Control_positive row 26 (provider AccessControl)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   }
+  ]
+ },
+ {
+  "id": "data_positive_access_control_3",
+  "title": "Access Control - positive data-driven batch 3",
+  "why": "Executes the QA team's authored positive scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "positive",
+  "tier": 4,
+  "controller": "Access Control",
+  "hops": [
+   {
+    "name": "GetProcessList",
+    "verb": "POST",
+    "path": "/api/AccessControl/GetProcessList",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Access_Control_positive row 27 (provider AccessControl)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetMappedProcessListToProfile",
+    "verb": "POST",
+    "path": "/api/AccessControl/GetMappedProcessListToProfile",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Access_Control_positive row 28 (provider AccessControl)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetMappedProcessList",
+    "verb": "POST",
+    "path": "/api/AccessControl/GetMappedProcessList",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Access_Control_positive row 29 (provider AccessControl)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetMappedProcessesForConnectorSession",
+    "verb": "POST",
+    "path": "/api/AccessControl/GetMappedProcessesForConnectorSession",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Access_Control_positive row 30 (provider AccessControl)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "AddProcess",
+    "verb": "POST",
+    "path": "/api/AccessControl/AddProcess",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Access_Control_positive row 31 (provider AccessControl)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "UpdateProcess",
+    "verb": "POST",
+    "path": "/api/AccessControl/UpdateProcess",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Access_Control_positive row 32 (provider AccessControl)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "MapProcessesToProfile",
+    "verb": "POST",
+    "path": "/api/AccessControl/MapProcessesToProfile",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Access_Control_positive row 34 (provider AccessControl)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "UnmapProcessFromProfile",
+    "verb": "POST",
+    "path": "/api/AccessControl/UnmapProcessFromProfile",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Access_Control_positive row 35 (provider AccessControl)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetSupportedServiceTypes",
+    "verb": "POST",
+    "path": "/api/AccessControl/GetSupportedServiceTypes",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Access_Control_positive row 36 (provider AccessControl)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetOtherCommandsByServiceTypes",
+    "verb": "POST",
+    "path": "/api/AccessControl/GetOtherCommandsByServiceTypes",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Access_Control_positive row 37 (provider AccessControl)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "BulkMappingImportFromExcel",
+    "verb": "POST",
+    "path": "/api/AccessControl/BulkMappingImportFromExcel",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Access_Control_positive row 38 (provider AccessControl)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "BulkUnmapUserAndServiceFromProfile",
+    "verb": "POST",
+    "path": "/api/AccessControl/BulkUnmapUserAndServiceFromProfile",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / Access_Control_positive row 39 (provider AccessControl)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   }
+  ]
+ }
+]

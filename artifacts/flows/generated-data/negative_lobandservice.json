@@ -1,0 +1,170 @@
+[
+ {
+  "id": "data_negative_lobandservice_1",
+  "title": "LobandService - negative data-driven batch 1",
+  "why": "Executes the QA team's authored negative scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status and error code.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "negative",
+  "tier": 4,
+  "controller": "LobandService",
+  "hops": [
+   {
+    "name": "GetLOBandServiceTypeList",
+    "verb": "GET",
+    "path": "/api/LobandService/GetLOBandServiceTypeList",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / LobandService_Negative / LobandService_MethodNotAllowed row 1 (provider LobandService_MethodNotAllowed)",
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetDomainServices",
+    "verb": "GET",
+    "path": "/api/LobandService/GetDomainServices",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / LobandService_Negative / LobandService_MethodNotAllowed row 2 (provider LobandService_MethodNotAllowed)",
+    "body": {
+     "domain": "10.10.0.38"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "CreateAWSService",
+    "verb": "GET",
+    "path": "/api/LobandService/CreateAWSService",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / LobandService_Negative / LobandService_MethodNotAllowed row 3 (provider LobandService_MethodNotAllowed)",
+    "body": {
+     "serviceparam": "{}"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "CreatePamService",
+    "verb": "GET",
+    "path": "/api/LobandService/CreatePamService",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / LobandService_Negative / LobandService_MethodNotAllowed row 4 (provider LobandService_MethodNotAllowed)",
+    "body": {
+     "serviceparam": "{}"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "CreateAzureUserService",
+    "verb": "GET",
+    "path": "/api/LobandService/CreateAzureUserService",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / LobandService_Negative / LobandService_MethodNotAllowed row 5 (provider LobandService_MethodNotAllowed)",
+    "body": {
+     "serviceparam": "{}"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "getUserByGroup",
+    "verb": "GET",
+    "path": "/api/LobandService/getUserByGroup",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / LobandService_Negative / LobandService_MethodNotAllowed row 7 (provider LobandService_MethodNotAllowed)",
+    "body": {
+     "serviceparam": "TEST_SG1,TEST_SG2"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetDiscoveryServices",
+    "verb": "GET",
+    "path": "/api/LobandService/GetDiscoveryServices",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / LobandService_Negative / LobandService_MethodNotAllowed row 8 (provider LobandService_MethodNotAllowed)",
+    "body": {
+     "servicetype": "1,7"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetStatus",
+    "verb": "POST",
+    "path": "/api/LobandService/GetStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / LobandService_Negative / LobandService_MethodNotAllowed row 9 (provider LobandService_MethodNotAllowed)",
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "SetStatus",
+    "verb": "POST",
+    "path": "/api/LobandService/SetStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / LobandService_Negative / LobandService_MethodNotAllowed row 10 (provider LobandService_MethodNotAllowed)",
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetDatabaseStatus",
+    "verb": "POST",
+    "path": "/api/LobandService/GetDatabaseStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / LobandService_Negative / LobandService_MethodNotAllowed row 11 (provider LobandService_MethodNotAllowed)",
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "GetDomainServicesBytype",
+    "verb": "GET",
+    "path": "/api/LobandService/GetDomainServicesBytype",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / LobandService_Negative / LobandService_MethodNotAllowed row 14 (provider LobandService_MethodNotAllowed)",
+    "body": {
+     "stype": "0,7,1"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   },
+   {
+    "name": "CreateAzureService",
+    "verb": "GET",
+    "path": "/api/LobandService/CreateAzureService",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "negative row from Negative_API_ExcelDataProviderFileName / LobandService_Negative / LobandService_MethodNotAllowed row 15 (provider LobandService_MethodNotAllowed)",
+    "body": {
+     "serviceparam": "{}"
+    },
+    "expect_status": 405,
+    "scenario": "MethodNotAllowed",
+    "negative": true
+   }
+  ]
+ }
+]

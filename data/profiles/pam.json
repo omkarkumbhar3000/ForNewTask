@@ -1,0 +1,197 @@
+{
+  "schema_version": "1.0",
+
+  "_comment": [
+    "THE WORKED EXAMPLE. Every value here was lifted from the working PAM implementation, not invented:",
+    "chain_runner.py lines 68-97 (paths, blocklist, destructive regex, SLA, caps),",
+    "chain_runner.py lines 373 and 398 (health probe, created-messages),",
+    "generate_flows.py lines 43-85 (context aliases, identity fields, the LOB prelude),",
+    "token_guard.py lines 170-235 (credential keys, resolution order),",
+    "and the measured counts from artifacts/runs/2026-08-05_114315 (OBJ-010).",
+    "This file is the proof that the profile schema is sufficient: the PAM harness's entire",
+    "project-specific surface fits in it. Read it beside docs/briefs/new-project-implementation.md §8,",
+    "which inventories every one of those couplings with its line reference."
+  ],
+
+  "project": {
+    "key": "PAM",
+    "name": "ARCON Privileged Access Management",
+    "owner": "Sudesh Sawant",
+    "tracker": "PAMIT",
+    "notes": "Reference implementation. 122 API modules across 70 controllers."
+  },
+
+  "workspace": {
+    "root_markers": ["Reports", "Automation gitlab repo"],
+    "reference_repo": "Automation gitlab repo/pam_automation_bootstrap",
+    "reports_dir": "Reports",
+    "flows_dir": "tools/flows"
+  },
+
+  "environment": {
+    "name": "QA_MsSQL",
+    "api_base": "https://u16hf.arconnet.com:6302",
+    "app_base": "https://u16hf.arconnet.com:1302",
+    "is_production": false,
+    "config_format": "java-properties",
+    "config_file": "Automation gitlab repo/pam_automation_bootstrap/Environments/QA_MsSQL.properties",
+    "verify_tls": false,
+    "stability": "poor",
+    "notes": "verify_tls false: QA host serves a self-signed certificate. The API port is NOT the app port - environmentUrl is :1302, environmentAPIUrl and pam_BaseAPIURL are :6302. Credentials are committed in plaintext across all 20 env files; treat the file as secret regardless."
+  },
+
+  "auth": {
+    "kind": "oauth2-password",
+    "token_endpoint": "/arcontoken",
+    "credential_keys": {
+      "token_url": "pam_tokenAPIUrl",
+      "username": "pam_APITokenUserName",
+      "password": "pam_APITokenPassword",
+      "grant_type": "pam_grantType"
+    },
+    "header": {"name": "Authorization", "template": "Bearer {token}"},
+    "token_lifetime_hours": 24,
+    "env_var_override": "PAM_API_TOKEN",
+    "cache_file": "tools/.token_cache.json",
+    "lockout_risk": "high",
+    "max_token_attempts_per_run": 1,
+    "latch_on_failure": true,
+    "invalid_token_sample": "Bearer invalid.token.forced-negative-auth-probe",
+    "roles": [
+      {"role": "Default", "api_user_id": 2, "source": "the JWT issued by /arcontoken", "note": "The only identity available. A second, lower-privilege identity would make authorization testing meaningful; none is provisioned - see unknowns."}
+    ],
+    "notes": "lockout_risk is high on measured evidence: repeated /arcontoken calls locked the GenericScheduler service account on 2026-07-28 (ISSUE-009), and that account is also the data-warehouse ETL account, so the blast radius reaches past testing. The lock, not a wrong password, was always the blocker. token_guard.py is the single gate: env var -> valid cache -> ONE live attempt, then latch."
+  },
+
+  "catalogue": {
+    "adapter": "java-constants",
+    "source": "Automation gitlab repo/pam_automation_bootstrap/src/test/java/com/arcon/autoconfigs/APIConfig.java",
+    "expected_count": 1306,
+    "count_basis": "distinct (controller, action) pairs. The same file also yields 1,336 (all public static String declarations, including header and verb constants), 1,321 (/api/ declarations with duplicates) and 1,308 (distinct path strings). Quote 1,306.",
+    "allow_verbs": ["GET", "POST"],
+    "verb_distribution": {"POST": 992, "GET": 325, "PUT": 2, "DELETE": 2, "PATCH": 0},
+    "templated_marker": "{",
+    "exclude_patterns": ["/AdminAPI/"],
+    "notes": "No OpenAPI/Swagger exists for this surface. The 37 published Swagger specs (690 operations) describe a DIFFERENT surface with ~6% name overlap. pam/PAM (the product source) implements only 48 of the 1,306 - do not plan on deriving the catalogue from it. /AdminAPI is excluded because it returns 404 on both ports with both credentials."
+  },
+
+  "payloads": {
+    "adapter": "java-payload-helpers",
+    "source": "Automation gitlab repo/pam_automation_bootstrap/src/test/java/com/arcon/utils/apiPayload",
+    "coverage": {
+      "create_endpoints": 217,
+      "with_working_body": 13,
+      "with_no_body": 79,
+      "measured_in": "artifacts/runs/2026-07-29_181439 and docs/gaps/01-Data-Gap-Analysis.md"
+    },
+    "binding_confidence": "by-name",
+    "unique_fields": ["username", "userid", "userdisplayname", "displayname", "loginid", "name", "emailid", "email", "mobileno", "mobilenumber", "password", "hostname", "ipaddress", "serverip", "serverhostname", "serviceusername", "servicepassword", "port"],
+    "notes": "1,289 zero-arg Java methods holding literal request JSON. The literals are stale, which is why only 13 of 217 creates work - the largest single cost in the whole implementation, and still open. A secondary source exists: PAM API (Internal Team).pdf holds 3,194 JSON examples, 1,605-1,654 endpoint-bound depending on basis, but bound BY PAGE PROXIMITY so some bindings are wrong."
+  },
+
+  "envelope": {
+    "status_is_authoritative": false,
+    "shapes_measured": 31,
+    "shape_census": "artifacts/analysis-data/envelope-shapes.json",
+    "success_fields": ["Success", "success"],
+    "error_code_fields": ["ErrorCode", "errorCode"],
+    "error_message_fields": ["ErrorMessage", "Message"],
+    "result_containers": ["Result", "aaData", "aaData1", "aaData11", "Output"],
+    "created_messages": ["inserted", "created", "added", "saved", "success"],
+    "noop_messages": ["already exists"],
+    "error_code_registry": "com.arcon.utils.validation.ErrorCodeRegistry - matches on numeric prefix and records an unrecognised code as an observation. The product has NO published registry; only 3 codes are documented anywhere.",
+    "non_json_expected": true,
+    "notes": "status_is_authoritative false is measured, not assumed: 1,022 of 5,416 cases (18.9%) returned HTTP 200 while failing validation. 31 shapes were counted across 1,868 retained bodies, of which only 6 match a documented one; 127 responses were not JSON objects at all, 288 carried no Success field, 139 of 1,291 Result values were not arrays, and 2 bodies were a naked true/false. Success:true is NOT evidence of a write - SetServiceDetails answers Success:true with Message 'Already Exists' when nothing was inserted. Casing matters: PascalCase Success appears 1,580 times, camelCase success 0 times."
+  },
+
+  "identity_prelude": [
+    {
+      "name": "GetLOBList", "verb": "POST", "path": "/api/ADbridging/GetLOBList", "body": {},
+      "find_extract": {"in": "Result", "where": {"LobName": "AUTOMATION_TEST_LOB"}, "take": {"LOB_ID": "LobId", "LOB_NAME": "LobName"}},
+      "sla_ms": 8000,
+      "note": "Selected BY NAME so the id is discovered rather than hardcoded. Result[0] is LOB 1 (O11), which has no user groups - blind first-row chaining fails here."
+    },
+    {
+      "name": "GetUserGroupList", "verb": "GET", "path": "/api/UserDetails/GetUserGroupListWithoutMandateValue",
+      "find_extract": {"in": "Result", "where": {"LOBName": "${LOB_NAME}"}, "take": {"USER_GROUP_ID": "UserGroupId", "USER_GROUP_NAME": "UserGroupName"}},
+      "sla_ms": 12000,
+      "note": "A real join: this endpoint exposes LOBName, not LobId, so the NAME carried from hop 1 is the join key."
+    },
+    {
+      "name": "GetServerGroupList", "verb": "POST", "path": "/api/ADbridging/GetServerGroupList",
+      "body": {"LobId": "${LOB_ID}"},
+      "extract": {"SERVER_GROUP_ID": "Result[0].ServerGroupId"},
+      "stop_on_fail": false, "sla_ms": 8000
+    }
+  ],
+
+  "id_aliases": {
+    "lobid": "${LOB_ID}", "lob_id": "${LOB_ID}", "lobsid": "${LOB_ID}",
+    "usergroupid": "${USER_GROUP_ID}", "user_group_id": "${USER_GROUP_ID}",
+    "servergroupid": "${SERVER_GROUP_ID}",
+    "servicegroupid": "${SERVICE_GROUP_ID}"
+  },
+
+  "safety": {
+    "default_mode": "plan-only",
+    "blocklist": {
+      "GetLogs": "hangs 30 s and stops the IIS application pool (ISSUE-010)",
+      "GetErrorLogs": "hangs 30 s and stops the IIS application pool (ISSUE-010)",
+      "GetAllActiveUserDetails": "hung 30 s on every version during the GET run"
+    },
+    "destructive_name_regex": "^(delete|remove|drop|purge|reset|revoke|disable|deactivate|terminate|kill|wipe)",
+    "teardown": "disabled",
+    "health_probe": {"verb": "POST", "path": "/api/ADbridging/GetLOBList", "body": {}},
+    "throttle_ms": 2000,
+    "breaker_consecutive_5xx": 3,
+    "downtime_wait_s": 300,
+    "max_calls": 20000,
+    "http_timeout_s": 45,
+    "body_cap_bytes": 8388608,
+    "redact_keys": ["password", "passwd", "token", "secret", "credential"],
+    "notes": "The blocklist is enforced at planning time, before a request is built - three sequential calls to GetLogs took the entire API to 503 with no recovery, and that was not a load test. Name-based guarding is mandatory here because deletion is expressed as POST /api/<Controller>/Delete<Thing>: a destructive call is indistinguishable from an ordinary POST by verb. Teardown disabled leaves 146 destructive rows unexecuted and this run's created records in place - stated, not hidden. body_cap exists because one endpoint returns 1.1 MB with no filter parameter."
+  },
+
+  "validation": {
+    "layers": ["L1", "L2", "L3", "L4", "L5", "L6", "L7"],
+    "sla_ms": {"default": 5000, "read": 5000, "write": 7000},
+    "database": {
+      "dialect": "mssql",
+      "read_only": true,
+      "config_keys": {"host": "db_host", "name": "databaseName", "user": "db_user", "password": "db_password"},
+      "tables_of_interest": ["ARCOSDB_U16SP2_WEBSM_QA"]
+    },
+    "notes": "The Python harness asserts L1-L7. L8-L12 (schema, mandatory-fields, business-rule, db-persistence, security) exist in the Java framework as com.arcon.utils.validation and are not wired into the harness. Keep L3 and L4: status_is_authoritative is false, so dropping them leaves nothing that can detect a rejected request. sla_ms is split because writes take 5-7 s here and a single read-tuned budget fails every write."
+  },
+
+  "reporting": {
+    "run_dir_pattern": "artifacts/runs/{stamp}",
+    "retention": "forever",
+    "evidence_per_call": true,
+    "workbook": true,
+    "benchmark_baseline": "artifacts/runs/2026-07-29_181439",
+    "notes": "Retaining every run is what made the N-1 vs N benchmark possible, and what let a corrected validator re-score 1,868 baseline hops offline with zero HTTP calls."
+  },
+
+  "unknowns": [
+    {"field": "auth.roles", "question": "Is a second, lower-privilege identity available so authorization boundaries can be tested for real?", "settled_by": "provisioning one QA account per role, or a statement that only one exists", "owner": "Sudesh Sawant", "blocks": false},
+    {"field": "catalogue.exclude_patterns", "question": "Is /AdminAPI expected to be deployed on QA_MsSQL? 2,104 authored test rows target it and it 404s on both ports.", "settled_by": "a deployment answer from the product team", "owner": "product team", "blocks": false},
+    {"field": "envelope.error_code_registry", "question": "What is the complete list of application error codes and their meanings?", "settled_by": "a product-side registry; only 3 codes are documented today and 206-LC_GLD / 902-ALC-ISSML were both observed live", "owner": "product team", "blocks": false},
+    {"field": "payloads.coverage", "question": "Where does a valid request body for the remaining 204 create endpoints come from?", "settled_by": "mining the 3,194 documented payload examples, or recorded production-shaped traffic", "owner": "Sudesh Sawant", "blocks": false},
+    {"field": "catalogue.expected_count", "question": "Are the 348 endpoints returning 404 (25.1% of those exercised) a deployment gap or a stale catalogue?", "settled_by": "triage against a deployed-route dump", "owner": "product team", "blocks": false}
+  ],
+
+  "provenance": {
+    "authored_from": [
+      "tools/chain_runner.py",
+      "tools/generate_flows.py",
+      "tools/token_guard.py",
+      "docs/management/summary/OBJ-010-Execution-Benchmark.md",
+      "artifacts/analysis-data/envelope-shapes.json",
+      ".claude/rules/api-surface.md"
+    ],
+    "probe_run": "artifacts/runs/2026-07-29_181439",
+    "measured_run": "artifacts/runs/2026-08-05_114315",
+    "reviewed_by": "UNKNOWN - not yet reviewed by the owner"
+  }
+}

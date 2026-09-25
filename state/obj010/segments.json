@@ -1,0 +1,32 @@
+{
+ "why": "The run executed in two segments. chain_runner writes meta.elapsed_s, meta.calls and meta.downtime_events for the CURRENT process only, so the results.json of a resumed run understates all three. These are segment 1's measured figures, recovered from its log and evidence timestamps, so the benchmark can report the true totals instead of segment 2's alone.",
+ "run": "2026-08-05_114315",
+ "segments": [
+  {
+   "segment": 1,
+   "started": "2026-08-05T11:43:18+05:30",
+   "ended": "2026-08-05T15:37:29+05:30",
+   "elapsed_min": 234.2,
+   "hops_executed": 3390,
+   "flows_checkpointed": 500,
+   "flows_aborted": 3,
+   "downtime_pauses": 17,
+   "guard_trips": {"blocklist:hung-endpoint-family": 8, "teardown-not-allowed": 6},
+   "ended_because": "OSError 22 - an Excel-derived hop name containing a query string produced an invalid evidence filename. Fixed in chain_runner.run_flow (filename sanitisation) and in the action-name extraction at all three sites."
+  },
+  {
+   "segment": 2,
+   "elapsed_min": 94.9,
+   "flows_run": 250,
+   "flows_requeued_from_aborted": 3,
+   "downtime_pauses": 0,
+   "note": "Resumed with --execute --resume; 497 completed flows skipped, the 3 ABORTED flows re-queued. Same cached token, no /arcontoken call."
+  }
+ ],
+ "totals": {
+  "elapsed_min": 329.1,
+  "downtime_pauses": 17,
+  "downtime_minutes_waiting": 85.0,
+  "token_endpoint_calls": 0
+ }
+}

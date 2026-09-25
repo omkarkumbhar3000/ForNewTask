@@ -1,0 +1,85 @@
+[
+ {
+  "id": "data_positive_agwplus_1",
+  "title": "AGWPlus - positive data-driven batch 1",
+  "why": "Executes the QA team's authored positive scenarios through the dynamic framework. Each hop is one Excel row, sent as authored, and asserted against the expected status.",
+  "generated": true,
+  "data_driven": true,
+  "kind": "positive",
+  "tier": 4,
+  "controller": "AGWPlus",
+  "hops": [
+   {
+    "name": "GetConnectionURL",
+    "verb": "POST",
+    "path": "/api/AGWPlus/GetConnectionURL",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / AGWPlus_positive row 1 (provider AGWPlus)",
+    "body": {
+     "ServerIp": "10.10.1.111",
+     "ServiceType": "SSHLinux",
+     "UserName": "UserName_1",
+     "RequestedBy": "L1"
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetAGWPlusUserData",
+    "verb": "POST",
+    "path": "/api/AGWPlus/GetAGWPlusUserData",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / AGWPlus_positive row 2 (provider AGWPlus)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetSessionSharingURL",
+    "verb": "POST",
+    "path": "/api/AGWPlus/GetSessionSharingURL",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / AGWPlus_positive row 3 (provider AGWPlus)",
+    "body": {
+     "userdata": "",
+     "usersessiondata": "",
+     "sessionurl": ""
+    },
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetStatus",
+    "verb": "GET",
+    "path": "/api/AGWPlus/GetStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / AGWPlus_positive row 4 (provider AGWPlus)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "SetStatus",
+    "verb": "GET",
+    "path": "/api/AGWPlus/SetStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / AGWPlus_positive row 5 (provider AGWPlus)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   },
+   {
+    "name": "GetDatabaseStatus",
+    "verb": "GET",
+    "path": "/api/AGWPlus/GetDatabaseStatus",
+    "sla_ms": 25000,
+    "stop_on_fail": false,
+    "note": "positive row from API_ExcelDataProviderFileName / AllApiPositiveScenarios / AGWPlus_positive row 6 (provider AGWPlus)",
+    "expect_status": 200,
+    "scenario": "Positive"
+   }
+  ]
+ }
+]

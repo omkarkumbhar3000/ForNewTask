@@ -1,0 +1,82 @@
+{
+  "_schema": "pamit-tracker/1",
+  "_doc": [
+    "Registry of every finding group we intend to raise, and the ticket raised for it.",
+    "",
+    "Read by track_tickets.py, which is READ-ONLY against Jira (GET only — it never",
+    "transitions, comments on, assigns or edits an issue).",
+    "",
+    "A group with key=null has no ticket yet and shows as 'Need to create a ticket' in",
+    "the daily review, so unraised work stays visible instead of silently disappearing.",
+    "",
+    "When a ticket is raised, set its key here — that is the only edit needed."
+  ],
+
+  "action_rules": {
+    "_doc": "Conditions that make a ticket OUR action item, agreed with the owner.",
+    "qa_testing_status": "QA Testing",
+    "awaiting_response_status": "Awaiting Response",
+    "awaiting_response_assignee": "Omkar Kumbhar",
+    "explanation": [
+      "1. Any tracked ticket that reaches 'QA Testing' is flagged — it needs QA verification.",
+      "2. A ticket in 'Awaiting Response' is flagged ONLY when assigned to Omkar Kumbhar,",
+      "   because then the response is owed by us. Awaiting Response on someone else is",
+      "   their action, not ours, and is reported without a flag."
+    ]
+  },
+
+  "tickets": [
+    {
+      "group": "A1",
+      "key": "PAMIT-42744",
+      "programme": "API implementation",
+      "title": "HTTP 200 for application-level failures",
+      "covers": ["LH-01"],
+      "note": "Raised before the grouping proposal. A1 also covers LH-02, 03, 04, 11 — decide at triage whether to extend this ticket's scope or link them beneath it."
+    },
+    {
+      "group": "B1",
+      "key": "PAMIT-43050",
+      "programme": "Repository size",
+      "title": "Binary artifacts committed to version control",
+      "covers": ["F01", "F02", "F03", "F07", "F13"],
+      "note": "Owner approved B1 only."
+    },
+    {
+      "group": "A2", "key": null, "programme": "API implementation",
+      "title": "Authentication boundary and data exposure",
+      "covers": ["LH-13", "LH-09"],
+      "note": "⛔ LH-13 is an open, unraised security finding. Raising is the owner's call and may need restricted visibility."
+    },
+    {
+      "group": "A3", "key": null, "programme": "API implementation",
+      "title": "Availability under unbounded queries",
+      "covers": ["LH-08", "LH-12"], "note": null
+    },
+    {
+      "group": "A4", "key": null, "programme": "API implementation",
+      "title": "HTTP surface: declared vs served",
+      "covers": ["LH-05", "LH-06"], "note": null
+    },
+    {
+      "group": "A5", "key": null, "programme": "API implementation",
+      "title": "Request models are undeclared",
+      "covers": ["LH-07", "LH-10"], "note": null
+    },
+    {
+      "group": "B2", "key": null, "programme": "Repository size",
+      "title": "No controls prevent binary intake",
+      "covers": ["F04", "F08", "F10", "F12", "F15"], "note": null
+    },
+    {
+      "group": "B3", "key": null, "programme": "Repository size",
+      "title": "Checkout carries redundant binaries",
+      "covers": ["F05", "F06", "F11"], "note": null
+    },
+    {
+      "group": "B4", "key": null, "programme": "Repository size",
+      "title": "Adopt partial clone; plan history remediation",
+      "covers": ["F09", "R01", "R03"], "note": null
+    }
+  ]
+}
