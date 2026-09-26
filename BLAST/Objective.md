@@ -16,54 +16,56 @@
 
 <!-- ▼▼▼ WRITE THE CURRENT REQUIREMENT HERE — replace everything between the markers ▼▼▼ -->
 
-**`OBJ-031` — Make this workspace a clean, reusable BLAST framework, and prepare `New Task/` for the
-next development project.** 🟡 **In progress — stage 1 (preparation) ✅ complete; stage 2 waits for the
-owner to upload the current project and start it.**
+**`OBJ-032` — Correct the repository documentation, then extract the reusable framework into the new
+`NewProject_Framework` repository.** ✅ **Complete** — framework first commit `4bd37b0`, pushed and verified.
+⛔ **Not** the application: stage 2 of `OBJ-031`
+(build the updated project in `../New Task/Updated Project/`) stays pending in this repository.
 
-### Stage 1 — now
+### Part 1 — documentation correction (this repository and its folder)
 
-1. **Analyse** the whole BLAST framework and workspace. Classify everything as: reusable framework
-   capability · project-specific or obsolete · old Jira/PAM/CI/Payments analysis data · rules, skills,
-   tools and structures to preserve for future projects.
-2. **Keep the objective-first rule and make the structure enforce it.** Every CLI instruction is first
-   analysed and written into this file, and this file then governs the work and its output. Owner's
-   words: *"first analyze and update the `object.md` file present inside the BLAST folder as required.
-   Then use the updated `object.md` as the governing context."* `object.md` is this file.
-3. **Remove obsolete Jira/PAM/CI/Payments material** without damaging any reusable capability. Never
-   delete something only because it is old; decide first whether it is framework or project data.
-4. **Create `New Task/Current Project/`**: the input and baseline. The owner uploads the current project,
-   source, docs, configuration, requirements, assets and colleague feedback here. Do not modify it
-   unnecessarily.
-5. **Create `New Task/Updated Project/`**: the output. All new development, generated files, docs,
-   configuration and final deliverables for this task go here.
-6. Leave the framework ready for stage 2. ⛔ **Do not implement the new application, and do not invent
-   its requirements.**
+`ForNewTask` **is** a git repository. Correct the statement "this folder has no git repository" wherever it
+appears in relevant `.md` files, documentation or configuration, and correct anything else the repository
+restructure made inaccurate. No unrelated changes.
 
-### Stage 2 — only when the owner uploads the material and explicitly starts it
+### Part 2 — `NewProject_Framework`: do the setup once, reuse it for every future project
 
-Analyse the current project in full: architecture, frontend, backend, APIs, data handling, structure,
-dependencies, configuration, UI/UX, performance, security, maintainability, scalability, code quality,
-error handling, validation, user flows, documentation, deployment readiness, limitations, technical debt,
-missing functionality and opportunities. Then build the improved product:
-**Updated Project = BLAST + Current Project + Requirement + Colleague Feedback + Improvements.**
+Target: `https://github.com/omkarkumbhar3000/NewProject_Framework.git`, a blank repository; this is its
+**first commit**. It holds **only** the generic, reusable framework. The current application keeps using
+`ForNewTask`.
 
-| Direction | Rule |
-|---|---|
-| Primary goal | **User experience.** Simple, crisp, clear, lightweight, fast, responsive, modern, smooth, robust, easy to understand and maintain, future-proof. Improve beyond the stated requirement where it has a clear purpose; no complexity for its own sake |
-| UI | **Light theme.** Clean layout, good spacing, clear hierarchy, simple navigation, intuitive flows, responsive, smooth transitions, subtle purposeful animation, useful loading states, clear success and error feedback, consistent components, accessible, minimal clutter. Apple-style quality as inspiration, never a copy; keep the product's own identity |
-| Technology | Modern, future-proof and as lightweight as practical. Replace an existing technology only after weighing the real benefit, migration effort and compatibility, and never at the cost of working functionality |
-| Change control | Safe improvements may be made directly. A major, destructive or architectural change is identified explicitly and needs the owner's permission |
-| Mindset | Senior developer and architect: understand the product and requirement first, plan, implement only once started, validate, keep documentation in step, never claim unverified completion |
-| Skills and tools | Reuse the relevant BLAST and installed skills. Do not force Jira, PAM or CI workflows onto this project |
+1. **Migrate what is genuinely reusable**, generalised where needed: BLAST and the `Objective.md`
+   objective-first mechanism; `CLAUDE.md`/`AGENTS.md` templates; generic, safe-editing, documentation and
+   git rules; git hooks and the objective auto-load hook with its wrapper script; development, testing,
+   validation, error-handling and verification practices; coding and code-quality conventions; reusable
+   skills; generic tools (project-root detection, document conversion, PDF processing, API-testing
+   onboarding); templates and onboarding docs. Include anything from recent work that took real effort to
+   build.
+2. **Exclude project baggage**: Jira/PAM/CI/Payments data, client data, snapshots, reports, dashboards,
+   spreadsheets, project test scripts, requirements, the current application, temporary or generated files,
+   credentials or private data, machine-specific paths and environment assumptions.
+3. **Make it a product, not a copy**: portable hooks, repository-independent scripts, configurable paths,
+   documented prerequisites and setup, how to start a new project, mandatory versus optional components,
+   how `Objective.md` is initialised, how git/GitHub fits, how skills are selected, how the framework is
+   updated over time. Future projects start with a **clean objective and history**
+   (framework capability ≠ project history).
+4. **Review as a senior architect**: maintainability, portability, security, developer experience,
+   automation, git practice, CI readiness, cross-machine use, documentation, testing, onboarding.
+   Simple + clean + lightweight + robust + maintainable + reusable; no complexity for its own sake.
+5. **Validate before pushing**: completeness, stale paths, project-specific references, hooks, scripts,
+   docs, markdown links, configuration, secrets, Jira/PAM/CI baggage, reuse as a real starting point, and
+   the final file list.
+6. **Git**: check status, branch and remote; commit only reviewed framework content; push; synchronise and
+   verify local against remote. ⛔ No force-push without explicit approval.
+7. **Report** which skills are available and which were actually useful.
 
 ### Owner decisions taken at intake
 
 | Question | Decision |
 |---|---|
-| Where `New Task/` lives | **Inside this repository**: `New Task/Current Project/` and `New Task/Updated Project/`, so the objective rule, `CLAUDE.md` and the hook apply there |
-| How far the cleanup goes | **Full.** Delete all PAM/Jira/CI data, reports, snapshots, the PAM API harness, the Jira census scripts, the PAM dashboards and the old docs. Keep BLAST, the generic rules, and four reusable tools: the `api-onboarding` skill kit, the markdown → Word/Excel renderer, the PDF → page-cited text extractor, and the root-path resolver. Everything deleted stays recoverable from git |
-| The old history register | **Start a fresh register** at `OBJ-031`. `OBJ-001`–`OBJ-030` stay in git history, and the new index points at the commit that holds them |
-| The objective hook | **Repair it**, hooks only: one `UserPromptSubmit` hook injects this file on every prompt through a wrapper script. The `permissions.deny` list in `.claude/settings.json` stays exactly as it is |
+| How a future project is created | **Template + bootstrap.** The framework repository holds a clean `template/` plus `scripts/new_project.py`, which copies only project files, fills placeholders, adds the chosen optional tools and skills, initialises git with safety hooks, and can adopt the framework into an existing project without overwriting anything |
+| User-level setup | **Include it, generalised**: `global/CLAUDE.md` (the CLI operating rules and skill policy, as a template to install on a new machine) and the `go-go-go` git-sync skill. No names, machine paths or dates; owner preferences become marked settings |
+| The global `~/.claude/CLAUDE.md` | **One targeted edit**: the sentence "No objective-file hook works on this machine" becomes accurate (the hook works where a repository wires it). Nothing else in that file changes |
+| The GitHub token pasted in the instruction | **Not used and not stored.** The machine's existing git credentials reach the new repository. The owner should revoke the token |
 
 <!-- ▲▲▲ WRITE THE CURRENT REQUIREMENT HERE ▲▲▲ -->
 

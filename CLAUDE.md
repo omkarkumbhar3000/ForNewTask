@@ -19,6 +19,11 @@ recoverable from checkpoint commit `2a3298d` (`git show 2a3298d:<path>`).
 
 Git: branch `main`, remote `github.com/omkarkumbhar3000/ForNewTask`.
 
+This repository is for the **current application's work**. The reusable framework it grew into lives in a
+separate repository, `NewProject_Framework` (sibling folder `..\NewProject_Framework`). ⛔ Never put this
+project's code or data there; generic improvements to BLAST, rules or tools go there instead of being
+rebuilt per project (its `docs/maintaining.md`).
+
 ## ⛔ The objective-first rule — the owner's rule; never remove it
 
 **Every substantive CLI instruction (build, analyse, fix, run, produce) goes into `BLAST/Objective.md`

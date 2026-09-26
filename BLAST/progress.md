@@ -24,3 +24,10 @@ are in `findings.md`; trial code removed.
 
 Awaiting stage 2: the owner uploads the current project, requirement and feedback into
 `../New Task/Current Project/` and starts it. Protocol 0 applies from that point.
+
+## OBJ-032 — framework extracted to NewProject_Framework
+
+- The reusable, generalised version of this BLAST setup now lives in the separate repository
+  `NewProject_Framework` (first commit `4bd37b0`): template, portable `sh` objective hook, `verify.py`
+  self-check, pre-commit safety hook, optional tools and skills, bootstrap script.
+- This folder is unchanged in behaviour; its hook stays the proven PowerShell one. Status above still holds.

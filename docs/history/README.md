@@ -1,6 +1,6 @@
 # History — Append-only record of objectives, decisions and what was learned
 
-**Starts at:** `OBJ-031` · **Next objective ID:** `OBJ-032` · **Next decision ID:** `D52`
+**Starts at:** `OBJ-031` · **Next objective ID:** `OBJ-033` · **Next decision ID:** `D55`
 **Earlier history:** `OBJ-001`–`OBJ-030` and `D1`–`D47` belong to the retired Jira/PAM/CI project. They are
 kept in git, not in this tree: `git show 2a3298d:docs/history/README.md` (index),
 `git show 2a3298d:docs/history/01-objective-records.md` (records), `git show 2a3298d:docs/history/03-decisions.md`.
@@ -36,4 +36,5 @@ IDs continue from them so no ID is ever reused.
 
 | ID | Title | Status |
 |---|---|---|
-| OBJ-031 | Make the workspace a clean, reusable BLAST framework, and prepare `New Task/` for the next development project | 🟡 In Progress — stage 1 (preparation) done: Jira/PAM/CI material removed (661 files, recoverable from `2a3298d`), objective hook repaired, `New Task/Current Project/` and `New Task/Updated Project/` created. Stage 2 (analyse and build the updated project) waits for the owner's upload. Narrative: `03-narrative-log.md` §OBJ-031 |
+| OBJ-031 | Make the workspace a clean, reusable BLAST framework, and prepare `New Task/` for the next development project | Superseded by `OBJ-032` — stage 1 (preparation) ✅ completed: Jira/PAM/CI material removed (661 files, recoverable from `2a3298d`), objective hook repaired, `New Task/Current Project/` and `New Task/Updated Project/` created. Stage 2 (analyse and build the updated project) never started; carried forward as Pending Work. Record: `01-objective-records.md`. Narrative: `03-narrative-log.md` §OBJ-031 |
+| OBJ-032 | Correct the repository documentation, and extract the reusable framework into the new `NewProject_Framework` repository | ✅ Completed — the folder-level `CLAUDE.md` corrected (this repository is a git repository, and eight further statements the restructure made wrong), one sentence of the global `~/.claude/CLAUDE.md` updated; `NewProject_Framework` 1.0.0 built, validated (15-check gate, negative tests, fresh-clone run), first commit `4bd37b0` pushed and verified. Decisions `D52`–`D54`. Narrative: `03-narrative-log.md` §OBJ-032 |

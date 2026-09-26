@@ -138,7 +138,9 @@ libuv assertion (`!(handle->flags & UV_HANDLE_CLOSING)`, `src\win\async.c:94`) a
 - ⛔ **No project data in `BLAST/`.** Project facts live in `../New Task/` and in the objective. Keep example
   identifiers generic (`PROJ-123`, `your-domain.atlassian.net`); never reintroduce author names, project
   keys, ticket IDs or deployment targets.
-- **To reuse BLAST in another project:** copy this folder, the root `CLAUDE.md` rules, the
-  `UserPromptSubmit` hook entry in `.claude/settings.json`, and whatever of `../tools/` the project needs.
-  The hook finds the root by marker, so it works in any folder that has `CLAUDE.md` and `.claude/`.
+- **To reuse BLAST in another project, use `NewProject_Framework`** (the sibling repository
+  `github.com/omkarkumbhar3000/NewProject_Framework`): `python scripts/new_project.py <folder>` creates a
+  project, or adopts the framework into an existing one. It carries the generalised version of this folder
+  (a portable `sh` hook, a self-check, clean memory files). Improvements to BLAST belong there, so the next
+  project starts with them.
 - `gemini.md` in any inherited documentation means `LLM.md`. Do not recreate `gemini.md`.

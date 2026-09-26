@@ -53,3 +53,40 @@ old history. One ignored file, the client workbook, was deleted after confirming
 
 **Stage 2** starts when the owner uploads the current project, the requirement and colleague feedback into
 `New Task/Current Project/` and gives the instruction.
+
+---
+
+## OBJ-032 — Documentation correction, and the `NewProject_Framework` repository
+
+**Why.** Each new project had meant rebuilding the rules, workflow, hooks, tools and habits of the last one.
+The owner created a blank repository to hold that framework once, separately from any project.
+
+**Part 1 — documentation.** This repository's own docs were already correct. The folder-level
+`..\CLAUDE.md` (not versioned; backed up first) still said no git repository existed anywhere, and eight
+further statements had gone stale: `ForNewTask` described as byte-identical to `omkar_internal/Jira RCA`,
+the census commands listed as runnable here, the objective "never auto-injected", and the absent-directory,
+artifact-size and backup-copy notes. Each was corrected in place and the Jira facts re-pointed at
+`omkar_internal/Jira RCA`. One sentence of the global `~/.claude/CLAUDE.md` was corrected (`D54`).
+
+**Part 2 — the framework.** Built in `..\NewProject_Framework`, a sibling folder, as a product rather than a
+copy: a clean `template/` (the mandatory core), optional `tools/` and `skills/`, a generalised `global/`,
+`scripts/new_project.py` (create, or adopt without overwriting) and `scripts/verify.py` (the gate), six
+guides, a changelog and CI. Generalised on the way: the onboarding schema's 29 PAM-specific descriptions
+rewritten as anonymous lessons, the rule set's placeholders resolved and its old-project sections removed,
+the objective hook re-implemented in POSIX `sh` so one script serves Windows, macOS and Linux, git rights
+aligned with the owner's standing preferences. New: a `pre-commit` hook that blocks credentials,
+secret-shaped strings, conflict markers and oversized files, and a project self-check `BLAST/verify.py`.
+
+**Validation.** The 15-check gate passed; five deliberately broken project states were each caught; a fresh
+clone of the pushed repository passed the gate again. First commit `4bd37b0`, pushed to `main` and verified
+equal to the remote.
+
+**Lessons.**
+- **A gate that passed first time still needed a negative test.** Breaking a generated project on purpose
+  exposed a real defect the smoke test had missed: a project created with a *subset* of tools failed its
+  own link check, because `tools/README.md` linked to tools it had not installed. The fix was plain paths,
+  plus a partial-install case added to the smoke test.
+- **A stored denylist of old-project names would itself be baggage.** The framework's permanent checks are
+  generic (secrets, home paths, placeholders, links); the old-project scan was run once and not kept.
+- **The pasted GitHub token was never needed.** The machine's existing credentials reached the new
+  repository; the token was not used, stored or written anywhere, and the owner was advised to revoke it.
