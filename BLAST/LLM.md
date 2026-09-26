@@ -19,7 +19,7 @@ _TBD — define in Phase 1._
 | Service | Use | Endpoint / Transport | Auth | Status |
 |---|---|---|---|---|
 | Jira | _TBD_ | MCP (see `MCP-SETUP.md`) | OAuth or API token | ⬜ standby |
-| GROQ | _TBD_ | `POST https://api.groq.com/openai/v1/chat/completions` | `Bearer GROQ_KEY` | ✅ key set, link verified |
+| GROQ | _TBD_ | `POST https://api.groq.com/openai/v1/chat/completions` | `Bearer GROQ_KEY` | ⬜ no key in this copy; link verified in the framework trial |
 
 ## 3. Data Schema (Input / Output) — ⬜ NOT CONFIRMED
 <!-- The Data-First Rule. Coding begins only once these shapes are confirmed. -->
@@ -57,5 +57,7 @@ _TBD — define in Phase 1._
   all failure paths). Environment facts and the Windows `process.exit()` rule are
   carried forward in `findings.md`.
 - Awaiting `Objective.md` and Phase 1 Discovery for the real requirement.
-- **On record (2026-08-03):** `Objective.md` is auto-loaded — imported by the root `CLAUDE.md` and
-  re-injected each prompt. Durable history lives in `../docs/history/README.md` (append-only).
+- **On record (`OBJ-031`):** `Objective.md` reaches context through one live path, the
+  `UserPromptSubmit` hook `hooks/inject-objective.ps1` (no `@`-import). Durable history lives in
+  `../docs/history/` (append-only). Development deliverables for the current task land in
+  `../New Task/Updated Project/`, not in `tools/`.

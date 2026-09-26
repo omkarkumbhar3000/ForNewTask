@@ -9,12 +9,13 @@ Stand up the dynamic API validation approach on a project that does not have it 
 
 **The deliverable is not tests. It is a validated profile plus a first executed run**, from which
 tests generate themselves. Every project-specific fact lives in
-`data/profiles/<key>.json`; this skill contains no project facts at all, which is
+`tools/onboarding/profiles/<key>.json`; this skill contains no project facts at all, which is
 what makes it reusable.
 
 The narrative version of everything here — with the measured evidence, the two architecture
-options and the management case — is `docs/briefs/new-project-implementation.md`. Read this file to
-*do* the work; read that one to *understand or present* it.
+options and the management case — was `docs/briefs/new-project-implementation.md`, retired with the
+reference project and recoverable with `git show 2a3298d:docs/briefs/new-project-implementation.md`.
+Read this file to *do* the work; read that one to *understand or present* it.
 
 ## Usage
 
@@ -84,8 +85,9 @@ Copy `profiles/_template.json` to `profiles/<key>.json` and fill it in the order
 python tools/onboarding/validate_profile.py profiles/<key>.json
 ```
 
-Blockers are unanswered questions, not lint. `profiles/pam.json` is the worked example — read it
-beside the template when a field's intent is unclear. Field-by-field guidance:
+Blockers are unanswered questions, not lint. The worked example is the retired PAM profile
+(`git show 2a3298d:data/profiles/pam.json`) — read it beside the template when a field's intent is
+unclear. Field-by-field guidance:
 `references/02-profile-authoring.md`.
 
 ### Phase 2 — Probe

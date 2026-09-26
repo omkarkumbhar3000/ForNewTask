@@ -21,14 +21,14 @@
         "key": {"type": "string", "pattern": "^[A-Z][A-Z0-9_]{1,15}$", "description": "Short uppercase code, e.g. PAM, IDEV. Used in filenames."},
         "name": {"type": "string", "description": "Human name of the product under test."},
         "owner": {"type": "string", "description": "The person who answers questions about it. A profile with no named owner has no route to resolving an UNKNOWN."},
-        "tracker": {"type": "string", "description": "Jira (or other) project key for raising defects, e.g. PAMIT."},
+        "tracker": {"type": "string", "description": "Jira (or other) project key for raising defects, e.g. PROJ."},
         "notes": {"type": "string"}
       }
     },
 
     "workspace": {
       "type": "object",
-      "description": "Where things live on disk. Replaces chain_runner.py's hardcoded REPO / ROOT resolution.",
+      "description": "Where things live on disk. Replaces a harness's hardcoded REPO / ROOT resolution.",
       "required": ["root_markers", "reports_dir", "flows_dir"],
       "properties": {
         "root_markers": {
@@ -46,7 +46,7 @@
       "description": "The target environment. One profile addresses exactly one environment; copy the profile for another.",
       "required": ["name", "api_base", "is_production", "config_format"],
       "properties": {
-        "name": {"type": "string", "x-blocker": true, "description": "Environment identifier, e.g. QA_MsSQL."},
+        "name": {"type": "string", "x-blocker": true, "description": "Environment identifier, e.g. QA or STAGING."},
         "api_base": {"type": "string", "x-blocker": true, "description": "Scheme, host and port serving the API. Often NOT the same port as the app."},
         "app_base": {"type": "string", "description": "The UI/app origin, when it differs. PAM: API :6302, app :1302 — confusing the two produces 404s that read as missing endpoints."},
         "is_production": {"type": "boolean", "x-blocker": true, "description": "MUST be false. A true value is a hard refusal, not a warning."},

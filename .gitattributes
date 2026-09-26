@@ -1,34 +1,15 @@
 # =============================================================================
-# Dynamic API Validator — root .gitattributes                          (OBJ-024)
+# Root .gitattributes
 #
-# LFS rules MUST be in place before the first 'git add'. A file staged without
-# them is stored as an ordinary blob, and moving it to LFS afterwards requires
-# rewriting history.
-#
-# ⚠️ repo.arconnet.com is self-hosted, so whether LFS is enabled server-side is
-# UNVERIFIED from this workspace. If the first push rejects LFS objects, the
-# fallback is to exclude these files rather than commit them as plain blobs.
+# LFS rules MUST be in place before a matching file is first staged. A file
+# staged without them is stored as an ordinary blob, and moving it to LFS
+# afterwards requires rewriting history. GitHub rejects any blob over 100 MB.
 # =============================================================================
 
 # --- Git-LFS -----------------------------------------------------------------
-# The three source PDFs: 78.64 MB, and incompressible (gzip 89-95%), so they
-# would cost their full weight in every clone. Static vendor/reference documents
-# that never diff usefully.
-#   PAM Administrative Guide.pdf   40.15 MB
-#   Client Manager Guide.pdf       26.26 MB
-#   PAM API (Internal Team).pdf    12.23 MB  <- the payload reference
+# PDFs (requirement documents, vendor guides) are large, incompressible and never
+# diff usefully, so they would cost their full weight in every clone.
 *.pdf filter=lfs diff=lfs merge=lfs -text
-
-# 201.53 MB — the single largest file in the repository and the only one over
-# GitLab's default 100 MB per-blob limit, so LFS is what makes it pushable at
-# all. Note it is a *derived* artifact of the excluded pam/PAM product repo
-# (its .graphify_root names 'pam\PAM'), and it is regenerable — exclusion was
-# offered and declined, so it is tracked via LFS instead.
-# OBJ-025: matched by '**/graphify-out/graph.json' rather than the literal path.
-# A literal path stops matching the instant artifacts/graph/ moves, and git then stores
-# 201 MB as an ordinary blob -- silent at commit, rejected at push, and fixable
-# only by rewriting history. This form also covers dev-scope and any future scope.
-**/graphify-out/graph.json filter=lfs diff=lfs merge=lfs -text
 
 # --- Binary: never diff, never line-ending-normalise -------------------------
 *.xlsx binary
@@ -38,13 +19,14 @@
 *.zip  binary
 *.png  binary
 *.jpg  binary
+*.jpeg binary
 *.gif  binary
+*.webp binary
+*.ico  binary
 
 # --- Text: keep line endings exactly as committed ----------------------------
-# No '* text=auto'. This tree holds Windows PowerShell scripts that must stay
-# CRLF (the *_register_*.ps1 task registrars are documented as 7-bit ASCII and
-# encoding-sensitive) alongside POSIX shell and Python. Normalising the whole
-# tree on a Windows checkout would rewrite thousands of files on first commit
-# and bury the real content in whitespace churn.
+# No '* text=auto': normalising a whole uploaded project on a Windows checkout
+# would rewrite every file on first commit and bury real changes in whitespace.
+# PowerShell scripts stay CRLF (PS 5.1 is encoding-sensitive); shell scripts LF.
 *.ps1 text eol=crlf
 *.sh  text eol=lf

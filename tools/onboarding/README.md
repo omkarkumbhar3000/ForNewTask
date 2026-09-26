@@ -1,8 +1,12 @@
 # onboarding — the portable kit for standing this solution up on a new project
 
 **Purpose:** everything project-agnostic, in one folder, so a new project needs a profile rather than a fork.
-**Objective:** `OBJ-011` · **Reference implementation:** PAM (`OBJ-010`, `artifacts/runs/2026-08-05_114315`)
-**Read first:** [`../new-project-implementation.md`](../new-project-implementation.md) — the guide this folder serves.
+**Origin:** built under `OBJ-011` from a PAM reference implementation (`OBJ-010`). That project, its run
+evidence, its worked-example profile and the long-form guide were retired by `OBJ-031`; they are
+recoverable from commit `2a3298d` (`git show 2a3298d:data/profiles/pam.json`,
+`git show 2a3298d:docs/briefs/new-project-implementation.md`).
+**Scope:** dynamic API test generation. It is a dormant, reusable kit: use it only when an objective is
+about API test automation.
 
 ---
 
@@ -11,7 +15,6 @@
 | Path | What it is | Edit? |
 |---|---|---|
 | `profile.schema.json` | The contract. Every field is a place the PAM harness currently hardcodes a PAM fact | ✅ versioned by `schema_version` |
-| `profiles/pam.json` | **The worked example** — PAM's entire project-specific surface, filled in from the working scripts | ✅ update when PAM changes |
 | `profiles/_template.json` | What a new project copies. Every `UNKNOWN` is a real question with an owner | ⛔ never edit in place — copy it |
 | `validate_profile.py` | The readiness gate. Structure + the operational checks a schema cannot express. **Zero HTTP calls** | ✅ |
 | `skills/api-onboarding/SKILL.md` | The portable skill: seven phases, each with an exit criterion | ✅ |
@@ -20,11 +23,8 @@
 ## 2. Using it
 
 ```powershell
-# Readiness gate on the worked example - exits 0
-python tools\onboarding\validate_profile.py profiles/pam.json
-
-# Start a new project
-Copy-Item data\profiles\_template.json data\profiles\idev.json
+# Start a new project: copy the template, then run the gate on the copy
+Copy-Item tools\onboarding\profiles\_template.json tools\onboarding\profiles\idev.json
 python tools\onboarding\validate_profile.py profiles/idev.json    # exits 1, lists what is missing
 
 # Every profile at once
@@ -40,10 +40,9 @@ credential. Project facts live in a profile; that separation is the entire reusa
 is checkable — grep the skill for a product name and you should find none outside a labelled
 *reference project* citation.
 
-**It changes nothing that already works.** `tools/` produced OBJ-010's 5,416-case run and
-is untouched by this folder. The profile currently *documents* the couplings rather than *driving*
-them; wiring the scripts to read a profile is the next increment, scoped in
-`../new-project-implementation.md` §8.
+**It documents couplings; it does not drive a harness.** The PAM harness this kit was distilled from
+(OBJ-010's 5,416-case run) was retired by `OBJ-031`. A profile describes a project's facts; wiring an
+executor to read one is the next increment, scoped in §8 of the retired guide (`2a3298d`).
 
 ## 4. Dependencies
 
@@ -54,7 +53,6 @@ else. The kit is deliberately no harder to stand up than the harness it onboards
 
 | Need | Read |
 |---|---|
-| The full onboarding guide, both architecture options, the recommendation | `../new-project-implementation.md` |
-| What the PAM implementation measured | `../../docs/management/summary/OBJ-010-Execution-Benchmark.md` |
-| How to brief the AI on a *feature*'s business context (a different problem) | `../../docs/business-context/BUSINESS-CONTEXT-STANDARD.md` §0 |
-| The PAM-specific target architecture specs (Java/TestNG, not this framework) | `../skills/*.SKILL.md` |
+| The full onboarding guide, both architecture options, the recommendation | `git show 2a3298d:docs/briefs/new-project-implementation.md` |
+| The worked-example profile (PAM) | `git show 2a3298d:data/profiles/pam.json` |
+| How to brief the AI on a *feature*'s business context (a different problem) | `git show 2a3298d:docs/business-context/BUSINESS-CONTEXT-STANDARD.md` |

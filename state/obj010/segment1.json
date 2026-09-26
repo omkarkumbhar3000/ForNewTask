@@ -1,9 +1,0 @@
-﻿{
-    "evidence_files":  3390,
-    "elapsed_min":  234.2,
-    "started":  "2026-08-05T11:43:18.1524822+05:30",
-    "segment":  1,
-    "crash":  "OSError 22 - invalid evidence filename from an Excel-derived hop name (fixed)",
-    "ended":  "2026-08-05T15:37:29.3795410+05:30",
-    "flows_checkpointed":  500
-}

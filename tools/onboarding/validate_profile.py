@@ -20,7 +20,7 @@ Exit codes: 0 ready to execute - 1 blocked - 2 bad usage.
 
 Usage
 -----
-    python tools/onboarding/validate_profile.py profiles/pam.json
+    python tools/onboarding/validate_profile.py profiles/_template.json   # exits 1: all UNKNOWN
     python tools/onboarding/validate_profile.py --all
     python tools/onboarding/validate_profile.py profiles/idev.json --quiet
 

@@ -1,16 +1,14 @@
 # Objective.md — Active Instruction
 
 > **This file holds one thing: what I want done right now.** Rewrite the §Instruction block below and
-> save. It is imported by the root `CLAUDE.md` and re-injected on every prompt, so the change takes
-> effect immediately — no need to restate context, point at the file, or start a new session.
+> save. The `UserPromptSubmit` hook (`hooks/inject-objective.ps1`) injects it on every prompt, so the
+> change takes effect on the next message — no need to restate context or start a new session.
 >
-> **Keep it small.** Nothing historical belongs here. Everything already known about this project —
-> decisions, prior requirements, measured findings, the backlog — lives in
-> [`../docs/history/README.md`](../docs/history/README.md) and in the workspace docs. The
-> assistant reads those when it needs them and must **never copy them back into this file.**
+> **Keep it small** (the hook warns above 10,000 characters). Nothing historical belongs here.
+> Decisions, prior objectives and findings live in [`../docs/history/`](../docs/history/README.md); the
+> assistant reads them when needed and must **never copy them back into this file.**
 
-**Owner:** Sudesh Sawant · **Jira:** `PAMIT` · **Updated:** 2026-08-26
-**Environment:** `QA_MsSQL` only — API `https://u16hf.arconnet.com:6302` (app URL is `:1302`)
+**Owner:** Sudesh Sawant · **Updated:** 2026-09-26 · **Work area:** `../New Task/`
 
 ---
 
@@ -19,7 +17,8 @@
 <!-- ▼▼▼ WRITE THE CURRENT REQUIREMENT HERE — replace everything between the markers ▼▼▼ -->
 
 **`OBJ-031` — Make this workspace a clean, reusable BLAST framework, and prepare `New Task/` for the
-next development project.** 🟡 **In progress — stage 1, preparation only.**
+next development project.** 🟡 **In progress — stage 1 (preparation) ✅ complete; stage 2 waits for the
+owner to upload the current project and start it.**
 
 ### Stage 1 — now
 
@@ -76,12 +75,13 @@ The assistant runs the instruction above using the whole workspace as context, w
 
 | Needs | Reads |
 |---|---|
-| Standing rules — edit scope, never push, response envelope, safety blocklist, `JAVA_HOME` | root `CLAUDE.md` |
-| Why something is the way it is — decisions, prior requirements, findings, the old backlog | `../docs/history/README.md` |
+| Standing rules: objective-first workflow, edit scope, change control, validation, git | root `../CLAUDE.md` |
+| Why something is the way it is: decisions, prior objectives | `../docs/history/README.md` |
 | The protocol and its phases | `B.L.A.S.T.md`; memory in `LLM.md`, `task_plan.md`, `findings.md`, `progress.md` |
-| Measured evidence | `../artifacts/runs/` (runs) · `../docs/analysis/` (reports) · `../docs/findings/issues/` |
-| Code and its structure | `Automation gitlab repo/pam_automation_bootstrap/` + `graphify-out/`, `AGENTS.md` |
-| Product docs and payloads | `tools/rag/` |
+| The project being improved, its requirement and its feedback | `../New Task/Current Project/` |
+| The work in progress and its documentation | `../New Task/Updated Project/` |
+| Searchable PDFs, markdown → Word/Excel, API-testing onboarding | `../tools/rag/` · `../tools/render/` · `../tools/onboarding/` |
 
-**On completion:** append what changed and what was learned to `../docs/history/README.md`.
-When this file is rewritten, its outgoing instruction is appended there first.
+**On completion:** append what changed and what was learned to `../docs/history/` (narrative log, and a
+decision record for each owner decision). When this file is rewritten, its outgoing instruction is
+archived to the objective register first.

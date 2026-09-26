@@ -8,26 +8,14 @@
     ]
   },
   "hooks": {
-    "SessionStart": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "powershell.exe -NoProfile -NonInteractive -Command \"[Console]::OutputEncoding=[Text.Encoding]::UTF8; $b = (python 'E:\\Omkar\\Automation\\Dev Project\\workbench\\scripts\\obj013_loop.py' check --brief 2>$null | Out-String); if ($LASTEXITCODE -eq 0 -and $b.Trim()) { ConvertTo-Json -Compress -Depth 5 @{hookSpecificOutput=@{hookEventName='SessionStart';additionalContext=$b.Trim()}} }\" 2>/dev/null || true",
-            "timeout": 60,
-            "statusMessage": "Checking workspace drift"
-          }
-        ]
-      }
-    ],
     "UserPromptSubmit": [
       {
         "hooks": [
           {
             "type": "command",
-            "command": "powershell.exe -NoProfile -NonInteractive -Command \"[Console]::OutputEncoding=[Text.Encoding]::UTF8; if (Test-Path 'E:\\Omkar\\Automation\\Dev Project\\BLAST\\Objective.md') { ConvertTo-Json -Compress -Depth 5 @{hookSpecificOutput=@{hookEventName='UserPromptSubmit';additionalContext=[string](Get-Content -Raw -Encoding UTF8 'E:\\Omkar\\Automation\\Dev Project\\BLAST\\Objective.md')}} }\" 2>/dev/null || true",
+            "command": "powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File \"$CLAUDE_PROJECT_DIR/BLAST/hooks/inject-objective.ps1\"",
             "timeout": 15,
-            "statusMessage": "Loading Objective.md"
+            "statusMessage": "Loading BLAST/Objective.md"
           }
         ]
       }

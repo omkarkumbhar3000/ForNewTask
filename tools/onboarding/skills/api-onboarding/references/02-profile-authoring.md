@@ -1,7 +1,7 @@
 # Phase 1 — Authoring the profile
 
 **Purpose:** how to fill `profiles/<key>.json`, and what each field actually decides.
-**Contract:** `profile.schema.json` · **Worked example:** `profiles/pam.json` · **Gate:** `validate_profile.py`
+**Contract:** `profile.schema.json` · **Worked example:** `git show 2a3298d:data/profiles/pam.json` (retired PAM profile) · **Gate:** `validate_profile.py`
 
 The profile is the whole point of the design. It is the boundary between *generic machinery* and
 *one project's facts* — everything the reference implementation hardcodes appears here as a field.
@@ -126,5 +126,5 @@ in CI and safe to run repeatedly.
 
 **A clean profile is not a correct profile.** The validator checks completeness and internal
 consistency; only the probe in Phase 2 can tell you whether the `envelope` section describes
-reality. `profiles/pam.json` validates with zero blockers and still carries five open `unknowns` —
+reality. The retired PAM profile validated with zero blockers and still carried five open `unknowns` —
 that is the intended steady state, not a failure.

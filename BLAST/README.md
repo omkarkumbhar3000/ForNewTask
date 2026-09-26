@@ -1,77 +1,57 @@
 # B.L.A.S.T. Framework
 
-A protocol for building deterministic, self-healing automation.
-**B**lueprint → **L**ink → **A**rchitect → **S**tylize → **T**rigger, on top of the
-**A.N.T.** 3-layer architecture.
-
-This is a clean skeleton. No application code — that gets generated when you run the
-protocol against an objective.
+A reusable protocol for building deterministic, self-healing software:
+**B**lueprint → **L**ink → **A**rchitect → **S**tylize → **T**rigger, on top of the **A.N.T.** 3-layer
+architecture. This folder is the framework only; the work it drives lives in `../New Task/`.
 
 ## How to use it
 
-1. **Write your requirement** in `Objective.md`. Since 2026-08-03 it is loaded automatically on every
-   prompt, so saving the file is enough — step 2 is optional.
-2. **Hand the System Pilot both files:**
+1. **Give an instruction.** For any substantive request it is written into `Objective.md` first, and the
+   outgoing objective is archived to `../docs/history/`. You can also edit `Objective.md` yourself.
+2. **It loads itself.** `hooks/inject-objective.ps1` injects `Objective.md` on every prompt (wired in
+   `../.claude/settings.json`), so an edit takes effect on the next message.
+3. **To run the full protocol**, hand the System Pilot both files:
    ```
    @B.L.A.S.T.md @Objective.md
    Follow the BLAST protocol. Start at Protocol 0.
    ```
-3. The Pilot halts at Phase 1 Discovery, asks its questions, and only starts building
-   once the Data Schema is confirmed in `LLM.md`.
+   The Pilot halts at Discovery, asks its five questions, and builds nothing until the data schema is
+   confirmed in `LLM.md` and the Blueprint in `task_plan.md` is approved.
 
 ## Layout
 
 ```
-B.L.A.S.T.md        # The protocol — the System Pilot's instructions
-Objective.md        # ← YOU EDIT THIS. Active instruction only, kept small. Auto-loaded every prompt.
-                    #   History lives in ../docs/history/README.md (append-only).
-CLAUDE.md           # Guidance for Claude Code working in this repo
-LLM.md              # Project Constitution — schema, rules, invariants. This is law.
-task_plan.md        # Memory — phases and checklists
-findings.md         # Memory — research, constraints, discoveries
-progress.md         # Memory — what was done, what broke, what was learned
-MCP-SETUP.md        # Jira MCP activation guide (currently standby)
-architecture/       # Layer 1 — SOPs (the "how-to")
-tools/              # Layer 3 — deterministic scripts (the "engines")
+B.L.A.S.T.md        The protocol: the System Pilot's instructions
+Objective.md        The active instruction only, kept small. Injected on every prompt
+CLAUDE.md           Guidance for Claude Code working in this folder
+LLM.md              Project Constitution: schema, rules, invariants. This is law
+task_plan.md        Memory: phases and checklists
+findings.md         Memory: research, constraints, discoveries
+progress.md         Memory: what was done, what broke, what was learned (append-only)
+MCP-SETUP.md        Jira MCP activation guide (standby)
+hooks/              inject-objective.ps1, the UserPromptSubmit hook behind step 2
+architecture/       Layer 1: SOPs (the "how-to")
+tools/              Layer 3: deterministic scripts (the "engines")
 ```
 
-Layer 2 (Navigation) is the Pilot's own reasoning — it routes between SOPs and Tools
-and is not a directory.
+Layer 2 (Navigation) is the Pilot's own reasoning; it routes between SOPs and tools and is not a
+directory.
 
 ## Configuration
 
 | What | Where | Status |
 |---|---|---|
-| GROQ API key | `.env` → `GROQ_KEY` | ✅ set |
+| LLM key (GROQ) | `.env` → `GROQ_KEY` | ⬜ not present in this copy |
 | Jira connection | `.mcp.json.template` → see `MCP-SETUP.md` | ⬜ standby |
 
-`.env` and `.mcp.json` are gitignored. `.env.sample` documents the expected shape.
-
-To bring Jira online: add credentials to `.env`, then `cp .mcp.json.template .mcp.json`
-and restart. Full instructions in `MCP-SETUP.md`.
-
-## Runtime notes
-
-No `package.json` yet — Phase 1 picks the stack and Phase 3 creates the tooling.
-Verified available here: Node v24.18.0, Python 3.14.6, Windows 11.
-
-If Node is chosen, credentials load natively — no `dotenv` needed:
-
-```bash
-node --env-file=.env <script>
-```
-
-The flag must be on every run command or `GROQ_KEY` will be undefined.
-
-⚠️ **Never call `process.exit()` after an HTTP request.** On Windows it aborts with a
-libuv assertion and exit code 127 even when the request succeeded. Use `process.exitCode`.
-Details in `findings.md`.
+`.env` and `.mcp.json` are gitignored. `.env.sample` documents the expected shape. Activate only what an
+objective needs.
 
 ## The rules that matter
 
-- **Protocol 0 HALT** — no code in `tools/` until Discovery is answered and the schema
-  is confirmed. This is the whole point of the framework.
-- **`LLM.md` is law**, the planning files are memory.
-- **Deterministic boundary** — the LLM generates content; code owns formatting and I/O.
-- **Self-annealing** — a fix isn't done until the matching `architecture/` SOP records
-  the learning.
+- **Objective first.** No work starts from an instruction that exists only in the chat.
+- **Protocol 0 HALT.** No deliverable code until Discovery is answered and the schema is confirmed.
+- **`LLM.md` is law**; the planning files are memory.
+- **Deterministic boundary.** The LLM generates content; code owns formatting and I/O.
+- **Self-annealing.** A fix isn't done until the matching `architecture/` SOP records the learning.
+- **No project data here.** BLAST stays reusable; project material lives in `../New Task/`.

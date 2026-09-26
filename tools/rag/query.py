@@ -1,16 +1,16 @@
 """
-Query the extracted data/sources corpus. No embeddings, no network, no API cost -
-regex retrieval over page-cited text. Fast enough at this corpus size (1.1M chars).
+Query a corpus built by extract.py. No embeddings, no network, no API cost: regex
+retrieval over page-cited text, which is fast enough for a few thousand pages.
 
-Run from the workspace root:
+  python tools/rag/query.py find "login timeout"               # ranked pages containing all terms
+  python tools/rag/query.py find "api user" --doc admin-guide  # restrict to one document
+  python tools/rag/query.py page admin-guide 63                # print one page
+  python tools/rag/query.py page admin-guide 63-67             # print a range
+  python tools/rag/query.py toc admin-guide --level 2 --grep api
+  python tools/rag/query.py docs                               # list the documents in the corpus
 
-  python tools/rag/query.py find "web api registration"        # ranked pages containing all terms
-  python tools/rag/query.py find "api user" --doc pam-admin    # restrict to one document
-  python tools/rag/query.py page pam-admin 633                 # print one page
-  python tools/rag/query.py page pam-admin 633-637             # print a range
-  python tools/rag/query.py toc pam-admin --level 2 --grep api # heading index, filtered
-
-Every result is cited as <doc>:p<N>, which maps back to the printed guide page.
+Every result is cited as <doc>:p<N>, which maps back to the printed PDF page.
+--corpus defaults to <workspace>/.tmp/rag-corpus, where extract.py writes.
 """
 
 import argparse
@@ -19,17 +19,25 @@ import re
 import sys
 from pathlib import Path
 
-CORPUS = Path(__file__).resolve().parent / "corpus"
+HERE = Path(__file__).resolve().parent
+sys.path.insert(0, str(HERE.parent))
+
+from paths import RAG_CORPUS  # noqa: E402
 
 
-def load(doc: str | None):
+def load(corpus: Path, doc: str | None):
+    path = corpus / "corpus.jsonl"
+    if not path.is_file():
+        sys.exit(f"no corpus at {corpus} - run tools/rag/extract.py first, or pass --corpus")
     rows = []
-    with (CORPUS / "corpus.jsonl").open(encoding="utf-8") as fh:
+    with path.open(encoding="utf-8") as fh:
         for line in fh:
             r = json.loads(line)
             if doc and r["doc"] != doc:
                 continue
             rows.append(r)
+    if doc and not rows:
+        sys.exit(f"no document '{doc}' in {corpus} - see: query.py docs")
     return rows
 
 
@@ -37,7 +45,7 @@ def cmd_find(a) -> None:
     terms = [t for t in re.split(r"\s+", a.terms.strip()) if t]
     pats = [re.compile(re.escape(t), re.IGNORECASE) for t in terms]
     hits = []
-    for r in load(a.doc):
+    for r in load(a.corpus, a.doc):
         counts = [len(p.findall(r["text"])) for p in pats]
         if all(c > 0 for c in counts):
             hits.append((sum(counts), r))
@@ -60,14 +68,16 @@ def cmd_page(a) -> None:
         sys.exit("pages must be N or N-M")
     lo = int(m.group(1))
     hi = int(m.group(2) or m.group(1))
-    for r in load(a.doc):
+    for r in load(a.corpus, a.doc):
         if lo <= r["page"] <= hi:
             print(f"\n===== {r['doc']}:p{r['page']} =====")
             print(r["text"] or "_(no extractable text)_")
 
 
 def cmd_toc(a) -> None:
-    path = CORPUS / f"{a.doc}.headings.tsv"
+    path = a.corpus / f"{a.doc}.headings.tsv"
+    if not path.is_file():
+        sys.exit(f"no heading index at {path}")
     pat = re.compile(a.grep, re.IGNORECASE) if a.grep else None
     with path.open(encoding="utf-8") as fh:
         next(fh)
@@ -80,26 +90,48 @@ def cmd_toc(a) -> None:
             print(f"  p{pg:>4}  {'  ' * (int(lvl) - 1)}{head}")
 
 
-p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-sub = p.add_subparsers(dest="cmd", required=True)
+def cmd_docs(a) -> None:
+    pages = {}
+    for r in load(a.corpus, None):
+        pages[r["doc"]] = pages.get(r["doc"], 0) + 1
+    for doc, n in sorted(pages.items()):
+        print(f"  {doc:24} {n:>5} pages")
 
-f = sub.add_parser("find", help="ranked pages containing all terms")
-f.add_argument("terms")
-f.add_argument("--doc")
-f.add_argument("--limit", type=int, default=15)
-f.add_argument("--context", type=int, default=180)
-f.set_defaults(func=cmd_find)
 
-g = sub.add_parser("page", help="print a page or range")
-g.add_argument("doc")
-g.add_argument("pages")
-g.set_defaults(func=cmd_page)
+def main() -> None:
+    for stream in (sys.stdout, sys.stderr):
+        try:
+            stream.reconfigure(encoding="utf-8", errors="replace")
+        except (AttributeError, ValueError):
+            pass
+    p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    p.add_argument("--corpus", type=Path, default=RAG_CORPUS, help=f"corpus folder (default {RAG_CORPUS})")
+    sub = p.add_subparsers(dest="cmd", required=True)
 
-t = sub.add_parser("toc", help="heading index")
-t.add_argument("doc")
-t.add_argument("--level", type=int, default=0)
-t.add_argument("--grep")
-t.set_defaults(func=cmd_toc)
+    f = sub.add_parser("find", help="ranked pages containing all terms")
+    f.add_argument("terms")
+    f.add_argument("--doc")
+    f.add_argument("--limit", type=int, default=15)
+    f.add_argument("--context", type=int, default=180)
+    f.set_defaults(func=cmd_find)
 
-args = p.parse_args()
-args.func(args)
+    g = sub.add_parser("page", help="print a page or range")
+    g.add_argument("doc")
+    g.add_argument("pages")
+    g.set_defaults(func=cmd_page)
+
+    t = sub.add_parser("toc", help="heading index")
+    t.add_argument("doc")
+    t.add_argument("--level", type=int, default=0)
+    t.add_argument("--grep")
+    t.set_defaults(func=cmd_toc)
+
+    d = sub.add_parser("docs", help="list the documents in the corpus")
+    d.set_defaults(func=cmd_docs)
+
+    args = p.parse_args()
+    args.func(args)
+
+
+if __name__ == "__main__":
+    main()
