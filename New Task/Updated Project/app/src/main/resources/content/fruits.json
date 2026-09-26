@@ -1,0 +1,591 @@
+{
+  "slug": "fruits",
+  "title": "Fruits",
+  "kind": "TOPIC",
+  "icon": "🥝",
+  "description": "Watch videos of 26 fruits.",
+  "coverImage": "fruits/frutis-secondpage.jpeg",
+  "sortOrder": 5,
+  "lessons": [
+    {
+      "title": "Apple to Grapes",
+      "sourceTitle": null,
+      "sortOrder": 1,
+      "items": [
+        {
+          "sortOrder": 1,
+          "label": "Apple",
+          "word": "Apple",
+          "sourceWord": "Apple",
+          "emoji": null,
+          "description": null,
+          "image": null,
+          "audio": null,
+          "video": "fruits/apple-vedio.mp4",
+          "lyrics": null,
+          "alt": "Video of Apple",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 2,
+          "label": "Banana",
+          "word": "Banana",
+          "sourceWord": "Banana",
+          "emoji": null,
+          "description": null,
+          "image": null,
+          "audio": null,
+          "video": "fruits/banana-video.mp4",
+          "lyrics": null,
+          "alt": "Video of Banana",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 3,
+          "label": "Mango",
+          "word": "Mango",
+          "sourceWord": "Mango",
+          "emoji": null,
+          "description": null,
+          "image": null,
+          "audio": null,
+          "video": "fruits/mango-video.mp4",
+          "lyrics": null,
+          "alt": "Video of Mango",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 4,
+          "label": "Orange",
+          "word": "Orange",
+          "sourceWord": "Orange",
+          "emoji": null,
+          "description": null,
+          "image": null,
+          "audio": null,
+          "video": "fruits/orange-video.mp4",
+          "lyrics": null,
+          "alt": "Video of Orange",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 5,
+          "label": "Grapes",
+          "word": "Grapes",
+          "sourceWord": "Grapes",
+          "emoji": null,
+          "description": null,
+          "image": null,
+          "audio": null,
+          "video": "fruits/grps-video.mp4",
+          "lyrics": null,
+          "alt": "Video of Grapes",
+          "status": "READY"
+        }
+      ]
+    },
+    {
+      "title": "Blackberry to Custard Apple",
+      "sourceTitle": null,
+      "sortOrder": 2,
+      "items": [
+        {
+          "sortOrder": 1,
+          "label": "Blackberry",
+          "word": "Blackberry",
+          "sourceWord": "blackbarray",
+          "emoji": null,
+          "description": null,
+          "image": null,
+          "audio": null,
+          "video": "fruits/blackbarray-video.mp4",
+          "lyrics": null,
+          "alt": "Video of Blackberry",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 2,
+          "label": "Blueberry",
+          "word": "Blueberry",
+          "sourceWord": "bluekbarray",
+          "emoji": null,
+          "description": null,
+          "image": null,
+          "audio": null,
+          "video": "fruits/bluebarray-video.mp4",
+          "lyrics": null,
+          "alt": "Video of Blueberry",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 3,
+          "label": "Coconut",
+          "word": "Coconut",
+          "sourceWord": "cocunet",
+          "emoji": null,
+          "description": null,
+          "image": null,
+          "audio": null,
+          "video": "fruits/cocunet-video.mp4",
+          "lyrics": null,
+          "alt": "Video of Coconut",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 4,
+          "label": "Cherries",
+          "word": "Cherries",
+          "sourceWord": "cheress",
+          "emoji": null,
+          "description": null,
+          "image": null,
+          "audio": null,
+          "video": "fruits/cheress-video.mp4",
+          "lyrics": null,
+          "alt": "Video of Cherries",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 5,
+          "label": "Custard Apple",
+          "word": "Custard Apple",
+          "sourceWord": "custed apple",
+          "emoji": null,
+          "description": null,
+          "image": null,
+          "audio": null,
+          "video": "fruits/custed-apple-video.mp4",
+          "lyrics": null,
+          "alt": "Video of Custard Apple",
+          "status": "READY"
+        }
+      ]
+    },
+    {
+      "title": "Dragon Fruit to Jackfruit",
+      "sourceTitle": null,
+      "sortOrder": 3,
+      "items": [
+        {
+          "sortOrder": 1,
+          "label": "Dragon Fruit",
+          "word": "Dragon Fruit",
+          "sourceWord": "dragenfrutis",
+          "emoji": null,
+          "description": null,
+          "image": null,
+          "audio": null,
+          "video": "fruits/dragenfruti-video.mp4",
+          "lyrics": null,
+          "alt": "Video of Dragon Fruit",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 2,
+          "label": "Green Apple",
+          "word": "Green Apple",
+          "sourceWord": "green apple",
+          "emoji": null,
+          "description": null,
+          "image": null,
+          "audio": null,
+          "video": "fruits/green-apple-video.mp4",
+          "lyrics": null,
+          "alt": "Video of Green Apple",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 3,
+          "label": "Honeydew",
+          "word": "Honeydew",
+          "sourceWord": "honydew",
+          "emoji": null,
+          "description": null,
+          "image": null,
+          "audio": null,
+          "video": "fruits/honydew-video.mp4",
+          "lyrics": null,
+          "alt": "Video of Honeydew",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 4,
+          "label": "Jackfruit",
+          "word": "Jackfruit",
+          "sourceWord": "jackfruti",
+          "emoji": null,
+          "description": null,
+          "image": null,
+          "audio": null,
+          "video": "fruits/jackfurtis.mp4",
+          "lyrics": null,
+          "alt": "Video of Jackfruit",
+          "status": "READY"
+        }
+      ]
+    },
+    {
+      "title": "Lemon to Pear",
+      "sourceTitle": null,
+      "sortOrder": 4,
+      "items": [
+        {
+          "sortOrder": 1,
+          "label": "Lemon",
+          "word": "Lemon",
+          "sourceWord": "lemon",
+          "emoji": null,
+          "description": null,
+          "image": null,
+          "audio": null,
+          "video": "fruits/lemon-video.mp4",
+          "lyrics": null,
+          "alt": "Video of Lemon",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 2,
+          "label": "Loquat",
+          "word": "Loquat",
+          "sourceWord": "loqute",
+          "emoji": null,
+          "description": null,
+          "image": null,
+          "audio": null,
+          "video": "fruits/loqute.mp4",
+          "lyrics": null,
+          "alt": "Video of Loquat",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 3,
+          "label": "Melon",
+          "word": "Melon",
+          "sourceWord": "melon",
+          "emoji": null,
+          "description": null,
+          "image": null,
+          "audio": null,
+          "video": "fruits/melon-video.mp4",
+          "lyrics": null,
+          "alt": "Video of Melon",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 4,
+          "label": "Pear",
+          "word": "Pear",
+          "sourceWord": "paer",
+          "emoji": null,
+          "description": null,
+          "image": null,
+          "audio": null,
+          "video": "fruits/paer-video.mp4",
+          "lyrics": null,
+          "alt": "Video of Pear",
+          "status": "READY"
+        }
+      ]
+    },
+    {
+      "title": "Papaya to Rosebary",
+      "sourceTitle": null,
+      "sortOrder": 5,
+      "items": [
+        {
+          "sortOrder": 1,
+          "label": "Papaya",
+          "word": "Papaya",
+          "sourceWord": "papaya",
+          "emoji": null,
+          "description": null,
+          "image": null,
+          "audio": null,
+          "video": "fruits/papaya-video.mp4",
+          "lyrics": null,
+          "alt": "Video of Papaya",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 2,
+          "label": "Peach",
+          "word": "Peach",
+          "sourceWord": "pech",
+          "emoji": null,
+          "description": null,
+          "image": null,
+          "audio": null,
+          "video": "fruits/pech-video.mp4",
+          "lyrics": null,
+          "alt": "Video of Peach",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 3,
+          "label": "Pineapple",
+          "word": "Pineapple",
+          "sourceWord": "pinapal",
+          "emoji": null,
+          "description": null,
+          "image": null,
+          "audio": null,
+          "video": "fruits/pinapal-video.mp4",
+          "lyrics": null,
+          "alt": "Video of Pineapple",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 4,
+          "label": "Rosebary",
+          "word": "Rosebary",
+          "sourceWord": "rosebary",
+          "emoji": null,
+          "description": null,
+          "image": null,
+          "audio": null,
+          "video": "fruits/rosebary.mp4",
+          "lyrics": null,
+          "alt": "Video of Rosebary",
+          "status": "READY"
+        }
+      ]
+    },
+    {
+      "title": "Soursop to Watermelon",
+      "sourceTitle": null,
+      "sortOrder": 6,
+      "items": [
+        {
+          "sortOrder": 1,
+          "label": "Soursop",
+          "word": "Soursop",
+          "sourceWord": "soursop",
+          "emoji": null,
+          "description": null,
+          "image": null,
+          "audio": null,
+          "video": "fruits/soursop-video.mp4",
+          "lyrics": null,
+          "alt": "Video of Soursop",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 2,
+          "label": "Strawberry",
+          "word": "Strawberry",
+          "sourceWord": "stobary",
+          "emoji": null,
+          "description": null,
+          "image": null,
+          "audio": null,
+          "video": "fruits/stobary-video.mp4",
+          "lyrics": null,
+          "alt": "Video of Strawberry",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 3,
+          "label": "Tangerine",
+          "word": "Tangerine",
+          "sourceWord": "tengaris",
+          "emoji": null,
+          "description": null,
+          "image": null,
+          "audio": null,
+          "video": "fruits/tengaris-video.mp4",
+          "lyrics": null,
+          "alt": "Video of Tangerine",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 4,
+          "label": "Watermelon",
+          "word": "Watermelon",
+          "sourceWord": "watermelan",
+          "emoji": null,
+          "description": null,
+          "image": null,
+          "audio": null,
+          "video": "fruits/watermalen-video.mp4",
+          "lyrics": null,
+          "alt": "Video of Watermelon",
+          "status": "READY"
+        }
+      ]
+    }
+  ],
+  "quiz": {
+    "title": "Fruits Quiz",
+    "passMarkPercent": 70,
+    "questions": [
+      {
+        "prompt": "Which fruit is red?",
+        "options": [
+          "Apple",
+          "Banana",
+          "Grapes",
+          "Orange"
+        ],
+        "answerIndex": 0
+      },
+      {
+        "prompt": "Which fruit is yellow?",
+        "options": [
+          "Banana",
+          "Apple",
+          "Mango",
+          "Guava"
+        ],
+        "answerIndex": 0
+      },
+      {
+        "prompt": "Which fruit is green outside and red inside?",
+        "options": [
+          "Watermelon",
+          "Apple",
+          "Orange",
+          "Papaya"
+        ],
+        "answerIndex": 0
+      },
+      {
+        "prompt": "Which fruit is very juicy and orange color?",
+        "options": [
+          "Orange",
+          "Grapes",
+          "Apple",
+          "Banana"
+        ],
+        "answerIndex": 0
+      },
+      {
+        "prompt": "Which fruit is small and purple?",
+        "options": [
+          "Grapes",
+          "Mango",
+          "Apple",
+          "Guava"
+        ],
+        "answerIndex": 0
+      },
+      {
+        "prompt": "Which fruit is called king of fruits?",
+        "options": [
+          "Mango",
+          "Apple",
+          "Banana",
+          "Orange"
+        ],
+        "answerIndex": 0
+      },
+      {
+        "prompt": "Which fruit has many seeds inside?",
+        "options": [
+          "Papaya",
+          "Apple",
+          "Banana",
+          "Mango"
+        ],
+        "answerIndex": 0
+      },
+      {
+        "prompt": "Which fruit is used to make jam?",
+        "options": [
+          "Strawberry",
+          "Potato",
+          "Carrot",
+          "Onion"
+        ],
+        "answerIndex": 0
+      },
+      {
+        "prompt": "Which fruit is sour and green?",
+        "options": [
+          "Lemon",
+          "Apple",
+          "Banana",
+          "Mango"
+        ],
+        "answerIndex": 0
+      },
+      {
+        "prompt": "Which fruit grows in bunches?",
+        "options": [
+          "Banana",
+          "Apple",
+          "Orange",
+          "Guava"
+        ],
+        "answerIndex": 0
+      }
+    ]
+  },
+  "reserveQuestions": [
+    {
+      "prompt": "What fruit is used to make orange juice?",
+      "options": [
+        "Lemon",
+        "Orange",
+        "Mango",
+        "Pear"
+      ],
+      "answerIndex": 1
+    },
+    {
+      "prompt": "Which fruit is small, round, and grows in bunches?",
+      "options": [
+        "Watermelon",
+        "Grapes",
+        "Pineapple",
+        "Peach"
+      ],
+      "answerIndex": 1
+    },
+    {
+      "prompt": "Which fruit has its seeds on the outside?",
+      "options": [
+        "Strawberry",
+        "Blueberry",
+        "Orange",
+        "Apple"
+      ],
+      "answerIndex": 0
+    },
+    {
+      "prompt": "What is the color of a ripe lemon?",
+      "options": [
+        "Purple",
+        "Yellow",
+        "Blue",
+        "Red"
+      ],
+      "answerIndex": 1
+    },
+    {
+      "prompt": "Which fruit has a hard brown shell and water inside?",
+      "options": [
+        "Coconut",
+        "Plum",
+        "Banana",
+        "Pear"
+      ],
+      "answerIndex": 0
+    },
+    {
+      "prompt": "Which fruit is named after a color?",
+      "options": [
+        "Grapes",
+        "Orange",
+        "Apple",
+        "Kiwi"
+      ],
+      "answerIndex": 1
+    }
+  ],
+  "diagram": null,
+  "source": {
+    "lessonPage": "frutis_voice.html",
+    "quizPage": "frutis_quize.html",
+    "reservePage": "fruits_qq.html"
+  }
+}

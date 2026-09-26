@@ -1,0 +1,485 @@
+{
+  "slug": "flowers",
+  "title": "Flowers",
+  "kind": "TOPIC",
+  "icon": "🌷",
+  "description": "See 18 flowers and hear their names.",
+  "coverImage": "flowers/flowers-secondpage.jpeg",
+  "sortOrder": 7,
+  "lessons": [
+    {
+      "title": "Sunflower to Tulip",
+      "sourceTitle": null,
+      "sortOrder": 1,
+      "items": [
+        {
+          "sortOrder": 1,
+          "label": "Sunflower",
+          "word": "Sunflower",
+          "sourceWord": "sunflower",
+          "emoji": null,
+          "description": null,
+          "image": "flowers/sunflower-photo.avif",
+          "audio": "flowers/sunflower-sound.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Sunflower",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 2,
+          "label": "Rose",
+          "word": "Rose",
+          "sourceWord": "Rose",
+          "emoji": null,
+          "description": null,
+          "image": "flowers/rose-photo.jpg",
+          "audio": "flowers/rose-sound.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Rose",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 3,
+          "label": "Marigold",
+          "word": "Marigold",
+          "sourceWord": "Marigold",
+          "emoji": null,
+          "description": null,
+          "image": "flowers/marigold-photo.webp",
+          "audio": "flowers/marigold-sound.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Marigold",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 4,
+          "label": "Lotus",
+          "word": "Lotus",
+          "sourceWord": "lotus",
+          "emoji": null,
+          "description": null,
+          "image": "flowers/lotus-photo.jpg",
+          "audio": "flowers/lotus-sound.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Lotus",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 5,
+          "label": "Tulip",
+          "word": "Tulip",
+          "sourceWord": "tulip",
+          "emoji": null,
+          "description": null,
+          "image": "flowers/tulip-photo.jpg",
+          "audio": "flowers/tulip-sound.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Tulip",
+          "status": "READY"
+        }
+      ]
+    },
+    {
+      "title": "Hibiscus to Rosemary",
+      "sourceTitle": null,
+      "sortOrder": 2,
+      "items": [
+        {
+          "sortOrder": 1,
+          "label": "Hibiscus",
+          "word": "Hibiscus",
+          "sourceWord": "hibiseus",
+          "emoji": null,
+          "description": null,
+          "image": "flowers/hibiscus-photo.jpg",
+          "audio": "flowers/hibiscus-sound.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Hibiscus",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 2,
+          "label": "Jasmine",
+          "word": "Jasmine",
+          "sourceWord": "jasmine",
+          "emoji": null,
+          "description": null,
+          "image": "flowers/jasmin-photo.webp",
+          "audio": "flowers/jasmine-sound.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Jasmine",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 3,
+          "label": "Lily",
+          "word": "Lily",
+          "sourceWord": "lily",
+          "emoji": null,
+          "description": null,
+          "image": "flowers/lily-photo.jpg",
+          "audio": "flowers/lily-sound.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Lily",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 4,
+          "label": "Daisy",
+          "word": "Daisy",
+          "sourceWord": "Daisy",
+          "emoji": null,
+          "description": null,
+          "image": "flowers/daisy-photo.jpg",
+          "audio": "flowers/daisy-sound.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Daisy",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 5,
+          "label": "Rosemary",
+          "word": "Rosemary",
+          "sourceWord": "rosmary",
+          "emoji": null,
+          "description": null,
+          "image": "flowers/rosmary-photo.webp",
+          "audio": "flowers/rosemerry-sound.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Rosemary",
+          "status": "READY"
+        }
+      ]
+    },
+    {
+      "title": "Lavender to Dahlia",
+      "sourceTitle": null,
+      "sortOrder": 3,
+      "items": [
+        {
+          "sortOrder": 1,
+          "label": "Lavender",
+          "word": "Lavender",
+          "sourceWord": "lavender",
+          "emoji": null,
+          "description": null,
+          "image": "flowers/lavender-photo.jpg",
+          "audio": "flowers/lavender-sound.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Lavender",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 2,
+          "label": "Orchid",
+          "word": "Orchid",
+          "sourceWord": "orchid",
+          "emoji": null,
+          "description": null,
+          "image": "flowers/orchid-photo.webp",
+          "audio": "flowers/orchid-sound.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Orchid",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 3,
+          "label": "Daffodil",
+          "word": "Daffodil",
+          "sourceWord": "Daffodil",
+          "emoji": null,
+          "description": null,
+          "image": "flowers/daffodil-photo.webp",
+          "audio": "flowers/daffodil-sound.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Daffodil",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 4,
+          "label": "Dahlia",
+          "word": "Dahlia",
+          "sourceWord": "Dahlia",
+          "emoji": null,
+          "description": null,
+          "image": "flowers/dahlia-photo.webp",
+          "audio": "flowers/dahila-sound.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Dahlia",
+          "status": "READY"
+        }
+      ]
+    },
+    {
+      "title": "Violet to Bluebell",
+      "sourceTitle": null,
+      "sortOrder": 4,
+      "items": [
+        {
+          "sortOrder": 1,
+          "label": "Violet",
+          "word": "Violet",
+          "sourceWord": "violet",
+          "emoji": null,
+          "description": null,
+          "image": "flowers/voilet-photo.jpg",
+          "audio": "flowers/violet-sound.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Violet",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 2,
+          "label": "Cherry Blossom",
+          "word": "Cherry Blossom",
+          "sourceWord": "cherry blossom",
+          "emoji": null,
+          "description": null,
+          "image": "flowers/cherry-blosoom-photo.jpg",
+          "audio": "flowers/cherry-blossom-sound.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Cherry Blossom",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 3,
+          "label": "Aster",
+          "word": "Aster",
+          "sourceWord": "aster",
+          "emoji": null,
+          "description": null,
+          "image": "flowers/aster-photo.webp",
+          "audio": "flowers/aster-sound.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Aster",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 4,
+          "label": "Bluebell",
+          "word": "Bluebell",
+          "sourceWord": "Blue bell",
+          "emoji": null,
+          "description": null,
+          "image": "flowers/bluebell-photo.jpg",
+          "audio": "flowers/blue-bel.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Bluebell",
+          "status": "READY"
+        }
+      ]
+    }
+  ],
+  "quiz": {
+    "title": "Flowers Quiz",
+    "passMarkPercent": 70,
+    "questions": [
+      {
+        "prompt": "Which flower is red and has thorns?",
+        "options": [
+          "Rose",
+          "Lily",
+          "Lotus",
+          "Sunflower"
+        ],
+        "answerIndex": 0
+      },
+      {
+        "prompt": "Which flower grows in water?",
+        "options": [
+          "Lotus",
+          "Rose",
+          "Sunflower",
+          "Tulip"
+        ],
+        "answerIndex": 0
+      },
+      {
+        "prompt": "Which flower follows the sun?",
+        "options": [
+          "Sunflower",
+          "Rose",
+          "Lily",
+          "Jasmine"
+        ],
+        "answerIndex": 0
+      },
+      {
+        "prompt": "Which flower is white and smells nice?",
+        "options": [
+          "Jasmine",
+          "Rose",
+          "Lotus",
+          "Tulip"
+        ],
+        "answerIndex": 0
+      },
+      {
+        "prompt": "Which flower is pink and grows in water?",
+        "options": [
+          "Lotus",
+          "Rose",
+          "Sunflower",
+          "Lily"
+        ],
+        "answerIndex": 0
+      },
+      {
+        "prompt": "Which flower is yellow and big?",
+        "options": [
+          "Sunflower",
+          "Rose",
+          "Tulip",
+          "Lily"
+        ],
+        "answerIndex": 0
+      },
+      {
+        "prompt": "Which flower is used on Valentine's Day?",
+        "options": [
+          "Rose",
+          "Lotus",
+          "Lily",
+          "Tulip"
+        ],
+        "answerIndex": 0
+      },
+      {
+        "prompt": "Which flower is small and white?",
+        "options": [
+          "Jasmine",
+          "Sunflower",
+          "Rose",
+          "Lotus"
+        ],
+        "answerIndex": 0
+      },
+      {
+        "prompt": "Which flower has long petals?",
+        "options": [
+          "Lily",
+          "Carrot",
+          "Potato",
+          "Onion"
+        ],
+        "answerIndex": 0
+      },
+      {
+        "prompt": "Which flower smells sweet?",
+        "options": [
+          "Rose",
+          "Stone",
+          "Rock",
+          "Leaf"
+        ],
+        "answerIndex": 0
+      }
+    ]
+  },
+  "reserveQuestions": [
+    {
+      "prompt": "Which flower always faces the sun?",
+      "options": [
+        "Sunflower",
+        "Lotus",
+        "Marigold",
+        "Jasmine"
+      ],
+      "answerIndex": 0
+    },
+    {
+      "prompt": "What color is a common Daisy?",
+      "options": [
+        "Blue",
+        "Black",
+        "White with yellow center",
+        "Purple"
+      ],
+      "answerIndex": 2
+    },
+    {
+      "prompt": "Which flower is yellow and often used in garlands?",
+      "options": [
+        "Marigold",
+        "Lavender",
+        "Poppy",
+        "Rose"
+      ],
+      "answerIndex": 0
+    },
+    {
+      "prompt": "Which flower has a very strong, sweet smell at night?",
+      "options": [
+        "Jasmine",
+        "Sunflower",
+        "Cactus",
+        "Daisy"
+      ],
+      "answerIndex": 0
+    },
+    {
+      "prompt": "What color are Violets?",
+      "options": [
+        "Green",
+        "Purple",
+        "Yellow",
+        "Red"
+      ],
+      "answerIndex": 1
+    },
+    {
+      "prompt": "Which flower looks like a bell?",
+      "options": [
+        "Bluebell",
+        "Rose",
+        "Sun",
+        "Leaf"
+      ],
+      "answerIndex": 0
+    },
+    {
+      "prompt": "Which flower grows from a bulb and is famous in Holland?",
+      "options": [
+        "Tulip",
+        "Daisy",
+        "Lotus",
+        "Marigold"
+      ],
+      "answerIndex": 0
+    },
+    {
+      "prompt": "What part of the plant is the flower?",
+      "options": [
+        "The root",
+        "The colorful part",
+        "The dirt",
+        "The leaf"
+      ],
+      "answerIndex": 1
+    }
+  ],
+  "diagram": null,
+  "source": {
+    "lessonPage": "flowers_voice.html",
+    "quizPage": "flowers_quize.html",
+    "reservePage": "flowers_qq.html"
+  }
+}

@@ -1,0 +1,145 @@
+{
+  "slug": "stories",
+  "title": "Stories",
+  "kind": "MEDIA",
+  "icon": null,
+  "description": "Watch 6 stories told in video.",
+  "coverImage": "stories/story-secondpage.jpeg",
+  "sortOrder": 11,
+  "lessons": [
+    {
+      "title": "The Hare and the Tortoise",
+      "sourceTitle": "The hare and the tort toise",
+      "sortOrder": 1,
+      "items": [
+        {
+          "sortOrder": 1,
+          "label": "The Hare and the Tortoise",
+          "word": "The Hare and the Tortoise",
+          "sourceWord": "The hare and the tort toise",
+          "emoji": null,
+          "description": null,
+          "image": "stories/the-hare-and-the-tort-toise-photo.webp",
+          "audio": null,
+          "video": "stories/the-hare-and-the-tort-toise.mp4",
+          "lyrics": null,
+          "alt": "Video of The Hare and the Tortoise",
+          "status": "READY"
+        }
+      ]
+    },
+    {
+      "title": "The Thirsty Crow",
+      "sourceTitle": "The thirsty  crow",
+      "sortOrder": 2,
+      "items": [
+        {
+          "sortOrder": 1,
+          "label": "The Thirsty Crow",
+          "word": "The Thirsty Crow",
+          "sourceWord": "The thirsty  crow",
+          "emoji": null,
+          "description": null,
+          "image": "stories/the-thirsty-crow-photo.jpg",
+          "audio": null,
+          "video": "stories/the-thirsty-crow.mp4",
+          "lyrics": null,
+          "alt": "Video of The Thirsty Crow",
+          "status": "READY"
+        }
+      ]
+    },
+    {
+      "title": "Run O Pumpkin",
+      "sourceTitle": "Run O pumpkin",
+      "sortOrder": 3,
+      "items": [
+        {
+          "sortOrder": 1,
+          "label": "Run O Pumpkin",
+          "word": "Run O Pumpkin",
+          "sourceWord": "Run O pumpkin",
+          "emoji": null,
+          "description": null,
+          "image": "stories/run-o-pumpkin-photo.jpg",
+          "audio": null,
+          "video": "stories/run-o-pumpkin.mp4",
+          "lyrics": null,
+          "alt": "Video of Run O Pumpkin",
+          "status": "READY"
+        }
+      ]
+    },
+    {
+      "title": "The Two Cats and a Monkey",
+      "sourceTitle": "The two cats and a monkey",
+      "sortOrder": 4,
+      "items": [
+        {
+          "sortOrder": 1,
+          "label": "The Two Cats and a Monkey",
+          "word": "The Two Cats and a Monkey",
+          "sourceWord": "The two cats and a monkey",
+          "emoji": null,
+          "description": null,
+          "image": "stories/the-two-cats-and-a-monkey-photo.png",
+          "audio": null,
+          "video": "stories/the-two-cats-and-a-monkey.mp4",
+          "lyrics": null,
+          "alt": "Video of The Two Cats and a Monkey",
+          "status": "READY"
+        }
+      ]
+    },
+    {
+      "title": "The Capseller and the Monkeys",
+      "sourceTitle": "The capseller and the monkeys",
+      "sortOrder": 5,
+      "items": [
+        {
+          "sortOrder": 1,
+          "label": "The Capseller and the Monkeys",
+          "word": "The Capseller and the Monkeys",
+          "sourceWord": "The capseller and the monkeys",
+          "emoji": null,
+          "description": null,
+          "image": "stories/the-capseller-and-the-monkeys-photo.jpg",
+          "audio": null,
+          "video": null,
+          "lyrics": null,
+          "alt": "Video of The Capseller and the Monkeys",
+          "status": "MEDIA_MISSING"
+        }
+      ]
+    },
+    {
+      "title": "The Lion and the Mouse",
+      "sourceTitle": "The lion and the mouse",
+      "sortOrder": 6,
+      "items": [
+        {
+          "sortOrder": 1,
+          "label": "The Lion and the Mouse",
+          "word": "The Lion and the Mouse",
+          "sourceWord": "The lion and the mouse",
+          "emoji": null,
+          "description": null,
+          "image": "stories/the-lion-and-the-mouse-photo.png",
+          "audio": null,
+          "video": "stories/the-lion-and-the-mouse.mp4",
+          "lyrics": null,
+          "alt": "Video of The Lion and the Mouse",
+          "status": "READY"
+        }
+      ]
+    }
+  ],
+  "quiz": null,
+  "reserveQuestions": [],
+  "diagram": null,
+  "source": {
+    "lessonPage": "story.html",
+    "quizPage": null,
+    "reservePage": null
+  }
+}

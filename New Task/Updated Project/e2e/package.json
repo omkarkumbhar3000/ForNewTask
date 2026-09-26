@@ -1,0 +1,13 @@
+{
+  "name": "clevercubs-e2e",
+  "private": true,
+  "description": "Browser tests for CleverCubs (requirement section 28). Development only; never shipped.",
+  "type": "module",
+  "scripts": {
+    "test": "playwright test",
+    "report": "playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0"
+  }
+}

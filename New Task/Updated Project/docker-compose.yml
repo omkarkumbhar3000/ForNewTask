@@ -1,0 +1,33 @@
+# MySQL 8.4 (LTS) for local development of CleverCubs.
+# Credentials come from .env beside this file (copy .env.example; .env is never committed).
+# The port is bound to 127.0.0.1 only, so the database is not reachable from the network.
+#
+#   docker compose up -d        start (first start also creates the users, see db/init)
+#   docker compose down         stop, keeping the data volume
+#   docker compose down -v      stop AND delete all local data
+name: clevercubs
+
+services:
+  mysql:
+    image: mysql:8.4
+    container_name: clevercubs-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${CC_DB_ROOT_PASSWORD:?Set CC_DB_ROOT_PASSWORD in .env}
+      MYSQL_DATABASE: clevercubs
+      CC_DB_MIGRATOR_PASSWORD: ${CC_DB_MIGRATOR_PASSWORD:?Set CC_DB_MIGRATOR_PASSWORD in .env}
+      CC_DB_APP_PASSWORD: ${CC_DB_APP_PASSWORD:?Set CC_DB_APP_PASSWORD in .env}
+    command: ["--character-set-server=utf8mb4", "--collation-server=utf8mb4_0900_ai_ci"]
+    ports:
+      - "127.0.0.1:3306:3306"
+    volumes:
+      - clevercubs-mysql:/var/lib/mysql
+      - ./db/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 --silent"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+
+volumes:
+  clevercubs-mysql:

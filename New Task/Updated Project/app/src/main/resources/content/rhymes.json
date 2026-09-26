@@ -1,0 +1,208 @@
+{
+  "slug": "rhymes",
+  "title": "Rhymes",
+  "kind": "MEDIA",
+  "icon": null,
+  "description": "Watch 9 nursery rhymes and read along with the words.",
+  "coverImage": "rhymes/poem-secondpage.jpeg",
+  "sortOrder": 10,
+  "lessons": [
+    {
+      "title": "Twinkle Twinkle Little Star",
+      "sourceTitle": "🌟 Twinkle Twinkle Little Star",
+      "sortOrder": 1,
+      "items": [
+        {
+          "sortOrder": 1,
+          "label": "Twinkle Twinkle",
+          "word": "Twinkle Twinkle Little Star",
+          "sourceWord": "🌟 Twinkle Twinkle Little Star",
+          "emoji": "🌟",
+          "description": null,
+          "image": "rhymes/twinka-photo.jpg",
+          "audio": null,
+          "video": "rhymes/twinkal-v.mp4",
+          "lyrics": "Twinkle, twinkle, little star,\nHow I wonder what you are!\nUp above the world so high,\nLike a diamond in the sky.\n\nWhen the blazing sun is gone,\nWhen he nothing shines upon,\nThen you show your little light,\nTwinkle, twinkle, all the night.\n\nThen the traveler in the dark\nThanks you for your tiny spark;\nHe could not see which way to go,\nIf you did not twinkle so.",
+          "alt": "Video of Twinkle Twinkle Little Star",
+          "status": "READY"
+        }
+      ]
+    },
+    {
+      "title": "Baa Baa Black Sheep",
+      "sourceTitle": "🐑 Baa Baa Black Sheep",
+      "sortOrder": 2,
+      "items": [
+        {
+          "sortOrder": 1,
+          "label": "Baa Baa Black Sheep",
+          "word": "Baa Baa Black Sheep",
+          "sourceWord": "🐑 Baa Baa Black Sheep",
+          "emoji": "🐑",
+          "description": null,
+          "image": "rhymes/baba-photo.avif",
+          "audio": null,
+          "video": "rhymes/baba-blackship.mp4",
+          "lyrics": "Baa, baa, black sheep,\nHave you any wool?\nYes sir, yes sir, three bags full;\n\nOne for the master,\nOne for the dame,\nAnd one for the little boy\nWho lives down the lane.\n\nBaa, baa, white sheep,\nHave you any wool?\nYes sir, yes sir, three bags full.",
+          "alt": "Video of Baa Baa Black Sheep",
+          "status": "READY"
+        }
+      ]
+    },
+    {
+      "title": "Johnny Johnny Yes Papa",
+      "sourceTitle": "👶 Johnny Johnny Yes Papa",
+      "sortOrder": 3,
+      "items": [
+        {
+          "sortOrder": 1,
+          "label": "Johnny Johnny",
+          "word": "Johnny Johnny Yes Papa",
+          "sourceWord": "👶 Johnny Johnny Yes Papa",
+          "emoji": "👶",
+          "description": null,
+          "image": "rhymes/jony-jony-photo.jpg",
+          "audio": null,
+          "video": "rhymes/jony-jony.mp4",
+          "lyrics": "Johnny, Johnny!\nYes, Papa?\nEating sugar?\nNo, Papa.\nTelling lies?\nNo, Papa.\nOpen your mouth.\nHa! Ha! Ha!\nJohnny, Johnny!\nYes, Papa?\nEating chocolate?\nNo, Papa.\nTelling lies?\nNo, Papa.\nOpen your mouth.\nHa! Ha! Ha!",
+          "alt": "Video of Johnny Johnny Yes Papa",
+          "status": "READY"
+        }
+      ]
+    },
+    {
+      "title": "Chubby Cheeks",
+      "sourceTitle": "😊 Chubby Cheeks",
+      "sortOrder": 4,
+      "items": [
+        {
+          "sortOrder": 1,
+          "label": "Chubby Cheeks",
+          "word": "Chubby Cheeks",
+          "sourceWord": "😊 Chubby Cheeks",
+          "emoji": "😊",
+          "description": null,
+          "image": "rhymes/chubby-cheks-photo.jpg",
+          "audio": null,
+          "video": "rhymes/chubby-checks.mp4",
+          "lyrics": "Chubby cheeks, dimple chin,\nRosy lips, teeth within,\nCurly hair, very fair,\nEyes are blue, lovely too.\n\nTeacher’s pet, is that you?\nYes, yes, yes!",
+          "alt": "Video of Chubby Cheeks",
+          "status": "READY"
+        }
+      ]
+    },
+    {
+      "title": "If You're Happy and You Know It",
+      "sourceTitle": "👏 If You're Happy and You Know It",
+      "sortOrder": 5,
+      "items": [
+        {
+          "sortOrder": 1,
+          "label": "If You're Happy",
+          "word": "If You're Happy and You Know It",
+          "sourceWord": "👏 If You're Happy and You Know It",
+          "emoji": "👏",
+          "description": null,
+          "image": "rhymes/if-your-happy-photo.avif",
+          "audio": null,
+          "video": "rhymes/if-you-happyy.mp4",
+          "lyrics": "If you're happy and you know it, clap your hands.\nIf you're happy and you know it, clap your hands.\nIf you're happy and you know it, and you really want to show it,\nIf you're happy and you know it, clap your hands.\n\nIf you're happy and you know it, stomp your feet.\nIf you're happy and you know it, stomp your feet.\nIf you're happy and you know it, and you really want to show it,\nIf you're happy and you know it, stomp your feet.",
+          "alt": "Video of If You're Happy and You Know It",
+          "status": "READY"
+        }
+      ]
+    },
+    {
+      "title": "Humpty Dumpty",
+      "sourceTitle": "🥚 Humpty Dumpty",
+      "sortOrder": 6,
+      "items": [
+        {
+          "sortOrder": 1,
+          "label": "Humpty Dumpty",
+          "word": "Humpty Dumpty",
+          "sourceWord": "🥚 Humpty Dumpty",
+          "emoji": "🥚",
+          "description": null,
+          "image": "rhymes/humpy-dumpy-photo.jpg",
+          "audio": null,
+          "video": "rhymes/humpy-dumpy.mp4",
+          "lyrics": "Humpty Dumpty sat on a wall,\nHumpty Dumpty had a great fall.\nAll the king’s horses\nAnd all the king’s men\nCouldn't put Humpty together again.",
+          "alt": "Video of Humpty Dumpty",
+          "status": "READY"
+        }
+      ]
+    },
+    {
+      "title": "The Wheels on the Bus",
+      "sourceTitle": "🚌 The Wheels on the Bus",
+      "sortOrder": 7,
+      "items": [
+        {
+          "sortOrder": 1,
+          "label": "Wheels on the Bus",
+          "word": "The Wheels on the Bus",
+          "sourceWord": "🚌 The Wheels on the Bus",
+          "emoji": "🚌",
+          "description": null,
+          "image": "rhymes/wheel-on-bus-photo.jpg",
+          "audio": null,
+          "video": "rhymes/wheel-on-bus.mp4",
+          "lyrics": "The wheels on the bus go round and round,\nRound and round, round and round,\nThe wheels on the bus go round and round,\nAll through the town.\n\nThe wipers on the bus go Swish, swish, swish,\nAll through the town.\n\nThe horn on the bus goes Beep, beep, beep,\nAll through the town.",
+          "alt": "Video of The Wheels on the Bus",
+          "status": "READY"
+        }
+      ]
+    },
+    {
+      "title": "Five Little Monkeys",
+      "sourceTitle": "🐒 Five Little Monkeys",
+      "sortOrder": 8,
+      "items": [
+        {
+          "sortOrder": 1,
+          "label": "Five Little Monkeys",
+          "word": "Five Little Monkeys",
+          "sourceWord": "🐒 Five Little Monkeys",
+          "emoji": "🐒",
+          "description": null,
+          "image": "rhymes/five-lettel-monky.png",
+          "audio": null,
+          "video": "rhymes/five-monky.mp4",
+          "lyrics": "Five little monkeys jumping on the bed,\nOne fell off and bumped his head.\nMama called the doctor and the doctor said,\n'No more monkeys jumping on the bed!'\n\nFour little monkeys jumping on the bed,\nOne fell off and bumped his head...\n(Repeat until no monkeys are left!)",
+          "alt": "Video of Five Little Monkeys",
+          "status": "READY"
+        }
+      ]
+    },
+    {
+      "title": "Jingle Bells",
+      "sourceTitle": "🔔 Jingle Bells",
+      "sortOrder": 9,
+      "items": [
+        {
+          "sortOrder": 1,
+          "label": "Jingle Bells",
+          "word": "Jingle Bells",
+          "sourceWord": "🔔 Jingle Bells",
+          "emoji": "🔔",
+          "description": null,
+          "image": "rhymes/jingal-bel-photo.webp",
+          "audio": null,
+          "video": "rhymes/jingal-bel.mp4",
+          "lyrics": "Dashing through the snow,\nIn a one-horse open sleigh,\nO'er the fields we go,\nLaughing all the way;\nBells on bobtails ring,\nMaking spirits bright,\nWhat fun it is to ride and sing\nA sleighing song tonight!\n\nJingle bells, jingle bells,\nJingle all the way!\nOh, what fun it is to ride\nIn a one-horse open sleigh, hey!",
+          "alt": "Video of Jingle Bells",
+          "status": "READY"
+        }
+      ]
+    }
+  ],
+  "quiz": null,
+  "reserveQuestions": [],
+  "diagram": null,
+  "source": {
+    "lessonPage": "poem_video2.html",
+    "quizPage": null,
+    "reservePage": null
+  }
+}

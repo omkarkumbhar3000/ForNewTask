@@ -1,0 +1,360 @@
+{
+  "slug": "colours",
+  "title": "Colours",
+  "kind": "TOPIC",
+  "icon": "🎨",
+  "description": "See 11 colours and hear their names.",
+  "coverImage": "colours/color-secondpage.jpeg",
+  "sortOrder": 8,
+  "lessons": [
+    {
+      "title": "Pink to Black",
+      "sourceTitle": null,
+      "sortOrder": 1,
+      "items": [
+        {
+          "sortOrder": 1,
+          "label": "Pink",
+          "word": "Pink",
+          "sourceWord": "Pink",
+          "emoji": null,
+          "description": null,
+          "image": "colours/pink-color.avif",
+          "audio": "colours/pink-color.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Pink",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 2,
+          "label": "Brown",
+          "word": "Brown",
+          "sourceWord": "Brown",
+          "emoji": null,
+          "description": null,
+          "image": "colours/braown-color.png",
+          "audio": "colours/browen-color.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Brown",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 3,
+          "label": "White",
+          "word": "White",
+          "sourceWord": "White",
+          "emoji": null,
+          "description": null,
+          "image": "colours/white1-color.jpg",
+          "audio": "colours/white-color.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of White",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 4,
+          "label": "Black",
+          "word": "Black",
+          "sourceWord": "Black",
+          "emoji": null,
+          "description": null,
+          "image": "colours/black-color.avif",
+          "audio": "colours/black-color.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Black",
+          "status": "READY"
+        }
+      ]
+    },
+    {
+      "title": "Yellow to Gray",
+      "sourceTitle": null,
+      "sortOrder": 2,
+      "items": [
+        {
+          "sortOrder": 1,
+          "label": "Yellow",
+          "word": "Yellow",
+          "sourceWord": "Yellow",
+          "emoji": null,
+          "description": null,
+          "image": "colours/yellow-color.jpg",
+          "audio": "colours/yellow-color.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Yellow",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 2,
+          "label": "Orange",
+          "word": "Orange",
+          "sourceWord": "Orange",
+          "emoji": null,
+          "description": null,
+          "image": "colours/orange-color.webp",
+          "audio": "colours/orange-color.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Orange",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 3,
+          "label": "Purple",
+          "word": "Purple",
+          "sourceWord": "Purple",
+          "emoji": null,
+          "description": null,
+          "image": "colours/purpal-color.png",
+          "audio": "colours/purple-color.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Purple",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 4,
+          "label": "Gray",
+          "word": "Gray",
+          "sourceWord": "Gray",
+          "emoji": null,
+          "description": null,
+          "image": "colours/gary-color.png",
+          "audio": "colours/gray-color.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Gray",
+          "status": "READY"
+        }
+      ]
+    },
+    {
+      "title": "Green to Red",
+      "sourceTitle": null,
+      "sortOrder": 3,
+      "items": [
+        {
+          "sortOrder": 1,
+          "label": "Green",
+          "word": "Green",
+          "sourceWord": "Green",
+          "emoji": null,
+          "description": null,
+          "image": "colours/green-color.png",
+          "audio": "colours/green-color.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Green",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 2,
+          "label": "Blue",
+          "word": "Blue",
+          "sourceWord": "Blue",
+          "emoji": null,
+          "description": null,
+          "image": "colours/blue-color.png",
+          "audio": "colours/blue-color.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Blue",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 3,
+          "label": "Red",
+          "word": "Red",
+          "sourceWord": "Red",
+          "emoji": null,
+          "description": null,
+          "image": "colours/red-color.png",
+          "audio": "colours/red-color.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Red",
+          "status": "READY"
+        }
+      ]
+    }
+  ],
+  "quiz": {
+    "title": "Colours Quiz",
+    "passMarkPercent": 70,
+    "questions": [
+      {
+        "prompt": "What color is the sky?",
+        "options": [
+          "Blue",
+          "Red",
+          "Green",
+          "Yellow"
+        ],
+        "answerIndex": 0
+      },
+      {
+        "prompt": "What color is grass?",
+        "options": [
+          "Green",
+          "Blue",
+          "Red",
+          "Pink"
+        ],
+        "answerIndex": 0
+      },
+      {
+        "prompt": "What color is a banana?",
+        "options": [
+          "Yellow",
+          "Blue",
+          "Black",
+          "White"
+        ],
+        "answerIndex": 0
+      },
+      {
+        "prompt": "What color is an apple?",
+        "options": [
+          "Red",
+          "Blue",
+          "Green",
+          "Purple"
+        ],
+        "answerIndex": 0
+      },
+      {
+        "prompt": "What color is milk?",
+        "options": [
+          "White",
+          "Black",
+          "Blue",
+          "Green"
+        ],
+        "answerIndex": 0
+      },
+      {
+        "prompt": "What color is coal?",
+        "options": [
+          "Black",
+          "White",
+          "Yellow",
+          "Pink"
+        ],
+        "answerIndex": 0
+      },
+      {
+        "prompt": "What color is a rose?",
+        "options": [
+          "Red",
+          "Green",
+          "Blue",
+          "White"
+        ],
+        "answerIndex": 0
+      },
+      {
+        "prompt": "What color is chocolate?",
+        "options": [
+          "Brown",
+          "Pink",
+          "Blue",
+          "Green"
+        ],
+        "answerIndex": 0
+      },
+      {
+        "prompt": "What color is a lemon?",
+        "options": [
+          "Yellow",
+          "Red",
+          "Blue",
+          "Purple"
+        ],
+        "answerIndex": 0
+      },
+      {
+        "prompt": "What color is a leaf?",
+        "options": [
+          "Green",
+          "Red",
+          "Black",
+          "White"
+        ],
+        "answerIndex": 0
+      }
+    ]
+  },
+  "reserveQuestions": [
+    {
+      "prompt": "What color do you get if you mix Red and Yellow?",
+      "options": [
+        "Purple",
+        "Green",
+        "Orange",
+        "Blue"
+      ],
+      "answerIndex": 2
+    },
+    {
+      "prompt": "Which color represents 'Stop' at a traffic light?",
+      "options": [
+        "Green",
+        "Yellow",
+        "Red",
+        "White"
+      ],
+      "answerIndex": 2
+    },
+    {
+      "prompt": "What color is a crow?",
+      "options": [
+        "White",
+        "Black",
+        "Grey",
+        "Brown"
+      ],
+      "answerIndex": 1
+    },
+    {
+      "prompt": "What color do you get by mixing White and Red?",
+      "options": [
+        "Pink",
+        "Purple",
+        "Blue",
+        "Brown"
+      ],
+      "answerIndex": 0
+    },
+    {
+      "prompt": "What color is the Sun?",
+      "options": [
+        "Blue",
+        "Yellow",
+        "Green",
+        "Purple"
+      ],
+      "answerIndex": 1
+    },
+    {
+      "prompt": "Which color is a combination of Blue and Red?",
+      "options": [
+        "Green",
+        "Orange",
+        "Purple",
+        "Yellow"
+      ],
+      "answerIndex": 2
+    }
+  ],
+  "diagram": null,
+  "source": {
+    "lessonPage": "color_voice.html",
+    "quizPage": "colors_quize.html",
+    "reservePage": "colors_qq.html"
+  }
+}

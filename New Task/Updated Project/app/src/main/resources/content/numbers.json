@@ -1,0 +1,432 @@
+{
+  "slug": "numbers",
+  "title": "Numbers",
+  "kind": "TOPIC",
+  "icon": "🔢",
+  "description": "Count from 1 to 20 with emoji pictures and spoken number names.",
+  "coverImage": "numbers/number-photo-secondpage.jpeg",
+  "sortOrder": 1,
+  "lessons": [
+    {
+      "title": "1 – 5",
+      "sourceTitle": null,
+      "sortOrder": 1,
+      "items": [
+        {
+          "sortOrder": 1,
+          "label": "1",
+          "word": "One",
+          "sourceWord": "One",
+          "emoji": "🍎",
+          "description": null,
+          "image": null,
+          "audio": "numbers/1-voice.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": null,
+          "status": "READY"
+        },
+        {
+          "sortOrder": 2,
+          "label": "2",
+          "word": "Two",
+          "sourceWord": "Two",
+          "emoji": "⚽⚽",
+          "description": null,
+          "image": null,
+          "audio": "numbers/2-voice.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": null,
+          "status": "READY"
+        },
+        {
+          "sortOrder": 3,
+          "label": "3",
+          "word": "Three",
+          "sourceWord": "Three",
+          "emoji": "🐶🐶🐶",
+          "description": null,
+          "image": null,
+          "audio": "numbers/3-voice.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": null,
+          "status": "READY"
+        },
+        {
+          "sortOrder": 4,
+          "label": "4",
+          "word": "Four",
+          "sourceWord": "Four",
+          "emoji": "🐠🐠🐠🐠",
+          "description": null,
+          "image": null,
+          "audio": "numbers/4-voice.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": null,
+          "status": "READY"
+        },
+        {
+          "sortOrder": 5,
+          "label": "5",
+          "word": "Five",
+          "sourceWord": "Five",
+          "emoji": "🌻🌻🌻🌻🌻",
+          "description": null,
+          "image": null,
+          "audio": "numbers/5-voice.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": null,
+          "status": "READY"
+        }
+      ]
+    },
+    {
+      "title": "6 – 10",
+      "sourceTitle": null,
+      "sortOrder": 2,
+      "items": [
+        {
+          "sortOrder": 1,
+          "label": "6",
+          "word": "Six",
+          "sourceWord": "Six",
+          "emoji": "🌳🌳🌳🌳🌳🌳",
+          "description": null,
+          "image": null,
+          "audio": "numbers/6-voice.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": null,
+          "status": "READY"
+        },
+        {
+          "sortOrder": 2,
+          "label": "7",
+          "word": "Seven",
+          "sourceWord": "Seven",
+          "emoji": "🌜🌜🌜🌜🌜🌜🌜",
+          "description": null,
+          "image": null,
+          "audio": "numbers/7-voice.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": null,
+          "status": "READY"
+        },
+        {
+          "sortOrder": 3,
+          "label": "8",
+          "word": "Eight",
+          "sourceWord": "Eight",
+          "emoji": "☀️☀️☀️☀️☀️☀️☀️☀️",
+          "description": null,
+          "image": null,
+          "audio": "numbers/8-voice.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": null,
+          "status": "READY"
+        },
+        {
+          "sortOrder": 4,
+          "label": "9",
+          "word": "Nine",
+          "sourceWord": "Nine",
+          "emoji": "📒📒📒📒📒📒📒📒📒",
+          "description": null,
+          "image": null,
+          "audio": "numbers/9-voice.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": null,
+          "status": "READY"
+        },
+        {
+          "sortOrder": 5,
+          "label": "10",
+          "word": "Ten",
+          "sourceWord": "Ten",
+          "emoji": "🍓🍓🍓🍓🍓🍓🍓🍓🍓🍓",
+          "description": null,
+          "image": null,
+          "audio": "numbers/10-voice.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": null,
+          "status": "READY"
+        }
+      ]
+    },
+    {
+      "title": "11 – 15",
+      "sourceTitle": null,
+      "sortOrder": 3,
+      "items": [
+        {
+          "sortOrder": 1,
+          "label": "11",
+          "word": "Eleven",
+          "sourceWord": "Eleven",
+          "emoji": "🍄🍄🍄🍄🍄🍄🍄🍄🍄🍄🍄",
+          "description": null,
+          "image": null,
+          "audio": "numbers/11-voice.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": null,
+          "status": "READY"
+        },
+        {
+          "sortOrder": 2,
+          "label": "12",
+          "word": "Twelve",
+          "sourceWord": "Twelve",
+          "emoji": "🍔🍔🍔🍔🍔🍔🍔🍔🍔🍔🍔🍔",
+          "description": null,
+          "image": null,
+          "audio": "numbers/12-voice.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": null,
+          "status": "READY"
+        },
+        {
+          "sortOrder": 3,
+          "label": "13",
+          "word": "Thirteen",
+          "sourceWord": "Thirteen",
+          "emoji": "🍦🍦🍦🍦🍦🍦🍦🍦🍦🍦🍦🍦🍦",
+          "description": null,
+          "image": null,
+          "audio": "numbers/13-voice.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": null,
+          "status": "READY"
+        },
+        {
+          "sortOrder": 4,
+          "label": "14",
+          "word": "Fourteen",
+          "sourceWord": "Fourteen",
+          "emoji": "🏡🏡🏡🏡🏡🏡🏡🏡🏡🏡🏡🏡🏡🏡",
+          "description": null,
+          "image": null,
+          "audio": "numbers/14-voice.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": null,
+          "status": "READY"
+        },
+        {
+          "sortOrder": 5,
+          "label": "15",
+          "word": "Fifteen",
+          "sourceWord": "Fifteen",
+          "emoji": "🧃🧃🧃🧃🧃🧃🧃🧃🧃🧃🧃🧃🧃🧃🧃",
+          "description": null,
+          "image": null,
+          "audio": "numbers/15-voice.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": null,
+          "status": "READY"
+        }
+      ]
+    },
+    {
+      "title": "16 – 20",
+      "sourceTitle": null,
+      "sortOrder": 4,
+      "items": [
+        {
+          "sortOrder": 1,
+          "label": "16",
+          "word": "Sixteen",
+          "sourceWord": "Sixteen",
+          "emoji": "🚗🚗🚗🚗🚗🚗🚗🚗🚗🚗🚗🚗🚗🚗🚗🚗",
+          "description": null,
+          "image": null,
+          "audio": "numbers/16-voice.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": null,
+          "status": "READY"
+        },
+        {
+          "sortOrder": 2,
+          "label": "17",
+          "word": "Seventeen",
+          "sourceWord": "Seventeen",
+          "emoji": "🍰🍰🍰🍰🍰🍰🍰🍰🍰🍰🍰🍰🍰🍰🍰🍰🍰",
+          "description": null,
+          "image": null,
+          "audio": "numbers/17-voice.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": null,
+          "status": "READY"
+        },
+        {
+          "sortOrder": 3,
+          "label": "18",
+          "word": "Eighteen",
+          "sourceWord": "Eighteen",
+          "emoji": "👒👒👒👒👒👒👒👒👒👒👒👒👒👒👒👒👒👒",
+          "description": null,
+          "image": null,
+          "audio": "numbers/18-voice.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": null,
+          "status": "READY"
+        },
+        {
+          "sortOrder": 4,
+          "label": "19",
+          "word": "Nineteen",
+          "sourceWord": "Nineteen",
+          "emoji": "🕐🕐🕐🕐🕐🕐🕐🕐🕐🕐🕐🕐🕐🕐🕐🕐🕐🕐🕐",
+          "description": null,
+          "image": null,
+          "audio": "numbers/19-voice.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": null,
+          "status": "READY"
+        },
+        {
+          "sortOrder": 5,
+          "label": "20",
+          "word": "Twenty",
+          "sourceWord": "Twenty",
+          "emoji": "🍬🍬🍬🍬🍬🍬🍬🍬🍬🍬🍬🍬🍬🍬🍬🍬🍬🍬🍬🍬",
+          "description": null,
+          "image": null,
+          "audio": "numbers/20-voice.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": null,
+          "status": "READY"
+        }
+      ]
+    }
+  ],
+  "quiz": {
+    "title": "Numbers Quiz",
+    "passMarkPercent": 70,
+    "questions": [
+      {
+        "prompt": "How many apples can you see 🍎🍎🍎🍎🍎🍎🍎",
+        "options": [
+          "6",
+          "7",
+          "8",
+          "9"
+        ],
+        "answerIndex": 1
+      },
+      {
+        "prompt": "What comes after 5?",
+        "options": [
+          "4",
+          "6",
+          "7",
+          "8"
+        ],
+        "answerIndex": 1
+      },
+      {
+        "prompt": "What comes before 10?",
+        "options": [
+          "12",
+          "8",
+          "9",
+          "11"
+        ],
+        "answerIndex": 2
+      },
+      {
+        "prompt": "How many fingers on one hand?",
+        "options": [
+          "5",
+          "6",
+          "4",
+          "10"
+        ],
+        "answerIndex": 0
+      },
+      {
+        "prompt": "Which number is the biggest?",
+        "options": [
+          "12",
+          "9",
+          "1",
+          "18"
+        ],
+        "answerIndex": 3
+      },
+      {
+        "prompt": "Which number is the smallest?",
+        "options": [
+          "18",
+          "15",
+          "10",
+          "12"
+        ],
+        "answerIndex": 2
+      },
+      {
+        "prompt": "How many numbers are there from 9 to 13?",
+        "options": [
+          "12",
+          "5",
+          "8",
+          "10"
+        ],
+        "answerIndex": 1
+      },
+      {
+        "prompt": "What is 6+1?",
+        "options": [
+          "9",
+          "5",
+          "8",
+          "7"
+        ],
+        "answerIndex": 3
+      },
+      {
+        "prompt": "What is 4+6?",
+        "options": [
+          "8",
+          "10",
+          "9",
+          "2"
+        ],
+        "answerIndex": 1
+      },
+      {
+        "prompt": "What is 15-9?",
+        "options": [
+          "6",
+          "20",
+          "10",
+          "11"
+        ],
+        "answerIndex": 0
+      }
+    ]
+  },
+  "reserveQuestions": [],
+  "diagram": null,
+  "source": {
+    "lessonPage": "number_voice.html",
+    "quizPage": "num_quiz.html",
+    "reservePage": null
+  }
+}

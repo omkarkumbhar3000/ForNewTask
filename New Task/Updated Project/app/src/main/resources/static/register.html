@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Create a family account | CleverCubs</title>
+  <link rel="icon" href="/img/logo-96.png">
+  <link rel="stylesheet" href="/css/app.css">
+  <script type="module" src="/js/pages/register.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header id="site-header" class="site-header"></header>
+  <main id="main" class="page page-text" tabindex="-1">
+    <div class="stack">
+      <h1>Create a family account</h1>
+      <p class="muted">A grown-up creates the account and adds the first child. You can add more children later. Fields marked <span class="req">required</span> are needed; everything else is optional.</p>
+
+      <form id="register-form" class="form stack-lg" novalidate>
+        <p class="form-alert" hidden tabindex="-1"></p>
+
+        <section class="panel form" aria-labelledby="about-you">
+          <h2 id="about-you">About you</h2>
+          <div class="field">
+            <label for="fullName">Your name <span class="req">(required)</span></label>
+            <input id="fullName" name="parent.fullName" type="text" autocomplete="name" required maxlength="100">
+          </div>
+          <div class="field">
+            <label for="email">Email address <span class="req">(required)</span></label>
+            <input id="email" name="parent.email" type="email" autocomplete="email" required maxlength="254">
+            <p class="hint">You sign in with this. We never show it to your child.</p>
+          </div>
+          <div class="field">
+            <label for="password">Password <span class="req">(required)</span></label>
+            <input id="password" name="parent.password" type="password" autocomplete="new-password" required minlength="12" maxlength="200">
+            <p class="hint">At least 12 characters. A short sentence you will remember works well.</p>
+          </div>
+          <div class="grid-2">
+            <div class="field">
+              <label for="mobile">Mobile number <span class="opt">(optional)</span></label>
+              <input id="mobile" name="parent.mobile" type="tel" autocomplete="tel" maxlength="20">
+            </div>
+            <div class="field">
+              <label for="city">Town or city <span class="opt">(optional)</span></label>
+              <input id="city" name="parent.city" type="text" autocomplete="address-level2" maxlength="80">
+            </div>
+          </div>
+        </section>
+
+        <section class="panel form" aria-labelledby="about-child">
+          <h2 id="about-child">Your child</h2>
+          <div class="grid-2">
+            <div class="field">
+              <label for="firstName">First name <span class="req">(required)</span></label>
+              <input id="firstName" name="child.firstName" type="text" required maxlength="40" autocomplete="off">
+            </div>
+            <div class="field">
+              <label for="displayName">Nickname to show <span class="opt">(optional)</span></label>
+              <input id="displayName" name="child.displayName" type="text" maxlength="40" autocomplete="off">
+              <p class="hint">Shown on your child's screens. Leave empty to use the first name.</p>
+            </div>
+          </div>
+          <div class="field">
+            <label for="dateOfBirth">Date of birth <span class="req">(required)</span></label>
+            <input id="dateOfBirth" name="child.dateOfBirth" type="date" required>
+            <p class="hint" id="age-hint">Used only to choose the right level for your child's age.</p>
+          </div>
+          <div class="field">
+            <label for="username">Username <span class="opt">(optional)</span></label>
+            <div class="row">
+              <input id="username" name="child.username" type="text" maxlength="20" autocomplete="off" pattern="[A-Za-z0-9_-]{3,20}">
+              <button class="btn btn-quiet btn-small" type="button" id="suggest">Suggest one</button>
+            </div>
+            <p class="hint">3 to 20 letters, numbers, - or _. Please don't use your child's real name. We suggest one if you leave it empty.</p>
+          </div>
+          <fieldset class="field">
+            <legend>Avatar <span class="opt">(optional)</span></legend>
+            <div class="avatar-picker" id="avatars"></div>
+          </fieldset>
+        </section>
+
+        <section class="panel form" aria-labelledby="consent">
+          <h2 id="consent">Your consent</h2>
+          <p class="muted">These texts are drafts awaiting legal review. Please read them before you agree.</p>
+          <label class="check"><input type="checkbox" name="acceptTerms"> <span>I have read and accept the <a href="/terms" target="_blank" rel="noopener">Terms &amp; Conditions</a>. <span class="req">(required)</span></span></label>
+          <label class="check"><input type="checkbox" name="acceptPrivacy"> <span>I have read the <a href="/privacy" target="_blank" rel="noopener">Privacy notice</a>. <span class="req">(required)</span></span></label>
+          <label class="check"><input type="checkbox" name="consentChildData"> <span>I am this child's parent or legal guardian, and I agree to CleverCubs storing my child's first name, date of birth and learning progress. <span class="req">(required)</span></span></label>
+          <div class="field"><input type="hidden" name="consent"></div>
+        </section>
+
+        <div class="row">
+          <button class="btn btn-primary btn-big" type="submit">Create account</button>
+          <a href="/login">I already have an account</a>
+        </div>
+      </form>
+    </div>
+  </main>
+  <footer id="site-footer" class="site-footer"></footer>
+</body>
+</html>

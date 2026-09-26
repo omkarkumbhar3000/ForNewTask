@@ -1,0 +1,17 @@
+# CleverCubs project ignores. The repository root .gitignore applies as well; these keep the project
+# safe if it is ever moved into its own repository.
+
+# Secrets
+.env
+*.env
+!.env.example
+
+# Build output and dependencies
+app/target/
+e2e/node_modules/
+e2e/test-results/
+e2e/playwright-report/
+
+# Scratch
+.tmp/
+*.log

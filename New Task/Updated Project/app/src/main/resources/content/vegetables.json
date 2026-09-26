@@ -1,0 +1,459 @@
+{
+  "slug": "vegetables",
+  "title": "Vegetables",
+  "kind": "TOPIC",
+  "icon": "🥦",
+  "description": "See 19 vegetables in pictures and videos.",
+  "coverImage": "vegetables/vegitables-secondpage.jpeg",
+  "sortOrder": 6,
+  "lessons": [
+    {
+      "title": "Tomato to Cauliflower",
+      "sourceTitle": null,
+      "sortOrder": 1,
+      "items": [
+        {
+          "sortOrder": 1,
+          "label": "Tomato",
+          "word": "Tomato",
+          "sourceWord": "Tomato",
+          "emoji": null,
+          "description": null,
+          "image": "vegetables/tomato-photo.webp",
+          "audio": null,
+          "video": "vegetables/tomato-video.mp4",
+          "lyrics": null,
+          "alt": "Picture of Tomato",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 2,
+          "label": "Radish",
+          "word": "Radish",
+          "sourceWord": "Radish",
+          "emoji": null,
+          "description": null,
+          "image": "vegetables/radish-photo.jpg",
+          "audio": null,
+          "video": "vegetables/radish-video.mp4",
+          "lyrics": null,
+          "alt": "Picture of Radish",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 3,
+          "label": "Onion",
+          "word": "Onion",
+          "sourceWord": "Onion",
+          "emoji": null,
+          "description": null,
+          "image": "vegetables/onion-photo.jpg",
+          "audio": null,
+          "video": "vegetables/onion-video.mp4",
+          "lyrics": null,
+          "alt": "Picture of Onion",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 4,
+          "label": "Potato",
+          "word": "Potato",
+          "sourceWord": "Potato",
+          "emoji": null,
+          "description": null,
+          "image": "vegetables/potato-photo.jpg",
+          "audio": null,
+          "video": "vegetables/pateto-video.mp4",
+          "lyrics": null,
+          "alt": "Picture of Potato",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 5,
+          "label": "Cauliflower",
+          "word": "Cauliflower",
+          "sourceWord": "Cauliflower",
+          "emoji": null,
+          "description": null,
+          "image": "vegetables/cauliflower-photo.webp",
+          "audio": null,
+          "video": "vegetables/cauliflwer-video.mp4",
+          "lyrics": null,
+          "alt": "Picture of Cauliflower",
+          "status": "READY"
+        }
+      ]
+    },
+    {
+      "title": "Pumpkin to Broccoli",
+      "sourceTitle": null,
+      "sortOrder": 2,
+      "items": [
+        {
+          "sortOrder": 1,
+          "label": "Pumpkin",
+          "word": "Pumpkin",
+          "sourceWord": "Pumpkin",
+          "emoji": null,
+          "description": null,
+          "image": "vegetables/pumpking-photo.png",
+          "audio": null,
+          "video": "vegetables/pumpkin-video.mp4",
+          "lyrics": null,
+          "alt": "Picture of Pumpkin",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 2,
+          "label": "Bottle Gourd",
+          "word": "Bottle Gourd",
+          "sourceWord": "Bottle Gourd",
+          "emoji": null,
+          "description": null,
+          "image": "vegetables/bottlegourd-photo.webp",
+          "audio": null,
+          "video": "vegetables/bottel-gord-video.mp4",
+          "lyrics": null,
+          "alt": "Picture of Bottle Gourd",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 3,
+          "label": "Cabbage",
+          "word": "Cabbage",
+          "sourceWord": "Cabbage",
+          "emoji": null,
+          "description": null,
+          "image": "vegetables/cabbage-photo.jpg",
+          "audio": null,
+          "video": "vegetables/cabbage-video.mp4",
+          "lyrics": null,
+          "alt": "Picture of Cabbage",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 4,
+          "label": "Carrot",
+          "word": "Carrot",
+          "sourceWord": "Carrot",
+          "emoji": null,
+          "description": null,
+          "image": "vegetables/carrot-photo.webp",
+          "audio": null,
+          "video": "vegetables/carret-video.mp4",
+          "lyrics": null,
+          "alt": "Picture of Carrot",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 5,
+          "label": "Broccoli",
+          "word": "Broccoli",
+          "sourceWord": "Broccoli",
+          "emoji": null,
+          "description": null,
+          "image": "vegetables/broccoli-photo.webp",
+          "audio": null,
+          "video": "vegetables/brocoali-video.mp4",
+          "lyrics": null,
+          "alt": "Picture of Broccoli",
+          "status": "READY"
+        }
+      ]
+    },
+    {
+      "title": "Brinjal to Peas",
+      "sourceTitle": null,
+      "sortOrder": 3,
+      "items": [
+        {
+          "sortOrder": 1,
+          "label": "Brinjal",
+          "word": "Brinjal",
+          "sourceWord": "Brinjal",
+          "emoji": null,
+          "description": null,
+          "image": "vegetables/brinjal-photo.jpg",
+          "audio": null,
+          "video": "vegetables/brinjal-video.mp4",
+          "lyrics": null,
+          "alt": "Picture of Brinjal",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 2,
+          "label": "Spinach",
+          "word": "Spinach",
+          "sourceWord": "Spinach",
+          "emoji": null,
+          "description": null,
+          "image": "vegetables/spniach-photo.jpg",
+          "audio": null,
+          "video": "vegetables/spnich-video.mp4",
+          "lyrics": null,
+          "alt": "Picture of Spinach",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 3,
+          "label": "Capsicum",
+          "word": "Capsicum",
+          "sourceWord": "Capsicum",
+          "emoji": null,
+          "description": null,
+          "image": "vegetables/capsicum-photo.jpg",
+          "audio": null,
+          "video": "vegetables/capsicum-video.mp4",
+          "lyrics": null,
+          "alt": "Picture of Capsicum",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 4,
+          "label": "Bitter Gourd",
+          "word": "Bitter Gourd",
+          "sourceWord": "Bitter Gourd",
+          "emoji": null,
+          "description": null,
+          "image": "vegetables/bitter-gourd-photo.webp",
+          "audio": null,
+          "video": "vegetables/bitter-gurd.mp4",
+          "lyrics": null,
+          "alt": "Picture of Bitter Gourd",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 5,
+          "label": "Peas",
+          "word": "Peas",
+          "sourceWord": "Peas",
+          "emoji": null,
+          "description": null,
+          "image": "vegetables/peas-photo.jpg",
+          "audio": null,
+          "video": "vegetables/peas-video.mp4",
+          "lyrics": null,
+          "alt": "Picture of Peas",
+          "status": "READY"
+        }
+      ]
+    },
+    {
+      "title": "Beetroot to Corn",
+      "sourceTitle": null,
+      "sortOrder": 4,
+      "items": [
+        {
+          "sortOrder": 1,
+          "label": "Beetroot",
+          "word": "Beetroot",
+          "sourceWord": "Beetroot",
+          "emoji": null,
+          "description": null,
+          "image": "vegetables/beetroot-photo.jpg",
+          "audio": null,
+          "video": "vegetables/betroot-video.mp4",
+          "lyrics": null,
+          "alt": "Picture of Beetroot",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 2,
+          "label": "Ladies Finger",
+          "word": "Ladies Finger",
+          "sourceWord": "Ladies Finger",
+          "emoji": null,
+          "description": null,
+          "image": "vegetables/ladys-finger.jpg",
+          "audio": null,
+          "video": "vegetables/ladys-finger.mp4",
+          "lyrics": null,
+          "alt": "Picture of Ladies Finger",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 3,
+          "label": "Garlic",
+          "word": "Garlic",
+          "sourceWord": "Garlic",
+          "emoji": null,
+          "description": null,
+          "image": "vegetables/garlic1-photo.jpg",
+          "audio": null,
+          "video": "vegetables/garlic-video.mp4",
+          "lyrics": null,
+          "alt": "Picture of Garlic",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 4,
+          "label": "Corn",
+          "word": "Corn",
+          "sourceWord": "Corn",
+          "emoji": null,
+          "description": null,
+          "image": "vegetables/cron-photo.jpg",
+          "audio": null,
+          "video": "vegetables/corn-video.mp4",
+          "lyrics": null,
+          "alt": "Picture of Corn",
+          "status": "READY"
+        }
+      ]
+    }
+  ],
+  "quiz": {
+    "title": "Vegetables Quiz",
+    "passMarkPercent": 70,
+    "questions": [
+      {
+        "prompt": "Which vegetable is orange?",
+        "options": [
+          "Carrot",
+          "Potato",
+          "Brinjal",
+          "Cabbage"
+        ],
+        "answerIndex": 0
+      },
+      {
+        "prompt": "Which vegetable is round and purple?",
+        "options": [
+          "Brinjal",
+          "Carrot",
+          "Potato",
+          "Onion"
+        ],
+        "answerIndex": 0
+      },
+      {
+        "prompt": "Which vegetable grows underground?",
+        "options": [
+          "Potato",
+          "Tomato",
+          "Cabbage",
+          "Spinach"
+        ],
+        "answerIndex": 0
+      },
+      {
+        "prompt": "Which vegetable makes you strong?",
+        "options": [
+          "Spinach",
+          "Candy",
+          "Cake",
+          "Chocolate"
+        ],
+        "answerIndex": 0
+      },
+      {
+        "prompt": "Which vegetable is green and long?",
+        "options": [
+          "Cucumber",
+          "Carrot",
+          "Potato",
+          "Onion"
+        ],
+        "answerIndex": 0
+      },
+      {
+        "prompt": "Which vegetable makes us cry?",
+        "options": [
+          "Onion",
+          "Tomato",
+          "Carrot",
+          "Peas"
+        ],
+        "answerIndex": 0
+      },
+      {
+        "prompt": "Which vegetable is red?",
+        "options": [
+          "Tomato",
+          "Potato",
+          "Cabbage",
+          "Onion"
+        ],
+        "answerIndex": 0
+      },
+      {
+        "prompt": "Which vegetable looks like a flower?",
+        "options": [
+          "Cauliflower",
+          "Carrot",
+          "Onion",
+          "Potato"
+        ],
+        "answerIndex": 0
+      },
+      {
+        "prompt": "Which vegetable is leafy?",
+        "options": [
+          "Spinach",
+          "Potato",
+          "Carrot",
+          "Onion"
+        ],
+        "answerIndex": 0
+      },
+      {
+        "prompt": "Which vegetable is small and green?",
+        "options": [
+          "Peas",
+          "Carrot",
+          "Brinjal",
+          "Potato"
+        ],
+        "answerIndex": 0
+      }
+    ]
+  },
+  "reserveQuestions": [
+    {
+      "prompt": "Which vegetable is used to make French Fries?",
+      "options": [
+        "Tomato",
+        "Potato",
+        "Broccoli",
+        "Cabbage"
+      ],
+      "answerIndex": 1
+    },
+    {
+      "prompt": "What is the color of a broccoli?",
+      "options": [
+        "Red",
+        "Blue",
+        "Green",
+        "Yellow"
+      ],
+      "answerIndex": 2
+    },
+    {
+      "prompt": "What vegetable looks like a small tree?",
+      "options": [
+        "Spinach",
+        "Broccoli",
+        "Tomato",
+        "Garlic"
+      ],
+      "answerIndex": 1
+    },
+    {
+      "prompt": "What is the color of an eggplant (brinjal)?",
+      "options": [
+        "Purple",
+        "Pink",
+        "White",
+        "Orange"
+      ],
+      "answerIndex": 0
+    }
+  ],
+  "diagram": null,
+  "source": {
+    "lessonPage": "vegitables voice.html",
+    "quizPage": "vegitables_quize.html",
+    "reservePage": "vegitables_qq.html"
+  }
+}

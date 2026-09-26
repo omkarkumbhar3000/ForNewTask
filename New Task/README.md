@@ -1,7 +1,14 @@
 # New Task — Working area for the current development project
 
-**Governing instruction:** [`../BLAST/Objective.md`](../BLAST/Objective.md) (`OBJ-031` at the time of writing)
+**Governing instruction:** [`../BLAST/Objective.md`](../BLAST/Objective.md) (`OBJ-034` at the time of writing)
 **Framework:** [`../BLAST/`](../BLAST/) — reusable; nothing project-specific is written there
+**Current project:** CleverCubs, the enhanced Kids Learn application —
+[`Updated Project/README.md`](Updated%20Project/README.md) (start, try, test) and
+[`Updated Project/docs/06-review-summary.md`](Updated%20Project/docs/06-review-summary.md) (what was delivered)
+
+> The uploaded baseline, `Current Project/Kids_learn_project/`, is **not in the repository** (`D72`): its
+> 579 MB were migrated into `Updated Project/` (content JSON and `media/`, checked by sha256) and the folder
+> is ignored by `../.gitignore`. It is kept on disk only to re-run `Updated Project/tools/extract_content.py`.
 
 ---
 

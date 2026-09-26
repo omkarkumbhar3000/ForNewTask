@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sign in | CleverCubs</title>
+  <link rel="icon" href="/img/logo-96.png">
+  <link rel="stylesheet" href="/css/app.css">
+  <script type="module" src="/js/pages/login.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header id="site-header" class="site-header"></header>
+  <main id="main" class="page page-narrow" tabindex="-1">
+    <div class="stack">
+      <h1>Sign in</h1>
+      <p class="muted">For parents, guardians and CleverCubs administrators. Children start learning from a parent's account.</p>
+      <div class="panel">
+        <form id="login-form" class="form" novalidate>
+          <p class="form-alert" hidden tabindex="-1"></p>
+          <div class="field">
+            <label for="email">Email address</label>
+            <input id="email" name="email" type="email" autocomplete="username" required maxlength="254">
+          </div>
+          <div class="field">
+            <label for="password">Password</label>
+            <input id="password" name="password" type="password" autocomplete="current-password" required maxlength="200">
+          </div>
+          <button class="btn btn-primary" type="submit">Sign in</button>
+        </form>
+      </div>
+      <p>New here? <a href="/register">Create a family account</a>.</p>
+      <p class="small muted">Forgot your password? Write to us from the <a href="/contact">contact page</a> and an administrator will set a temporary password for you.</p>
+    </div>
+  </main>
+  <footer id="site-footer" class="site-footer"></footer>
+</body>
+</html>

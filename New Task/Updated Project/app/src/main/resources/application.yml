@@ -1,0 +1,82 @@
+# CleverCubs configuration. Secrets never live here: every credential comes from the environment.
+# Local development: run with the "dev" profile, which imports ../.env (see .env.example).
+spring:
+  application:
+    name: clevercubs
+  datasource:
+    # Always the least-privilege application user (docs/05-data-model.md section 7).
+    url: ${CC_DB_URL:jdbc:mysql://127.0.0.1:3306/clevercubs}?connectionTimeZone=UTC&forceConnectionTimeZoneToSession=true&characterEncoding=UTF-8
+    username: cc_app
+    password: ${CC_DB_APP_PASSWORD}
+    hikari:
+      maximum-pool-size: 10
+  flyway:
+    # Migrations run as the schema owner, never as the application user.
+    user: cc_migrator
+    password: ${CC_DB_MIGRATOR_PASSWORD}
+  mvc:
+    problemdetails:
+      enabled: true
+  web:
+    resources:
+      cache:
+        # Pages, scripts and styles are small: revalidate every time (a cheap 304) so an update is never
+        # hidden behind a stale copy. Course media is cached for a week (WebConfig).
+        cachecontrol:
+          no-cache: true
+
+server:
+  servlet:
+    session:
+      timeout: 30m
+      tracking-modes: cookie
+      cookie:
+        name: CCSESSION
+        http-only: true
+        same-site: lax
+        secure: ${CC_COOKIE_SECURE:true}
+  error:
+    # Never leak internals to the browser (fixes SEC-E06 / SEC-E11). Details go to the server log only.
+    include-message: never
+    include-stacktrace: never
+    include-binding-errors: never
+    include-exception: false
+    whitelabel:
+      enabled: false
+  compression:
+    enabled: true
+    mime-types: text/html,text/css,application/javascript,application/json,image/svg+xml
+
+clevercubs:
+  media-root: ${CC_MEDIA_ROOT:../media}
+  contact-email: ${CC_CONTACT_EMAIL:}
+  admin:
+    bootstrap-email: ${CC_ADMIN_EMAIL:}
+    bootstrap-password: ${CC_ADMIN_INITIAL_PASSWORD:}
+
+logging:
+  level:
+    org.clevercubs: INFO
+
+---
+# Local development: reads ../.env and allows the session cookie over plain http://localhost.
+spring:
+  config:
+    activate:
+      on-profile: dev
+    import: optional:file:../.env[.properties]
+  web:
+    resources:
+      # Pages, scripts and styles straight from the source folder when started from app/, so an edit shows
+      # on the next refresh without a rebuild. Falls back to the copy inside the jar.
+      static-locations: file:src/main/resources/static/, classpath:/static/
+      cache:
+        period: 0
+        cachecontrol:
+          max-age: 0
+          no-cache: true
+server:
+  servlet:
+    session:
+      cookie:
+        secure: false

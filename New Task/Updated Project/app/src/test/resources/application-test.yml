@@ -1,0 +1,18 @@
+# Test profile: the database is provided by TestDatabase (Testcontainers); nothing is read from .env.
+server:
+  servlet:
+    session:
+      cookie:
+        secure: false
+clevercubs:
+  media-root: ../media
+  contact-email: hello@clevercubs.test
+  admin:
+    bootstrap-email: ""
+    bootstrap-password: ""
+  security:
+    # Cost 4 keeps the suite fast; production uses 12 (DD-01). The hash format is identical.
+    bcrypt-strength: 4
+    # Every test signs in from 127.0.0.1, so the per-address limit would trip across the suite.
+    # LoginThrottleTests checks the limit itself.
+    max-failures-per-address: 100000

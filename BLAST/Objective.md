@@ -16,56 +16,84 @@
 
 <!-- ▼▼▼ WRITE THE CURRENT REQUIREMENT HERE — replace everything between the markers ▼▼▼ -->
 
-**`OBJ-032` — Correct the repository documentation, then extract the reusable framework into the new
-`NewProject_Framework` repository.** ✅ **Complete** — framework first commit `4bd37b0`, pushed and verified.
-⛔ **Not** the application: stage 2 of `OBJ-031`
-(build the updated project in `../New Task/Updated Project/`) stays pending in this repository.
+**`OBJ-034` — Enhance the Kids Learn / CleverCubs project into a simple, lightweight, secure,
+child-friendly educational application with a Java backend.** This is stage 2 of `OBJ-031`.
+Phases 1–3 (understand, analyse, plan) ✅ · Blueprint approved (`D68`) · 🟡 **Phase 4 (build), B0–B8.**
 
-### Part 1 — documentation correction (this repository and its folder)
+### 🟡 Overnight run (2026-09-26, amends `OBJ-034`) — finish, verify, publish, deploy
 
-`ForNewTask` **is** a git repository. Correct the statement "this folder has no git repository" wherever it
-appears in relevant `.md` files, documentation or configuration, and correct anything else the repository
-restructure made inaccurate. No unrelated changes.
+Execute in this order, without waiting for confirmations; record anything that truly needs the owner
+and carry on with everything else (`D71` open execution permission still applies):
 
-### Part 2 — `NewProject_Framework`: do the setup once, reuse it for every future project
+1. **Finish the build** (B1–B8) and open it in Chrome. No dependency on the baseline folder.
+2. **Cross-check end to end** against §1–§31: implementation, documentation, broken flows, obsolete or
+   duplicated files. A build that compiles is not "done".
+3. **Old project folder:** once its content is verified as migrated, keep it out of the repository.
+   Delete nothing blindly.
+4. **Git (`D72` lifts `D55`):** update every `*.md`, check status, pull and reconcile, commit, push to
+   `github.com/omkarkumbhar3000/ForNewTask`, verify the push. Include media and assets (LFS for large
+   binaries); never secrets, caches or build output.
+5. **Improvement pass** (UX, UI, accessibility, responsiveness, error handling, maintainability), then a
+   **performance pass**; push again.
+6. **Vercel:** deploy a production URL colleagues can use, with configuration and secrets set securely
+   (never in the repository), and test the main flows on it.
+7. **Final verification** of every point above; report what needs the owner in the morning.
 
-Target: `https://github.com/omkarkumbhar3000/NewProject_Framework.git`, a blank repository; this is its
-**first commit**. It holds **only** the generic, reusable framework. The current application keeps using
-`ForNewTask`.
+Tokens supplied by the owner are used only from environment variables and never written to any file in the
+repository or printed.
 
-1. **Migrate what is genuinely reusable**, generalised where needed: BLAST and the `Objective.md`
-   objective-first mechanism; `CLAUDE.md`/`AGENTS.md` templates; generic, safe-editing, documentation and
-   git rules; git hooks and the objective auto-load hook with its wrapper script; development, testing,
-   validation, error-handling and verification practices; coding and code-quality conventions; reusable
-   skills; generic tools (project-root detection, document conversion, PDF processing, API-testing
-   onboarding); templates and onboarding docs. Include anything from recent work that took real effort to
-   build.
-2. **Exclude project baggage**: Jira/PAM/CI/Payments data, client data, snapshots, reports, dashboards,
-   spreadsheets, project test scripts, requirements, the current application, temporary or generated files,
-   credentials or private data, machine-specific paths and environment assumptions.
-3. **Make it a product, not a copy**: portable hooks, repository-independent scripts, configurable paths,
-   documented prerequisites and setup, how to start a new project, mandatory versus optional components,
-   how `Objective.md` is initialised, how git/GitHub fits, how skills are selected, how the framework is
-   updated over time. Future projects start with a **clean objective and history**
-   (framework capability ≠ project history).
-4. **Review as a senior architect**: maintainability, portability, security, developer experience,
-   automation, git practice, CI readiness, cross-machine use, documentation, testing, onboarding.
-   Simple + clean + lightweight + robust + maintainable + reusable; no complexity for its own sake.
-5. **Validate before pushing**: completeness, stale paths, project-specific references, hooks, scripts,
-   docs, markdown links, configuration, secrets, Jira/PAM/CI baggage, reuse as a real starting point, and
-   the final file list.
-6. **Git**: check status, branch and remote; commit only reviewed framework content; push; synchronise and
-   verify local against remote. ⛔ No force-push without explicit approval.
-7. **Report** which skills are available and which were actually useful.
+**The full requirement is authoritative and verbatim:**
+[`../New Task/Updated Project/docs/00-source-requirement.md`](../New%20Task/Updated%20Project/docs/00-source-requirement.md)
+(§1–§31 plus the owner's addendum). This block summarises it; where the two differ, the verbatim file wins.
 
-### Owner decisions taken at intake
+### Summary
 
-| Question | Decision |
+| Area | What is required (§ of the requirement) |
 |---|---|
-| How a future project is created | **Template + bootstrap.** The framework repository holds a clean `template/` plus `scripts/new_project.py`, which copies only project files, fills placeholders, adds the chosen optional tools and skills, initialises git with safety hooks, and can adopt the framework into an existing project without overwriting anything |
-| User-level setup | **Include it, generalised**: `global/CLAUDE.md` (the CLI operating rules and skill policy, as a template to install on a new machine) and the `go-go-go` git-sync skill. No names, machine paths or dates; owner preferences become marked settings |
-| The global `~/.claude/CLAUDE.md` | **One targeted edit**: the sentence "No objective-file hook works on this machine" becomes accurate (the hook works where a repository wires it). Nothing else in that file changes |
-| The GitHub token pasted in the instruction | **Not used and not stored.** The machine's existing git credentials reach the new repository. The owner should revoke the token |
+| Input and output | The baseline is `../New Task/Current Project/Kids_learn_project/`, the primary source of truth, never modified. The enhanced version goes in `../New Task/Updated Project/`. Missing artifacts are created there (addendum) |
+| Goal | Child-friendly, simple, attractive, light theme, lightweight, secure, clear to parents, maintainable, mobile-ready. Purposeful animation only (§2, §24) |
+| Principle | Ask before any decision that materially affects architecture, data model, security, roles, auth, parent–child relationships, course, quiz or reward logic, the database, the mobile design or existing functionality. Minor UI decisions follow industry practice and are documented (§3, §31) |
+| Analysis first | The twelve points in §4. Plan before any structural change. Remove existing functionality only if it is obsolete, conflicts with the requirement, or is approved |
+| Users | Several age groups, derived from the date of birth; the experience adapts to the group (§5) |
+| Accounts | Parent registration plus child registration; mandatory, optional and recommended fields; data minimisation (§6). Parent → Child → Courses → Lessons → Quizzes → Progress; a secure escalation to the parent (§7) |
+| Access | Authentication, sessions, expiry, logout, RBAC (Child, Parent, Super Admin). A protected URL without a session redirects to login, and authorization is enforced on the backend (§8) |
+| Learning | Course cards, descriptions, progress, resume (§9). Progress is calculated on the backend and stays below 100% until the required quiz is passed (§10). At most 3 quiz attempts, enforced by the backend (§11) |
+| Profile, rewards | Profile with username, display name, avatar, summaries and badges (§12). Rewards above 80%, no leaderboards (§13). Encouraging, age-appropriate tone (§14) |
+| Parent and site | Parent feedback, visible to admins only (§15). A one-year completion summary for the parent, whose decision continuation remains (§16). Contact Us (§17). Terms & Conditions, flagged for legal review (§18) |
+| Admin | A Super Admin dashboard with RBAC, protection for sensitive actions and an audit trail (§19) |
+| Security | Mandatory: the §20 list, privacy by design, no compliance claim without verification |
+| Technology | Java backend with a clean architecture and justified dependencies only (§21). A schema designed from the requirements and proposed before implementation (§22). Desktop first, responsive, APIs a mobile client could use (§23) |
+| Quality | Measured performance work (§25), maintainability (§26), the five issue classes of §27, the tests listed in §28 |
+| Workflow | Understand → Analyse → Plan → Build → Validate → Review (§29) |
+
+### Points the requirement itself says to confirm, not invent
+
+Age-group definitions (§5) · what happens after 3 failed attempts (§11) · what "above 80%" measures (§13) ·
+the parent-escalation behaviour (§7) · the target jurisdiction and the legal/privacy review areas (§18,
+§20) · the final registration field list (§6) · the database schema, proposed before implementation (§22).
+
+### Standing constraints
+
+- **Git:** before every commit, check large files and LFS, secrets, generated and temporary files (§30).
+- **Protocol 0:** Discovery answered, schema in `LLM.md` §3, Blueprint approved (`D68`) — HALT lifted.
+- **Skills:** use the installed skills that add real value, and report which ones helped (addendum).
+
+### Owner decisions taken at intake (2026-09-26; detail in `docs/03-decisions.md`, history `D56`–`D67`)
+
+| Topic | Decision |
+|---|---|
+| Stack | Spring Boot 4.1, and plain HTML/CSS/JS pages calling a versioned REST API |
+| Database | MySQL 8 in Docker; Testcontainers for tests |
+| Child sign-in | The parent signs in and picks the child; the parent area asks for the password again |
+| Escalation | An in-app parent gate and request inbox; email later, by configuration |
+| Lessons | A topic is a course of short lessons (about five items); one lesson per rhyme or story |
+| Progress | Lessons make up 70%, passing the quiz adds 30%, calculated on the server |
+| Pass mark | 70%, per quiz, editable by the admin |
+| 3 attempts | Then the quiz locks, and the parent can grant 3 more (audited) |
+| Rewards | A best quiz score of 80% or more |
+| Year program | An admin-defined course list per age group, complete when all its courses reach 100% |
+| Age groups | 2–3, 4–5 and 6–8, stored as editable data |
+| Privacy | Jurisdiction undecided: the strictest common baseline; legal texts flagged for review |
 
 <!-- ▲▲▲ WRITE THE CURRENT REQUIREMENT HERE ▲▲▲ -->
 

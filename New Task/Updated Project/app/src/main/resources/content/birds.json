@@ -1,0 +1,503 @@
+{
+  "slug": "birds",
+  "title": "Birds",
+  "kind": "TOPIC",
+  "icon": "🦜",
+  "description": "Meet 20 birds and hear the sounds they make.",
+  "coverImage": "birds/birds-secondpage.jpeg",
+  "sortOrder": 4,
+  "lessons": [
+    {
+      "title": "Owl to Woodpecker",
+      "sourceTitle": null,
+      "sortOrder": 1,
+      "items": [
+        {
+          "sortOrder": 1,
+          "label": "Owl",
+          "word": "Owl",
+          "sourceWord": "Owl",
+          "emoji": null,
+          "description": null,
+          "image": "birds/owl.jpg",
+          "audio": "birds/owl-voice.m4a",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Owl",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 2,
+          "label": "Penguin",
+          "word": "Penguin",
+          "sourceWord": "Penguin",
+          "emoji": null,
+          "description": null,
+          "image": "birds/penguin.webp",
+          "audio": "birds/pingvin-voice.m4a",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Penguin",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 3,
+          "label": "Cockatoo",
+          "word": "Cockatoo",
+          "sourceWord": "Cockatoo",
+          "emoji": null,
+          "description": null,
+          "image": "birds/cockatoo.jpg",
+          "audio": "birds/cocato-voice.m4a",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Cockatoo",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 4,
+          "label": "Kingfisher",
+          "word": "Kingfisher",
+          "sourceWord": "Kingfisher",
+          "emoji": null,
+          "description": null,
+          "image": "birds/kingfisher.jpg",
+          "audio": "birds/kingfisher-voice.m4a",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Kingfisher",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 5,
+          "label": "Woodpecker",
+          "word": "Woodpecker",
+          "sourceWord": "Woodpecker",
+          "emoji": null,
+          "description": null,
+          "image": "birds/woodpecker.webp",
+          "audio": "birds/woodpiker-voice.m4a",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Woodpecker",
+          "status": "READY"
+        }
+      ]
+    },
+    {
+      "title": "Seagull to Flamingo",
+      "sourceTitle": null,
+      "sortOrder": 2,
+      "items": [
+        {
+          "sortOrder": 1,
+          "label": "Seagull",
+          "word": "Seagull",
+          "sourceWord": "Seagull",
+          "emoji": null,
+          "description": null,
+          "image": "birds/seagull.jpg",
+          "audio": "birds/sigual-voice.m4a",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Seagull",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 2,
+          "label": "Pelican",
+          "word": "Pelican",
+          "sourceWord": "Pelican",
+          "emoji": null,
+          "description": null,
+          "image": "birds/pelican.jpg",
+          "audio": "birds/pelican-voice.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Pelican",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 3,
+          "label": "Magpie",
+          "word": "Magpie",
+          "sourceWord": "Magpie",
+          "emoji": null,
+          "description": null,
+          "image": "birds/magpie.jpg",
+          "audio": "birds/magpie-voice.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Magpie",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 4,
+          "label": "Vulture",
+          "word": "Vulture",
+          "sourceWord": "Vulture",
+          "emoji": null,
+          "description": null,
+          "image": "birds/vulture.jpg",
+          "audio": "birds/vulture-voice.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Vulture",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 5,
+          "label": "Flamingo",
+          "word": "Flamingo",
+          "sourceWord": "Flamingo",
+          "emoji": null,
+          "description": null,
+          "image": "birds/flamingo.jpg",
+          "audio": "birds/flimengo-voice.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Flamingo",
+          "status": "READY"
+        }
+      ]
+    },
+    {
+      "title": "Dove to Hawk",
+      "sourceTitle": null,
+      "sortOrder": 3,
+      "items": [
+        {
+          "sortOrder": 1,
+          "label": "Dove",
+          "word": "Dove",
+          "sourceWord": "Dove",
+          "emoji": null,
+          "description": null,
+          "image": "birds/dove.webp",
+          "audio": "birds/dove-voice.m4a",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Dove",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 2,
+          "label": "Toucan",
+          "word": "Toucan",
+          "sourceWord": "Toucan",
+          "emoji": null,
+          "description": null,
+          "image": "birds/toucan.jpg",
+          "audio": "birds/toucan-voice.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Toucan",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 3,
+          "label": "Quail",
+          "word": "Quail",
+          "sourceWord": "Quail",
+          "emoji": null,
+          "description": null,
+          "image": "birds/quail.jpg",
+          "audio": "birds/qual-voice.m4a",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Quail",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 4,
+          "label": "Nightingale",
+          "word": "Nightingale",
+          "sourceWord": "Nightingale",
+          "emoji": null,
+          "description": null,
+          "image": "birds/nigtingale.jpg",
+          "audio": "birds/nightingale-voice.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Nightingale",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 5,
+          "label": "Hawk",
+          "word": "Hawk",
+          "sourceWord": "Hawk",
+          "emoji": null,
+          "description": null,
+          "image": "birds/hawk.avif",
+          "audio": "birds/hawk-voice.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Hawk",
+          "status": "READY"
+        }
+      ]
+    },
+    {
+      "title": "Hummingbird to Blue Jay",
+      "sourceTitle": null,
+      "sortOrder": 4,
+      "items": [
+        {
+          "sortOrder": 1,
+          "label": "Hummingbird",
+          "word": "Hummingbird",
+          "sourceWord": "Hummingbird",
+          "emoji": null,
+          "description": null,
+          "image": "birds/hamingbirds.jpg",
+          "audio": "birds/hamingbird-voice.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Hummingbird",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 2,
+          "label": "Parrot",
+          "word": "Parrot",
+          "sourceWord": "Parrot",
+          "emoji": null,
+          "description": null,
+          "image": "birds/parrot.jpg",
+          "audio": "birds/parrot-voice.m4a",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Parrot",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 3,
+          "label": "Pigeon",
+          "word": "Pigeon",
+          "sourceWord": "Pigeon",
+          "emoji": null,
+          "description": null,
+          "image": "birds/pigon.jpg",
+          "audio": "birds/pigan-voice.m4a",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Pigeon",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 4,
+          "label": "Sparrow",
+          "word": "Sparrow",
+          "sourceWord": "Sparrow",
+          "emoji": null,
+          "description": null,
+          "image": "birds/sprrow.jpg",
+          "audio": "birds/sparow-voice.m4a",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Sparrow",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 5,
+          "label": "Blue Jay",
+          "word": "Blue Jay",
+          "sourceWord": "Blue Jay",
+          "emoji": null,
+          "description": null,
+          "image": "birds/blue-jay.jpg",
+          "audio": "birds/blue-jay-voice.m4a",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Blue Jay",
+          "status": "READY"
+        }
+      ]
+    }
+  ],
+  "quiz": {
+    "title": "Birds Quiz",
+    "passMarkPercent": 70,
+    "questions": [
+      {
+        "prompt": "Which bird can fly very high?",
+        "options": [
+          "Eagle",
+          "Hen",
+          "Penguin",
+          "Duck"
+        ],
+        "answerIndex": 0
+      },
+      {
+        "prompt": "Which bird says 'Coo'?",
+        "options": [
+          "Crow",
+          "Pigeon",
+          "Sparrow",
+          "Owl"
+        ],
+        "answerIndex": 1
+      },
+      {
+        "prompt": "Which bird cannot fly?",
+        "options": [
+          "Parrot",
+          "Peacock",
+          "Penguin",
+          "Crow"
+        ],
+        "answerIndex": 2
+      },
+      {
+        "prompt": "Which bird is green and talks?",
+        "options": [
+          "Parrot",
+          "Crow",
+          "Hen",
+          "Duck"
+        ],
+        "answerIndex": 0
+      },
+      {
+        "prompt": "Which bird lays eggs?",
+        "options": [
+          "Hen",
+          "Dog",
+          "Cat",
+          "Cow"
+        ],
+        "answerIndex": 0
+      },
+      {
+        "prompt": "Which bird hoots at night?",
+        "options": [
+          "Owl",
+          "Crow",
+          "Duck",
+          "Peacock"
+        ],
+        "answerIndex": 0
+      },
+      {
+        "prompt": "Which bird has colorful feathers?",
+        "options": [
+          "Peacock",
+          "Crow",
+          "Hen",
+          "Sparrow"
+        ],
+        "answerIndex": 0
+      },
+      {
+        "prompt": "Which bird swims in water?",
+        "options": [
+          "Duck",
+          "Crow",
+          "Eagle",
+          "Owl"
+        ],
+        "answerIndex": 0
+      },
+      {
+        "prompt": "Which bird is small and brown?",
+        "options": [
+          "Sparrow",
+          "Eagle",
+          "Peacock",
+          "Hen"
+        ],
+        "answerIndex": 0
+      },
+      {
+        "prompt": "Which bird is black and says 'Caw'?",
+        "options": [
+          "Crow",
+          "Duck",
+          "Owl",
+          "Hen"
+        ],
+        "answerIndex": 0
+      }
+    ]
+  },
+  "reserveQuestions": [
+    {
+      "prompt": "Which bird can talk like a human?",
+      "options": [
+        "Parrot",
+        "Eagle",
+        "Duck",
+        "Owl"
+      ],
+      "answerIndex": 0
+    },
+    {
+      "prompt": "Which bird stays awake at night?",
+      "options": [
+        "Sparrow",
+        "Owl",
+        "Swan",
+        "Turkey"
+      ],
+      "answerIndex": 1
+    },
+    {
+      "prompt": "What bird says 'Quack Quack'?",
+      "options": [
+        "Duck",
+        "Chicken",
+        "Penguin",
+        "Eagle"
+      ],
+      "answerIndex": 0
+    },
+    {
+      "prompt": "What is the largest bird in the world?",
+      "options": [
+        "Ostrich",
+        "Hummingbird",
+        "Goose",
+        "Eagle"
+      ],
+      "answerIndex": 0
+    },
+    {
+      "prompt": "Which bird is very small and can fly backwards?",
+      "options": [
+        "Crow",
+        "Hummingbird",
+        "Pelican",
+        "Swan"
+      ],
+      "answerIndex": 1
+    },
+    {
+      "prompt": "What color are flamingos?",
+      "options": [
+        "Blue",
+        "Green",
+        "Pink",
+        "Black"
+      ],
+      "answerIndex": 2
+    },
+    {
+      "prompt": "Which bird is a symbol of peace?",
+      "options": [
+        "Vulture",
+        "Dove",
+        "Hawk",
+        "Woodpecker"
+      ],
+      "answerIndex": 1
+    }
+  ],
+  "diagram": null,
+  "source": {
+    "lessonPage": "birds_voice.html",
+    "quizPage": "birds_quize.html",
+    "reservePage": "birds_qq.html"
+  }
+}

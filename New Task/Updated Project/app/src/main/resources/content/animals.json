@@ -1,0 +1,426 @@
+{
+  "slug": "animals",
+  "title": "Animals",
+  "kind": "TOPIC",
+  "icon": "🦁",
+  "description": "Meet 15 animals and hear the sounds they make.",
+  "coverImage": "animals/animal-secondpage.jpeg",
+  "sortOrder": 2,
+  "lessons": [
+    {
+      "title": "Bee to Dog",
+      "sourceTitle": null,
+      "sortOrder": 1,
+      "items": [
+        {
+          "sortOrder": 1,
+          "label": "Bee",
+          "word": "Bee",
+          "sourceWord": "Bee",
+          "emoji": null,
+          "description": null,
+          "image": "animals/bee-photo.jpg",
+          "audio": "animals/bee-voice.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Bee",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 2,
+          "label": "Cat",
+          "word": "Cat",
+          "sourceWord": "Cat",
+          "emoji": null,
+          "description": null,
+          "image": "animals/cat-photo.jpg",
+          "audio": "animals/cat-voice.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Cat",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 3,
+          "label": "Rooster",
+          "word": "Rooster",
+          "sourceWord": "Rooster",
+          "emoji": null,
+          "description": null,
+          "image": "animals/rooster-photo.jpg",
+          "audio": "animals/rooster-voice.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Rooster",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 4,
+          "label": "Cow",
+          "word": "Cow",
+          "sourceWord": "Cow",
+          "emoji": null,
+          "description": null,
+          "image": "animals/cow-photo.jpg",
+          "audio": "animals/cow-voice.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Cow",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 5,
+          "label": "Dog",
+          "word": "Dog",
+          "sourceWord": "Dog",
+          "emoji": null,
+          "description": null,
+          "image": "animals/dog-photo.webp",
+          "audio": "animals/dog-voice.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Dog",
+          "status": "READY"
+        }
+      ]
+    },
+    {
+      "title": "Duck to Mouse",
+      "sourceTitle": null,
+      "sortOrder": 2,
+      "items": [
+        {
+          "sortOrder": 1,
+          "label": "Duck",
+          "word": "Duck",
+          "sourceWord": "Duck",
+          "emoji": null,
+          "description": null,
+          "image": "animals/duck-photo.webp",
+          "audio": "animals/duck-voice.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Duck",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 2,
+          "label": "Frog",
+          "word": "Frog",
+          "sourceWord": "Frog",
+          "emoji": null,
+          "description": null,
+          "image": "animals/frog-photo.jpg",
+          "audio": "animals/froge-voice.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Frog",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 3,
+          "label": "Horse",
+          "word": "Horse",
+          "sourceWord": "Horse",
+          "emoji": null,
+          "description": null,
+          "image": "animals/horse-photo.jpg",
+          "audio": "animals/hourse-voice.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Horse",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 4,
+          "label": "Lion",
+          "word": "Lion",
+          "sourceWord": "Lion",
+          "emoji": null,
+          "description": null,
+          "image": "animals/lion-photo.avif",
+          "audio": "animals/lion-voice.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Lion",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 5,
+          "label": "Mouse",
+          "word": "Mouse",
+          "sourceWord": "Mouse",
+          "emoji": null,
+          "description": null,
+          "image": "animals/mouse-photo.jpg",
+          "audio": "animals/mouse-voice.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Mouse",
+          "status": "READY"
+        }
+      ]
+    },
+    {
+      "title": "Pig to Tiger",
+      "sourceTitle": null,
+      "sortOrder": 3,
+      "items": [
+        {
+          "sortOrder": 1,
+          "label": "Pig",
+          "word": "Pig",
+          "sourceWord": "Pig",
+          "emoji": null,
+          "description": null,
+          "image": "animals/pig-photo.png",
+          "audio": "animals/pig-voice.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Pig",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 2,
+          "label": "Pigeon",
+          "word": "Pigeon",
+          "sourceWord": "Pigeon",
+          "emoji": null,
+          "description": null,
+          "image": "animals/pigeon-photo.jpg",
+          "audio": "animals/pigone-voice.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Pigeon",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 3,
+          "label": "Sheep",
+          "word": "Sheep",
+          "sourceWord": "Sheep",
+          "emoji": null,
+          "description": null,
+          "image": "animals/sheep-photo.webp",
+          "audio": "animals/sheep-voice.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Sheep",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 4,
+          "label": "Snake",
+          "word": "Snake",
+          "sourceWord": "Snake",
+          "emoji": null,
+          "description": null,
+          "image": "animals/snake-photo.jpg",
+          "audio": "animals/snake-voice.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Snake",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 5,
+          "label": "Tiger",
+          "word": "Tiger",
+          "sourceWord": "Tiger",
+          "emoji": null,
+          "description": null,
+          "image": "animals/tiger-photo.jpg",
+          "audio": "animals/tiger-voice.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Tiger",
+          "status": "READY"
+        }
+      ]
+    }
+  ],
+  "quiz": {
+    "title": "Animals Quiz",
+    "passMarkPercent": 70,
+    "questions": [
+      {
+        "prompt": "Which animal says 'Meow'?",
+        "options": [
+          "Dog",
+          "Cat",
+          "Cow",
+          "Horse"
+        ],
+        "answerIndex": 1
+      },
+      {
+        "prompt": "Which animal is called King of Jungle?",
+        "options": [
+          "Tiger",
+          "Lion",
+          "Elephant",
+          "Bear"
+        ],
+        "answerIndex": 1
+      },
+      {
+        "prompt": "Which animal gives us milk?",
+        "options": [
+          "Goat",
+          "Cow",
+          "Dog",
+          "Lion"
+        ],
+        "answerIndex": 1
+      },
+      {
+        "prompt": "Which animal has a long trunk?",
+        "options": [
+          "Horse",
+          "Elephant",
+          "Monkey",
+          "Dog"
+        ],
+        "answerIndex": 1
+      },
+      {
+        "prompt": "Which animal barks?",
+        "options": [
+          "Cat",
+          "Dog",
+          "Fox",
+          "Tiger"
+        ],
+        "answerIndex": 1
+      },
+      {
+        "prompt": "Which animal eats bananas?",
+        "options": [
+          "Monkey",
+          "Lion",
+          "Cow",
+          "Goat"
+        ],
+        "answerIndex": 0
+      },
+      {
+        "prompt": "Which animal has black and white stripes?",
+        "options": [
+          "Lion",
+          "Tiger",
+          "Zebra",
+          "Dog"
+        ],
+        "answerIndex": 2
+      },
+      {
+        "prompt": "Which animal runs very fast?",
+        "options": [
+          "Cheetah",
+          "Cow",
+          "Elephant",
+          "Goat"
+        ],
+        "answerIndex": 0
+      },
+      {
+        "prompt": "Which animal lives in water and land?",
+        "options": [
+          "Frog",
+          "Lion",
+          "Cat",
+          "Dog"
+        ],
+        "answerIndex": 0
+      },
+      {
+        "prompt": "Which animal roars loudly?",
+        "options": [
+          "Horse",
+          "Lion",
+          "Monkey",
+          "Cow"
+        ],
+        "answerIndex": 1
+      }
+    ]
+  },
+  "reserveQuestions": [
+    {
+      "prompt": "Which animal says 'Moo'?",
+      "options": [
+        "Dog",
+        "Cow",
+        "Lion",
+        "Pig"
+      ],
+      "answerIndex": 1
+    },
+    {
+      "prompt": "Which is the largest land animal?",
+      "options": [
+        "Cat",
+        "Elephant",
+        "Ant",
+        "Rabbit"
+      ],
+      "answerIndex": 1
+    },
+    {
+      "prompt": "What animal has a very long neck?",
+      "options": [
+        "Giraffe",
+        "Sheep",
+        "Monkey",
+        "Horse"
+      ],
+      "answerIndex": 0
+    },
+    {
+      "prompt": "Which animal hops and carries a baby in its pouch?",
+      "options": [
+        "Kangaroo",
+        "Deer",
+        "Fox",
+        "Wolf"
+      ],
+      "answerIndex": 0
+    },
+    {
+      "prompt": "Which animal lives in the water and has eight arms?",
+      "options": [
+        "Shark",
+        "Octopus",
+        "Whale",
+        "Crab"
+      ],
+      "answerIndex": 1
+    },
+    {
+      "prompt": "What do we call a baby dog?",
+      "options": [
+        "Kitten",
+        "Calf",
+        "Puppy",
+        "Cub"
+      ],
+      "answerIndex": 2
+    },
+    {
+      "prompt": "Which animal is famous for being very slow?",
+      "options": [
+        "Rabbit",
+        "Horse",
+        "Turtle",
+        "Bird"
+      ],
+      "answerIndex": 2
+    }
+  ],
+  "diagram": null,
+  "source": {
+    "lessonPage": "animal_voice.html",
+    "quizPage": "animal_quize.html",
+    "reservePage": "animal_qq.html"
+  }
+}

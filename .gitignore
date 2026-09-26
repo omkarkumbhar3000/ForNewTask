@@ -71,3 +71,14 @@ desktop.ini
 # --- Local-only --------------------------------------------------------------
 # The owner's private Marathi companion to CLI sessions. Never published.
 mar.md
+
+# --- The uploaded baseline (D72) ----------------------------------------------
+# 579 MB, migrated into "New Task/Updated Project" (content JSON + media/, sha256-checked).
+# Kept on disk only so Updated Project/tools/extract_content.py can be re-run.
+New Task/Current Project/Kids_learn_project/
+
+# --- Test and tool artefacts -------------------------------------------------
+.playwright-mcp/
+test-results/
+playwright-report/
+.vercel/

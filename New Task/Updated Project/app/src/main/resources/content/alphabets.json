@@ -1,0 +1,551 @@
+{
+  "slug": "alphabets",
+  "title": "Alphabets",
+  "kind": "TOPIC",
+  "icon": "🔤",
+  "description": "Meet the 26 letters from A to Z, each with a picture and a spoken word.",
+  "coverImage": "alphabets/letters-secondpage.jpeg",
+  "sortOrder": 3,
+  "lessons": [
+    {
+      "title": "A – E",
+      "sourceTitle": null,
+      "sortOrder": 1,
+      "items": [
+        {
+          "sortOrder": 1,
+          "label": "A",
+          "word": "Apple",
+          "sourceWord": "Apple",
+          "emoji": null,
+          "description": null,
+          "image": "alphabets/apple.png",
+          "audio": "alphabets/apple-audio.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Apple",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 2,
+          "label": "B",
+          "word": "Ball",
+          "sourceWord": "Ball",
+          "emoji": null,
+          "description": null,
+          "image": "alphabets/ball-emoji.jpg",
+          "audio": "alphabets/ball-audio.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Ball",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 3,
+          "label": "C",
+          "word": "Cookie",
+          "sourceWord": "Cookie",
+          "emoji": null,
+          "description": null,
+          "image": "alphabets/cookie-emoji.webp",
+          "audio": "alphabets/cokie-audio.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Cookie",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 4,
+          "label": "D",
+          "word": "Daddy",
+          "sourceWord": "Daddy",
+          "emoji": null,
+          "description": null,
+          "image": "alphabets/dad-emoji.png",
+          "audio": "alphabets/dad-audio.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Daddy",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 5,
+          "label": "E",
+          "word": "Elbow",
+          "sourceWord": "Elbow",
+          "emoji": null,
+          "description": null,
+          "image": "alphabets/elbow-emoji.jpg",
+          "audio": "alphabets/elbow-audio.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Elbow",
+          "status": "READY"
+        }
+      ]
+    },
+    {
+      "title": "F – J",
+      "sourceTitle": null,
+      "sortOrder": 2,
+      "items": [
+        {
+          "sortOrder": 1,
+          "label": "F",
+          "word": "Funny",
+          "sourceWord": "Funny",
+          "emoji": null,
+          "description": null,
+          "image": "alphabets/funny-emoji.webp",
+          "audio": "alphabets/funny-audio.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Funny",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 2,
+          "label": "G",
+          "word": "Go",
+          "sourceWord": "Go",
+          "emoji": null,
+          "description": null,
+          "image": "alphabets/go-emoji.jpg",
+          "audio": "alphabets/go-audio.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Go",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 3,
+          "label": "H",
+          "word": "Happy",
+          "sourceWord": "Happy",
+          "emoji": null,
+          "description": null,
+          "image": "alphabets/happy-emoji.png",
+          "audio": "alphabets/happy-audio.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Happy",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 4,
+          "label": "I",
+          "word": "In",
+          "sourceWord": "In",
+          "emoji": null,
+          "description": null,
+          "image": "alphabets/inside-emoji.avif",
+          "audio": "alphabets/in-audio.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of In",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 5,
+          "label": "J",
+          "word": "Juice",
+          "sourceWord": "Juice",
+          "emoji": null,
+          "description": null,
+          "image": "alphabets/juice-emoji.jpg",
+          "audio": "alphabets/juice-audio.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Juice",
+          "status": "READY"
+        }
+      ]
+    },
+    {
+      "title": "K – N",
+      "sourceTitle": null,
+      "sortOrder": 3,
+      "items": [
+        {
+          "sortOrder": 1,
+          "label": "K",
+          "word": "Kick",
+          "sourceWord": "Kick",
+          "emoji": null,
+          "description": null,
+          "image": "alphabets/kick-emoji.jpg",
+          "audio": "alphabets/kike-audio.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Kick",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 2,
+          "label": "L",
+          "word": "Look",
+          "sourceWord": "Look",
+          "emoji": null,
+          "description": null,
+          "image": "alphabets/look-emoji.avif",
+          "audio": "alphabets/look-audio.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Look",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 3,
+          "label": "M",
+          "word": "Mommy",
+          "sourceWord": "Mommy",
+          "emoji": null,
+          "description": null,
+          "image": "alphabets/mom-emoji.avif",
+          "audio": "alphabets/mom-voice.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Mommy",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 4,
+          "label": "N",
+          "word": "No",
+          "sourceWord": "No",
+          "emoji": null,
+          "description": null,
+          "image": "alphabets/no-emoji.jpg",
+          "audio": "alphabets/no-voice.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of No",
+          "status": "READY"
+        }
+      ]
+    },
+    {
+      "title": "O – R",
+      "sourceTitle": null,
+      "sortOrder": 4,
+      "items": [
+        {
+          "sortOrder": 1,
+          "label": "O",
+          "word": "Off",
+          "sourceWord": "Off",
+          "emoji": null,
+          "description": null,
+          "image": "alphabets/of-emoji.jpg",
+          "audio": "alphabets/off-voice.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Off",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 2,
+          "label": "P",
+          "word": "Play",
+          "sourceWord": "Play",
+          "emoji": null,
+          "description": null,
+          "image": "alphabets/play-emoji.jpg",
+          "audio": "alphabets/play-video.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Play",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 3,
+          "label": "Q",
+          "word": "Quiet",
+          "sourceWord": "Quiet",
+          "emoji": null,
+          "description": null,
+          "image": "alphabets/quit-emoji.webp",
+          "audio": "alphabets/quite-voice.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Quiet",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 4,
+          "label": "R",
+          "word": "Red",
+          "sourceWord": "Red",
+          "emoji": null,
+          "description": null,
+          "image": "alphabets/red-emoji.jpg",
+          "audio": "alphabets/red-voice.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Red",
+          "status": "READY"
+        }
+      ]
+    },
+    {
+      "title": "S – V",
+      "sourceTitle": null,
+      "sortOrder": 5,
+      "items": [
+        {
+          "sortOrder": 1,
+          "label": "S",
+          "word": "Stop",
+          "sourceWord": "Stop",
+          "emoji": null,
+          "description": null,
+          "image": "alphabets/stop-emoji.webp",
+          "audio": "alphabets/stop-voice.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Stop",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 2,
+          "label": "T",
+          "word": "Toilet",
+          "sourceWord": "Toilet",
+          "emoji": null,
+          "description": null,
+          "image": "alphabets/toliet-emoji.webp",
+          "audio": "alphabets/tolite-voice.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Toilet",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 3,
+          "label": "U",
+          "word": "Up",
+          "sourceWord": "Up",
+          "emoji": null,
+          "description": null,
+          "image": "alphabets/up-emoji.webp",
+          "audio": "alphabets/up-voice.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Up",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 4,
+          "label": "V",
+          "word": "Voice",
+          "sourceWord": "Voice",
+          "emoji": null,
+          "description": null,
+          "image": "alphabets/voice-emoji.jpg",
+          "audio": "alphabets/voice-voice.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Voice",
+          "status": "READY"
+        }
+      ]
+    },
+    {
+      "title": "W – Z",
+      "sourceTitle": null,
+      "sortOrder": 6,
+      "items": [
+        {
+          "sortOrder": 1,
+          "label": "W",
+          "word": "Water",
+          "sourceWord": "Water",
+          "emoji": null,
+          "description": null,
+          "image": "alphabets/water-emoji.webp",
+          "audio": "alphabets/water-voice.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Water",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 2,
+          "label": "X",
+          "word": "X-ray",
+          "sourceWord": "X-ray",
+          "emoji": null,
+          "description": null,
+          "image": "alphabets/xsary-audio.jpg",
+          "audio": "alphabets/xeray-voice.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of X-ray",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 3,
+          "label": "Y",
+          "word": "Yes",
+          "sourceWord": "Yes",
+          "emoji": null,
+          "description": null,
+          "image": "alphabets/yes-emoji.jpg",
+          "audio": "alphabets/yes-voice.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Yes",
+          "status": "READY"
+        },
+        {
+          "sortOrder": 4,
+          "label": "Z",
+          "word": "Zero",
+          "sourceWord": "Zero",
+          "emoji": null,
+          "description": null,
+          "image": "alphabets/zero-emoji.webp",
+          "audio": "alphabets/zero-voice.mp4",
+          "video": null,
+          "lyrics": null,
+          "alt": "Picture of Zero",
+          "status": "READY"
+        }
+      ]
+    }
+  ],
+  "quiz": {
+    "title": "Alphabets Quiz",
+    "passMarkPercent": 70,
+    "questions": [
+      {
+        "prompt": "Which letter comes after A?",
+        "options": [
+          "B",
+          "C",
+          "D",
+          "E"
+        ],
+        "answerIndex": 0
+      },
+      {
+        "prompt": "Which letter comes before D?",
+        "options": [
+          "A",
+          "B",
+          "C",
+          "E"
+        ],
+        "answerIndex": 2
+      },
+      {
+        "prompt": "Which letter is a vowel?",
+        "options": [
+          "B",
+          "E",
+          "G",
+          "K"
+        ],
+        "answerIndex": 1
+      },
+      {
+        "prompt": "Which letter comes after M?",
+        "options": [
+          "L",
+          "N",
+          "O",
+          "P"
+        ],
+        "answerIndex": 1
+      },
+      {
+        "prompt": "Which letter comes before H?",
+        "options": [
+          "F",
+          "G",
+          "I",
+          "J"
+        ],
+        "answerIndex": 1
+      },
+      {
+        "prompt": "Which letter starts the word 'Apple'?",
+        "options": [
+          "A",
+          "E",
+          "P",
+          "L"
+        ],
+        "answerIndex": 0
+      },
+      {
+        "prompt": "Which letter comes after X?",
+        "options": [
+          "Y",
+          "Z",
+          "W",
+          "V"
+        ],
+        "answerIndex": 0
+      },
+      {
+        "prompt": "Which letter is the last alphabet?",
+        "options": [
+          "Y",
+          "Z",
+          "X",
+          "W"
+        ],
+        "answerIndex": 1
+      },
+      {
+        "prompt": "Which letter comes between P and R?",
+        "options": [
+          "O",
+          "Q",
+          "S",
+          "T"
+        ],
+        "answerIndex": 1
+      },
+      {
+        "prompt": "Which letter starts the word 'Cat'?",
+        "options": [
+          "K",
+          "C",
+          "T",
+          "B"
+        ],
+        "answerIndex": 1
+      }
+    ]
+  },
+  "reserveQuestions": [
+    {
+      "prompt": "A is for...?",
+      "options": [
+        "Dog",
+        "Apple",
+        "Banana",
+        "Cat"
+      ],
+      "answerIndex": 1
+    },
+    {
+      "prompt": "Which letter looks like a snake?",
+      "options": [
+        "M",
+        "O",
+        "S",
+        "L"
+      ],
+      "answerIndex": 2
+    }
+  ],
+  "diagram": null,
+  "source": {
+    "lessonPage": "alphabets_voice.html",
+    "quizPage": "alphabets_quize.html",
+    "reservePage": "alphabets_qq.html"
+  }
+}

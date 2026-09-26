@@ -3,6 +3,7 @@
 **What this is:** a reusable framework (BLAST) for running development work through a written objective,
 plus the work area for the current project.
 **Active objective:** see [`BLAST/Objective.md`](BLAST/Objective.md) · **History:** [`docs/history/`](docs/history/README.md)
+**Current project:** CleverCubs — [`New Task/Updated Project/README.md`](New%20Task/Updated%20Project/README.md)
 **Audience:** anyone opening this repository cold, whether to review it or to work in it.
 
 ---

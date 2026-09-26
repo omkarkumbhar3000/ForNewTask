@@ -1,0 +1,745 @@
+{
+  "slug": "body-parts",
+  "title": "Body Parts",
+  "kind": "TOPIC",
+  "icon": "💪",
+  "description": "Explore 19 body parts on a picture and read what each one does.",
+  "coverImage": "body-parts/body.jpeg",
+  "sortOrder": 9,
+  "lessons": [
+    {
+      "title": "Head to Hairs",
+      "sourceTitle": null,
+      "sortOrder": 1,
+      "items": [
+        {
+          "sortOrder": 1,
+          "label": "Head",
+          "word": "Head",
+          "sourceWord": "head",
+          "emoji": null,
+          "description": "Your head is like a helmet that protects your wonderful brain!",
+          "image": null,
+          "audio": null,
+          "video": null,
+          "lyrics": null,
+          "alt": null,
+          "status": "READY"
+        },
+        {
+          "sortOrder": 2,
+          "label": "Face",
+          "word": "Face",
+          "sourceWord": "face",
+          "emoji": null,
+          "description": "Your face shows everyone when you are happy, silly, or surprised!",
+          "image": null,
+          "audio": null,
+          "video": null,
+          "lyrics": null,
+          "alt": null,
+          "status": "READY"
+        },
+        {
+          "sortOrder": 3,
+          "label": "Chest",
+          "word": "Chest",
+          "sourceWord": "chest",
+          "emoji": null,
+          "description": "Your chest holds your heart, which beats to pump blood all over your body!",
+          "image": null,
+          "audio": null,
+          "video": null,
+          "lyrics": null,
+          "alt": null,
+          "status": "READY"
+        },
+        {
+          "sortOrder": 4,
+          "label": "Stomach",
+          "word": "Stomach",
+          "sourceWord": "stomach",
+          "emoji": null,
+          "description": "Your stomach digests your yummy food to give you energy to play!",
+          "image": null,
+          "audio": null,
+          "video": null,
+          "lyrics": null,
+          "alt": null,
+          "status": "READY"
+        },
+        {
+          "sortOrder": 5,
+          "label": "Hairs",
+          "word": "Hairs",
+          "sourceWord": "hairs",
+          "emoji": null,
+          "description": "Your hair keeps your head warm and comes in many beautiful styles!",
+          "image": null,
+          "audio": null,
+          "video": null,
+          "lyrics": null,
+          "alt": null,
+          "status": "READY"
+        }
+      ]
+    },
+    {
+      "title": "Leg to Hands",
+      "sourceTitle": null,
+      "sortOrder": 2,
+      "items": [
+        {
+          "sortOrder": 1,
+          "label": "Leg",
+          "word": "Leg",
+          "sourceWord": "leg",
+          "emoji": null,
+          "description": "Your legs are super strong and help you run, jump, and skip!",
+          "image": null,
+          "audio": null,
+          "video": null,
+          "lyrics": null,
+          "alt": null,
+          "status": "READY"
+        },
+        {
+          "sortOrder": 2,
+          "label": "Foot",
+          "word": "Foot",
+          "sourceWord": "foot",
+          "emoji": null,
+          "description": "Your feet give you balance so you can stand tall and dance!",
+          "image": null,
+          "audio": null,
+          "video": null,
+          "lyrics": null,
+          "alt": null,
+          "status": "READY"
+        },
+        {
+          "sortOrder": 3,
+          "label": "Shoulder",
+          "word": "Shoulder",
+          "sourceWord": "shoulder",
+          "emoji": null,
+          "description": "Your shoulders help you lift your arms up high to reach for the stars!",
+          "image": null,
+          "audio": null,
+          "video": null,
+          "lyrics": null,
+          "alt": null,
+          "status": "READY"
+        },
+        {
+          "sortOrder": 4,
+          "label": "Elbow",
+          "word": "Elbow",
+          "sourceWord": "elbow",
+          "emoji": null,
+          "description": "Your elbows are special hinges that let you bend your arms!",
+          "image": null,
+          "audio": null,
+          "video": null,
+          "lyrics": null,
+          "alt": null,
+          "status": "READY"
+        },
+        {
+          "sortOrder": 5,
+          "label": "Hands",
+          "word": "Hands",
+          "sourceWord": "hands",
+          "emoji": null,
+          "description": "Hands are for clapping, drawing, and giving high-fives!",
+          "image": null,
+          "audio": null,
+          "video": null,
+          "lyrics": null,
+          "alt": null,
+          "status": "READY"
+        }
+      ]
+    },
+    {
+      "title": "Fingers to Eyes",
+      "sourceTitle": null,
+      "sortOrder": 3,
+      "items": [
+        {
+          "sortOrder": 1,
+          "label": "Fingers",
+          "word": "Fingers",
+          "sourceWord": "fingers",
+          "emoji": null,
+          "description": "Your fingers are perfect for wiggling, painting, and holding toys!",
+          "image": null,
+          "audio": null,
+          "video": null,
+          "lyrics": null,
+          "alt": null,
+          "status": "READY"
+        },
+        {
+          "sortOrder": 2,
+          "label": "Toes",
+          "word": "Toes",
+          "sourceWord": "toes",
+          "emoji": null,
+          "description": "Your toes help you balance and are fun to wiggle in the sand!",
+          "image": null,
+          "audio": null,
+          "video": null,
+          "lyrics": null,
+          "alt": null,
+          "status": "READY"
+        },
+        {
+          "sortOrder": 3,
+          "label": "Neck",
+          "word": "Neck",
+          "sourceWord": "neck",
+          "emoji": null,
+          "description": "Your neck connects your head to your body and lets you look around!",
+          "image": null,
+          "audio": null,
+          "video": null,
+          "lyrics": null,
+          "alt": null,
+          "status": "READY"
+        },
+        {
+          "sortOrder": 4,
+          "label": "Ears",
+          "word": "Ears",
+          "sourceWord": "ears",
+          "emoji": null,
+          "description": "Your ears help you listen to music and hear your friends calling!",
+          "image": null,
+          "audio": null,
+          "video": null,
+          "lyrics": null,
+          "alt": null,
+          "status": "READY"
+        },
+        {
+          "sortOrder": 5,
+          "label": "Eyes",
+          "word": "Eyes",
+          "sourceWord": "eyes",
+          "emoji": null,
+          "description": "Your eyes help you see all the beautiful colors in the world!",
+          "image": null,
+          "audio": null,
+          "video": null,
+          "lyrics": null,
+          "alt": null,
+          "status": "READY"
+        }
+      ]
+    },
+    {
+      "title": "Cheeks to Mouth",
+      "sourceTitle": null,
+      "sortOrder": 4,
+      "items": [
+        {
+          "sortOrder": 1,
+          "label": "Cheeks",
+          "word": "Cheeks",
+          "sourceWord": "cheeks",
+          "emoji": null,
+          "description": "Your cheeks stretch when you make a big, happy smile!",
+          "image": null,
+          "audio": null,
+          "video": null,
+          "lyrics": null,
+          "alt": null,
+          "status": "READY"
+        },
+        {
+          "sortOrder": 2,
+          "label": "Nose",
+          "word": "Nose",
+          "sourceWord": "nose",
+          "emoji": null,
+          "description": "Your nose lets you smell sweet flowers and yummy food!",
+          "image": null,
+          "audio": null,
+          "video": null,
+          "lyrics": null,
+          "alt": null,
+          "status": "READY"
+        },
+        {
+          "sortOrder": 3,
+          "label": "Lips",
+          "word": "Lips",
+          "sourceWord": "lips",
+          "emoji": null,
+          "description": "Your lips help you form words and give soft kisses!",
+          "image": null,
+          "audio": null,
+          "video": null,
+          "lyrics": null,
+          "alt": null,
+          "status": "READY"
+        },
+        {
+          "sortOrder": 4,
+          "label": "Mouth",
+          "word": "Mouth",
+          "sourceWord": "mouth",
+          "emoji": null,
+          "description": "You use your mouth to eat yummy food and speak to friends!",
+          "image": null,
+          "audio": null,
+          "video": null,
+          "lyrics": null,
+          "alt": null,
+          "status": "READY"
+        }
+      ]
+    }
+  ],
+  "quiz": {
+    "title": "Body Parts Quiz",
+    "passMarkPercent": 70,
+    "questions": [
+      {
+        "prompt": "Which body part do we see with?",
+        "options": [
+          "Eyes",
+          "Hands",
+          "Legs",
+          "Ears"
+        ],
+        "answerIndex": 0
+      },
+      {
+        "prompt": "Which body part do we hear with?",
+        "options": [
+          "Ears",
+          "Nose",
+          "Eyes",
+          "Mouth"
+        ],
+        "answerIndex": 0
+      },
+      {
+        "prompt": "Which body part do we smell with?",
+        "options": [
+          "Nose",
+          "Eyes",
+          "Ears",
+          "Hands"
+        ],
+        "answerIndex": 0
+      },
+      {
+        "prompt": "Which body part do we eat with?",
+        "options": [
+          "Mouth",
+          "Eyes",
+          "Legs",
+          "Hands"
+        ],
+        "answerIndex": 0
+      },
+      {
+        "prompt": "How many legs do we have?",
+        "options": [
+          "2",
+          "4",
+          "6",
+          "1"
+        ],
+        "answerIndex": 0
+      },
+      {
+        "prompt": "How many hands do we have?",
+        "options": [
+          "2",
+          "3",
+          "4",
+          "1"
+        ],
+        "answerIndex": 0
+      },
+      {
+        "prompt": "Which body part helps us walk?",
+        "options": [
+          "Legs",
+          "Eyes",
+          "Ears",
+          "Nose"
+        ],
+        "answerIndex": 0
+      },
+      {
+        "prompt": "Which body part helps us clap?",
+        "options": [
+          "Hands",
+          "Legs",
+          "Eyes",
+          "Nose"
+        ],
+        "answerIndex": 0
+      },
+      {
+        "prompt": "Which body part is on top of body?",
+        "options": [
+          "Head",
+          "Leg",
+          "Hand",
+          "Foot"
+        ],
+        "answerIndex": 0
+      },
+      {
+        "prompt": "Which body part has fingers?",
+        "options": [
+          "Hand",
+          "Leg",
+          "Eye",
+          "Ear"
+        ],
+        "answerIndex": 0
+      }
+    ]
+  },
+  "reserveQuestions": [
+    {
+      "prompt": "What are the hard white things inside your mouth?",
+      "options": [
+        "Tongue",
+        "Lips",
+        "Teeth",
+        "Cheeks"
+      ],
+      "answerIndex": 2
+    },
+    {
+      "prompt": "How many fingers do you have in total on both hands?",
+      "options": [
+        "5",
+        "10",
+        "8",
+        "12"
+      ],
+      "answerIndex": 1
+    },
+    {
+      "prompt": "What do you use to taste your food?",
+      "options": [
+        "Tongue",
+        "Teeth",
+        "Nose",
+        "Eyes"
+      ],
+      "answerIndex": 0
+    },
+    {
+      "prompt": "Where is your brain located?",
+      "options": [
+        "In your stomach",
+        "In your head",
+        "In your foot",
+        "In your hand"
+      ],
+      "answerIndex": 1
+    }
+  ],
+  "diagram": {
+    "image": "body-parts/body.jpeg",
+    "alt": "Human Body",
+    "viewBox": "0 0 500 800",
+    "preserveAspectRatio": "none",
+    "hotspots": [
+      {
+        "word": "Head",
+        "shape": "circle",
+        "geometry": {
+          "cx": 250,
+          "cy": 180,
+          "r": 120
+        }
+      },
+      {
+        "word": "Face",
+        "shape": "ellipse",
+        "geometry": {
+          "cx": 250,
+          "cy": 210,
+          "rx": 100,
+          "ry": 90
+        }
+      },
+      {
+        "word": "Chest",
+        "shape": "ellipse",
+        "geometry": {
+          "cx": 250,
+          "cy": 350,
+          "rx": 75,
+          "ry": 40
+        }
+      },
+      {
+        "word": "Stomach",
+        "shape": "ellipse",
+        "geometry": {
+          "cx": 250,
+          "cy": 450,
+          "rx": 70,
+          "ry": 50
+        }
+      },
+      {
+        "word": "Hairs",
+        "shape": "ellipse",
+        "geometry": {
+          "cx": 250,
+          "cy": 80,
+          "rx": 110,
+          "ry": 50
+        }
+      },
+      {
+        "word": "Leg",
+        "shape": "ellipse",
+        "geometry": {
+          "cx": 190,
+          "cy": 630,
+          "rx": 28,
+          "ry": 70
+        }
+      },
+      {
+        "word": "Leg",
+        "shape": "ellipse",
+        "geometry": {
+          "cx": 310,
+          "cy": 630,
+          "rx": 28,
+          "ry": 70
+        }
+      },
+      {
+        "word": "Foot",
+        "shape": "ellipse",
+        "geometry": {
+          "cx": 190,
+          "cy": 735,
+          "rx": 30,
+          "ry": 20
+        }
+      },
+      {
+        "word": "Foot",
+        "shape": "ellipse",
+        "geometry": {
+          "cx": 310,
+          "cy": 735,
+          "rx": 30,
+          "ry": 20
+        }
+      },
+      {
+        "word": "Shoulder",
+        "shape": "circle",
+        "geometry": {
+          "cx": 150,
+          "cy": 320,
+          "r": 25
+        }
+      },
+      {
+        "word": "Shoulder",
+        "shape": "circle",
+        "geometry": {
+          "cx": 350,
+          "cy": 320,
+          "r": 25
+        }
+      },
+      {
+        "word": "Elbow",
+        "shape": "circle",
+        "geometry": {
+          "cx": 95,
+          "cy": 420,
+          "r": 20
+        }
+      },
+      {
+        "word": "Elbow",
+        "shape": "circle",
+        "geometry": {
+          "cx": 405,
+          "cy": 420,
+          "r": 20
+        }
+      },
+      {
+        "word": "Hands",
+        "shape": "circle",
+        "geometry": {
+          "cx": 80,
+          "cy": 510,
+          "r": 22
+        }
+      },
+      {
+        "word": "Hands",
+        "shape": "circle",
+        "geometry": {
+          "cx": 420,
+          "cy": 510,
+          "r": 22
+        }
+      },
+      {
+        "word": "Fingers",
+        "shape": "ellipse",
+        "geometry": {
+          "cx": 75,
+          "cy": 545,
+          "rx": 18,
+          "ry": 14
+        }
+      },
+      {
+        "word": "Fingers",
+        "shape": "ellipse",
+        "geometry": {
+          "cx": 425,
+          "cy": 545,
+          "rx": 18,
+          "ry": 14
+        }
+      },
+      {
+        "word": "Toes",
+        "shape": "ellipse",
+        "geometry": {
+          "cx": 190,
+          "cy": 765,
+          "rx": 25,
+          "ry": 12
+        }
+      },
+      {
+        "word": "Toes",
+        "shape": "ellipse",
+        "geometry": {
+          "cx": 310,
+          "cy": 765,
+          "rx": 25,
+          "ry": 12
+        }
+      },
+      {
+        "word": "Neck",
+        "shape": "rect",
+        "geometry": {
+          "x": 220,
+          "y": 280,
+          "rx": 10,
+          "width": 60,
+          "height": 35
+        }
+      },
+      {
+        "word": "Ears",
+        "shape": "ellipse",
+        "geometry": {
+          "cx": 90,
+          "cy": 205,
+          "rx": 18,
+          "ry": 28
+        }
+      },
+      {
+        "word": "Ears",
+        "shape": "ellipse",
+        "geometry": {
+          "cx": 410,
+          "cy": 205,
+          "rx": 18,
+          "ry": 28
+        }
+      },
+      {
+        "word": "Eyes",
+        "shape": "circle",
+        "geometry": {
+          "cx": 170,
+          "cy": 190,
+          "r": 18
+        }
+      },
+      {
+        "word": "Eyes",
+        "shape": "circle",
+        "geometry": {
+          "cx": 330,
+          "cy": 190,
+          "r": 18
+        }
+      },
+      {
+        "word": "Cheeks",
+        "shape": "circle",
+        "geometry": {
+          "cx": 130,
+          "cy": 230,
+          "r": 18
+        }
+      },
+      {
+        "word": "Cheeks",
+        "shape": "circle",
+        "geometry": {
+          "cx": 370,
+          "cy": 230,
+          "r": 18
+        }
+      },
+      {
+        "word": "Nose",
+        "shape": "circle",
+        "geometry": {
+          "cx": 250,
+          "cy": 210,
+          "r": 10
+        }
+      },
+      {
+        "word": "Lips",
+        "shape": "ellipse",
+        "geometry": {
+          "cx": 250,
+          "cy": 250,
+          "rx": 28,
+          "ry": 18
+        }
+      },
+      {
+        "word": "Mouth",
+        "shape": "ellipse",
+        "geometry": {
+          "cx": 250,
+          "cy": 250,
+          "rx": 20,
+          "ry": 12
+        }
+      }
+    ]
+  },
+  "source": {
+    "lessonPage": "body_parts_voice.html",
+    "quizPage": "body_part_quize.html",
+    "reservePage": "body_qq.html"
+  }
+}
