@@ -9,7 +9,7 @@ This is a **partial, de-identified copy** of the `dynamic-api-validator` workspa
 
 | | Here |
 |---|---|
-| Git | ⚠️ **No `.git` of its own** — but it now sits *inside* `E:\Omkar\AI Projects\Internal` (remote `omkar_internal.git`, branch `main`) as an **untracked, not ignored** folder: `git status` shows `?? "Jira RCA/"`, so `git add .` from the parent would sweep it in. Nothing here has history yet, so every "commit / push / pull / branch" rule inherited from the full workspace is still inert — and an edit here is still unrecoverable |
+| Git | ✅ **Its own repository since 2026-09-25**: branch `main`, remote `github.com/omkarkumbhar3000/ForNewTask`, root commit `8d8b841`. A committed file can be restored with `git restore <path>`; an uncommitted edit or an ignored file cannot. ⚠️ `.gitignore` excludes `artifacts/workbooks/PAM-Client-Ticket-Analysis.xlsx` because it embeds a customer login pasted into a ticket, so that workbook is local-only and a clone must rebuild it. The vendor PDFs and `graph.json` are Git LFS objects (`.gitattributes`); a clone made without `git lfs` gets pointer files |
 | Nested checkouts | ⛔ `Automation gitlab repo/` and `pam/` are **absent**. No Java, no Maven, no TestNG, no product source |
 | Live API | ⛔ No `artifacts/runs/`. Nothing here executes against the PAM API, and `/arcontoken` is never called |
 | What runs | ✅ **The Python tooling only** — Jira analysis, the RAG corpus query, the workbook/report builders |
@@ -18,9 +18,11 @@ This is a **partial, de-identified copy** of the `dynamic-api-validator` workspa
 it for *why* a rule exists — it is the append-only reasoning behind the three-repo rights model, the
 response envelope, the endpoint blocklist and the token guard. ⛔ **Do not follow its commands here**;
 most of them address paths this copy does not contain. The maintained deployment is
-`E:\Omkar\AI Projects\Dev Project` (see §Divergence).
+`E:\Omkar\AI Projects\Dev Project`, whose copy on the D: machine is `..\dynamic-api-validator\` (see §Divergence).
 
-`AGENTS.md` beside this file carries the same scope note and is the OpenCode-facing equivalent.
+`AGENTS.md` beside this file carries the same scope note and is the OpenCode-facing equivalent. The root
+`README.md` is the **full-workspace** guide: it opens by calling this folder the `dynamic-api-validator`
+repository and documents Maven/TestNG, and neither applies here. For this copy, read `tools/jira/README.md`.
 
 ### Do not act on these — they cannot succeed here
 
@@ -31,8 +33,8 @@ absent `Automation gitlab repo/…` path or `artifacts/runs`. The same applies t
 **Their presence is not evidence they apply.**
 
 ⛔ **Both hooks in `.claude/settings.json` are dead.** They hard-code
-`E:\Omkar\Automation\Dev Project\…`, which does not exist on this machine (the real sibling workspace is
-`E:\Omkar\AI Projects\Dev Project`). Two consequences:
+`E:\Omkar\Automation\Dev Project\…`, which does not exist: the sibling moved to
+`E:\Omkar\AI Projects\Dev Project`, and the D: machine has no `E:` drive at all. Two consequences:
 
 - **`BLAST/Objective.md` is NOT auto-injected.** `CLAUDE.full-workspace.md` opens by asserting it is, and
   forbids re-adding the `@import` on that basis. That reasoning inverts once the hook is dead — **read
@@ -42,20 +44,41 @@ absent `Automation gitlab repo/…` path or `artifacts/runs`. The same applies t
   (`workbench\scripts\obj013_loop.py`) that no longer exists in any copy.
 
 The same `settings.json` also carries a live `permissions.deny` for `git merge` and `git remote set-url`
-(both shells). That half **does** work. The assistant cannot edit `.claude/settings.json` — owner fix.
+(both shells). That half **does** work. Now that this folder is a repository the deny has teeth: in a
+session started here, `git merge` is refused even when the owner has authorised merging, until the owner
+edits the list. The assistant cannot edit `.claude/settings.json`; that fix is the owner's.
 
 ## The work this copy exists for — Jira analysis
 
 Two Jira projects, both on `https://arcon-tech-solution.atlassian.net`: **`PAMIT`** (PAM product) and
 **`CI`** (Converged Identity). Credentials live in `tools/jira/.env` (gitignored; copy `.env.sample`).
 
+**Setup, once per machine.** The Jira line needs only `openpyxl` and `python-docx`. `doctor.py`,
+`validate_analysis.py` and `run_census.py --dry-run` use the stdlib alone. Install into a venv, because a
+distribution-managed Python refuses a global `pip install`:
+
 ```powershell
+python -m venv .venv
+.venv\Scripts\python -m pip install -r tools\requirements.txt
+```
+
+On the D: machine, `python` and `py` do not work. The one interpreter there is `python3.11` (uv-managed
+3.11.9, with no packages), and `..\CLAUDE.md` records the rest of that machine's quirks.
+
+```powershell
+# The whole census line in one command: generate -> render -> pack -> validate, inheriting the
+# validator's exit code (0 = every step ran and every figure validated). Prefer this to the steps below.
+python tools\jira\run_census.py                          # offline, zero HTTP
+python tools\jira\run_census.py --project CI             # one project; the pack is still rebuilt from both
+python tools\jira\run_census.py --dry-run                # print the six steps, run nothing
+python tools\jira\run_census.py --live                   # re-fetch first: production Jira, overwrites snapshots
+
 # Daily PAMIT client-ticket analysis -> report + the master workbook
 python tools\jira\pamit_client_analysis.py              # fetch, analyse, write
 python tools\jira\pamit_client_analysis.py --offline     # reuse last capture, zero HTTP
 python tools\jira\pamit_workbook.py                      # rebuild the workbook from that capture
 
-# The 2026 census reports (01 Jan - 21 Sep 2026, OBJ-030)
+# The 2026 census reports (01 Jan - 21 Sep 2026, OBJ-030), step by step; run_census.py runs these
 python tools\jira\jira_analysis_2026.py --offline        # PAMIT, 5,740 tickets
 python tools\jira\ci_analysis_2026.py --offline          # CI,    5,994 tickets
 
@@ -70,9 +93,15 @@ python tools\jira\build_delivery_pack.py
 python tools\jira\track_tickets.py                       # exit 0 = clear, 1 = action items, 2 = lookup failed
 
 # Preflight and proof — run the first on a new machine, the second before circulating anything
-python tools\jira\doctor.py                              # env, packages, credentials, freshness; 0 = ready
-python tools\jira\validate_analysis.py                   # 55 checks vs the snapshots; 0 = every figure agrees
+python tools\jira\doctor.py                              # env, packages, credentials, snapshots; 0 = ready
+python tools\jira\validate_analysis.py                   # 57 checks vs the snapshots; 0 = every figure agrees
+python tools\jira\validate_analysis.py --project CI      # one project: PAMIT | CI
+python tools\jira\validate_analysis.py --self-test       # proves each markdown check fires on its defect
 ```
+
+There is no pytest suite. `validate_analysis.py` is the test: `--project` narrows it to one project, and
+`--self-test` tests the checks themselves without touching project data. The three React apps have only
+`dev`, `build` and `preview` scripts, with no lint or test script.
 
 `tools/jira/README.md` is the operator's guide for this folder — the pipeline in order, what writes
 what, and a troubleshooting table keyed by the exact error text.
@@ -156,7 +185,7 @@ a figure passes only when the report and the source agree. Run it before circula
 
 ```powershell
 python tools\jira\doctor.py              # environment + freshness preflight; exit 0 = ready
-python tools\jira\validate_analysis.py   # 55 checks; exit 0 = every figure matches the source
+python tools\jira\validate_analysis.py   # 57 checks; exit 0 = every figure matches the source
 ```
 
 ⚠️ **A validator that has never failed proves nothing**, so this one was run against the pre-fix reports
@@ -164,6 +193,20 @@ from `cea4352` and confirmed to catch the CI sub-task defect by name (`+2798`) a
 coverage line. Each census report now also carries a **`Source snapshot:`** header line naming its snapshot
 and a sha256 of its bytes, which the validator recomputes — a report can no longer claim a source it was
 not built from. Full account: `docs/hardening/README.md`.
+
+⛔ **That hash is taken over the snapshot's bytes as checked out, so line endings count.** The snapshots
+were CRLF when they were hashed. Git stores them as LF, and `core.autocrlf=true` restores CRLF on checkout.
+A clone with `autocrlf` off gets LF and fails `B0-provenance` against a correct report. Check
+`git config core.autocrlf` before you believe a provenance failure.
+
+⚠️ **One provenance failure is real and has been in the history since the first commit.** Both
+`artifacts/snapshots/ci-analysis-*.json` files were rewritten at 19:33 on 2026-09-25, 15 minutes before
+`8d8b841`. `.gitignore` records a redaction made before the first commit; whether this rewrite was part of
+it is unverified. The committed 21 Sep CI snapshot now hashes to `650b1e8e…`, while the CI report's header
+claims `5e12f6be…`. Run against a `git archive` of HEAD, the validator gives **PASS 56 · FAIL 1**, and that
+failure is this one. Which way to fix it is the owner's call: regenerate the CI report from the committed
+snapshot (`run_census.py --project CI`) and check whether any figure moved, or restore the pre-rewrite
+snapshot. **Never edit the hash in the markdown.**
 
 ⛔ **JQL `created <= 'YYYY-MM-DD'` means `<= YYYY-MM-DD 00:00` — it silently excludes the whole end day.**
 Every edition of both reports before `OBJ-030` omitted its own final date (24 PAMIT / 31 CI tickets in the
@@ -216,8 +259,8 @@ spot attributed to one is a false finding, reported but never silently applied t
 | Path | Holds |
 |---|---|
 | `tools/` | Everything executable. `jira/` is the live half here; `rag/`, `analysis/`, `onboarding/` and the three React apps also work. The flat `obj0NN_*` harness does not (§What this folder is) |
-| `docs/` | Everything a human reads. `analysis/` (**12** reports, plus `README.md`, `summary.md` and a dated `summary/` series) · `history/` (**append-only** register + narrative) · `hardening/` (the 2026-09-22 review — what was wrong, what changed, what is still open) · `briefs/` · `findings/` · `business-context/` · `gaps/` · `knowledge-base/` · loose `graph.md` and `runs.md`. ⚠️ `management/` and `specs/` exist but are **empty** |
-| `data/` | Authored input. `sources/` (3 vendor PDFs, 82 MB, real files not LFS pointers) · `analysis/` (8 hand-maintained JSON) · `profiles/` |
+| `docs/` | Everything a human reads. `analysis/` (**12** reports, plus `README.md`, `summary.md` and a dated `summary/` series) · `history/` (**append-only** register + narrative) · `hardening/` (the 2026-09-22 review — what was wrong, what changed, what is still open) · `briefs/` · `findings/` · `business-context/` · `gaps/` · `knowledge-base/` · loose `graph.md` and `runs.md`. ⚠️ `management/` and `specs/` are **absent**, although the root `README.md` still lists them |
+| `data/` | Authored input. `sources/` (3 vendor PDFs, ~83 MB, stored in Git LFS) · `analysis/` (8 hand-maintained JSON) · `profiles/` |
 | `artifacts/` | Everything a tool produced — **never hand-edit; fix the tool and re-run.** `workbooks/` · `client-tickets/` · `snapshots/` · `rag-corpus/` · `analysis-data/` · `graph/` · `flows/` · `deck/` |
 | `state/` | Job state and audit logs — `client-analysis/` `daily/` `drift/` `obj010/` `perf/` |
 | `BLAST/` | Requirement intake. `Objective.md` is the active instruction; `B.L.A.S.T.md` is the protocol. **Has its own `CLAUDE.md`** with a hard "Protocol 0 HALT" — read it before touching `BLAST/` |
@@ -261,18 +304,22 @@ artifact. The fix is one line — `from paths import RAG_CORPUS as CORPUS` — b
 ## ⚠️ Divergence — this is not the only copy
 
 `tools/jira/` has drifted **in both directions** against `E:\Omkar\AI Projects\Dev Project`. Measured
-2026-09-22 — re-measure, both sides move:
+2026-09-22, then re-measured on 2026-09-26 against its D: copy `..\dynamic-api-validator\tools\jira\`.
+Every size below still holds, and the only correction was adding `run_census.py`, which the earlier table
+had left out. Re-measure before relying on it, because both sides move:
 
 | | Files | Evidence |
 |---|---|---|
 | **Dev Project ahead — 7** | `pamit_analysis_rules.py` · `pamit_client_analysis.py` · `pamit_report.py` · `pamit_workbook.py` · **`jira_query.py`** · **`track_tickets.py`** · `create_b01.py` | `pamit_analysis_rules.py` 86,440 B (15 Sep) vs **77,662 B here** (3 Sep); `jira_query.py` 13,665 B (8 Sep) vs **13,441 B here** |
-| **Here ahead — 9** | the whole 2026 census line: `jira_analysis_2026.py` · `ci_analysis_2026.py` · `analysis_classify.py` · `analysis_render.py` · `convert_analysis.py` · `md_to_docx_xlsx.py` · `build_delivery_pack.py`, plus `validate_analysis.py` and `doctor.py` (added 2026-09-22) | **absent on Dev Project** |
+| **Here ahead — 10** | the whole 2026 census line: `jira_analysis_2026.py` · `ci_analysis_2026.py` · `analysis_classify.py` · `analysis_render.py` · `convert_analysis.py` · `md_to_docx_xlsx.py` · `build_delivery_pack.py`, plus `validate_analysis.py`, `doctor.py` and `run_census.py` (added 2026-09-22) | **absent on Dev Project** |
 
 ⛔ **Neither copy is a superset, and the behind-set is wider than the `pamit_*` four** — it includes
 **`jira_query.py`, the read-only enforcement layer itself.** Editing any of those seven here silently
-edits a copy 5–12 days behind the maintained one, and this folder has no history to catch it.
-**Before changing anything under `tools/jira/`, check which side owns the file** and say which copy you
-are in. The nine here-only modules are owned here and are safe to edit.
+edits a copy 5–12 days behind the maintained one. This folder's own history starts at `8d8b841` and
+cannot show what changed on the other side. **Before changing anything under `tools/jira/`, check which
+side owns the file** and say which copy you are in. The ten here-only modules are owned here and are safe
+to edit. `register_client_analysis_task.ps1` also differs from the D: copy: same size, 4 bytes, not yet
+examined.
 
 ⚠️ **`tools/jira/pamit_fmt.py` is a tenth, newly-diverged file.** It was **byte-identical on both sides**
 (measured 2026-09-22: `HEAD:tools/jira/pamit_fmt.py` vs `Dev Project\tools\jira\pamit_fmt.py`, no
@@ -291,8 +338,8 @@ this copy is now ahead on a file the divergence table above had listed on neithe
   but **not yet archived** — archive it to `01-objective-records.md` *before* overwriting `Objective.md`
   with the next instruction, or the record of it is lost.
 - **`BLAST/Objective.md` stays small** and holds the active instruction only. Never copy history into it.
-  Archive the outgoing objective to the register *before* overwriting. `BLAST/` is not versioned anywhere —
-  an edit there is unrecoverable.
+  Archive the outgoing objective to the register *before* overwriting. `BLAST/` has been tracked since
+  `8d8b841`, but only a committed version can be restored, so commit before you overwrite.
 - **Traceability over tidiness.** Name the real artifact — report, workbook sheet, script, snapshot file,
   Jira key. A figure quoted without its basis is a defect; several counts here legitimately differ by unit.
 - `.claude/rules/` holds three path-scoped rules. `markdown-docs.md` (`**/*.md`) applies; `api-surface.md`
@@ -309,11 +356,11 @@ this copy does not contain.
 
 ## Measured facts worth not re-deriving
 
-Re-measured 2026-09-22.
+Re-measured 2026-09-22. The validator and runtime rows were re-measured 2026-09-26.
 
 | Fact | Value | Where |
 |---|---:|---|
-| Client-ticket workbook | **13 sheets**; `04 Ticket Details` = **2,201 tickets × 71 columns** | `artifacts/workbooks/PAM-Client-Ticket-Analysis.xlsx` |
+| Client-ticket workbook | **13 sheets**; `04 Ticket Details` = **2,201 tickets × 71 columns** | `artifacts/workbooks/PAM-Client-Ticket-Analysis.xlsx` (gitignored; local-only) |
 | …its row geometry | 5-line title block, blank row 6, header row **7**, data rows **8–2208** (`max_row` 2208) | ⚠️ quote the unit — the prior "2,206 rows" matched neither |
 | PAMIT tickets, 2026-01-01 → 2026-09-21 | **5,740** = 3,705 client + 2,035 internal | `docs/analysis/Jira_Analysis_01Jan26-21Sep26.md` |
 | CI tickets, same range | **5,994** = 1,456 client + 4,538 internal | `docs/analysis/CI_Jira_Analysis_01Jan26-21Sep26.md` |
@@ -321,7 +368,9 @@ Re-measured 2026-09-22.
 | PAMIT Affected Milestone | **4,523 of 5,740 tickets (78.8%)** populated → **4,615** assignments over **101** distinct values | `docs/analysis/Jira_Analysis_01Jan26-21Sep26.md` §12; published as 100% `Not set` until 2026-09-22 |
 | PAMIT Fix versions | **1,558 of 5,740 tickets (27.1%)** populated → **1,607** assignments over **68** values — the gap against 78.8% above is exactly why `D42` names Affected Milestone as the build axis | same report, §11 |
 | Daily client-analysis captures | stop at **2026-09-03** — that line is paused; the census line is the active work | `artifacts/client-tickets/snapshots/` |
-| Runtime | Python **3.14.7** · Node **v24.19.0** · openpyxl 3.1.5, python-docx, python-pptx 1.0.2 present | measured |
+| `validate_analysis.py` on commit `8d8b841` | **57 checks: PASS 56 · FAIL 1** (CI `B0-provenance`, §Three defects). `--self-test` passes | run on a `git archive` of HEAD |
+| Runtime, original machine | Python **3.14.7** · Node **v24.19.0** · everything in `tools/requirements.txt` | measured 2026-09-22 |
+| Runtime, D: machine | only `python3.11` (3.11.9, no packages) · Node **v24.16.0**. `doctor.py`, `validate_analysis.py` and `run_census.py --dry-run` run there; nothing that renders does | measured 2026-09-26 |
 
 ⛔ **Re-measure before quoting any number in this file.** This is not decorative — it keeps catching this
 document. The revision two back described itself as "65 KB / 836 lines" while measuring 68,498 bytes /

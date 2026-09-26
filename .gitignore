@@ -128,3 +128,9 @@ artifacts/workbooks/PAM-Client-Ticket-Analysis.xlsx
 .git-credentials
 .netrc
 _netrc
+
+# --- Local-only -------------------------------------------------------------
+# The owner's private Marathi companion to CLI sessions. Never published.
+mar.md
+# Per-machine virtualenv (CLAUDE.md §Setup).
+.venv/

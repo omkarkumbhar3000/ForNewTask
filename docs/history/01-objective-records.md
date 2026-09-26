@@ -2065,3 +2065,66 @@ all the way down** — a *missing* column would read as "not analysed".
 **Dependencies.** `OBJ-028` (the analysis engine, its read-only Jira layer and the `D38`–`D41` population
 rules, all retained) · `D38` (the defect denominator, which is why the escape census reports 367 defects
 rather than 439 client tickets) · `D39` (linked tickets are evidence, never population).
+
+
+### OBJ-030 — Extend both 2026 Jira census reports from 03 Sep to 21 Sep 2026
+
+**Objective ID.** `OBJ-030`
+
+**Title.** Extend the PAMIT and CI 2026 Jira census reports to cover 2026-01-01 → 2026-09-21, processed
+separately; update the analysis, not the methodology.
+
+**Status.** ✅ Completed.
+
+**Summary.** Both reports were measured 100% generated, so the extension was a `DATE_TO` bump and a
+re-run, never a markdown edit. PAMIT **5,431 → 5,740**, CI **5,588 → 5,994**, delivered as
+`01Jan26-21Sep26` with the `03Sep26` set retired. A defect older than this objective was found and fixed:
+JQL `created <= 'YYYY-MM-DD'` excludes that whole day, so every prior edition had omitted its own final
+date. A later hardening review in the same line found and fixed three further generator defects (PAMIT
+§12 `Affected Milestone` published 100% `Not set`; the CI sub-task count of 4,241 was a parent-presence
+count, real figure 1,443; §12 counted unpopulated tickets as milestone assignments, 5,832 → 4,615) and
+added an independent validator, a preflight and a one-command pipeline.
+
+**Key Deliverables.**
+1. `docs/analysis/Jira_Analysis_01Jan26-21Sep26.md` + `.docx` + `.xlsx` (PAMIT).
+2. `docs/analysis/CI_Jira_Analysis_01Jan26-21Sep26.md` + `.docx` + `.xlsx` (CI).
+3. Snapshots `artifacts/client-tickets/snapshots/jira-analysis-2026-01-01-to-2026-09-21.json` and
+   `artifacts/snapshots/ci-analysis-2026-01-01-to-2026-09-21.json`.
+4. The dated client pack `21-09-2026/{PAM,CI}/`, built by `tools/jira/build_delivery_pack.py`.
+5. `tools/jira/validate_analysis.py` (57 checks, `--self-test`), `doctor.py`, `run_census.py`, and a
+   `Source snapshot:` provenance line with a sha256 in each report (`pamit_fmt.snapshot_provenance()`).
+
+**Related Files.** `tools/jira/jira_analysis_2026.py` · `ci_analysis_2026.py` · `analysis_classify.py` ·
+`analysis_render.py` · `convert_analysis.py` · `md_to_docx_xlsx.py` · `build_delivery_pack.py` ·
+`validate_analysis.py` · `doctor.py` · `run_census.py` · `pamit_fmt.py` · `docs/hardening/README.md` ·
+`docs/history/04-narrative-log.md` §4. All of it is recoverable from commit `8d8b841`.
+
+**Reason for Archiving.** Completed, then displaced from the active-instruction slot by `OBJ-031`, which
+retires the Jira/PAM/CI line from this workspace and turns it into a clean BLAST framework plus a
+`New Task/` working area.
+
+**Pending Work.** None will be resumed here; the line is retired by `OBJ-031`. Recorded for whoever
+restores it from `8d8b841`:
+1. `CI-25546` is readable by `key =` and invisible to every bulk search, a Jira search-index
+   inconsistency (1 in 5,994). Its gate was left failing on purpose.
+2. On the committed tree the validator reports **PASS 56 · FAIL 1**. Both CI snapshots were rewritten
+   before the first commit, so the CI report's `Source snapshot:` hash no longer matches its snapshot.
+   Fix by regenerating from the committed snapshot, never by editing the hash.
+3. The 21 Sep final-day counts are a partial day and grow on any later re-run of the same range.
+4. `tools/rag/query.py` read a directory `extract.py` never wrote (hardening review F1).
+
+**Lessons Learned / Observations.**
+- ⛔ **JQL `created <= 'YYYY-MM-DD'` means `<= YYYY-MM-DD 00:00`.** New JQL uses the half-open
+  `created < DATE_TO_EXCLUSIVE`.
+- ⛔ **Reconciliation is not validation.** All three hardening defects passed every `OBJ-030` gate, because
+  those gates re-ran the generator's own rule. Only an independent re-derivation from the raw snapshot
+  caught them.
+- **A file renamed by hand after generation turns the next run into a stale deliverable**, which is why
+  output names derive from one `RANGE_SLUG` constant.
+- **A provenance hash over file bytes depends on line endings.** Git stores the snapshots LF;
+  `core.autocrlf=true` restores the CRLF they were hashed with.
+- **A validator that has never failed proves nothing.** It was run against the pre-fix reports and caught
+  the CI sub-task defect by name before it was trusted.
+
+**Dependencies.** `OBJ-028` (the read-only Jira layer) · `OBJ-029` (`D42` build axis, `D46` populated-subset
+rule) · `D38`–`D46`.

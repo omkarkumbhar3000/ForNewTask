@@ -18,82 +18,53 @@
 
 <!-- ▼▼▼ WRITE THE CURRENT REQUIREMENT HERE — replace everything between the markers ▼▼▼ -->
 
-**`OBJ-030` — Extend both 2026 Jira census reports from 03 Sep to 21 Sep 2026.** ✅ **Complete.**
-PAMIT **5,431 → 5,740**, CI **5,588 → 5,994**. Kept here as the active record until the owner issues the
-next instruction. ⛔ **A pre-existing defect was found and fixed:** JQL `created <= 'YYYY-MM-DD'` excludes
-that whole day, so every prior edition of both reports omitted its own final date (24 PAMIT / 31 CI tickets
-in the 03 Sep edition). See §Validation results below and `../docs/history/04-narrative-log.md`.
+**`OBJ-031` — Make this workspace a clean, reusable BLAST framework, and prepare `New Task/` for the
+next development project.** 🟡 **In progress — stage 1, preparation only.**
 
-Update `Jira_Analysis_*` (PAMIT) and `CI_Jira_Analysis_*` (CI) to cover **2026-01-01 → 2026-09-21**,
-processed separately. ⛔ **Update the analysis, do not change the methodology.**
+### Stage 1 — now
 
-### Method — regenerate, never hand-edit
+1. **Analyse** the whole BLAST framework and workspace. Classify everything as: reusable framework
+   capability · project-specific or obsolete · old Jira/PAM/CI/Payments analysis data · rules, skills,
+   tools and structures to preserve for future projects.
+2. **Keep the objective-first rule and make the structure enforce it.** Every CLI instruction is first
+   analysed and written into this file, and this file then governs the work and its output. Owner's
+   words: *"first analyze and update the `object.md` file present inside the BLAST folder as required.
+   Then use the updated `object.md` as the governing context."* `object.md` is this file.
+3. **Remove obsolete Jira/PAM/CI/Payments material** without damaging any reusable capability. Never
+   delete something only because it is old; decide first whether it is framework or project data.
+4. **Create `New Task/Current Project/`**: the input and baseline. The owner uploads the current project,
+   source, docs, configuration, requirements, assets and colleague feedback here. Do not modify it
+   unnecessarily.
+5. **Create `New Task/Updated Project/`**: the output. All new development, generated files, docs,
+   configuration and final deliverables for this task go here.
+6. Leave the framework ready for stage 2. ⛔ **Do not implement the new application, and do not invent
+   its requirements.**
 
-Both reports were measured **100% generated**: regenerating each from its own 03 Sep snapshot reproduced
-the on-disk file with **2 differing lines out of 469 / 433**, both the `Generated:` timestamp. Nothing is
-hand-authored. So the requirement "preserve the format, headings, tables, calculations and analysis logic"
-is met **by construction** — bump `DATE_TO` in the generator and re-run. Hand-editing the markdown would
-be the one approach that *could* break it.
+### Stage 2 — only when the owner uploads the material and explicitly starts it
+
+Analyse the current project in full: architecture, frontend, backend, APIs, data handling, structure,
+dependencies, configuration, UI/UX, performance, security, maintainability, scalability, code quality,
+error handling, validation, user flows, documentation, deployment readiness, limitations, technical debt,
+missing functionality and opportunities. Then build the improved product:
+**Updated Project = BLAST + Current Project + Requirement + Colleague Feedback + Improvements.**
+
+| Direction | Rule |
+|---|---|
+| Primary goal | **User experience.** Simple, crisp, clear, lightweight, fast, responsive, modern, smooth, robust, easy to understand and maintain, future-proof. Improve beyond the stated requirement where it has a clear purpose; no complexity for its own sake |
+| UI | **Light theme.** Clean layout, good spacing, clear hierarchy, simple navigation, intuitive flows, responsive, smooth transitions, subtle purposeful animation, useful loading states, clear success and error feedback, consistent components, accessible, minimal clutter. Apple-style quality as inspiration, never a copy; keep the product's own identity |
+| Technology | Modern, future-proof and as lightweight as practical. Replace an existing technology only after weighing the real benefit, migration effort and compatibility, and never at the cost of working functionality |
+| Change control | Safe improvements may be made directly. A major, destructive or architectural change is identified explicitly and needs the owner's permission |
+| Mindset | Senior developer and architect: understand the product and requirement first, plan, implement only once started, validate, keep documentation in step, never claim unverified completion |
+| Skills and tools | Reuse the relevant BLAST and installed skills. Do not force Jira, PAM or CI workflows onto this project |
 
 ### Owner decisions taken at intake
 
-| | Decision |
+| Question | Decision |
 |---|---|
-| **Filenames** | Rename to `01Jan26-21Sep26`; **retire the `03Sep26` set** (`.md` + `.docx` + `.xlsx`). One current report per project. The 03 Sep JSON snapshots are retained, so the old report stays reproducible |
-| **Historical window** | **Full re-fetch.** The report is a point-in-time census; it is now taken on 21 Sep instead of 03 Sep, so Jan–Sep tickets carry their *current* status/resolution. Same methodology, later evaluation date. The historical drift is to be **quantified and reported**, never silent |
-
-⚠️ **`jira_analysis_2026.py` writes a filename computed from its date constants**
-(`Jira_Analysis_20260101-20260903.md`) which **does not match the file on disk** (`…01Jan26-03Sep26.md`) —
-it was renamed by hand after generation. Re-running it unchanged writes a *new* file and leaves the
-intended one stale. `ci_analysis_2026.py` hardcodes its output name instead. Both must be fixed to emit
-the agreed name, or the deliverable silently misses.
-
-### Validation gates — all must pass before the work is called done
-
-1. No missing dates and no duplicate issue keys across the full range.
-2. Old-window ticket **set** is unchanged (JQL filters on `created`); only field *values* may move.
-3. Every headline count reconciles against the enumerated ticket list — ⛔ **never**
-   `/search/approximate-count`, which `jira_query.py` records as measured-wrong here.
-4. Report body, summary section and the `.docx`/`.xlsx` renders agree with each other.
-
-### Deliverables
-
-| What | Where |
-|---|---|
-| PAMIT census | `docs/analysis/Jira_Analysis_01Jan26-21Sep26.md` + `.docx` + `.xlsx` |
-| CI census | `docs/analysis/CI_Jira_Analysis_01Jan26-21Sep26.md` + `.docx` + `.xlsx` |
-| Snapshots | `artifacts/client-tickets/snapshots/jira-analysis-2026-01-01-to-2026-09-21.json` · `artifacts/snapshots/ci-analysis-2026-01-01-to-2026-09-21.json` |
-| Changed | `tools/jira/jira_analysis_2026.py` · `ci_analysis_2026.py` · `convert_analysis.py` (date range + output naming) |
-
-```powershell
-python tools\jira\jira_analysis_2026.py     # PAMIT, fetch + report
-python tools\jira\ci_analysis_2026.py       # CI, fetch + report
-```
-
-### Validation results — 11 gates per project
-
-| Gate | PAMIT | CI |
-|---|---|---|
-| No duplicate issue keys | ✅ 5,740 / 5,740 unique | ✅ 5,994 / 5,994 unique |
-| Every 03 Sep ticket still present | ✅ 5,431 → 5,455 | ⛔ **1 missing — `CI-25546`** |
-| End date 21 Sep present | ✅ 44 tickets | ✅ 38 tickets |
-| Every empty date confirmed zero at source | ✅ 06, 14, 20 Sep | ✅ 06, 13 Sep |
-| Header / §1 / client+internal / §2 / §10 all reconcile to the enumerated population | ✅ | ✅ |
-| `.md` ≡ `.docx` ≡ `.xlsx` | ✅ 23 §§, 26 sheets | ✅ 18 §§, 21 sheets |
-
-⛔ **`CI-25546` — a Jira search-index inconsistency, not a tooling defect.** Readable by `key =`
-(`2026-08-31T21:57:29`, project `CI`, Story, Closed) and invisible to every bulk search. Not paging: a
-one-day window returns **56 rows in a single page**, the server's own count agrees at 56, neighbours
-`CI-25545`/`CI-25547` are present, and it is still absent with no `ORDER BY`. 1 in 5,994 (**0.017%**);
-no aggregate is affected. The gate is left **failing on purpose** — a characterised exception beats a
-suppressed one.
-
-⚠️ **Historical drift is real and was quantified, not assumed.** Among the 5,431 pre-04-Sep PAMIT
-tickets: status moved on **478 (8.8%)**, assignee 328 (6.0%), priority 3, resolution 0. CI: 350 (6.3%),
-291 (5.2%), 6, 0. The ticket **set** is unchanged — JQL filters on `created` — only field values moved.
-
-⚠️ **21 Sep was the current date**, so its final-day counts are a partial day and will grow on a later
-re-run of the same range. That is not drift.
+| Where `New Task/` lives | **Inside this repository**: `New Task/Current Project/` and `New Task/Updated Project/`, so the objective rule, `CLAUDE.md` and the hook apply there |
+| How far the cleanup goes | **Full.** Delete all PAM/Jira/CI data, reports, snapshots, the PAM API harness, the Jira census scripts, the PAM dashboards and the old docs. Keep BLAST, the generic rules, and four reusable tools: the `api-onboarding` skill kit, the markdown → Word/Excel renderer, the PDF → page-cited text extractor, and the root-path resolver. Everything deleted stays recoverable from git |
+| The old history register | **Start a fresh register** at `OBJ-031`. `OBJ-001`–`OBJ-030` stay in git history, and the new index points at the commit that holds them |
+| The objective hook | **Repair it**, hooks only: one `UserPromptSubmit` hook injects this file on every prompt through a wrapper script. The `permissions.deny` list in `.claude/settings.json` stays exactly as it is |
 
 <!-- ▲▲▲ WRITE THE CURRENT REQUIREMENT HERE ▲▲▲ -->
 
