@@ -3,7 +3,25 @@
 // still on a temporary password. The server protects every route; this file only shapes what is shown.
 
 import { api, post, whoAmI, homeFor, onReauthRequired } from './api.js';
-import { h, mount, toast, askPassword, setReadAloud, showErrors, clearErrors } from './ui.js';
+import { h, mount, toast, askPassword, setReadAloud, showErrors, clearErrors, empty } from './ui.js';
+
+// A page whose first load fails (offline, the server restarting) must not sit on "Loading…" forever: it gets
+// a friendly message and a way to try again. Later failures are shown as a short message instead.
+function showFailure(error) {
+  const e = error || {};
+  if (e.code === 'unauthenticated' || e.code === 'password-change-required') return;
+  const main = document.getElementById('main');
+  const message = e.code ? e.message : 'Something went wrong. Please try again.';
+  if (main && main.querySelector(':scope > .loading')) {
+    mount(main, empty('🌧️', message,
+      h('button', { class: 'btn btn-primary', type: 'button', onclick: () => location.reload(), text: 'Try again' })));
+  } else {
+    toast(message, 'bad');
+  }
+}
+window.addEventListener('unhandledrejection', (event) => showFailure(event.reason));
+// An error event without an error object is browser noise (a ResizeObserver notice, a blocked extension), not ours.
+window.addEventListener('error', (event) => { if (event.error) showFailure(event.error); });
 
 const NAV = {
   parent: [

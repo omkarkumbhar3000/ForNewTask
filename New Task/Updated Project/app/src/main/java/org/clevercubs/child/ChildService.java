@@ -1,12 +1,14 @@
 package org.clevercubs.child;
 
-import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
 import java.util.Optional;
 
 import org.clevercubs.child.AgeGroups.AgeGroup;
+import org.clevercubs.platform.db.SqlDialect;
+import org.clevercubs.platform.db.Timestamps;
 import org.clevercubs.platform.web.ApiException;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Service;
@@ -44,11 +46,13 @@ public class ChildService {
             FROM child""";
 
     private final JdbcClient jdbc;
+    private final SqlDialect dialect;
     private final AgeGroups ageGroups;
 
-    public ChildService(JdbcClient jdbc, AgeGroups ageGroups) {
+    public ChildService(JdbcClient jdbc, AgeGroups ageGroups, SqlDialect dialect) {
         this.jdbc = jdbc;
         this.ageGroups = ageGroups;
+        this.dialect = dialect;
     }
 
     @Transactional
@@ -65,7 +69,7 @@ public class ChildService {
         checkUsername(username, firstName, null);
         String avatar = Avatars.isValid(in.avatarCode()) ? in.avatarCode() : Avatars.defaultCode();
 
-        Instant now = Instant.now();
+        LocalDateTime now = Timestamps.now();
         jdbc.sql("""
                         INSERT INTO child (parent_id, first_name, display_name, username, date_of_birth, avatar_code,
                                            created_at, updated_at)
@@ -78,7 +82,8 @@ public class ChildService {
                 .param("avatar", avatar)
                 .param("now", now)
                 .update();
-        long childId = jdbc.sql("SELECT id FROM child WHERE username = :u").param("u", username)
+        long childId = jdbc.sql("SELECT id FROM child WHERE username = " + dialect.caseInsensitive("u"))
+                .param("u", username)
                 .query(Long.class).single();
         enrolInYearOne(childId, group.id());
         return childId;
@@ -114,7 +119,7 @@ public class ChildService {
                 .param("dob", dob)
                 .param("sound", u.soundEffects() == null ? current.soundEffects() : u.soundEffects())
                 .param("read", u.readAloud() == null ? current.readAloud() : u.readAloud())
-                .param("now", Instant.now())
+                .param("now", Timestamps.now())
                 .param("id", childId)
                 .update();
     }
@@ -163,7 +168,8 @@ public class ChildService {
     }
 
     public boolean isUsernameFree(String username, Long exceptChildId) {
-        return jdbc.sql("SELECT COUNT(*) FROM child WHERE username = :u AND id <> :except")
+        return jdbc.sql("SELECT COUNT(*) FROM child WHERE username = " + dialect.caseInsensitive("u")
+                        + " AND id <> :except")
                 .param("u", username)
                 .param("except", exceptChildId == null ? -1L : exceptChildId)
                 .query(Integer.class).single() == 0;
@@ -186,13 +192,13 @@ public class ChildService {
 
     /** Enrols the child in the Year-1 program of their age group, if one is published (D65). */
     public void enrolInYearOne(long childId, long ageGroupId) {
-        jdbc.sql("""
-                        INSERT IGNORE INTO program_enrolment (child_id, program_id, status, started_at)
+        jdbc.sql(dialect.insertIgnoringDuplicates("""
+                        INSERT INTO program_enrolment (child_id, program_id, status, started_at)
                         SELECT :child, id, 'ACTIVE', :now FROM program
-                        WHERE age_group_id = :group AND year_number = 1 AND status = 'PUBLISHED'""")
+                        WHERE age_group_id = :group AND year_number = 1 AND status = 'PUBLISHED'"""))
                 .param("child", childId)
                 .param("group", ageGroupId)
-                .param("now", Instant.now())
+                .param("now", Timestamps.now())
                 .update();
     }
 

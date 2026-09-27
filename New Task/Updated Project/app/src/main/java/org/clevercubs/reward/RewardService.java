@@ -10,6 +10,9 @@ import java.util.Map;
 import org.clevercubs.audit.AuditLog;
 import org.clevercubs.learning.ProgressService;
 import org.clevercubs.learning.ProgressService.CourseProgress;
+import org.clevercubs.platform.db.Rows;
+import org.clevercubs.platform.db.SqlDialect;
+import org.clevercubs.platform.db.Timestamps;
 import org.clevercubs.platform.settings.Settings;
 import org.clevercubs.quiz.QuizRules;
 import org.springframework.jdbc.core.simple.JdbcClient;
@@ -46,11 +49,14 @@ public class RewardService {
     private static final String CODE_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 
     private final JdbcClient jdbc;
+    private final SqlDialect dialect;
     private final Settings settings;
     private final ProgressService progress;
     private final AuditLog audit;
 
-    public RewardService(JdbcClient jdbc, Settings settings, ProgressService progress, AuditLog audit) {
+    public RewardService(JdbcClient jdbc, Settings settings, ProgressService progress, AuditLog audit,
+            SqlDialect dialect) {
+        this.dialect = dialect;
         this.jdbc = jdbc;
         this.settings = settings;
         this.progress = progress;
@@ -87,7 +93,7 @@ public class RewardService {
         List<Map<String, Object>> enrolments = jdbc.sql("""
                         SELECT e.id, e.program_id, p.title FROM program_enrolment e JOIN program p ON p.id = e.program_id
                         WHERE e.child_id = :c AND e.status = 'ACTIVE'""")
-                .param("c", childId).query().listOfRows();
+                .param("c", childId).query(Rows.MAP).list();
         for (Map<String, Object> e : enrolments) {
             long programId = ((Number) e.get("program_id")).longValue();
             List<Long> ids = progress.programCourseIds(programId);
@@ -99,12 +105,12 @@ public class RewardService {
             int changed = jdbc.sql("""
                             UPDATE program_enrolment SET status = 'COMPLETED', completed_at = :now
                             WHERE id = :id AND status = 'ACTIVE'""")
-                    .param("now", Instant.now()).param("id", ((Number) e.get("id")).longValue()).update();
+                    .param("now", Timestamps.now()).param("id", ((Number) e.get("id")).longValue()).update();
             if (changed == 1) {
-                jdbc.sql("""
-                                INSERT IGNORE INTO certificate (child_id, program_id, issued_at, verification_code)
-                                VALUES (:c, :p, :now, :code)""")
-                        .param("c", childId).param("p", programId).param("now", Instant.now())
+                jdbc.sql(dialect.insertIgnoringDuplicates("""
+                                INSERT INTO certificate (child_id, program_id, issued_at, verification_code)
+                                VALUES (:c, :p, :now, :code)"""))
+                        .param("c", childId).param("p", programId).param("now", Timestamps.now())
                         .param("code", verificationCode()).update();
                 audit.record(null, "SYSTEM", "PROGRAM_COMPLETED", "child", childId, Map.of("programId", programId));
                 List<BadgeView> badges = award(childId, "criteria = 'PROGRAM_COMPLETED' AND program_id = :p",
@@ -149,13 +155,13 @@ public class RewardService {
         List<BadgeView> earned = new ArrayList<>();
         List<Map<String, Object>> badges = jdbc.sql(
                         "SELECT id, code, title, description, icon FROM badge WHERE active AND " + where)
-                .params(params).query().listOfRows();
+                .params(params).query(Rows.MAP).list();
         for (Map<String, Object> b : badges) {
             long badgeId = ((Number) b.get("id")).longValue();
-            int inserted = jdbc.sql("""
-                            INSERT IGNORE INTO child_badge (child_id, badge_id, awarded_at, source_attempt_id)
-                            VALUES (:c, :b, :now, :attempt)""")
-                    .param("c", childId).param("b", badgeId).param("now", Instant.now()).param("attempt", attemptId)
+            int inserted = jdbc.sql(dialect.insertIgnoringDuplicates("""
+                            INSERT INTO child_badge (child_id, badge_id, awarded_at, source_attempt_id)
+                            VALUES (:c, :b, :now, :attempt)"""))
+                    .param("c", childId).param("b", badgeId).param("now", Timestamps.now()).param("attempt", attemptId)
                     .update();
             if (inserted == 1) {
                 earned.add(new BadgeView(badgeId, (String) b.get("code"), (String) b.get("title"),

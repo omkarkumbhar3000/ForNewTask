@@ -1,7 +1,6 @@
 package org.clevercubs.admin;
 
 import java.security.SecureRandom;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -10,6 +9,9 @@ import java.util.regex.Pattern;
 
 import org.clevercubs.audit.AuditLog;
 import org.clevercubs.child.AgeGroups;
+import org.clevercubs.platform.db.Rows;
+import org.clevercubs.platform.db.SqlDialect;
+import org.clevercubs.platform.db.Timestamps;
 import org.clevercubs.platform.security.PasswordPolicy;
 import org.clevercubs.platform.security.Role;
 import org.clevercubs.platform.settings.Settings;
@@ -48,15 +50,17 @@ public class AdminService {
     private final PasswordEncoder passwords;
     private final PasswordPolicy policy;
     private final AgeGroups ageGroups;
+    private final SqlDialect dialect;
 
     public AdminService(JdbcClient jdbc, AuditLog audit, Settings settings, PasswordEncoder passwords,
-            PasswordPolicy policy, AgeGroups ageGroups) {
+            PasswordPolicy policy, AgeGroups ageGroups, SqlDialect dialect) {
         this.jdbc = jdbc;
         this.audit = audit;
         this.settings = settings;
         this.passwords = passwords;
         this.policy = policy;
         this.ageGroups = ageGroups;
+        this.dialect = dialect;
     }
 
     // --- overview and reports -------------------------------------------------------------------------
@@ -72,8 +76,9 @@ public class AdminService {
         counts.put("programsCompleted", count("SELECT COUNT(*) FROM program_enrolment WHERE status = 'COMPLETED'"));
         counts.put("newFeedback", count("SELECT COUNT(*) FROM feedback WHERE status = 'NEW'"));
         counts.put("pendingRequests", count("SELECT COUNT(*) FROM parent_request WHERE status = 'PENDING'"));
-        counts.put("lockedAccounts", count(
-                "SELECT COUNT(*) FROM user_account WHERE status <> 'ACTIVE' OR locked_until > UTC_TIMESTAMP(6)"));
+        counts.put("lockedAccounts", jdbc.sql(
+                        "SELECT COUNT(*) FROM user_account WHERE status <> 'ACTIVE' OR locked_until > :now")
+                .param("now", Timestamps.now()).query(Integer.class).single());
         return Map.of("counts", counts, "recentAudit", audit(null, 10, 0));
     }
 
@@ -92,7 +97,7 @@ public class AdminService {
                           (SELECT COUNT(*) FROM child_badge cb JOIN badge b ON b.id = cb.badge_id
                              WHERE b.course_id = c.id) AS badges
                         FROM course c ORDER BY c.sort_order""")
-                .query().listOfRows();
+                .query(Rows.MAP).list();
     }
 
     // --- accounts ----------------------------------------------------------------------------------------
@@ -104,10 +109,11 @@ public class AdminService {
                                a.last_login_at, a.created_at, p.full_name,
                                (SELECT COUNT(*) FROM child ch WHERE ch.parent_id = p.id) AS children
                         FROM user_account a LEFT JOIN parent p ON p.account_id = a.id
-                        WHERE (:q = '' OR a.email LIKE CONCAT('%', :q, '%') OR p.full_name LIKE CONCAT('%', :q, '%'))
+                        WHERE (:q = '' OR LOWER(a.email) LIKE LOWER(CONCAT('%', :q, '%'))
+                               OR LOWER(p.full_name) LIKE LOWER(CONCAT('%', :q, '%')))
                         ORDER BY a.created_at DESC LIMIT :size OFFSET :offset""")
                 .param("q", q).param("size", size).param("offset", page * size)
-                .query().listOfRows();
+                .query(Rows.MAP).list();
     }
 
     @Transactional
@@ -123,7 +129,7 @@ public class AdminService {
                            locked_until = NULL, failed_logins = 0, updated_at = :now WHERE id = :id""";
             default -> throw ApiException.badRequest("invalid-input", "Unknown action.");
         };
-        if (jdbc.sql(sql).param("now", Instant.now()).param("id", accountId).update() == 0) {
+        if (jdbc.sql(sql).param("now", Timestamps.now()).param("id", accountId).update() == 0) {
             throw ApiException.notFound("Account");
         }
         audit.record(adminId, ADMIN, "ACCOUNT_" + action, "user_account", accountId, Map.of());
@@ -154,7 +160,7 @@ public class AdminService {
                         UPDATE user_account SET password_hash = :hash, must_change_password = TRUE,
                                password_changed_at = :now, failed_logins = 0, locked_until = NULL, updated_at = :now
                         WHERE id = :id""")
-                .param("hash", passwords.encode(temporary)).param("now", Instant.now()).param("id", accountId)
+                .param("hash", passwords.encode(temporary)).param("now", Timestamps.now()).param("id", accountId)
                 .update();
         if (changed == 0) {
             throw ApiException.notFound("Account");
@@ -172,10 +178,11 @@ public class AdminService {
                                (SELECT COUNT(*) FROM lesson_completion lc WHERE lc.child_id = ch.id) AS lessons_done,
                                (SELECT MAX(v.first_viewed_at) FROM lesson_item_view v WHERE v.child_id = ch.id) AS last_active
                         FROM child ch JOIN parent p ON p.id = ch.parent_id
-                        WHERE (:q = '' OR ch.username LIKE CONCAT('%', :q, '%') OR ch.display_name LIKE CONCAT('%', :q, '%'))
+                        WHERE (:q = '' OR LOWER(ch.username) LIKE LOWER(CONCAT('%', :q, '%'))
+                               OR LOWER(ch.display_name) LIKE LOWER(CONCAT('%', :q, '%')))
                         ORDER BY ch.created_at DESC LIMIT :size OFFSET :offset""")
                 .param("q", q).param("size", size).param("offset", page * size)
-                .query().listOfRows();
+                .query(Rows.MAP).list();
         List<Map<String, Object>> out = new ArrayList<>();
         for (Map<String, Object> r : rows) {
             Map<String, Object> m = new LinkedHashMap<>(r);
@@ -199,16 +206,16 @@ public class AdminService {
                                  WHERE l.course_id = c.id) AS items,
                                q.id AS quiz_id, q.pass_mark_percent, q.status AS quiz_status
                         FROM course c LEFT JOIN quiz q ON q.course_id = c.id ORDER BY c.sort_order""")
-                .query().listOfRows();
+                .query(Rows.MAP).list();
     }
 
     public Map<String, Object> course(long courseId) {
         Map<String, Object> course = jdbc.sql("SELECT id, slug, title, description, icon, kind, status, sort_order FROM course WHERE id = :id")
-                .param("id", courseId).query().listOfRows().stream().findFirst()
+                .param("id", courseId).query(Rows.MAP).list().stream().findFirst()
                 .orElseThrow(() -> ApiException.notFound("Course"));
         List<Map<String, Object>> lessons = jdbc.sql(
                         "SELECT id, title, sort_order, status FROM lesson WHERE course_id = :c ORDER BY sort_order")
-                .param("c", courseId).query().listOfRows();
+                .param("c", courseId).query(Rows.MAP).list();
         List<Map<String, Object>> withItems = new ArrayList<>();
         for (Map<String, Object> l : lessons) {
             Map<String, Object> m = new LinkedHashMap<>(l);
@@ -216,7 +223,7 @@ public class AdminService {
                             SELECT id, sort_order, label, word, emoji, description, alt_text, image_path, audio_path,
                                    video_path, status
                             FROM lesson_item WHERE lesson_id = :l ORDER BY sort_order""")
-                    .param("l", l.get("id")).query().listOfRows());
+                    .param("l", l.get("id")).query(Rows.MAP).list());
             withItems.add(m);
         }
         Map<String, Object> out = new LinkedHashMap<>(course);
@@ -237,7 +244,7 @@ public class AdminService {
                         WHERE id = :id""")
                 .param("title", trimToNull(title, 60)).param("description", trimToNull(description, 500))
                 .param("icon", trimToNull(icon, 16)).param("status", status).param("sort", sortOrder)
-                .param("now", Instant.now()).param("id", id).update();
+                .param("now", Timestamps.now()).param("id", id).update();
         found(changed, "Course");
         audit.record(adminId, ADMIN, "COURSE_UPDATED", "course", id, Map.of());
     }
@@ -248,7 +255,7 @@ public class AdminService {
         found(jdbc.sql("""
                         UPDATE lesson SET title = COALESCE(:title, title), status = COALESCE(:status, status),
                                updated_at = :now WHERE id = :id""")
-                .param("title", trimToNull(title, 80)).param("status", status).param("now", Instant.now())
+                .param("title", trimToNull(title, 80)).param("status", status).param("now", Timestamps.now())
                 .param("id", id).update(), "Lesson");
         audit.record(adminId, ADMIN, "LESSON_UPDATED", "lesson", id, Map.of());
     }
@@ -267,17 +274,17 @@ public class AdminService {
         Map<String, Object> quiz = jdbc.sql("""
                         SELECT q.id, q.title, q.pass_mark_percent, q.required, q.status, c.title AS course_title
                         FROM quiz q JOIN course c ON c.id = q.course_id WHERE q.id = :id""")
-                .param("id", quizId).query().listOfRows().stream().findFirst()
+                .param("id", quizId).query(Rows.MAP).list().stream().findFirst()
                 .orElseThrow(() -> ApiException.notFound("Quiz"));
         List<Map<String, Object>> questions = jdbc.sql(
                         "SELECT id, pool, sort_order, prompt FROM quiz_question WHERE quiz_id = :q ORDER BY pool, sort_order")
-                .param("q", quizId).query().listOfRows();
+                .param("q", quizId).query(Rows.MAP).list();
         List<Map<String, Object>> full = new ArrayList<>();
         for (Map<String, Object> q : questions) {
             Map<String, Object> m = new LinkedHashMap<>(q);
             m.put("options", jdbc.sql(
                             "SELECT id, sort_order, label, is_correct FROM quiz_option WHERE question_id = :q ORDER BY sort_order")
-                    .param("q", q.get("id")).query().listOfRows());
+                    .param("q", q.get("id")).query(Rows.MAP).list());
             full.add(m);
         }
         Map<String, Object> out = new LinkedHashMap<>(quiz);
@@ -296,7 +303,7 @@ public class AdminService {
                                required = COALESCE(:required, required), status = COALESCE(:status, status),
                                updated_at = :now WHERE id = :id""")
                 .param("pass", passMark).param("required", required).param("status", status)
-                .param("now", Instant.now()).param("id", id).update(), "Quiz");
+                .param("now", Timestamps.now()).param("id", id).update(), "Quiz");
         audit.record(adminId, ADMIN, "QUIZ_UPDATED", "quiz", id, passMark == null ? Map.of() : Map.of("passMark", passMark));
     }
 
@@ -331,7 +338,7 @@ public class AdminService {
         List<Map<String, Object>> programs = jdbc.sql("""
                         SELECT p.id, p.title, p.description, p.year_number, p.status, g.name AS age_group
                         FROM program p JOIN age_group g ON g.id = p.age_group_id ORDER BY g.sort_order, p.year_number""")
-                .query().listOfRows();
+                .query(Rows.MAP).list();
         List<Map<String, Object>> out = new ArrayList<>();
         for (Map<String, Object> p : programs) {
             Map<String, Object> m = new LinkedHashMap<>(p);
@@ -349,7 +356,8 @@ public class AdminService {
         jdbc.sql("DELETE FROM program_course WHERE program_id = :p").param("p", programId).update();
         int order = 1;
         for (Long courseId : courseIds) {
-            jdbc.sql("INSERT IGNORE INTO program_course (program_id, course_id, sort_order) VALUES (:p, :c, :o)")
+            jdbc.sql(dialect.insertIgnoringDuplicates(
+                            "INSERT INTO program_course (program_id, course_id, sort_order) VALUES (:p, :c, :o)"))
                     .param("p", programId).param("c", courseId).param("o", order++).update();
         }
         audit.record(adminId, ADMIN, "PROGRAM_COURSES_SET", "program", programId, Map.of("courses", courseIds.size()));
@@ -357,14 +365,14 @@ public class AdminService {
 
     public List<Map<String, Object>> ageGroups() {
         return jdbc.sql("SELECT id, code, name, min_age, max_age, ui_profile, sort_order FROM age_group ORDER BY sort_order")
-                .query().listOfRows();
+                .query(Rows.MAP).list();
     }
 
     /** Edits a band; bands may not overlap, so every age still maps to exactly one group (docs/05 3.2). */
     @Transactional
     public void updateAgeGroup(long adminId, long id, String name, Integer minAge, Integer maxAge) {
         Map<String, Object> current = jdbc.sql("SELECT min_age, max_age FROM age_group WHERE id = :id")
-                .param("id", id).query().listOfRows().stream().findFirst()
+                .param("id", id).query(Rows.MAP).list().stream().findFirst()
                 .orElseThrow(() -> ApiException.notFound("Age group"));
         int min = minAge != null ? minAge : ((Number) current.get("min_age")).intValue();
         int max = maxAge != null ? maxAge : ((Number) current.get("max_age")).intValue();
@@ -386,7 +394,7 @@ public class AdminService {
                         SELECT b.id, b.code, b.title, b.description, b.icon, b.criteria, b.active, c.title AS course,
                                (SELECT COUNT(*) FROM child_badge cb WHERE cb.badge_id = b.id) AS awarded
                         FROM badge b LEFT JOIN course c ON c.id = b.course_id ORDER BY b.criteria, c.sort_order, b.id""")
-                .query().listOfRows();
+                .query(Rows.MAP).list();
     }
 
     @Transactional
@@ -403,7 +411,7 @@ public class AdminService {
         return jdbc.sql("""
                         SELECT m.id, m.message_key, m.text, m.active, g.name AS age_group, m.age_group_id
                         FROM ui_message m LEFT JOIN age_group g ON g.id = m.age_group_id ORDER BY m.message_key, m.id""")
-                .query().listOfRows();
+                .query(Rows.MAP).list();
     }
 
     @Transactional
@@ -462,11 +470,11 @@ public class AdminService {
         String a = action == null ? "" : action.trim();
         return jdbc.sql("""
                         SELECT id, occurred_at, actor_account_id, actor_role, action, target_type, target_id,
-                               CAST(details AS CHAR) AS details
+                               details
                         FROM audit_event WHERE (:a = '' OR action = :a)
                         ORDER BY occurred_at DESC, id DESC LIMIT :size OFFSET :offset""")
                 .param("a", a).param("size", size).param("offset", page * size)
-                .query().listOfRows();
+                .query(Rows.MAP).list();
     }
 
     public List<String> auditActions() {

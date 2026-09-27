@@ -1,8 +1,8 @@
 package org.clevercubs.audit;
 
-import java.time.Instant;
 import java.util.Map;
 
+import org.clevercubs.platform.db.Timestamps;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Component;
 
@@ -27,8 +27,8 @@ public class AuditLog {
         jdbc.sql("""
                         INSERT INTO audit_event (occurred_at, actor_account_id, actor_role, action, target_type,
                                                  target_id, details)
-                        VALUES (:at, :actor, :role, :action, :targetType, :targetId, :details)""")
-                .param("at", Instant.now())
+                        VALUES (:at, :actor, :role, :action, :targetType, :targetId, CAST(:details AS JSON))""")
+                .param("at", Timestamps.now())
                 .param("actor", actorAccountId)
                 .param("role", actorRole)
                 .param("action", action)

@@ -1,4 +1,10 @@
 # Test profile: the database is provided by TestDatabase (Testcontainers); nothing is read from .env.
+spring:
+  autoconfigure:
+    # MockMvc carries a signed-in session between requests as a MockHttpSession, which only the servlet
+    # container's own sessions understand. The database-backed sessions of the running application are
+    # covered by JdbcSessionTests (which turns them back on) and by the browser suite (e2e/).
+    exclude: org.springframework.boot.session.jdbc.autoconfigure.JdbcSessionAutoConfiguration
 server:
   servlet:
     session:

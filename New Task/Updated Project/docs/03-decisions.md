@@ -198,6 +198,20 @@ claimed until reviewed.
 
 History `D67`.
 
+### DQ-12 — The cloud database (§21, §22)
+
+Vercel, where colleagues use the application, offers no MySQL; every database in its Marketplace is
+PostgreSQL or a non-relational store ([`07-deployment.md`](07-deployment.md) §2).
+
+| Option | What it means |
+|---|---|
+| **Neon PostgreSQL through the Vercel Marketplace** (recommended) | The application also runs on PostgreSQL, already ported and tested; the connection settings arrive as project variables; one vendor. Every SQL statement must run on both databases |
+| A managed MySQL outside Vercel (TiDB Cloud, Aiven) | One database everywhere, but a second vendor account, its own connection secrets, and traffic leaving Vercel's network |
+
+**Answer (2026-09-27): ✅ The owner left the choice to the assistant**, asking for the option most
+consistent with the application and lowest in maintenance: **Neon PostgreSQL.** Development and the default
+test run stay on MySQL 8.4 (`DQ-02`); the suite passes on both. History `D73`.
+
 ## 3. Documented defaults (DD)
 
 Standard practice, applied unless the owner overrides it. Each one closes a security or quality gap recorded
@@ -231,3 +245,6 @@ in [`02-issue-register.md`](02-issue-register.md).
 | DD-24 | Quiz feedback | After each answer the child sees whether it was right and, if not, the right answer, in encouraging words. Answers are final | §11 "appropriate feedback"; learning from the answer |
 | DD-25 | Forgotten passwords | Until an email provider exists (`INF-04`), a Super Admin issues a random temporary password, shown once and audited; the owner must replace it at the next sign-in | §19 user management; no email channel |
 | DD-26 | Sensitive actions | Exporting or deleting a child, deleting an account, and admin changes to accounts, settings, programs and age groups need the password proven within `parent.reauth_minutes` (15) | `DD-02`; ASVS V3 re-authentication |
+| DD-27 | Cloud database | **Decided by the owner as `DQ-12` (`D73`)**: the hosted copy on Vercel runs on PostgreSQL (Neon), because Vercel offers no MySQL; development and the default tests stay on MySQL 8.4 (`DQ-02`). Both run the same suite | The owner asked for a Vercel deployment; a platform limit, not a preference |
+| DD-28 | Sessions | Server sessions are kept in the database (Spring Session JDBC), in development and in the cloud, indexed by account id. The session cookie keeps its name and flags | The cloud host stops idle instances after 5 minutes and may run several; in-memory sessions would sign families out |
+| DD-29 | Lighter media | `tools/optimize_media.py` resizes a picture over 100 KB to twice its display size (a card 320 px, a video poster 1280 px) in its own format, and keeps the result only if it is at least 20% smaller; it moves the index of every MP4/M4A before the data by copying the streams. File names never change; `media/OPTIMISED.csv` records each change, and `extract_content.py` accepts those results | `FUN-E29`, `FUN-E32`, §25; no path, row or page changes, and nothing is re-encoded where it would not pay |

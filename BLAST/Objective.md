@@ -8,7 +8,7 @@
 > Decisions, prior objectives and findings live in [`../docs/history/`](../docs/history/README.md); the
 > assistant reads them when needed and must **never copy them back into this file.**
 
-**Owner:** Sudesh Sawant · **Updated:** 2026-09-26 · **Work area:** `../New Task/`
+**Owner:** Sudesh Sawant · **Updated:** 2026-09-27 · **Work area:** `../New Task/`
 
 ---
 
@@ -18,26 +18,30 @@
 
 **`OBJ-034` — Enhance the Kids Learn / CleverCubs project into a simple, lightweight, secure,
 child-friendly educational application with a Java backend.** This is stage 2 of `OBJ-031`.
-Phases 1–3 (understand, analyse, plan) ✅ · Blueprint approved (`D68`) · 🟡 **Phase 4 (build), B0–B8.**
+Phases 1–3 ✅ · Blueprint approved (`D68`) · B0–B8 built ✅ · 🟡 **Completion run: verify, publish, deploy.**
 
-### 🟡 Overnight run (2026-09-26, amends `OBJ-034`) — finish, verify, publish, deploy
+The overnight run of 2026-09-26 (`D71`, `D72`) is done up to its first push (`3651d3b`: build, §1–§31
+cross-check, baseline kept out of git). Its improvement push and the Vercel deployment remain.
 
-Execute in this order, without waiting for confirmations; record anything that truly needs the owner
-and carry on with everything else (`D71` open execution permission still applies):
+### 🟡 Completion run (2026-09-27, amends `OBJ-034`) — end to end; stop only a step truly blocked
 
-1. **Finish the build** (B1–B8) and open it in Chrome. No dependency on the baseline folder.
-2. **Cross-check end to end** against §1–§31: implementation, documentation, broken flows, obsolete or
-   duplicated files. A build that compiles is not "done".
-3. **Old project folder:** once its content is verified as migrated, keep it out of the repository.
-   Delete nothing blindly.
-4. **Git (`D72` lifts `D55`):** update every `*.md`, check status, pull and reconcile, commit, push to
-   `github.com/omkarkumbhar3000/ForNewTask`, verify the push. Include media and assets (LFS for large
-   binaries); never secrets, caches or build output.
-5. **Improvement pass** (UX, UI, accessibility, responsiveness, error handling, maintainability), then a
-   **performance pass**; push again.
-6. **Vercel:** deploy a production URL colleagues can use, with configuration and secrets set securely
-   (never in the repository), and test the main flows on it.
-7. **Final verification** of every point above; report what needs the owner in the morning.
+1. **Docker running**, then the full suite on **MySQL and PostgreSQL** and the E2E journeys against the
+   current code. No reliance on earlier runs; fix what fails.
+2. **Review every uncommitted change**; discard or overwrite nothing without checking it.
+3. **Finish the code-side items** of `docs/06-review-summary.md` §8, and the deferred media fixes
+   (`FUN-E29`, `FUN-E32`) unless they genuinely need a business decision.
+4. **Docs and history:** record `D73`; correct the test count and the stale "publish to GitHub remaining";
+   fix `Dockerfile.vercel`'s README reference; update anything else stale; re-check `CLAUDE.md`.
+5. **Git:** status, diff, ignores, secrets, LFS; commit; push; the repository **public**; verify the remote.
+6. **Vercel:** connect the cloud database once the owner accepts the Vercel/Neon terms; deploy to
+   production; verify it and run the E2E journeys against it; fix and redeploy as needed.
+7. **Final verification** (local, MySQL, PostgreSQL, GitHub, Vercel, cloud database, E2E, docs,
+   security), a cross-check against the requirement, and a concise report.
+
+**Owner decisions (2026-09-27):** the repository is public for now (`D74`) · the cloud database is the
+assistant's choice, most consistent with the code and lowest in maintenance (`D73`: Neon PostgreSQL) ·
+the owner accepts the Vercel/Neon terms when prompted · the production Super Admin signs in as the
+owner's Gmail address; the Contact Us address stays unset for now (`INF-02` open) (`D75`).
 
 Tokens supplied by the owner are used only from environment variables and never written to any file in the
 repository or printed.

@@ -11,8 +11,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.time.LocalDate;
 import java.time.ZoneOffset;
+import java.util.Locale;
 import java.util.Map;
 
+import org.clevercubs.platform.db.Rows;
 import org.clevercubs.support.IntegrationTest;
 import org.clevercubs.support.Journeys;
 import org.clevercubs.support.Journeys.Family;
@@ -70,7 +72,7 @@ class RegistrationTests extends IntegrationTest {
                 .andExpect(jsonPath("$.mode").value("PARENT"));
 
         Map<String, Object> child = jdbc.sql("SELECT * FROM child WHERE id = :id").param("id", f.childId())
-                .query().singleRow();
+                .query(Rows.MAP).single();
         assertThat(child.get("first_name")).isEqualTo("Zoe");
         assertThat(child.get("display_name")).as("defaults to the first name").isEqualTo("Zoe");
         assertThat((String) child.get("username")).as("a friendly suggestion").matches("[a-z]+-[a-z]+-\\d{2}");
@@ -169,6 +171,23 @@ class RegistrationTests extends IntegrationTest {
         journeys.remember(email);
         assertThat(Journeys.<String>read(register(registration(email, PASSWORD, "Ola", age(5), taken)), "$.code"))
                 .isEqualTo("username-taken");
+    }
+
+    @Test
+    @DisplayName("an email address or username in other letter case is the same one (both databases, D73)")
+    void identitiesIgnoreLetterCase() throws Exception {
+        Family f = journeys.family(5);
+        String username = jdbc.sql("SELECT username FROM child WHERE id = :c").param("c", f.childId())
+                .query(String.class).single();
+
+        journeys.login(f.email().toUpperCase(Locale.ROOT), PASSWORD);
+
+        String email = Journeys.uniqueEmail("parent");
+        journeys.remember(email);
+        assertThat(Journeys.<String>read(register(registration(f.email().toUpperCase(Locale.ROOT), PASSWORD, "Ola",
+                age(5), null)), "$.code")).isEqualTo("email-taken");
+        assertThat(Journeys.<String>read(register(registration(email, PASSWORD, "Ola", age(5),
+                username.toUpperCase(Locale.ROOT))), "$.code")).isEqualTo("username-taken");
     }
 
     @Test

@@ -1371,12 +1371,28 @@ def run(argv=None) -> int:
     checks.append(("Background videos found (`#bgVideo`)", True, f"{len(bg_names)}: " + ", ".join(bg_names)))
 
     # ---- space check before any write
+    # A file tools/optimize_media.py made lighter counts as placed when it is exactly the recorded result
+    # for this very source (media/OPTIMISED.csv), so a re-run neither reverts nor reports it.
+    optimised: dict[str, dict[str, str]] = {}
+    if (out_media / "OPTIMISED.csv").exists():
+        with (out_media / "OPTIMISED.csv").open(encoding="utf-8", newline="") as f:
+            optimised = {row["path"]: row for row in csv.DictReader(f)}
+
+    def placed(dst: Path, rel: str, size: int, digest: str) -> bool:
+        if not dst.exists():
+            return False
+        if dst.stat().st_size == size and sha256_file(dst) == digest:
+            return True
+        o = optimised.get(rel)
+        return bool(o and o["source_sha256"] == digest and dst.stat().st_size == int(o["bytes"])
+                    and sha256_file(dst) == o["sha256"])
+
     to_copy_bytes = 0
     src_hash: dict[str, str] = {}
     for folder, src, new in copy_rows:
         src_hash[src] = src_hash.get(src) or sha256_file(bl.path(src))
         dst = out_media / folder / new
-        if not (dst.exists() and dst.stat().st_size == sizes[src] and sha256_file(dst) == src_hash[src]):
+        if not placed(dst, f"{folder}/{new}", sizes[src], src_hash[src]):
             to_copy_bytes += sizes[src]
     remaining = free_before - to_copy_bytes
     checks.append(("Free space after copying stays at or above 1.5 GiB", remaining >= MIN_FREE_AFTER,
@@ -1399,13 +1415,13 @@ def run(argv=None) -> int:
         folder_stats[folder] = (n_files + 1, n_bytes + sizes[src])
         csv_rows.append((folder, f"{folder}/{new}", src, sizes[src], digest))
         if args.dry_run:
-            if dst.exists() and dst.stat().st_size == sizes[src] and sha256_file(dst) == digest:
+            if placed(dst, f"{folder}/{new}", sizes[src], digest):
                 unchanged += 1
             else:
                 copied += 1
                 copied_bytes += sizes[src]
             continue
-        if dst.exists() and dst.stat().st_size == sizes[src] and sha256_file(dst) == digest:
+        if placed(dst, f"{folder}/{new}", sizes[src], digest):
             unchanged += 1
             continue
         dst.parent.mkdir(parents=True, exist_ok=True)
@@ -1426,7 +1442,7 @@ def run(argv=None) -> int:
         for f in sorted(out_media.rglob("*")):
             if f.is_file():
                 rel = f.relative_to(out_media).as_posix()
-                if rel != "MEDIA-MAP.csv" and rel not in planned:
+                if rel not in ("MEDIA-MAP.csv", "OPTIMISED.csv", ".gitattributes") and rel not in planned:
                     log.warnings.append(f"media/{rel} is not part of this run's plan (left untouched)")
     expected_json = {f"{c['slug']}.json" for c, _ in courses}
     if out_content.exists():

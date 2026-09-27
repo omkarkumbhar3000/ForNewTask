@@ -29,6 +29,9 @@ function collectErrors(page) {
 
 /** Header links and buttons sit behind the menu button on phones; open it first when it is shown. */
 async function header(page, role, name) {
+  // layout.js draws the header only after it has read the session, so right after a navigation there is no
+  // menu button yet; isVisible() does not wait, and the folded menu would stay shut. Wait for the header.
+  await page.locator('#site-nav').waitFor({ state: 'attached' });
   const toggle = page.locator('.menu-toggle');
   if (await toggle.isVisible() && (await toggle.getAttribute('aria-expanded')) !== 'true') await toggle.click();
   return page.locator('#site-nav').getByRole(role, { name });

@@ -42,7 +42,7 @@ content files (`sourceWord`).
 |---|---|---|---|
 | 1, 4, 29 | Understand the baseline first; enhanced version in `Updated Project/` | `01-baseline-analysis.md`, `02-issue-register.md`; the app, content and media all in `Updated Project/` | This document; the app runs without the old folder |
 | 2, 24 | Child-friendly, simple, light theme, purposeful animation | Design system `css/app.css`; one celebration on success; age-adaptive pages | Browser review at 1440 and 375 px |
-| 3, 31 | Ask before material decisions | `D56`–`D72`; defaults `DD-01`–`DD-26` documented | `03-decisions.md` |
+| 3, 31 | Ask before material decisions | `D56`–`D75`; defaults `DD-01`–`DD-29` documented | `03-decisions.md` |
 | 5 | Age groups from the date of birth; experience adapts | Bands 2–3, 4–5, 6–8 as data; `ui_profile` drives size, wording, stars or numbers | `ChildRulesTests`, `LearningFlowTests.homeStartsAtZero` |
 | 6 | Parent and child registration, mandatory and optional fields | `register.html`, `RegistrationService` (`DD-09`) | `RegistrationTests` (11) |
 | 7 | Parent → child → courses → progress; escalation to the parent | Child mode (`D58`), "Ask a grown-up" requests, parent inbox (`D59`) | `QuizAttemptTests.parentGrantsMoreAttempts`, `ParentAreaTests.usernameRequest`, `e2e` |
@@ -58,23 +58,24 @@ content files (`sourceWord`).
 | 17 | Contact Us, clearly visible | Footer on every page; `contact.html` | `e2e` public pages |
 | 18 | Terms & Conditions, flagged for legal review | `terms.html`, `privacy.html` marked draft | `INF-03` |
 | 19 | Super Admin dashboard, RBAC, protected sensitive actions, audit | `/admin/`, `AdminService`, recent-password rule (`DD-26`) | `AdminTests` (8) |
-| 20 | Security list | See `02-issue-register.md` §6 (every baseline issue with its test) | 212 JUnit tests |
+| 20 | Security list | See `02-issue-register.md` §6 (every baseline issue with its test) | 219 JUnit tests |
 | 21 | Java, clean architecture, justified dependencies | Packages by feature, no ORM, no Lombok, no JS framework | `pom.xml` (7 runtime starters) |
-| 22 | Schema from the requirements, proposed first | `05-data-model.md` (approved with `D68`), migrations V1–V3 | `DatabaseSetupTests` |
+| 22 | Schema from the requirements, proposed first | `05-data-model.md` (approved with `D68`), migrations V1–V4, a PostgreSQL copy for the cloud (`D73`) | `DatabaseSetupTests` on both databases |
 | 23 | Desktop first, responsive, mobile-ready APIs | Versioned JSON API; responsive pages | `e2e` at 1440, 1024, 768, 375 px |
-| 25 | Measured performance work | See §2 "Weight" and §6 | `e2e/measure.mjs` |
+| 25 | Measured performance work | See §2 "Weight" and §6; lighter media (`DD-29`) | `e2e/measure.mjs`, `MediaWeightTests` |
 | 26 | Maintainable | One stylesheet, shared modules, docs per area, `README.md` | — |
 | 27 | Existing issues kept apart from new ones | `02-issue-register.md` §2–§6 | — |
-| 28 | Test the listed flows | JUnit (212) and Playwright (6 journeys) | §5 |
+| 28 | Test the listed flows | JUnit (219, on MySQL and on PostgreSQL) and Playwright (6 journeys) | §5 |
 | 30 | Git: check media, LFS, secrets, generated files before committing | `.gitignore`, LFS rules for `media/` | §7 |
 
 ## 5. How it was tested
 
 | Level | What | Result |
 |---|---|---|
-| Unit | Progress, quiz, reward, age-group, username and password rules; throttle | ✅ |
-| Integration (Testcontainers MySQL 8.4) | Registration, sign-in, lock, sessions, child mode, lessons, quizzes (limit, lock, grant, resume, simultaneous starts), rewards, year completion, parent area, admin, pages and media, security headers, CSRF, IDOR, injection strings | ✅ 212 tests, 0 failures (`mvnw verify`) |
-| Browser (Playwright, installed Chrome) | Public pages at four widths without script errors; protected URLs; register → child mode → lesson → ask a grown-up → parent gate → requests → progress → feedback → delete the account; at 1440 and 375 px | ✅ 6 of 6 |
+| Unit | Progress, quiz, reward, age-group, username and password rules; throttle; media weight (`MediaWeightTests`) | ✅ |
+| Integration (Testcontainers MySQL 8.4) | Registration, sign-in, lock, sessions, child mode, lessons, quizzes (limit, lock, grant, resume, simultaneous starts), rewards, year completion, parent area, admin, pages and media, security headers, CSRF, IDOR, injection strings | ✅ 219 tests, 0 failures (`mvnw verify`) |
+| The same suite on PostgreSQL 17 (`-Dclevercubs.test.db=postgresql`, `D73`) | Everything above, plus database sessions over a real server and letter case in email addresses and usernames | ✅ 219 tests, 0 failures |
+| Browser (Playwright, installed Chrome) | Public pages at four widths without script errors; protected URLs; register → child mode → lesson → ask a grown-up → parent gate → requests → progress → feedback → delete the account; at 1440 and 375 px | ✅ 6 of 6, against the development server (MySQL) and against the cloud image (PostgreSQL) |
 | Manual browser review | Every page of the three areas, the quiz with a wrong answer, the lock after three tries, the admin dashboard | ✅ found and fixed `FUN-R01`–`FUN-R04` |
 
 ## 6. Performance (measured on the local build)
@@ -92,24 +93,32 @@ Every API answer measured took under 50 ms locally. Videos stream with byte rang
 lazily, and media is cached for a week; pages, scripts and styles revalidate (`304`) so an update is never
 hidden.
 
+The media library itself is lighter (`DD-29`): the 17 heaviest pictures were resized to twice their
+display size (4.78 MB saved; every card picture is now at most 100 KB, the largest was 621 KB), and the 110
+sound and video files that stored their index after the data now store it first, so playback starts
+before the whole file has arrived.
+
 ## 7. Deployment
 
 Local: `start-dev.ps1` (see `README.md`). The cloud deployment is described in
-[`07-deployment.md`](07-deployment.md).
+[`07-deployment.md`](07-deployment.md): a container on Vercel with PostgreSQL from Neon, prepared and
+verified locally (the image passes the browser journeys against PostgreSQL). The first deployment waits for
+the owner to accept the Neon Marketplace terms.
 
 ## 8. What remains, and what needs the owner
 
 | Item | Needed from | Detail |
 |---|---|---|
-| Contact address (`INF-02`) | Owner | Set `CC_CONTACT_EMAIL`; the page says it is being set up until then |
+| The cloud database | Owner, once | Neon PostgreSQL is decided (`D73`, `DQ-12`); the Marketplace terms are accepted by the account owner in a browser ([`07-deployment.md`](07-deployment.md) §5) |
+| The repository is public | Owner (accepted for now, `D74`) | The media files are publicly downloadable from GitHub while their licences are unconfirmed (`INF-11`) |
+| Contact address (`INF-02`) | Owner (unset by choice, `D75`) | Set `CC_CONTACT_EMAIL` on the Vercel project when an address should be shown; until then the page says it is being set up |
 | Legal review (`INF-03`) | Owner / counsel | Terms, privacy notice, consent wording, retention, target country |
 | Email provider (`INF-04`) | Owner | Self-service password reset and request notifications; until then admins issue temporary passwords (`DD-25`) |
 | Content for 6–8 and a Year 2 (`INF-01`) | Owner | The next-year screen says the program is being prepared |
 | The missing story video (`INF-09`), body-parts audio (`INF-10`) | Owner | Shown as "coming soon" / read aloud by the browser |
 | Media licences (`INF-11`) | Owner | Some pictures look like stock images (one carries a watermark) |
 | Certificate wording (`INF-07`) | Owner | A neutral draft is shown |
-| `DD-20`–`DD-26` | Owner review | Defaults chosen during the build; each can be changed |
-| Card images not yet resized (`FUN-E29`), audio not "faststart" (`FUN-E32`) | Later | Needs image and `ffmpeg` tooling; small effect |
+| `DD-20`–`DD-29` | Owner review | Defaults chosen during the build; each can be changed |
 
 ## 9. Assumptions made
 
@@ -122,6 +131,7 @@ at 90% (`DD-17`); "Mark as seen" is the parent's answer to a help request.
 1. An email provider, for password reset, request notifications and email verification at registration
    (which also closes `SEC-R01`).
 2. A Year-2 program and content for the 6–8 band, so the next-year choice leads somewhere.
-3. Re-encode the videos at a child-appropriate bitrate and resize card images (likely 40–60% less data).
+3. Re-encode the videos at a child-appropriate bitrate (likely 40–60% less data). That changes what the
+   child sees and hears, so it needs the owner's review; the pictures are already resized (`DD-29`).
 4. Two-factor sign-in for Super Admins.
 5. A PWA with offline lessons, and translations (the wording is already data).

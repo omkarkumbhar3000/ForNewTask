@@ -15,6 +15,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.clevercubs.platform.config.CleverCubsProperties;
+import org.clevercubs.platform.db.Timestamps;
 import org.clevercubs.support.IntegrationTest;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
@@ -180,8 +181,9 @@ class AdminBootstrapTests extends IntegrationTest {
         jdbc.sql("""
                         UPDATE user_account
                         SET password_hash = :hash, must_change_password = FALSE, status = 'DISABLED',
-                            updated_at = UTC_TIMESTAMP(6)
+                            updated_at = :now
                         WHERE id = :id""")
+                .param("now", Timestamps.now())
                 .param("hash", passwords.encode(chosen))
                 .param("id", idOf(email))
                 .update();

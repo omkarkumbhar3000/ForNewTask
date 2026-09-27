@@ -5,6 +5,8 @@ import java.util.Optional;
 
 import org.clevercubs.audit.AuditLog;
 import org.clevercubs.platform.config.CleverCubsProperties;
+import org.clevercubs.platform.db.SqlDialect;
+import org.clevercubs.platform.db.Timestamps;
 import org.clevercubs.platform.security.Role;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -83,9 +85,11 @@ class AdminBootstrap implements ApplicationRunner {
     private final PasswordEncoder passwords;
     private final AuditLog audit;
     private final CleverCubsProperties properties;
+    private final SqlDialect dialect;
 
     AdminBootstrap(JdbcClient jdbc, PasswordEncoder passwords, AuditLog audit,
-            CleverCubsProperties properties) {
+            CleverCubsProperties properties, SqlDialect dialect) {
+        this.dialect = dialect;
         this.jdbc = jdbc;
         this.passwords = passwords;
         this.audit = audit;
@@ -155,8 +159,9 @@ class AdminBootstrap implements ApplicationRunner {
                                                       locked_until, must_change_password, password_changed_at,
                                                       created_at, updated_at)
                             VALUES (:email, :hash, 'SUPER_ADMIN', 'ACTIVE', 0, NULL, TRUE,
-                                    UTC_TIMESTAMP(6), UTC_TIMESTAMP(6), UTC_TIMESTAMP(6))""")
+                                    :now, :now, :now)""")
                     .param("email", address)
+                    .param("now", Timestamps.now())
                     .param("hash", passwords.encode(password))
                     .update(keys, "id");
         } catch (DuplicateKeyException anotherInstanceWon) {
@@ -174,7 +179,7 @@ class AdminBootstrap implements ApplicationRunner {
     }
 
     private boolean exists(String email) {
-        return jdbc.sql("SELECT COUNT(*) FROM user_account WHERE email = :email")
+        return jdbc.sql("SELECT COUNT(*) FROM user_account WHERE email = " + dialect.caseInsensitive("email"))
                 .param("email", email)
                 .query(Long.class)
                 .single() > 0;

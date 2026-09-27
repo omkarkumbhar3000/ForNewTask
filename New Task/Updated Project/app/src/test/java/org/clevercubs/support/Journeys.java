@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import org.clevercubs.platform.db.Rows;
+import org.clevercubs.platform.db.Timestamps;
 import org.springframework.http.MediaType;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.mock.web.MockHttpSession;
@@ -86,8 +88,8 @@ public final class Journeys {
         jdbc.sql("""
                         INSERT INTO user_account (email, password_hash, role, status, failed_logins, must_change_password,
                                                   password_changed_at, created_at, updated_at)
-                        VALUES (:e, :h, 'SUPER_ADMIN', 'ACTIVE', 0, FALSE, UTC_TIMESTAMP(6), UTC_TIMESTAMP(6),
-                                UTC_TIMESTAMP(6))""")
+                        VALUES (:e, :h, 'SUPER_ADMIN', 'ACTIVE', 0, FALSE, :now, :now, :now)""")
+                .param("now", Timestamps.now())
                 .param("e", email).param("h", passwords.encode(PASSWORD)).update();
         return login(email, PASSWORD);
     }
@@ -208,7 +210,7 @@ public final class Journeys {
     }
 
     public Map<String, Object> row(String sql, Map<String, ?> params) {
-        return jdbc.sql(sql).params(params).query().singleRow();
+        return jdbc.sql(sql).params(params).query(Rows.MAP).single();
     }
 
     /** Removes every account this helper created; children and their data follow by cascade. */

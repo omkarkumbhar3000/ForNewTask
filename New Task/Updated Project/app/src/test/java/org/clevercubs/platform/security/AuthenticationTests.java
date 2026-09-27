@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import org.clevercubs.platform.db.Timestamps;
 import org.clevercubs.support.IntegrationTest;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
@@ -391,7 +392,7 @@ class AuthenticationTests extends IntegrationTest {
                 .contains("AUTH_LOGIN_REFUSED");
 
         String details = jdbc.sql("""
-                        SELECT CAST(details AS CHAR) FROM audit_event
+                        SELECT details FROM audit_event
                         WHERE actor_account_id = :id AND action = 'AUTH_LOGIN_REFUSED' ORDER BY id DESC""")
                 .param("id", id).query(String.class).single();
 
@@ -694,7 +695,7 @@ class AuthenticationTests extends IntegrationTest {
                 .isPositive();
 
         String details = jdbc.sql("""
-                        SELECT CAST(details AS CHAR) FROM audit_event
+                        SELECT details FROM audit_event
                         WHERE actor_account_id = :id AND action = 'AUTH_LOGIN_REFUSED'
                         ORDER BY id DESC LIMIT 1""")
                 .param("id", id).query(String.class).single();
@@ -846,7 +847,8 @@ class AuthenticationTests extends IntegrationTest {
                         INSERT INTO user_account (email, password_hash, role, status, failed_logins, locked_until,
                                                   must_change_password, password_changed_at, created_at, updated_at)
                         VALUES (:email, :hash, 'PARENT', :status, 0, :lockedUntil, :mustChange,
-                                UTC_TIMESTAMP(6), UTC_TIMESTAMP(6), UTC_TIMESTAMP(6))""")
+                                :now, :now, :now)""")
+                .param("now", Timestamps.now())
                 .param("email", email)
                 .param("hash", passwords.encode(PASSWORD))
                 .param("status", status)

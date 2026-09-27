@@ -8,6 +8,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
+import java.util.Locale;
 
 import org.clevercubs.platform.settings.Settings;
 import org.clevercubs.support.IntegrationTest;
@@ -32,9 +33,11 @@ class DatabaseSetupTests extends IntegrationTest {
     void everyTableOfTheDataModelExists() {
         List<String> tables = jdbc.sql("""
                         SELECT table_name FROM information_schema.tables
-                        WHERE table_schema = 'clevercubs' AND table_name <> 'flyway_schema_history'""")
-                .query(String.class).list();
-        assertThat(tables).containsExactlyInAnyOrder(
+                        WHERE table_schema = :schema AND table_type = 'BASE TABLE'
+                          AND table_name <> 'flyway_schema_history'""")
+                .param("schema", TestDatabase.schema())
+                .query(String.class).list().stream().map(t -> t.toLowerCase(Locale.ROOT)).toList();
+        assertThat(tables).containsExactlyInAnyOrder("spring_session", "spring_session_attributes",
                 "user_account", "parent", "child", "consent_record", "age_group", "course", "lesson",
                 "lesson_item", "program", "program_course", "ui_message", "program_enrolment",
                 "lesson_item_view", "lesson_completion", "quiz", "quiz_question", "quiz_option",
@@ -62,12 +65,15 @@ class DatabaseSetupTests extends IntegrationTest {
 
     @Test
     void theApplicationUserIsNotASuperuser() throws SQLException {
+        // The same refusals on both databases, in each one's own words and system tables.
+        String dropRefused = TestDatabase.POSTGRES ? "must be owner" : "denied";
+        String accountsTable = TestDatabase.POSTGRES ? "SELECT rolpassword FROM pg_authid" : "SELECT user FROM mysql.user";
         try (Connection app = appConnection(); Statement st = app.createStatement()) {
             assertThatThrownBy(() -> st.execute("CREATE TABLE intruder (id INT)"))
                     .isInstanceOf(SQLException.class).hasMessageContaining("denied");
             assertThatThrownBy(() -> st.execute("DROP TABLE child"))
-                    .isInstanceOf(SQLException.class).hasMessageContaining("denied");
-            assertThatThrownBy(() -> st.executeQuery("SELECT user FROM mysql.user"))
+                    .isInstanceOf(SQLException.class).hasMessageContaining(dropRefused);
+            assertThatThrownBy(() -> st.executeQuery(accountsTable))
                     .isInstanceOf(SQLException.class).hasMessageContaining("denied");
         }
     }
@@ -77,7 +83,7 @@ class DatabaseSetupTests extends IntegrationTest {
         try (Connection app = appConnection(); Statement st = app.createStatement()) {
             st.executeUpdate("""
                     INSERT INTO audit_event (occurred_at, actor_role, action)
-                    VALUES (UTC_TIMESTAMP(6), 'SYSTEM', 'TEST_APPEND_ONLY')""");
+                    VALUES (CURRENT_TIMESTAMP, 'SYSTEM', 'TEST_APPEND_ONLY')""");
             assertThatThrownBy(() -> st.executeUpdate("UPDATE audit_event SET action = 'TAMPERED'"))
                     .isInstanceOf(SQLException.class).hasMessageContaining("denied");
             assertThatThrownBy(() -> st.executeUpdate("DELETE FROM audit_event"))

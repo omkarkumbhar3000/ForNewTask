@@ -13,6 +13,7 @@ import org.clevercubs.child.ChildService.ChildRow;
 import org.clevercubs.child.UsernameRules;
 import org.clevercubs.learning.ProgressService;
 import org.clevercubs.learning.ProgressService.CourseProgress;
+import org.clevercubs.platform.db.Timestamps;
 import org.clevercubs.platform.security.Role;
 import org.clevercubs.platform.settings.Settings;
 import org.clevercubs.platform.web.ApiException;
@@ -87,9 +88,11 @@ public class RequestService {
             }
         }
 
-        List<Long> pending = jdbc.sql("""
-                        SELECT id FROM parent_request
-                        WHERE child_id = :c AND type = :t AND status = 'PENDING' AND (quiz_id <=> :q)""")
+        // A request about no quiz matches only another request about no quiz (NULL never equals NULL in SQL).
+        String sameQuiz = quiz == null ? "quiz_id IS NULL" : "quiz_id = :q";
+        List<Long> pending = jdbc.sql(
+                        "SELECT id FROM parent_request WHERE child_id = :c AND type = :t AND status = 'PENDING' AND "
+                                + sameQuiz)
                 .param("c", childId).param("t", type).param("q", quiz).query(Long.class).list();
         if (!pending.isEmpty()) {
             return get(pending.getFirst());
@@ -98,7 +101,7 @@ public class RequestService {
                         INSERT INTO parent_request (child_id, parent_id, type, quiz_id, requested_value, status, created_at)
                         VALUES (:c, :p, :t, :q, :v, 'PENDING', :now)""")
                 .param("c", childId).param("p", child.parentId()).param("t", type).param("q", quiz)
-                .param("v", value).param("now", Instant.now()).update();
+                .param("v", value).param("now", Timestamps.now()).update();
         long id = jdbc.sql("SELECT MAX(id) FROM parent_request WHERE child_id = :c AND type = :t")
                 .param("c", childId).param("t", type).query(Long.class).single();
         return get(id);
@@ -150,14 +153,14 @@ public class RequestService {
         int changed = jdbc.sql("""
                         UPDATE quiz_allowance SET attempts_allowed = attempts_allowed + :more, updated_at = :now
                         WHERE child_id = :c AND quiz_id = :q""")
-                .param("more", more).param("now", Instant.now()).param("c", childId).param("q", quizId).update();
+                .param("more", more).param("now", Timestamps.now()).param("c", childId).param("q", quizId).update();
         if (changed == 0) {
             throw ApiException.rule("not-needed", "This quiz still has tries left.");
         }
         jdbc.sql("""
                         UPDATE parent_request SET status = 'APPROVED', resolved_at = :now
                         WHERE child_id = :c AND quiz_id = :q AND type = 'QUIZ_ATTEMPTS' AND status = 'PENDING'""")
-                .param("now", Instant.now()).param("c", childId).param("q", quizId).update();
+                .param("now", Timestamps.now()).param("c", childId).param("q", quizId).update();
         audit.record(accountId, Role.PARENT.name(), "QUIZ_ATTEMPTS_GRANTED", "child", childId,
                 Map.of("quizId", quizId, "attempts", more));
     }
@@ -174,7 +177,7 @@ public class RequestService {
 
     private void resolve(long requestId, String status) {
         jdbc.sql("UPDATE parent_request SET status = :s, resolved_at = :now WHERE id = :id AND status = 'PENDING'")
-                .param("s", status).param("now", Instant.now()).param("id", requestId).update();
+                .param("s", status).param("now", Timestamps.now()).param("id", requestId).update();
     }
 
     private RequestView get(long id) {

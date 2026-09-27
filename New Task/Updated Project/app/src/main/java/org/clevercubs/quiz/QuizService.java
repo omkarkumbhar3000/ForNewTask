@@ -1,6 +1,5 @@
 package org.clevercubs.quiz;
 
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +11,9 @@ import org.clevercubs.child.ChildService.ChildRow;
 import org.clevercubs.learning.Messages;
 import org.clevercubs.learning.ProgressService;
 import org.clevercubs.learning.ProgressService.CourseProgress;
+import org.clevercubs.platform.db.Rows;
+import org.clevercubs.platform.db.SqlDialect;
+import org.clevercubs.platform.db.Timestamps;
 import org.clevercubs.platform.settings.Settings;
 import org.clevercubs.platform.web.ApiException;
 import org.clevercubs.reward.RewardService;
@@ -69,6 +71,7 @@ public class QuizService {
     }
 
     private final JdbcClient jdbc;
+    private final SqlDialect dialect;
     private final Settings settings;
     private final ProgressService progress;
     private final RewardService rewards;
@@ -76,7 +79,8 @@ public class QuizService {
     private final Messages messages;
 
     public QuizService(JdbcClient jdbc, Settings settings, ProgressService progress, RewardService rewards,
-            ChildService children, Messages messages) {
+            ChildService children, Messages messages, SqlDialect dialect) {
+        this.dialect = dialect;
         this.jdbc = jdbc;
         this.settings = settings;
         this.progress = progress;
@@ -90,7 +94,8 @@ public class QuizService {
      *
      * <p>READ COMMITTED on purpose: a start that waited for the allowance lock must then see the attempt the
      * start before it committed, which MySQL's default REPEATABLE READ snapshot would hide. The upsert takes
-     * an exclusive lock straight away (INSERT IGNORE would take a shared one and deadlock on the upgrade).
+     * an exclusive lock straight away (a plain insert-ignore would take a shared one on MySQL and deadlock on
+     * the upgrade); PostgreSQL's ON CONFLICT DO UPDATE locks the same way.
      */
     @Transactional(isolation = Isolation.READ_COMMITTED)
     public AttemptView start(long childId, long quizId) {
@@ -98,12 +103,11 @@ public class QuizService {
         long courseId = ((Number) quiz.get("course_id")).longValue();
 
         // Serialise every start for this child and quiz on the allowance row.
-        jdbc.sql("""
+        jdbc.sql(dialect.insertOrLockExisting("""
                         INSERT INTO quiz_allowance (child_id, quiz_id, attempts_allowed, attempts_used, updated_at)
-                        VALUES (:c, :q, :allowed, 0, :now)
-                        ON DUPLICATE KEY UPDATE attempts_allowed = attempts_allowed""")
+                        VALUES (:c, :q, :allowed, 0, :now)""", "quiz_allowance", "child_id, quiz_id", "attempts_allowed"))
                 .param("c", childId).param("q", quizId).param("allowed", settings.intValue(Settings.MAX_ATTEMPTS))
-                .param("now", Instant.now()).update();
+                .param("now", Timestamps.now()).update();
         int[] allowance = jdbc.sql("""
                         SELECT attempts_allowed, attempts_used FROM quiz_allowance
                         WHERE child_id = :c AND quiz_id = :q FOR UPDATE""")
@@ -128,7 +132,7 @@ public class QuizService {
         jdbc.sql("""
                         UPDATE quiz_allowance SET attempts_used = attempts_used + 1, updated_at = :now
                         WHERE child_id = :c AND quiz_id = :q AND attempts_used < attempts_allowed""")
-                .param("now", Instant.now()).param("c", childId).param("q", quizId).update();
+                .param("now", Timestamps.now()).param("c", childId).param("q", quizId).update();
 
         int questions = jdbc.sql("SELECT COUNT(*) FROM quiz_question WHERE quiz_id = :q AND pool = 'MAIN'")
                 .param("q", quizId).query(Integer.class).single();
@@ -137,7 +141,7 @@ public class QuizService {
         jdbc.sql("""
                         INSERT INTO quiz_attempt (child_id, quiz_id, attempt_number, status, started_at, question_count)
                         VALUES (:c, :q, :n, 'IN_PROGRESS', :now, :questions)""")
-                .param("c", childId).param("q", quizId).param("n", number).param("now", Instant.now())
+                .param("c", childId).param("q", quizId).param("n", number).param("now", Timestamps.now())
                 .param("questions", questions).update();
         long attemptId = jdbc.sql("SELECT id FROM quiz_attempt WHERE child_id = :c AND quiz_id = :q AND attempt_number = :n")
                 .param("c", childId).param("q", quizId).param("n", number).query(Long.class).single();
@@ -173,7 +177,7 @@ public class QuizService {
                         SELECT q.id AS qid, q.sort_order, q.prompt, o.id AS oid, o.label, o.is_correct
                         FROM quiz_question q JOIN quiz_option o ON o.question_id = q.id
                         WHERE q.quiz_id = :quiz AND q.pool = 'MAIN' ORDER BY q.sort_order, o.sort_order""")
-                .param("quiz", attempt.quizId()).query().listOfRows();
+                .param("quiz", attempt.quizId()).query(Rows.MAP).list();
         List<QuestionView> questions = new ArrayList<>();
         Map<Long, List<OptionView>> options = new java.util.LinkedHashMap<>();
         Map<Long, String> prompts = new HashMap<>();
@@ -211,11 +215,11 @@ public class QuizService {
 
         Map<String, Object> question = jdbc.sql("""
                         SELECT id FROM quiz_question WHERE id = :q AND quiz_id = :quiz AND pool = 'MAIN'""")
-                .param("q", questionId).param("quiz", attempt.quizId()).query().listOfRows().stream().findFirst()
+                .param("q", questionId).param("quiz", attempt.quizId()).query(Rows.MAP).list().stream().findFirst()
                 .orElseThrow(() -> ApiException.notFound("Question"));
         List<Map<String, Object>> options = jdbc.sql(
                         "SELECT id, label, is_correct FROM quiz_option WHERE question_id = :q ORDER BY sort_order")
-                .param("q", question.get("id")).query().listOfRows();
+                .param("q", question.get("id")).query(Rows.MAP).list();
         Map<String, Object> correct = options.stream().filter(o -> truthy(o.get("is_correct"))).findFirst()
                 .orElseThrow(() -> new IllegalStateException("Question " + questionId + " has no correct option"));
         long correctId = ((Number) correct.get("id")).longValue();
@@ -241,7 +245,7 @@ public class QuizService {
                         INSERT INTO quiz_attempt_answer (attempt_id, question_id, option_id, is_correct, answered_at)
                         VALUES (:a, :q, :o, :correct, :now)""")
                 .param("a", attemptId).param("q", questionId).param("o", optionId).param("correct", isCorrect)
-                .param("now", Instant.now()).update();
+                .param("now", Timestamps.now()).update();
         if (isCorrect) {
             jdbc.sql("UPDATE quiz_attempt SET correct_count = correct_count + 1 WHERE id = :a")
                     .param("a", attemptId).update();
@@ -267,7 +271,7 @@ public class QuizService {
                         UPDATE quiz_attempt SET status = 'SUBMITTED', submitted_at = :now, score_percent = :score,
                                passed = :passed
                         WHERE id = :a AND status = 'IN_PROGRESS'""")
-                .param("now", Instant.now()).param("score", score).param("passed", passed).param("a", attempt.id())
+                .param("now", Timestamps.now()).param("score", score).param("passed", passed).param("a", attempt.id())
                 .update();
 
         long courseId = ((Number) quiz.get("course_id")).longValue();
@@ -285,7 +289,7 @@ public class QuizService {
         Map<String, Object> row = jdbc.sql("""
                         SELECT a.correct_count, a.score_percent, a.passed, q.pass_mark_percent, q.course_id
                         FROM quiz_attempt a JOIN quiz q ON q.id = a.quiz_id WHERE a.id = :a""")
-                .param("a", attempt.id()).query().listOfRows().getFirst();
+                .param("a", attempt.id()).query(Rows.MAP).list().getFirst();
         CourseProgress course = progress.forChild(childId).get(((Number) row.get("course_id")).longValue());
         var state = course.quiz();
         boolean passed = truthy(row.get("passed"));
@@ -315,7 +319,7 @@ public class QuizService {
                         SELECT q.id, q.title, q.course_id, q.pass_mark_percent, c.slug, c.title AS course_title
                         FROM quiz q JOIN course c ON c.id = q.course_id
                         WHERE q.id = :q AND q.status = 'PUBLISHED' AND c.status = 'PUBLISHED'""")
-                .param("q", quizId).query().listOfRows().stream().findFirst()
+                .param("q", quizId).query(Rows.MAP).list().stream().findFirst()
                 .orElseThrow(() -> ApiException.notFound("Quiz"));
     }
 

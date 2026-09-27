@@ -1,7 +1,7 @@
 package org.clevercubs.account;
 
-import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Map;
 
@@ -15,6 +15,8 @@ import jakarta.validation.constraints.Size;
 import org.clevercubs.audit.AuditLog;
 import org.clevercubs.child.ChildService;
 import org.clevercubs.child.ChildService.ChildInput;
+import org.clevercubs.platform.db.SqlDialect;
+import org.clevercubs.platform.db.Timestamps;
 import org.clevercubs.platform.security.AccountPrincipal;
 import org.clevercubs.platform.security.PasswordPolicy;
 import org.clevercubs.platform.security.Role;
@@ -67,9 +69,11 @@ public class RegistrationService {
     private final ChildService children;
     private final Settings settings;
     private final AuditLog audit;
+    private final SqlDialect dialect;
 
     public RegistrationService(JdbcClient jdbc, PasswordEncoder passwords, PasswordPolicy policy,
-            ChildService children, Settings settings, AuditLog audit) {
+            ChildService children, Settings settings, AuditLog audit, SqlDialect dialect) {
+        this.dialect = dialect;
         this.jdbc = jdbc;
         this.passwords = passwords;
         this.policy = policy;
@@ -87,7 +91,8 @@ public class RegistrationService {
         }
         String email = r.parent().email().trim().toLowerCase(Locale.ROOT);
         policy.check(r.parent().password(), email, "parent.password");
-        int taken = jdbc.sql("SELECT COUNT(*) FROM user_account WHERE email = :e").param("e", email)
+        int taken = jdbc.sql("SELECT COUNT(*) FROM user_account WHERE email = " + dialect.caseInsensitive("e"))
+                .param("e", email)
                 .query(Integer.class).single();
         if (taken > 0) {
             // A deliberate trade-off, documented in docs/03 DD-22: a clear message beats a silent failure here.
@@ -95,14 +100,15 @@ public class RegistrationService {
                     "An account with this email already exists. Please sign in instead.");
         }
 
-        Instant now = Instant.now();
+        LocalDateTime now = Timestamps.now();
         jdbc.sql("""
                         INSERT INTO user_account (email, password_hash, role, status, failed_logins,
                                                   must_change_password, password_changed_at, created_at, updated_at)
                         VALUES (:email, :hash, 'PARENT', 'ACTIVE', 0, FALSE, :now, :now, :now)""")
                 .param("email", email).param("hash", passwords.encode(r.parent().password())).param("now", now)
                 .update();
-        long accountId = jdbc.sql("SELECT id FROM user_account WHERE email = :e").param("e", email)
+        long accountId = jdbc.sql("SELECT id FROM user_account WHERE email = " + dialect.caseInsensitive("e"))
+                .param("e", email)
                 .query(Long.class).single();
         jdbc.sql("""
                         INSERT INTO parent (account_id, full_name, mobile, city, created_at, updated_at)

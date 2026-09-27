@@ -237,3 +237,33 @@ baseline. Evidence: 212 JUnit tests, 6 Playwright journeys, a measured 99% cut i
 
 **Decisions.** `D71` (open execution permission), `D72` (publish and deploy; replaces the local-only `D55`).
 Documented defaults `DD-20`–`DD-26` added for owner review.
+
+### The completion run: both databases, lighter media, publish (2026-09-27)
+
+**What changed.** The owner asked for the remaining work end to end, with no reliance on earlier results.
+Docker was started and the whole suite was re-run on the uncommitted work: 217 of 217 on MySQL 8.4 and on
+PostgreSQL 17. That uncommitted work, the PostgreSQL port (`D73`), database sessions (`DD-28`) and the
+improvement pass, was reviewed file by file and kept whole. The local browser run found one failure, fixed
+in the test. The two deferred media issues were closed with a new tool, `tools/optimize_media.py` (`DD-29`),
+which resizes 17 heavy pictures (4.78 MB lighter) and moves the index of 110 MP4/M4A files first, without
+renaming anything; `MediaWeightTests` now guards both (seen failing on a restored original, then passing),
+so the suite is 219 tests. The owner confirmed the public repository (`D74`), left the cloud database to the
+assistant (Neon PostgreSQL, `D73`), and chose the production admin address and an unset contact address
+(`D75`).
+
+**What was learned.**
+
+- **`isVisible()` does not wait.** The phone journey's menu helper asked whether the menu button was visible
+  right after a navigation, before `layout.js` had drawn the header (it waits for the session), so it never
+  opened the menu. It passed before only by timing. The helper now waits for the header first.
+- **Optimised copies of generated files must be recorded, or the generator undoes them.** `extract_content.py`
+  checks every media file against its source by sha256, so an in-place optimisation would be reverted and
+  reported. The optimiser writes `media/OPTIMISED.csv`, and the extractor accepts exactly those results.
+- **`vercel link` writes a token file (`.env.local`) and appends a broad `.env*` rule** to the project's
+  `.gitignore`, which also matched the tracked `.env.example`; the rule was narrowed to `.env.local`.
+- **Git Bash rewrites container paths**: `docker run -w /work` became a Windows path until
+  `MSYS_NO_PATHCONV=1` was set.
+
+**Decisions.** `D73` (Neon PostgreSQL in the cloud, MySQL locally), `D74` (public repository),
+`D75` (production admin address; contact address unset). Documented default `DD-29` (lighter media) and
+owner decision `DQ-12` in `Updated Project/docs/03-decisions.md`.

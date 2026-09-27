@@ -3,6 +3,7 @@ package org.clevercubs.account;
 import java.util.Map;
 
 import org.clevercubs.audit.AuditLog;
+import org.clevercubs.platform.db.Timestamps;
 import org.clevercubs.platform.security.CurrentUser;
 import org.clevercubs.platform.security.PasswordPolicy;
 import org.clevercubs.platform.security.ReauthenticationToken;
@@ -58,19 +59,14 @@ import org.springframework.stereotype.Component;
 public class PasswordChangeService {
 
     /**
-     * The one number the policy is, from {@code DD-01}: a password must be at least this long. The
-     * upper bound exists only so a huge body cannot be turned into expensive hashing, exactly as on
-     * {@code POST /api/v1/auth/reauth}.
-     *
-     * <p>{@code DD-01} also asks for a check against {@code resources/security/common-passwords.txt}, and
-     * that file ships with the application. It is still wired to nothing — on any path, not only this one —
-     * so it is deliberately not introduced here: this slice ends the lockout, and a password-policy change
-     * is its own piece of work with its own decision.
+     * The request's length bounds, for the {@code @Size} checks in {@link AuthController}. They are
+     * {@link PasswordPolicy}'s, the one home of {@code DD-01} (length, the common-password list and the
+     * account's own address); the upper bound only stops a huge body being turned into expensive hashing.
      */
-    public static final int MINIMUM_LENGTH = 12;
+    public static final int MINIMUM_LENGTH = PasswordPolicy.MINIMUM_LENGTH;
 
     /** The maximum length accepted, so an enormous body cannot be turned into expensive hashing. */
-    public static final int MAXIMUM_LENGTH = 200;
+    public static final int MAXIMUM_LENGTH = PasswordPolicy.MAXIMUM_LENGTH;
 
     /**
      * One message for every refusal, the same one the sign-in uses. A different answer for "wrong current
@@ -133,10 +129,11 @@ public class PasswordChangeService {
                         UPDATE user_account
                         SET password_hash = :hash,
                             must_change_password = FALSE,
-                            password_changed_at = UTC_TIMESTAMP(6),
-                            updated_at = UTC_TIMESTAMP(6)
+                            password_changed_at = :now,
+                            updated_at = :now
                         WHERE id = :id""")
                 .param("hash", hash)
+                .param("now", Timestamps.now())
                 .param("id", account.accountId())
                 .update();
 

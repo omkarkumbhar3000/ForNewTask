@@ -170,3 +170,21 @@ Neither is `root`, and both passwords come from the environment (`.env`, never c
 
 No table was added, so the grants in `afterMigrate.sql` and the table list in `DatabaseSetupTests` are
 unchanged.
+
+## 9. Sessions in the database and a PostgreSQL copy (`V4__http_sessions.sql`, `D73`)
+
+| Change | Why |
+|---|---|
+| `SPRING_SESSION`, `SPRING_SESSION_ATTRIBUTES` (Spring Session's own schema) | Server sessions survive a restart and work across several instances; the cloud host stops idle instances ([`07-deployment.md`](07-deployment.md)). `PRINCIPAL_NAME` holds the account id, never the email address |
+| Grants for the two tables in both `afterMigrate.sql` callbacks | `cc_app` creates, refreshes and expires its own sessions |
+| The migrations now live in `db/migration/mysql/` and `db/migration/postgresql/` | The hosted deployment runs on PostgreSQL. The MySQL files only moved folder (their checksums are unchanged), so existing databases validate |
+
+**The PostgreSQL copy keeps every table, key, check and rule.** Its differences are mechanical:
+identity keys for `AUTO_INCREMENT`, `TIMESTAMP(6)` for `DATETIME(6)`, `SMALLINT` for `TINYINT`, separate
+`CREATE INDEX` statements, and an index on every foreign key (InnoDB creates those by itself).
+`user_account.email` and `child.username` are `CITEXT`, because the application relies on MySQL's
+case-insensitive comparison; the length limits the `VARCHAR`s gave are kept as checks. On PostgreSQL the
+callback also creates the `cc_app` role, since a hosted database has no init script. A change to one copy
+needs the same change to the other, and both test runs (`mvnw test`, `mvnw test -Dclevercubs.test.db=postgresql`)
+must pass.
+

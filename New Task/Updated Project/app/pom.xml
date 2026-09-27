@@ -58,6 +58,23 @@
 			<artifactId>mysql-connector-j</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+		<!-- PostgreSQL, for hosting that offers no MySQL (Vercel's databases are all Postgres; D73).
+		     MySQL stays the development and default test database. -->
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-database-postgresql</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<!-- Sessions in the database, so a sign-in survives a restart and works across several instances
+		     (the cloud host stops idle instances and may run more than one) -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-session-jdbc</artifactId>
+		</dependency>
 
 		<!-- Tests: real MySQL through Testcontainers, MockMvc, Spring Security test support -->
 		<dependency>
@@ -98,6 +115,12 @@
 		<dependency>
 			<groupId>org.testcontainers</groupId>
 			<artifactId>testcontainers-mysql</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<!-- The same suite against PostgreSQL: mvnw test -Dclevercubs.test.db=postgresql -->
+		<dependency>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>testcontainers-postgresql</artifactId>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>

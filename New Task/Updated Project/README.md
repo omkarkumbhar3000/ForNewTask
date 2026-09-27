@@ -2,7 +2,8 @@
 
 **What it is:** a secure, child-friendly early-learning web application for children aged 2 to 8, with a
 parent area and a Super Admin dashboard · **Backend:** Java 25 / Spring Boot 4.1 · **Database:** MySQL 8.4
-(Docker) · **Frontend:** plain HTML, CSS and JavaScript modules (no framework, no build step) ·
+(Docker) for development; PostgreSQL in the cloud ([`docs/07-deployment.md`](docs/07-deployment.md)) ·
+**Frontend:** plain HTML, CSS and JavaScript modules (no framework, no build step) ·
 **Status:** usable build for team validation (see [`docs/06-review-summary.md`](docs/06-review-summary.md))
 
 Everything the application needs lives in this folder. It does **not** read the original project in
@@ -62,12 +63,14 @@ and the next-year decision).
 ```powershell
 $env:JAVA_HOME = "C:\Program Files\Java\jdk-26.0.2"
 .\app\mvnw.cmd -f app\pom.xml verify                                       # the whole suite (Docker must run)
+.\app\mvnw.cmd -f app\pom.xml test "-Dclevercubs.test.db=postgresql"       # the same suite on PostgreSQL 17
 .\app\mvnw.cmd -f app\pom.xml test -Dtest=QuizAttemptTests                 # one class
 .\app\mvnw.cmd -f app\pom.xml test "-Dtest=QuizAttemptTests#threeAttemptsThenLocked"   # one test
 ```
 
-The integration tests start their own MySQL 8.4 through Testcontainers (the development database is not
-touched). Browser flows: `e2e/` (see its README).
+The integration tests start their own MySQL 8.4 (or PostgreSQL 17) through Testcontainers (the development
+database is not touched). Run both before pushing a change to SQL or to a migration: the cloud copy runs on
+PostgreSQL. Browser flows: `e2e/` (see its README).
 
 ## 4. Where things are
 
@@ -85,18 +88,20 @@ Updated Project/
 │   │   ├── feedback/            parent feedback
 │   │   ├── admin/               Super Admin API
 │   │   ├── audit/               append-only audit trail
-│   │   └── platform/            security, errors, settings, configuration, web routing
+│   │   └── platform/            security, errors, settings, configuration, web routing, db (SqlDialect)
 │   ├── src/main/resources/
-│   │   ├── db/migration/        Flyway V1 schema, V2 reference data, V3, afterMigrate grants
+│   │   ├── db/migration/        Flyway, one folder per database: mysql/ and postgresql/ (V1–V4, afterMigrate grants)
 │   │   ├── content/             11 course files (JSON) made by tools/extract_content.py
 │   │   └── static/              pages (public, parent/, learn/, admin/), css/, js/, img/, fonts/
 │   └── src/test/java/           unit, integration (Testcontainers) and security tests
-├── media/                       course pictures, sounds and videos (423 MB, 305 files) + MEDIA-MAP.csv
+├── media/                       course pictures, sounds and videos (417 MB, 305 files) + MEDIA-MAP.csv, OPTIMISED.csv
 ├── db/init/01-users.sh          creates the two least-privilege database users
-├── docs/                        00 requirement … 06 review summary
+├── docs/                        00 requirement … 06 review summary, 07 deployment
 ├── tools/extract_content.py     one-time content migration from the original project
+├── tools/optimize_media.py      lighter pictures and fast-start sound/video, same file names (mediatool.Dockerfile)
 ├── e2e/                         browser tests (Playwright, development only)
 ├── docker-compose.yml           MySQL for development
+├── Dockerfile.vercel            the cloud image; .dockerignore, .vercelignore and vercel.json beside it
 └── start-dev.ps1 / stop-dev.ps1
 ```
 
@@ -123,7 +128,14 @@ course and passing its quiz the last 30% · pass mark 70% · three tries, then t
 grants three more · a badge needs a best quiz score of 80% or more · a year is complete when every course
 in the child's program is at 100% · the parent signs in and picks the child; the child has no password.
 
-## 7. Before any commit (D55: local only for now)
+## 7. Before any commit
 
-`media/` is 423 MB of video, audio and pictures: it needs Git LFS rules in `.gitattributes` **before** it is
-ever added. `.env`, `app/target/`, `.tmp/` and `e2e/node_modules/` are ignored by `.gitignore`.
+The project is in git (`D72`). `media/` (423 MB of video, audio and pictures) goes through Git LFS, by the
+rules in `media/.gitattributes`; a new media file needs `git lfs install` once on the machine. `.env`,
+`app/target/`, `.tmp/` and `e2e/node_modules/` are ignored by `.gitignore`. Run both test suites (§3) and
+check the staged files for secrets before committing.
+
+## 8. The cloud copy
+
+A container on Vercel with PostgreSQL from Neon: how it is built, configured, deployed and checked is in
+[`docs/07-deployment.md`](docs/07-deployment.md).

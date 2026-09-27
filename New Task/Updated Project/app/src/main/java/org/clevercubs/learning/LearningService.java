@@ -1,6 +1,5 @@
 package org.clevercubs.learning;
 
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +10,9 @@ import org.clevercubs.child.ChildService;
 import org.clevercubs.child.ChildService.ChildRow;
 import org.clevercubs.child.ChildService.ChildView;
 import org.clevercubs.learning.ProgressService.CourseProgress;
+import org.clevercubs.platform.db.Rows;
+import org.clevercubs.platform.db.SqlDialect;
+import org.clevercubs.platform.db.Timestamps;
 import org.clevercubs.platform.web.ApiException;
 import org.clevercubs.reward.RewardService;
 import org.clevercubs.reward.RewardService.BadgeView;
@@ -58,13 +60,15 @@ public class LearningService {
     }
 
     private final JdbcClient jdbc;
+    private final SqlDialect dialect;
     private final ChildService children;
     private final ProgressService progress;
     private final RewardService rewards;
     private final Messages messages;
 
     public LearningService(JdbcClient jdbc, ChildService children, ProgressService progress, RewardService rewards,
-            Messages messages) {
+            Messages messages, SqlDialect dialect) {
+        this.dialect = dialect;
         this.jdbc = jdbc;
         this.children = children;
         this.progress = progress;
@@ -85,7 +89,7 @@ public class LearningService {
                         SELECT e.program_id, e.status, p.title FROM program_enrolment e
                         JOIN program p ON p.id = e.program_id
                         WHERE e.child_id = :c ORDER BY e.status = 'ACTIVE' DESC, e.started_at DESC LIMIT 1""")
-                .param("c", childId).query().listOfRows().stream().findFirst();
+                .param("c", childId).query(Rows.MAP).list().stream().findFirst();
 
         List<CourseProgress> courses = new ArrayList<>();
         String programTitle = null;
@@ -145,14 +149,14 @@ public class LearningService {
                           AND EXISTS (SELECT 1 FROM lesson_item i WHERE i.lesson_id = l.id AND i.status = 'READY')
                           AND NOT EXISTS (SELECT 1 FROM lesson_completion lc WHERE lc.lesson_id = l.id AND lc.child_id = :c)
                         ORDER BY l.sort_order LIMIT 1""")
-                .param("course", courseId).param("c", childId).query().listOfRows().stream().findFirst();
+                .param("course", courseId).param("c", childId).query(Rows.MAP).list().stream().findFirst();
     }
 
     public CourseView course(long childId, String slug) {
         ChildRow child = child(childId);
         Map<String, Object> course = jdbc.sql("""
                         SELECT id, diagram FROM course WHERE slug = :slug AND status = 'PUBLISHED'""")
-                .param("slug", slug).query().listOfRows().stream().findFirst()
+                .param("slug", slug).query(Rows.MAP).list().stream().findFirst()
                 .orElseThrow(() -> ApiException.notFound("Course"));
         long courseId = ((Number) course.get("id")).longValue();
         CourseProgress p = progress.forChild(childId).get(courseId);
@@ -179,7 +183,7 @@ public class LearningService {
                         SELECT l.id, l.title, l.sort_order, l.course_id, c.slug, c.title AS course_title, c.kind, c.diagram
                         FROM lesson l JOIN course c ON c.id = l.course_id
                         WHERE l.id = :id AND l.status = 'PUBLISHED' AND c.status = 'PUBLISHED'""")
-                .param("id", lessonId).query().listOfRows().stream().findFirst()
+                .param("id", lessonId).query(Rows.MAP).list().stream().findFirst()
                 .orElseThrow(() -> ApiException.notFound("Lesson"));
         long courseId = ((Number) lesson.get("course_id")).longValue();
         int sort = ((Number) lesson.get("sort_order")).intValue();
@@ -227,7 +231,7 @@ public class LearningService {
                         SELECT i.id, i.lesson_id, i.status, l.course_id FROM lesson_item i
                         JOIN lesson l ON l.id = i.lesson_id JOIN course c ON c.id = l.course_id
                         WHERE i.id = :id AND l.status = 'PUBLISHED' AND c.status = 'PUBLISHED'""")
-                .param("id", itemId).query().listOfRows().stream().findFirst()
+                .param("id", itemId).query(Rows.MAP).list().stream().findFirst()
                 .orElseThrow(() -> ApiException.notFound("Card"));
         if (!"READY".equals(item.get("status"))) {
             throw ApiException.rule("media-missing", "This one is coming soon.");
@@ -235,10 +239,10 @@ public class LearningService {
         long lessonId = ((Number) item.get("lesson_id")).longValue();
         long courseId = ((Number) item.get("course_id")).longValue();
 
-        jdbc.sql("""
-                        INSERT IGNORE INTO lesson_item_view (child_id, lesson_item_id, first_viewed_at)
-                        VALUES (:c, :i, :now)""")
-                .param("c", childId).param("i", itemId).param("now", Instant.now()).update();
+        jdbc.sql(dialect.insertIgnoringDuplicates("""
+                        INSERT INTO lesson_item_view (child_id, lesson_item_id, first_viewed_at)
+                        VALUES (:c, :i, :now)"""))
+                .param("c", childId).param("i", itemId).param("now", Timestamps.now()).update();
 
         int remaining = jdbc.sql("""
                         SELECT COUNT(*) FROM lesson_item i
@@ -247,10 +251,10 @@ public class LearningService {
                 .param("l", lessonId).param("c", childId).query(Integer.class).single();
         boolean justDone = false;
         if (remaining == 0) {
-            justDone = jdbc.sql("""
-                            INSERT IGNORE INTO lesson_completion (child_id, lesson_id, completed_at)
-                            VALUES (:c, :l, :now)""")
-                    .param("c", childId).param("l", lessonId).param("now", Instant.now()).update() == 1;
+            justDone = jdbc.sql(dialect.insertIgnoringDuplicates("""
+                            INSERT INTO lesson_completion (child_id, lesson_id, completed_at)
+                            VALUES (:c, :l, :now)"""))
+                    .param("c", childId).param("l", lessonId).param("now", Timestamps.now()).update() == 1;
         }
 
         Map<Long, CourseProgress> all = progress.forChild(childId);

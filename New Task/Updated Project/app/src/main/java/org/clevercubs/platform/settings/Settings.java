@@ -1,9 +1,9 @@
 package org.clevercubs.platform.settings;
 
-import java.time.Instant;
 import java.util.Map;
 import java.util.TreeMap;
 
+import org.clevercubs.platform.db.Timestamps;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -59,7 +59,7 @@ public class Settings {
                         UPDATE system_setting SET setting_value = :value, updated_at = :now, updated_by = :actor
                         WHERE setting_key = :key""")
                 .param("value", value)
-                .param("now", Instant.now())
+                .param("now", Timestamps.now())
                 .param("actor", actorAccountId)
                 .param("key", key)
                 .update();

@@ -18,6 +18,9 @@ import org.clevercubs.child.ChildService.ChildView;
 import org.clevercubs.learning.ProgressRules;
 import org.clevercubs.learning.ProgressService;
 import org.clevercubs.learning.ProgressService.CourseProgress;
+import org.clevercubs.platform.db.Rows;
+import org.clevercubs.platform.db.SqlDialect;
+import org.clevercubs.platform.db.Timestamps;
 import org.clevercubs.platform.security.Role;
 import org.clevercubs.platform.web.ApiException;
 import org.clevercubs.reward.RewardService;
@@ -67,6 +70,7 @@ public class ParentService {
     }
 
     private final JdbcClient jdbc;
+    private final SqlDialect dialect;
     private final ChildService children;
     private final ProgressService progress;
     private final RewardService rewards;
@@ -75,7 +79,8 @@ public class ParentService {
     private final AuditLog audit;
 
     public ParentService(JdbcClient jdbc, ChildService children, ProgressService progress, RewardService rewards,
-            RequestService requests, AgeGroups ageGroups, AuditLog audit) {
+            RequestService requests, AgeGroups ageGroups, AuditLog audit, SqlDialect dialect) {
+        this.dialect = dialect;
         this.jdbc = jdbc;
         this.children = children;
         this.progress = progress;
@@ -174,12 +179,12 @@ public class ParentService {
             throw ApiException.rule("program-not-complete", "The decision opens when this year is complete.");
         }
         jdbc.sql("UPDATE program_enrolment SET next_decision = :d, decided_at = :now WHERE id = :id")
-                .param("d", decision).param("now", Instant.now()).param("id", program.enrolmentId()).update();
+                .param("d", decision).param("now", Timestamps.now()).param("id", program.enrolmentId()).update();
         if ("CONTINUE".equals(decision)) {
-            nextProgram(c, program, progress.forChild(c.id())).ifPresent(next -> jdbc.sql("""
-                            INSERT IGNORE INTO program_enrolment (child_id, program_id, status, started_at)
-                            VALUES (:c, :p, 'ACTIVE', :now)""")
-                    .param("c", c.id()).param("p", next.id()).param("now", Instant.now()).update());
+            nextProgram(c, program, progress.forChild(c.id())).ifPresent(next -> jdbc.sql(dialect.insertIgnoringDuplicates("""
+                            INSERT INTO program_enrolment (child_id, program_id, status, started_at)
+                            VALUES (:c, :p, 'ACTIVE', :now)"""))
+                    .param("c", c.id()).param("p", next.id()).param("now", Timestamps.now()).update());
         }
         audit.record(accountId, Role.PARENT.name(), "NEXT_YEAR_DECIDED", "child", childId,
                 Map.of("decision", decision));
@@ -197,7 +202,7 @@ public class ParentService {
                         SELECT l.title AS lesson, co.title AS course, lc.completed_at
                         FROM lesson_completion lc JOIN lesson l ON l.id = lc.lesson_id JOIN course co ON co.id = l.course_id
                         WHERE lc.child_id = :c ORDER BY lc.completed_at""")
-                .param("c", c.id()).query().listOfRows());
+                .param("c", c.id()).query(Rows.MAP).list());
         out.put("requests", requests.forChild(c.id()));
         audit.record(accountId, Role.PARENT.name(), "CHILD_DATA_EXPORTED", "child", childId, Map.of());
         return out;
@@ -226,7 +231,7 @@ public class ParentService {
                         UPDATE parent SET full_name = :name, mobile = :mobile, city = :city, updated_at = :now
                         WHERE account_id = :a""")
                 .param("name", fullName.trim()).param("mobile", blankToNull(mobile)).param("city", blankToNull(city))
-                .param("now", Instant.now()).param("a", accountId).update();
+                .param("now", Timestamps.now()).param("a", accountId).update();
         return account(accountId);
     }
 
@@ -291,7 +296,7 @@ public class ParentService {
             Optional<Map<String, Object>> p = jdbc.sql("""
                             SELECT id, title, description FROM program
                             WHERE age_group_id = :g AND year_number = :y AND status = 'PUBLISHED'""")
-                    .param("g", cand[0]).param("y", cand[1]).query().listOfRows().stream().findFirst();
+                    .param("g", cand[0]).param("y", cand[1]).query(Rows.MAP).list().stream().findFirst();
             if (p.isEmpty()) {
                 continue;
             }

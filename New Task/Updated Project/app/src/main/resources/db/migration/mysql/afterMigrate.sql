@@ -31,3 +31,6 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON feedback            TO 'cc_app'@'%';
 GRANT SELECT, UPDATE                 ON system_setting      TO 'cc_app'@'%';
 -- Append-only audit trail: no UPDATE, no DELETE.
 GRANT SELECT, INSERT                 ON audit_event         TO 'cc_app'@'%';
+-- Server sessions (V4). Spring Session creates, refreshes and expires rows itself.
+GRANT SELECT, INSERT, UPDATE, DELETE ON SPRING_SESSION            TO 'cc_app'@'%';
+GRANT SELECT, INSERT, UPDATE, DELETE ON SPRING_SESSION_ATTRIBUTES TO 'cc_app'@'%';

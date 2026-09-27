@@ -7,6 +7,8 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.clevercubs.audit.AuditLog;
+import org.clevercubs.platform.db.SqlDialect;
+import org.clevercubs.platform.db.Timestamps;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -55,8 +57,11 @@ public class AccountAuthenticationProvider implements AuthenticationProvider {
     private final JdbcClient jdbc;
     private final PasswordEncoder passwords;
     private final AuditLog audit;
+    private final SqlDialect dialect;
 
-    public AccountAuthenticationProvider(JdbcClient jdbc, PasswordEncoder passwords, AuditLog audit) {
+    public AccountAuthenticationProvider(JdbcClient jdbc, PasswordEncoder passwords, AuditLog audit,
+            SqlDialect dialect) {
+        this.dialect = dialect;
         this.jdbc = jdbc;
         this.passwords = passwords;
         this.audit = audit;
@@ -161,20 +166,22 @@ public class AccountAuthenticationProvider implements AuthenticationProvider {
     static final java.time.Duration LOCK_DURATION = java.time.Duration.ofMinutes(15);
 
     private void recordSignIn(AccountRow row) {
-        jdbc.sql("UPDATE user_account SET last_login_at = UTC_TIMESTAMP(6) WHERE id = :id")
+        jdbc.sql("UPDATE user_account SET last_login_at = :now WHERE id = :id")
+                .param("now", Timestamps.now())
                 .param("id", row.id())
                 .update();
         audit.record(row.id(), row.role().name(), "AUTH_LOGIN_SIGNED_IN", "user_account", row.id(), Map.of());
     }
 
     /**
-     * Reads one account by its unique email. The column collation is case-insensitive, so the comparison
-     * is too; the stored value is returned unchanged, so what the client sees is what the database holds.
+     * Reads one account by its unique email. The column ignores letter case (MySQL's collation, PostgreSQL's
+     * CITEXT), so the comparison does too; the stored value is returned unchanged, so what the client sees is
+     * what the database holds.
      */
     private Optional<AccountRow> findByEmail(String email) {
         return jdbc.sql("""
                         SELECT id, email, password_hash, role, status, locked_until, must_change_password
-                        FROM user_account WHERE email = :email""")
+                        FROM user_account WHERE email =\s""" + dialect.caseInsensitive("email"))
                 .param("email", email)
                 .query((rs, rowNumber) -> {
                     LocalDateTime lockedUntil = rs.getObject("locked_until", LocalDateTime.class);

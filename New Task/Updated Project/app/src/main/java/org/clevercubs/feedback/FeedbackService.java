@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.clevercubs.audit.AuditLog;
+import org.clevercubs.platform.db.Timestamps;
 import org.clevercubs.platform.security.Role;
 import org.clevercubs.platform.web.ApiException;
 import org.springframework.jdbc.core.simple.JdbcClient;
@@ -51,7 +52,7 @@ public class FeedbackService {
                 .query(Long.class).optional().orElseThrow(() -> ApiException.notFound("Parent"));
         Long course = courseId == null ? null : jdbc.sql("SELECT id FROM course WHERE id = :c")
                 .param("c", courseId).query(Long.class).optional().orElse(null);
-        Instant now = Instant.now();
+        LocalDateTime now = Timestamps.now();
         jdbc.sql("""
                         INSERT INTO feedback (parent_id, category, course_id, rating, message, status, created_at, updated_at)
                         VALUES (:p, :cat, :course, :rating, :msg, 'NEW', :now, :now)""")
@@ -81,7 +82,7 @@ public class FeedbackService {
             throw ApiException.badRequest("invalid-input", "Unknown status.");
         }
         int changed = jdbc.sql("UPDATE feedback SET status = :s, updated_at = :now WHERE id = :id")
-                .param("s", status).param("now", Instant.now()).param("id", feedbackId).update();
+                .param("s", status).param("now", Timestamps.now()).param("id", feedbackId).update();
         if (changed == 0) {
             throw ApiException.notFound("Feedback");
         }

@@ -133,13 +133,18 @@ It was uploaded to `New Task/Current Project/Kids_learn_project/` on 2026-09-26.
 ## The application being built — `New Task/Updated Project/`
 
 A Spring Boot 4.1 modular monolith: one Maven module in `app/`, Java 25 bytecode built on the local JDK 26,
-MySQL 8.4 in Docker and Flyway migrations. The pages are plain HTML, CSS and JS modules
-(`app/src/main/resources/static/`) calling a versioned JSON API under `/api/v1`, with no frontend framework
-and no build step. **B0–B8 are built and verified**; the state and what is open are in
-`docs/06-review-summary.md`, the cloud deployment in `docs/07-deployment.md`.
+MySQL 8.4 in Docker and Flyway migrations. The cloud copy (a container on Vercel) runs the same code on
+PostgreSQL (Neon), because Vercel has no MySQL (`D73`, `DQ-12`). The pages are plain
+HTML, CSS and JS modules (`app/src/main/resources/static/`) calling a versioned JSON API under `/api/v1`,
+with no frontend framework and no build step. **B0–B8 are built and verified**; the state and what is open
+are in `docs/06-review-summary.md`, the cloud deployment in `docs/07-deployment.md`.
 
 - **The design is `docs/04-architecture-and-plan.md`:** §2 the folder layout, §3 the reason for every
-  dependency, §4 security and §9 the build phases. **The schema is `docs/05-data-model.md`** (V3 in §8).
+  dependency, §4 security and §9 the build phases. **The schema is `docs/05-data-model.md`** (V3 in §8; V4
+  and the PostgreSQL copy in §9).
+- **Three profiles in `application.yml`:** `dev` (imports `../.env`, serves static files from source),
+  `test` (never reads `.env`, sessions off) and `cloud` (the Vercel image: PostgreSQL from Neon's `PG*`
+  variables, `PORT`, trusted `X-Forwarded-*` headers, media at `/app/media`).
 - **`README.md` in `Updated Project/`** is the team's guide: start, try, test, the API list.
 
 ### Commands
@@ -153,6 +158,7 @@ $env:JAVA_HOME = "C:\Program Files\Java\jdk-26.0.2"     # before ANY maven comma
 $app = ".\New Task\Updated Project\app"                  # from the repository root; mvnw.cmd is in app/
 
 & "$app\mvnw.cmd" -f "$app\pom.xml" verify                                                 # the whole gate
+& "$app\mvnw.cmd" -f "$app\pom.xml" test "-Dclevercubs.test.db=postgresql"                 # the same, on PostgreSQL 17
 & "$app\mvnw.cmd" -f "$app\pom.xml" test -Dtest=AuthenticationTests                        # one class
 & "$app\mvnw.cmd" -f "$app\pom.xml" test "-Dtest=LoginRedirectEntryPointTests#rejectsNull" # one method
 & "$app\mvnw.cmd" -f "$app\pom.xml" spring-boot:run -Dspring-boot.run.profiles=dev         # :8080
@@ -160,11 +166,16 @@ $app = ".\New Task\Updated Project\app"                  # from the repository r
 powershell -ExecutionPolicy Bypass -File "New Task\Updated Project\start-dev.ps1" -Restart   # db + build + start + Chrome
 powershell -ExecutionPolicy Bypass -File "New Task\Updated Project\stop-dev.ps1"
 cd "New Task\Updated Project\e2e"; npx playwright test      # browser journeys (app must be running)
+$env:CLEVERCUBS_URL = "https://…"; npx playwright test      # the same journeys against another instance
 node measure.mjs                                            # page weights (in e2e/)
 ```
 
-- **`verify` is the whole backend gate** (212 tests). No linter, formatter or type check is configured.
+- **`verify` is the whole backend gate** (219 tests), and the PostgreSQL run must pass too whenever SQL or a
+  migration changes. No linter, formatter or type check is configured.
   The Mockito "self-attaching" and `EnableDynamicAgentLoading` warnings are JDK 26 noise, not a failure.
+- **The cloud image:** `docker build -f Dockerfile.vercel -t clevercubs:local .` from `Updated Project/`;
+  running it against a local PostgreSQL is `docs/07-deployment.md` §6. The image build skips the tests, so
+  run both database suites before pushing.
 - **`start-dev.ps1`** finds a working JDK itself, starts MySQL, builds, and starts the jar detached with its
   log in `Updated Project/.tmp/app.log`. ⛔ Do not pipe its output (`| Select-Object`) in a tool call: the
   started JVM inherits the pipe and the call never returns.
@@ -182,6 +193,20 @@ node measure.mjs                                            # page weights (in e
   ran and the database answers.
 - **Content extraction:** `python3.11 "New Task\Updated Project\tools\extract_content.py" --dry-run`. It uses
   the standard library only.
+  - It writes one `app/src/main/resources/content/<slug>.json` per course, plus `media/`.
+  - `ContentSeeder` loads those files, the rewards and the Year-1 programs **only while the course table
+    is empty**, so it never overwrites an admin's edits. A changed JSON file therefore does not reach a
+    database that already has courses.
+- **Media optimisation (`DD-29`):** `tools/optimize_media.py` resizes heavy pictures and moves MP4/M4A indexes
+  first without renaming anything, recording each change in `media/OPTIMISED.csv`. It needs Pillow and
+  ffmpeg, so run it through the throw-away image from `Updated Project/`:
+  `docker build -f tools/mediatool.Dockerfile -t cc-mediatool .`, then
+  `docker run --rm -v "${PWD}:/work" -w /work cc-mediatool python tools/optimize_media.py [--dry-run]`.
+  Run it again after any `extract_content.py` write run, which would otherwise restore an original.
+  `MediaWeightTests` fails when a card picture is over 100 KB or an MP4 stores its index last.
+  - Under Git Bash, prefix `docker run` with `MSYS_NO_PATHCONV=1`, or `-w /work` becomes a Windows path.
+- ⛔ **`vercel link` writes `Updated Project/.env.local` holding a `VERCEL_OIDC_TOKEN`.** It is gitignored
+  (`.env.local`, `.vercel/`); never commit or print it.
 
 ### Architecture rules that span several files
 
@@ -199,22 +224,43 @@ node measure.mjs                                            # page weights (in e
   - An API call without a session gets `401`, a page gets `302 /login?next=…`, and the wrong role gets
     `403`.
   - A `POST` without the `X-XSRF-TOKEN` header is `403`, even on a public route. In tests, use
-    `with(csrf())`.
+    `with(Journeys.realCsrf())` (see §Tests for why not `csrf()`).
 - **Errors are RFC 9457 problem+json with a stable `code`,** and clients branch on that code, not on the
   message.
   - Throw `ApiException` for anything the caller may be told.
   - Anything else becomes a generic 500: its detail goes to the log and is never returned.
+- **Each page is an HTML file plus one module, `static/js/pages/<area>-<page>.js`.** `SecurityConfig`'s CSP
+  is `script-src 'self'; style-src 'self'`, so an inline `<script>`, `<style>` or `style="…"` is silently
+  blocked; styles go in `css/app.css`.
+  - Every API call goes through `js/api.js`, which sends `X-XSRF-TOKEN` from the cookie and turns
+    problem+json into an `ApiError` carrying `.code`.
+  - `js/api.js` also redirects a `401` to `/login?next=…`, sends `password-change-required` to the account
+    page, and retries once after `reauth-required` (the parent gate).
+  - `js/layout.js` draws the header and navigation for each area (`public`, `learn`, `parent`, `admin`).
 - **Persistence is `JdbcClient`** with named `:parameters` and text blocks. There is no ORM or JPA, and there
   are no repository interfaces.
 - **Two database users, never root.** `cc_migrator` runs Flyway, and the application connects as the
   least-privilege `cc_app`. `db/init/01-users.sh` creates both and Testcontainers reuses it, so the tests
   run under the real grants.
-  - A schema change is a new `V<N>__*.sql` file in `app/src/main/resources/db/migration/`. Never edit a
-    migration that has already been applied.
-  - ⛔ **A new table also needs its `GRANT` in `afterMigrate.sql`,** or `cc_app` is denied at runtime even
-    though the migration succeeded. It also needs adding to the exact table list in `DatabaseSetupTests`.
+  - A schema change is a new `V<N>__*.sql` file in **both** `db/migration/mysql/` and
+    `db/migration/postgresql/` (Flyway picks the folder by database). Never edit a migration that has
+    already been applied.
+  - ⛔ **A new table also needs its `GRANT` in both `afterMigrate.sql` files,** or `cc_app` is denied at
+    runtime even though the migration succeeded. It also needs adding to the exact table list in
+    `DatabaseSetupTests`. On PostgreSQL the callback also creates `cc_app` (there is no init script).
   - `audit_event` is append-only (`SELECT, INSERT`). Only `AuditLog` writes to it, and it never holds
     passwords, names, email addresses or free text.
+- ⛔ **Every SQL statement must run on MySQL and PostgreSQL (`D73`).**
+  - Bind time as `Timestamps.now()` (UTC `LocalDateTime`), never an `Instant` (the PostgreSQL driver cannot
+    bind one) and never `UTC_TIMESTAMP()`/`NOW()` in SQL.
+  - Read a row as a map with `.query(Rows.MAP)`, not `.query().listOfRows()`, so timestamps, JSON and
+    `CITEXT` values have the same Java types on both.
+  - Insert-or-skip, insert-or-lock and comparisons on `user_account.email` or `child.username` go through
+    `SqlDialect`. No `<=>`, `INSERT IGNORE`, `ON DUPLICATE KEY`, `CAST(… AS CHAR)` or `->>'$.x'`.
+  - Write JSON as `CAST(:x AS JSON)` and read it with `getString`.
+- **Sessions live in the database** (Spring Session JDBC, `DD-28`), in development and in the cloud, with
+  the cookie's name and flags from `server.servlet.session.cookie`. The `test` profile turns them off
+  because MockMvc carries `MockHttpSession`; `JdbcSessionTests` turns them on over a real server.
 - **Admin-editable business rules live in the `system_setting` table and are read through `Settings`.**
   - They include the progress weight, pass mark, attempt limits and reward threshold.
   - Never hardcode them or put them in `application.yml`. A new rule needs a migration first.
@@ -224,7 +270,8 @@ node measure.mjs                                            # page weights (in e
   - the `dev` profile imports `../.env`;
   - `clevercubs.media-root` defaults to `../media`.
 - **This is Spring Boot 4 with Jackson 3, not Boot 2 or 3.**
-  - Jackson's packages are `tools.jackson.*`.
+  - Jackson's core and databind packages are `tools.jackson.*`; only the annotations keep
+    `com.fasterxml.jackson.annotation`.
   - The starters are `-webmvc`, `-jdbc` and `-flyway`, and there is one `-test` starter per area.
   - `@AutoConfigureMockMvc` lives in `org.springframework.boot.webmvc.test.autoconfigure`.
 - **A new dependency needs its reason recorded in `docs/04` §3 first.** That section also lists what was
@@ -234,8 +281,10 @@ node measure.mjs                                            # page weights (in e
 ### Tests
 
 - **Integration tests extend `org.clevercubs.support.IntegrationTest`,** which sets `@SpringBootTest`,
-  MockMvc and the `test` profile. One MySQL container and one Spring context serve the whole suite, and the
-  `test` profile never reads `.env`. A pure decision gets a plain JUnit 5 test with no Spring context.
+  MockMvc and the `test` profile. One database container (MySQL, or PostgreSQL with
+  `-Dclevercubs.test.db=postgresql`) and one Spring context serve the whole suite, and the `test` profile
+  never reads `.env`. Vendor-specific checks branch on `TestDatabase.POSTGRES`. A pure decision gets a
+  plain JUnit 5 test with no Spring context.
 - ⛔ **The test database is shared, and `@SpringBootTest` runs `ApplicationRunner` beans such as
   `AdminBootstrap`.**
   - Give each fixture row a collision-free email, with a UUID in the address, and clean up by that email.

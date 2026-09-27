@@ -1,0 +1,9 @@
+# The container build (Dockerfile.vercel) needs only the application sources and the media.
+*
+!app/pom.xml
+!app/src
+!media
+app/target
+media/.gitattributes
+media/MEDIA-MAP.csv
+media/OPTIMISED.csv

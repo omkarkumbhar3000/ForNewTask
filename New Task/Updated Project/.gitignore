@@ -4,7 +4,12 @@
 # Secrets
 .env
 *.env
+.env.local
+.env.*.local
 !.env.example
+
+# Vercel CLI: the project link and the token file `vercel link` writes (docs/07-deployment.md)
+.vercel/
 
 # Build output and dependencies
 app/target/

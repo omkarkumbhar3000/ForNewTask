@@ -387,8 +387,10 @@ a.resume:hover { border-color: #ffd35c; }
   position: absolute; top: -10px; right: -8px; width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center;
   background: var(--sun); box-shadow: 0 3px 0 #d9a21f; font-size: 1.2rem; transform: rotate(12deg);
 }
+/* A small hop, not a scale: a card scaled up at the edge of a phone screen pushed its sticker past the
+   window, and the page scrolled sideways while it popped (found by the browser tests). */
 .card.pop { animation: pop .35s ease; }
-@keyframes pop { 0% { transform: scale(1); } 40% { transform: scale(1.06); } 100% { transform: scale(1); } }
+@keyframes pop { 0% { transform: none; } 40% { transform: translateY(-6px); } 100% { transform: none; } }
 .card-soon { cursor: default; border-style: dashed; opacity: .75; }
 
 .media-lesson { display: grid; gap: 20px; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); align-items: start; }

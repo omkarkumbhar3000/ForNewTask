@@ -11,9 +11,18 @@ spring:
     hikari:
       maximum-pool-size: 10
   flyway:
-    # Migrations run as the schema owner, never as the application user.
+    # Migrations run as the schema owner, never as the application user. One folder per database (D73):
+    # db/migration/mysql (development, tests) and db/migration/postgresql (hosting without MySQL).
     user: cc_migrator
     password: ${CC_DB_MIGRATOR_PASSWORD}
+    locations: classpath:db/migration/{vendor}
+    placeholders:
+      # Used only by the PostgreSQL callback, which creates the cc_app role with this password.
+      appPassword: ${CC_DB_APP_PASSWORD:}
+  session:
+    jdbc:
+      # The session tables are created by Flyway (V4), because the application user may not run DDL.
+      initialize-schema: never
   mvc:
     problemdetails:
       enabled: true
@@ -80,3 +89,31 @@ server:
     session:
       cookie:
         secure: false
+
+---
+# Hosted (docs/07-deployment.md, D73): the container on Vercel, with PostgreSQL from the Neon integration,
+# which puts PGHOST_UNPOOLED, PGDATABASE, PGUSER and PGPASSWORD in the environment. Neon's owner role runs
+# Flyway; the application connects as the least-privilege cc_app role that afterMigrate.sql creates.
+# CC_DB_APP_PASSWORD, CC_ADMIN_EMAIL and CC_ADMIN_INITIAL_PASSWORD are set as Vercel secrets.
+spring:
+  config:
+    activate:
+      on-profile: cloud
+  datasource:
+    url: jdbc:postgresql://${PGHOST_UNPOOLED}/${PGDATABASE}?sslmode=require
+    hikari:
+      # Several instances may run at once; Neon's free database accepts about a hundred connections.
+      maximum-pool-size: 5
+      minimum-idle: 1
+  flyway:
+    user: ${PGUSER}
+    password: ${PGPASSWORD}
+server:
+  # Vercel sends traffic to the port in PORT (80 by default).
+  port: ${PORT:80}
+  # Behind Vercel's proxy: the scheme, host and client address come from the X-Forwarded-* headers, which
+  # Vercel always overwrites (it never passes a client's own value on), so they can be trusted.
+  forward-headers-strategy: framework
+  shutdown: graceful
+clevercubs:
+  media-root: ${CC_MEDIA_ROOT:/app/media}

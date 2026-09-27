@@ -2,7 +2,7 @@ package org.clevercubs.content;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -11,6 +11,10 @@ import java.util.regex.Pattern;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import org.clevercubs.platform.db.Rows;
+import org.clevercubs.platform.db.SqlDialect;
+import org.clevercubs.platform.db.Timestamps;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.core.annotation.Order;
@@ -67,11 +71,13 @@ class ContentSeeder implements ApplicationRunner {
     private final JdbcClient jdbc;
     private final ObjectMapper json;
     private final TransactionTemplate tx;
+    private final SqlDialect dialect;
 
-    ContentSeeder(JdbcClient jdbc, ObjectMapper json, TransactionTemplate tx) {
+    ContentSeeder(JdbcClient jdbc, ObjectMapper json, TransactionTemplate tx, SqlDialect dialect) {
         this.jdbc = jdbc;
         this.json = json;
         this.tx = tx;
+        this.dialect = dialect;
     }
 
     @Override
@@ -82,7 +88,7 @@ class ContentSeeder implements ApplicationRunner {
         }
         List<CourseJson> courses = read();
         tx.executeWithoutResult(status -> {
-            Instant now = Instant.now();
+            LocalDateTime now = Timestamps.now();
             for (CourseJson c : courses) {
                 insertCourse(c, now);
             }
@@ -103,12 +109,12 @@ class ContentSeeder implements ApplicationRunner {
         return courses;
     }
 
-    private void insertCourse(CourseJson c, Instant now) {
+    private void insertCourse(CourseJson c, LocalDateTime now) {
         String icon = c.icon() != null ? c.icon() : ("rhymes".equals(c.slug()) ? "🎵" : "📖");
         long courseId = insert("""
                         INSERT INTO course (slug, title, description, icon, cover_image, diagram, kind, status,
                                             sort_order, created_at, updated_at)
-                        VALUES (:slug, :title, :description, :icon, :cover, :diagram, :kind, 'PUBLISHED', :sort,
+                        VALUES (:slug, :title, :description, :icon, :cover, CAST(:diagram AS JSON), :kind, 'PUBLISHED', :sort,
                                 :now, :now)""",
                 Map.of("slug", c.slug(), "title", c.title(), "description", c.description(), "icon", icon,
                         "kind", c.kind(), "sort", c.sortOrder(), "now", now),
@@ -186,14 +192,14 @@ class ContentSeeder implements ApplicationRunner {
 
     /** DD-20: every Year-1 program starts with every published course, in course order. */
     private void seedPrograms() {
-        jdbc.sql("""
-                        INSERT IGNORE INTO program_course (program_id, course_id, sort_order)
+        jdbc.sql(dialect.insertIgnoringDuplicates("""
+                        INSERT INTO program_course (program_id, course_id, sort_order)
                         SELECT p.id, c.id, c.sort_order FROM program p CROSS JOIN course c
-                        WHERE p.year_number = 1 AND c.status = 'PUBLISHED'""")
+                        WHERE p.year_number = 1 AND c.status = 'PUBLISHED'"""))
                 .update();
         List<Map<String, Object>> programs = jdbc.sql("""
                         SELECT p.id, g.code, g.name FROM program p JOIN age_group g ON g.id = p.age_group_id""")
-                .query().listOfRows();
+                .query(Rows.MAP).list();
         for (Map<String, Object> p : programs) {
             badge("program-" + p.get("code").toString().toLowerCase() + "-" + p.get("id"), "Year of Learning",
                     "Completed a whole year of learning in " + p.get("name") + ".", "🎓", "PROGRAM_COMPLETED", null,
@@ -203,10 +209,9 @@ class ContentSeeder implements ApplicationRunner {
 
     private void badge(String code, String title, String description, String icon, String criteria,
             Long courseId, Long programId) {
-        jdbc.sql("""
-                        INSERT IGNORE INTO badge (code, title, description, icon, criteria, course_id, program_id,
-                                                  active)
-                        VALUES (:code, :title, :description, :icon, :criteria, :course, :program, TRUE)""")
+        jdbc.sql(dialect.insertIgnoringDuplicates("""
+                        INSERT INTO badge (code, title, description, icon, criteria, course_id, program_id, active)
+                        VALUES (:code, :title, :description, :icon, :criteria, :course, :program, TRUE)"""))
                 .param("code", code)
                 .param("title", title)
                 .param("description", description)
@@ -251,7 +256,7 @@ class ContentSeeder implements ApplicationRunner {
             spec = spec.param(e.getKey(), e.getValue());
         }
         GeneratedKeyHolder keys = new GeneratedKeyHolder();
-        spec.update(keys);
+        spec.update(keys, "id");
         return keys.getKey().longValue();
     }
 }

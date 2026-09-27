@@ -148,8 +148,9 @@ Defects found in the new code. Fixed ones keep their row so the history stays ho
 | FUN-R01 | Medium | Opening the quiz page started a try at once, so visiting or reloading it used one of the three tries without the child choosing to | ✅ Fixed before release: a read-only `GET /learn/quizzes/{id}` overview; only "Let's go" starts a try (`QuizAttemptTests.overviewUsesNoAttempt`) |
 | FUN-R02 | Low | A suggested username could contain the child's own first name (for "Kit": `happy-kitten-42`), which the server's own rule then refused | ✅ Fixed: suggestions are checked against the child's name (`RegistrationTests.suggestionsRespectTheChildsName`); found by the browser tests |
 | FUN-R03 | Low | Pressing Enter in a password dialog chose "Cancel" (the first submit button) | ✅ Fixed: Cancel is a plain button; Enter confirms |
-| FUN-R04 | Low | The celebration animation widened a 375 px phone page by 3 px for a second | ✅ Fixed: the layer contains its paint (`e2e` responsive check) |
-| FUN-R05 | Low | Sessions are held in the server's memory, so a restart signs everyone out | ⚠️ Open for local development; the cloud deployment stores sessions in the database (see `06-review-summary.md` §7) |
+| FUN-R04 | Low | The celebration animation widened a 375 px phone page by 2–3 px for a second | ✅ Fixed in two steps: the layer contains its paint; then (2026-09-27) the card "pop" became a small hop instead of a 6% scale, which had pushed the card's sticker past the edge of the screen (`e2e` responsive check, repeated against the cloud image) |
+| FUN-R05 | Low | Sessions were held in the server's memory, so a restart signed everyone out | ✅ Fixed: sessions are kept in the database in development and in the cloud (`DD-28`, `JdbcSessionTests`) |
+| FUN-R06 | Medium | Found while adding PostgreSQL (`D73`), before any release: there, an email address or username typed in other letter case would not have matched (sign-in refused, a taken username reported as free) | ✅ Fixed before release: `SqlDialect.caseInsensitive` and `CITEXT` columns (`RegistrationTests.identitiesIgnoreLetterCase`, run on both databases) |
 
 ## 5. Information or requirements still required (class I)
 
@@ -173,8 +174,8 @@ value.
 
 ## 6. Verification of the existing issues against the build (E → F)
 
-Checked on 2026-09-27 against the running build and the automated tests (`app/`: JUnit, 212 tests;
-`e2e/`: Playwright, desktop and phone). ✅ = fixed and verified (class F), 🟡 = partly fixed, ⚠️ = still open
+Checked on 2026-09-27 against the running build and the automated tests (`app/`: JUnit, 219 tests, on
+MySQL and on PostgreSQL; `e2e/`: Playwright, desktop and phone). ✅ = fixed and verified (class F), 🟡 = partly fixed, ⚠️ = still open
 with its reason, ℹ️ = waiting for information.
 
 | ID | Status | How it is closed, and the evidence |
@@ -233,7 +234,7 @@ with its reason, ℹ️ = waiting for information.
 | FUN-E26 | ✅ | Background videos removed (`D68`); the heaviest lesson now loads 385 KB before any tap instead of 56.85 MB |
 | FUN-E27 | ✅ | Gone with the background videos |
 | FUN-E28 | ✅ | `loading="lazy"` on pictures, `preload="metadata"` and posters on videos |
-| FUN-E29 | 🟡 | The 230 KB logo is now 12 KB; card images are not yet resized (no image tooling in the build) |
+| FUN-E29 | ✅ | The 230 KB logo is now 12 KB. `tools/optimize_media.py` resized the 17 heavy pictures to twice their display size in their own format (cards 320 px, video posters 1280 px): 4.78 MB lighter, e.g. `juice-emoji.jpg` 621 → 11 KB. No path changed (`media/OPTIMISED.csv`). One poster PNG is kept, because re-encoding saves under 20% (`MediaWeightTests.cardPicturesAreSmall`) |
 | FUN-E30 | ℹ️ | The missing story is marked "coming soon" and does not count (`INF-09`) |
 | FUN-E31 | ✅ | Only media the content uses was copied (305 files, 423 MB) |
-| FUN-E32 | ⚠️ | Audio clips are still not "faststart"; they are 1–10 s long, so the effect is small. Needs `ffmpeg` |
+| FUN-E32 | ✅ | All 110 sound and video files that had their index after the data were remuxed with the index first by `tools/optimize_media.py` (ffmpeg stream copy: same streams, same length, verified with ffprobe) (`MediaWeightTests.soundAndVideoStartFast`) |

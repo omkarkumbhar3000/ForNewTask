@@ -28,6 +28,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
+import com.jayway.jsonpath.JsonPath;
+
 /** Requirement section 19: the Super Admin dashboard, RBAC, sensitive actions and the audit trail. */
 class AdminTests extends IntegrationTest {
 
@@ -134,8 +136,9 @@ class AdminTests extends IntegrationTest {
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$['reward.threshold_percent']").value("85"));
             assertThat(settings.intValue(Settings.REWARD_THRESHOLD)).isEqualTo(85);
-            assertThat(jdbc.sql("SELECT COUNT(*) FROM audit_event WHERE action = 'SETTING_CHANGED' AND details->>'$.to' = '85'")
-                    .query(Integer.class).single()).isPositive();
+            List<String> changes = jdbc.sql("SELECT details FROM audit_event WHERE action = 'SETTING_CHANGED'")
+                    .query(String.class).list();
+            assertThat(changes).anySatisfy(d -> assertThat(JsonPath.<String>read(d, "$.to")).isEqualTo("85"));
         } finally {
             jdbc.sql("UPDATE system_setting SET setting_value = '80' WHERE setting_key = :k")
                     .param("k", Settings.REWARD_THRESHOLD).update();

@@ -58,7 +58,7 @@ Updated Project/
 │       │   └── application.yml (+ -dev, -test)
 │       └── test/java/…       unit, integration (Testcontainers MySQL), security tests
 ├── media/                    course media, copied from the baseline and organised by course
-├── tools/                    content extraction (baseline HTML → content JSON + media map)
+├── tools/                    content extraction (baseline HTML → content JSON + media map), media optimisation
 ├── e2e/                      browser tests (Playwright), a development dependency only
 ├── docker-compose.yml        MySQL 8 for development
 └── .env.example              every variable, no values (the real .env is gitignored)
@@ -74,8 +74,11 @@ Updated Project/
 | `spring-boot-starter-jdbc` | Simple aggregate persistence with parameterised SQL. Lighter than JPA, with no lazy-loading surprises | String-built SQL (`SEC-E01`, `SEC-E02`) |
 | `spring-boot-starter-flyway` + `flyway-mysql` | A versioned, reviewable schema | No schema at all |
 | `mysql-connector-j` | The database driver | `mysqli` |
-| Test only: `spring-boot-starter-webmvc-test`, `spring-boot-starter-jdbc-test`, `spring-boot-starter-flyway-test`, `spring-boot-starter-security-test`, `spring-boot-starter-validation-test`, `spring-boot-testcontainers`, `testcontainers-junit-jupiter`, `testcontainers-mysql` | Real-database integration tests, security tests, and the test support each area needs | No tests |
+| `postgresql` + `flyway-database-postgresql` | The hosted deployment: Vercel offers no MySQL, only PostgreSQL databases (`D73`, [`07-deployment.md`](07-deployment.md)). MySQL stays the development and default test database | — |
+| `spring-boot-starter-session-jdbc` | Sessions kept in the database, so a sign-in survives a restart and works across several instances (the cloud host stops idle instances) | In-memory sessions |
+| Test only: `spring-boot-starter-webmvc-test`, `spring-boot-starter-jdbc-test`, `spring-boot-starter-flyway-test`, `spring-boot-starter-security-test`, `spring-boot-starter-validation-test`, `spring-boot-testcontainers`, `testcontainers-junit-jupiter`, `testcontainers-mysql`, `testcontainers-postgresql` | Real-database integration tests on both databases, security tests, and the test support each area needs | No tests |
 | Development only: Playwright (Node, in `e2e/`) | Browser flows and responsive checks (§28) | No tests |
+| Development only: Pillow and ffmpeg, in a throw-away image (`tools/mediatool.Dockerfile`) | `tools/optimize_media.py`: resize heavy pictures, move MP4 indexes first (`DD-29`). Never installed, never shipped | Hand-optimised media |
 
 **Artifact names follow `app/pom.xml`.** Spring Boot 4 renamed `spring-boot-starter-web` to
 `spring-boot-starter-webmvc` and `spring-boot-starter-data-jdbc` to `spring-boot-starter-jdbc`, ships
@@ -203,8 +206,11 @@ rather than separate code paths.
   `metadata`, poster frames and `loading="lazy"`.
 - **The autoplaying background videos are dropped** (149 MB, `FUN-E26`). This is a change to existing
   behaviour, listed in §10 for approval.
-- **Card images are resized** to at most twice their display size. Nothing is re-encoded without
-  measurement; video re-encoding needs `ffmpeg` and is deferred (§11).
+- **Card images are resized** to at most twice their display size, and sound and video files keep their
+  index before their data ("faststart"), both by `tools/optimize_media.py` (`DD-29`). It runs Pillow and
+  ffmpeg from a throw-away Docker image (`tools/mediatool.Dockerfile`), so nothing is installed and the
+  application gains no dependency; file names never change. `MediaWeightTests` guards both. Re-encoding the
+  videos themselves changes what a child sees and hears, so it waits for the owner (§12).
 
 ## 8. Testing (requirement §28)
 
@@ -256,7 +262,7 @@ Each phase ends with its checks passing. Progress is tracked in `BLAST/task_plan
 | The Docker engine is stopped | Start Docker Desktop before B0; the tests need it (Testcontainers) |
 | `JAVA_HOME` points at a missing JDK | Every Maven run sets `JAVA_HOME` to `jdk-26.0.2` (recorded in the README) |
 | Playwright browsers download about 300 MB on C: (48 GB free) | Fine; installed under `e2e/` only |
-| No `ffmpeg` | Video re-encoding is deferred; everything else in §7 needs no tool beyond Java and Python |
+| No `ffmpeg` on the machine | `tools/optimize_media.py` runs ffmpeg and Pillow from a throw-away Docker image (`tools/mediatool.Dockerfile`); video re-encoding stays deferred (§7) |
 | The size of the build | Phased, with each phase verified before the next, so a pause at any point leaves working, tested code |
 
 ## 12. Recommendations beyond this build (§31)

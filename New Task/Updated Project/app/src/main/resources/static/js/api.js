@@ -31,6 +31,9 @@ async function ensureCsrf() {
   return token;
 }
 
+const offline = () =>
+  new ApiError(0, { code: 'offline', detail: 'We could not reach CleverCubs. Check the connection and try again.' });
+
 export async function api(path, { method = 'GET', body, retry = true } = {}) {
   const headers = { Accept: 'application/json' };
   if (body !== undefined) headers['Content-Type'] = 'application/json';
@@ -47,7 +50,7 @@ export async function api(path, { method = 'GET', body, retry = true } = {}) {
       body: body === undefined ? undefined : JSON.stringify(body),
     });
   } catch {
-    throw new ApiError(0, { code: 'offline', detail: 'We could not reach CleverCubs. Check the connection and try again.' });
+    throw offline();
   }
   if (response.status === 204) return null;
   const type = response.headers.get('content-type') || '';
@@ -78,7 +81,12 @@ export const del = (path) => api(path, { method: 'DELETE' });
 
 /** The signed-in account, or null for a visitor. Never redirects and never answers 401. */
 export async function whoAmI() {
-  const response = await fetch('/api/v1/public/session', { credentials: 'same-origin', headers: { Accept: 'application/json' } });
+  let response;
+  try {
+    response = await fetch('/api/v1/public/session', { credentials: 'same-origin', headers: { Accept: 'application/json' } });
+  } catch {
+    throw offline();
+  }
   if (!response.ok) return null;
   const session = await response.json();
   return session.signedIn ? session : null;

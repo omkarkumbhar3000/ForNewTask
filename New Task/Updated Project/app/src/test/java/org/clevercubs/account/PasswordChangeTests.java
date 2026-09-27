@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import org.clevercubs.platform.db.Timestamps;
 import org.clevercubs.platform.security.Role;
 import org.clevercubs.support.IntegrationTest;
 import org.junit.jupiter.api.AfterEach;
@@ -444,8 +445,8 @@ class PasswordChangeTests extends IntegrationTest {
         String email = flagged(Role.PARENT);
         MockHttpSession session = signIn(email);
 
-        jdbc.sql("UPDATE user_account SET locked_until = UTC_TIMESTAMP(6) + INTERVAL 15 MINUTE "
-                + "WHERE email = :email").param("email", email).update();
+        jdbc.sql("UPDATE user_account SET locked_until = :until WHERE email = :email")
+                .param("until", Timestamps.now().plusMinutes(15)).param("email", email).update();
 
         mvc.perform(change(session, TEMPORARY, CHOSEN))
                 .andExpect(status().isUnauthorized())
@@ -470,7 +471,7 @@ class PasswordChangeTests extends IntegrationTest {
                 .as("exactly one row per change")
                 .isEqualTo(before + 1);
         String details = jdbc.sql("""
-                        SELECT CAST(details AS CHAR) FROM audit_event
+                        SELECT details FROM audit_event
                         WHERE actor_account_id = :id AND action = 'PASSWORD_CHANGED'
                         ORDER BY id DESC LIMIT 1""")
                 .param("id", id).query(String.class).optional().orElse("");
@@ -501,7 +502,7 @@ class PasswordChangeTests extends IntegrationTest {
                 .isEqualTo(changesBefore);
 
         String details = jdbc.sql("""
-                        SELECT CAST(details AS CHAR) FROM audit_event
+                        SELECT details FROM audit_event
                         WHERE actor_account_id = :id AND action = 'AUTH_LOGIN_REFUSED'
                         ORDER BY id DESC LIMIT 1""")
                 .param("id", id).query(String.class).single();
@@ -677,7 +678,8 @@ class PasswordChangeTests extends IntegrationTest {
                         INSERT INTO user_account (email, password_hash, role, status, failed_logins, locked_until,
                                                   must_change_password, password_changed_at, created_at, updated_at)
                         VALUES (:email, :hash, :role, :status, 0, :lockedUntil, :mustChange,
-                                :passwordChangedAt, UTC_TIMESTAMP(6), UTC_TIMESTAMP(6))""")
+                                :passwordChangedAt, :now, :now)""")
+                .param("now", Timestamps.now())
                 .param("email", email)
                 .param("hash", passwords.encode(TEMPORARY))
                 .param("role", role.name())

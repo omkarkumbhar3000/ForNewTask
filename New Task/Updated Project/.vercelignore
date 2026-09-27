@@ -1,0 +1,9 @@
+# What Vercel takes from this folder for a deployment (docs/07-deployment.md): only the container build and
+# its inputs. Documentation, the browser tests, tools and local scripts stay out.
+/*
+!/Dockerfile.vercel
+!/.dockerignore
+!/vercel.json
+!/app
+!/media
+/app/target

@@ -7,8 +7,10 @@ overrides this file. This file holds only what an agent cannot infer from the fi
 `BLAST/task_plan.md`, the issue register and this file's own earlier revision — **the tree is the truth,
 those files lag it** (§11).*
 
-> ✅ **The application is complete (B0–B8) and verified** (2026-09-27): `verify` 212 tests, 0 failures;
-> Playwright journeys 6/6 at 1440 and 375 px. The state, the requirement check and what is open are in
+> ✅ **The application is complete (B0–B8) and verified** (2026-09-27): 219 tests, 0 failures, on MySQL
+> **and** on PostgreSQL (`-Dclevercubs.test.db=postgresql`); Playwright journeys 6/6 at 1440 and 375 px,
+> against the dev server and against the cloud image. The cloud copy runs on PostgreSQL from Neon (`D73`).
+> The state, the requirement check and what is open are in
 > `New Task/Updated Project/docs/06-review-summary.md`; the cloud deployment in `docs/07-deployment.md`.
 > Sections §6, §10 and §11 below were updated for the finished build. Reading a nullable column: use an
 > explicit type (`LocalDateTime`, `Long`) with `rs.getObject(i, Type.class)`, never `Object.class`.
@@ -61,7 +63,8 @@ lives inside `app/`**, so `-f` alone is not enough.
 $env:JAVA_HOME = "C:\Program Files\Java\jdk-26.0.2"      # required before ANY maven command
 $app = ".\New Task\Updated Project\app"                   # run from the repository root
 
-& "$app\mvnw.cmd" -f "$app\pom.xml" verify                            # the gate: 212 tests, GREEN
+& "$app\mvnw.cmd" -f "$app\pom.xml" verify                            # the gate: 219 tests, GREEN
+& "$app\mvnw.cmd" -f "$app\pom.xml" test "-Dclevercubs.test.db=postgresql"   # the same suite on PostgreSQL 17
 & "$app\mvnw.cmd" -f "$app\pom.xml" test -Dtest=QuizAttemptTests      # one class
 & "$app\mvnw.cmd" -f "$app\pom.xml" test -Dtest='SecurityConfigurationTests#unmappedPathStillRequiresASession'
 & "$app\mvnw.cmd" -f "$app\pom.xml" spring-boot:run -Dspring-boot.run.profiles=dev   # then http://127.0.0.1:8080
@@ -176,13 +179,14 @@ how the build got here and are kept because the reasoning still applies:
 - **Two users, never root.** `cc_migrator` owns the schema and runs Flyway; `cc_app` is the least-privilege
   user the application connects as. `db/init/01-users.sh` creates both and is reused **verbatim** by
   Testcontainers, so tests exercise the real grants. Don't add a root connection.
-- **Migrations live in `app/src/main/resources/db/migration/`** (`V1__schema.sql` = **27** tables,
-  `V2__reference_data.sql`, `afterMigrate.sql`). Add schema as a new `V<N>__` file; never edit an applied
-  one. `DatabaseSetupTests` asserts the **exact** table list, so a new table means updating that test too.
-- ⛔ **A new table needs a matching `GRANT` in `afterMigrate.sql` in the same change**, or the application
-  user hits `denied` at runtime even though the migration succeeded. `audit_event` is deliberately
-  `SELECT, INSERT` only — the trail is append-only. (`afterMigrate.sql`'s header comment credits a test
-  `DatabasePrivilegeTests` that does not exist; the real class is `DatabaseSetupTests`.)
+- **Migrations live in `app/src/main/resources/db/migration/mysql/` and `…/postgresql/`** (`D73`; Flyway
+  picks the folder by database): `V1__schema.sql` = **27** tables, `V2__reference_data.sql`, `V3`, `V4` (the
+  two Spring Session tables), `afterMigrate.sql`. Add schema as a new `V<N>__` file **in both folders**; never
+  edit an applied one. `DatabaseSetupTests` asserts the **exact** table list, so a new table means updating
+  that test too. Every SQL statement must run on both databases: the rules are in `CLAUDE.md`.
+- ⛔ **A new table needs a matching `GRANT` in both `afterMigrate.sql` files in the same change**, or the
+  application user hits `denied` at runtime even though the migration succeeded. `audit_event` is deliberately
+  `SELECT, INSERT` only — the trail is append-only, which `DatabaseSetupTests` proves on both databases.
 - **Admin-editable business rules live in the `system_setting` table, read through `Settings`**, never in
   config. Eight seeded keys (`V2__reference_data.sql`): `progress.lesson_weight_percent` 70,
   `quiz.max_attempts` 3, `quiz.grant_attempts` 3, `quiz.default_pass_mark_percent` 70,
@@ -236,15 +240,16 @@ how the build got here and are kept because the reasoning still applies:
 Waiting for information (`docs/02-issue-register.md` §5): the contact address (`INF-02`), the legal review
 (`INF-03`), an email provider and so self-service password reset (`INF-04`), content for 6–8 and a Year 2
 (`INF-01`), the missing story video (`INF-09`), body-parts audio (`INF-10`), media licences (`INF-11`).
-Not done: resized card images (`FUN-E29`) and "faststart" audio (`FUN-E32`), both needing media tooling.
-Open by choice: `SEC-R01` (registration reveals a taken email, `DD-22`).
+The contact address stays unset by the owner's choice (`D75`). Waiting for the owner's review: re-encoding
+the videos themselves (the pictures and the MP4 indexes are already optimised, `DD-29`). Open by choice:
+`SEC-R01` (registration reveals a taken email, `DD-22`).
 
 ## 11. Current state
 
-`OBJ-034` is in its overnight run (`BLAST/Objective.md`): **B0–B8 are complete and verified**
-(`docs/06-review-summary.md`, `docs/04` §9 status column, `BLAST/task_plan.md`). The issue register §6
-records every baseline issue against the build with its test. The remaining steps are publishing (`D72`)
-and the Vercel deployment (`docs/07-deployment.md`).
+`OBJ-034` is in its completion run (`BLAST/Objective.md`): **B0–B8 are complete and verified**
+(`docs/06-review-summary.md`, `docs/04` §9 status column, `BLAST/task_plan.md`), and the build is published
+on GitHub (`D72`, public by `D74`). The issue register §6 records every baseline issue against the build
+with its test. The Vercel production deployment is described, with its state, in `docs/07-deployment.md`.
 
 ## 12. Conventions
 

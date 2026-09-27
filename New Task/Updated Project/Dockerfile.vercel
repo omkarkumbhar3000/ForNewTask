@@ -1,0 +1,33 @@
+# CleverCubs as a container on Vercel (docs/07-deployment.md, D73). Vercel builds this file on every
+# deployment, from the project root "New Task/Updated Project". The lesson media is copied into the image, so
+# the application serves it behind sign-in exactly as it does in development. Nothing secret is in the image:
+# every credential comes from the project's environment variables at run time.
+#
+# Local check:  docker build -f Dockerfile.vercel -t clevercubs .   (then see docs/07-deployment.md section 6)
+
+# --- build: compile and package the application ------------------------------------------------------------
+# Tests are not run here; they run on both databases before a push (README.md section 3).
+FROM maven:3.9-eclipse-temurin-25 AS build
+WORKDIR /build
+COPY app/pom.xml ./
+RUN mvn -B -q dependency:go-offline
+COPY app/src ./src
+RUN mvn -B -q -Dmaven.test.skip=true package \
+ && java -Djarmode=tools -jar target/clevercubs-*.jar extract --destination /build/extracted \
+ && mv /build/extracted/clevercubs-*.jar /build/extracted/clevercubs.jar
+
+# --- run: a small JRE image, a user without privileges, the unpacked application and the media -----------
+FROM eclipse-temurin:25-jre-alpine
+RUN addgroup -S clevercubs && adduser -S -G clevercubs clevercubs
+WORKDIR /app
+COPY --from=build /build/extracted/ ./
+COPY media ./media
+USER clevercubs
+# PORT is also set on the Vercel project, which is how Vercel knows where to send traffic (its default, 80,
+# needs root). The cloud profile reads the database settings that the Neon integration provides.
+ENV SPRING_PROFILES_ACTIVE=cloud \
+    CC_MEDIA_ROOT=/app/media \
+    PORT=8080 \
+    JAVA_TOOL_OPTIONS="-XX:MaxRAMPercentage=75 -XX:+ExitOnOutOfMemoryError"
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "/app/clevercubs.jar"]
