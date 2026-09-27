@@ -7,6 +7,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -48,13 +49,14 @@ class JdbcSessionTests extends IntegrationTest {
     JdbcIndexedSessionRepository sessions;
 
     private final HttpClient http = HttpClient.newHttpClient();
-    private Long accountId;
+    private final List<Long> accounts = new ArrayList<>();
 
     @AfterEach
-    void removeAccount() {
-        if (accountId != null) {
-            jdbc.sql("DELETE FROM user_account WHERE id = :id").param("id", accountId).update();
+    void removeAccounts() {
+        for (Long id : accounts) {
+            jdbc.sql("DELETE FROM user_account WHERE id = :id").param("id", id).update();
         }
+        accounts.clear();
     }
 
     @Test
@@ -62,13 +64,7 @@ class JdbcSessionTests extends IntegrationTest {
     void aSignInLivesInTheDatabase() throws Exception {
         assertThat(sessions).as("database sessions are switched on in this context").isNotNull();
         String email = "session-" + UUID.randomUUID() + "@example.test";
-        jdbc.sql("""
-                        INSERT INTO user_account (email, password_hash, role, status, failed_logins, must_change_password,
-                                                  password_changed_at, created_at, updated_at)
-                        VALUES (:e, :h, 'SUPER_ADMIN', 'ACTIVE', 0, FALSE, :now, :now, :now)""")
-                .param("e", email).param("h", passwords.encode(PASSWORD)).param("now", Timestamps.now()).update();
-        accountId = jdbc.sql("SELECT id FROM user_account WHERE email = :e").param("e", email)
-                .query(Long.class).single();
+        String accountId = Long.toString(insertAdmin(email));
 
         HttpResponse<String> signIn = send(post("/api/v1/auth/login", "",
                 "{\"email\":\"" + email + "\",\"password\":\"" + PASSWORD + "\"}"));
@@ -85,14 +81,14 @@ class JdbcSessionTests extends IntegrationTest {
         assertThat(send(get("/api/v1/public/session", session)).body()).contains("\"signedIn\":true");
 
         List<String> indexed = jdbc.sql("SELECT PRINCIPAL_NAME FROM SPRING_SESSION WHERE PRINCIPAL_NAME IN (:id, :email)")
-                .param("id", accountId.toString()).param("email", email).query(String.class).list();
-        assertThat(indexed).as("indexed by account id, never by email address").containsExactly(accountId.toString());
+                .param("id", accountId).param("email", email).query(String.class).list();
+        assertThat(indexed).as("indexed by account id, never by email address").containsExactly(accountId);
 
         List<byte[]> stored = jdbc.sql("""
                         SELECT a.ATTRIBUTE_BYTES FROM SPRING_SESSION_ATTRIBUTES a
                         JOIN SPRING_SESSION s ON s.PRIMARY_ID = a.SESSION_PRIMARY_ID
                         WHERE s.PRINCIPAL_NAME = :id""")
-                .param("id", accountId.toString()).query(byte[].class).list();
+                .param("id", accountId).query(byte[].class).list();
         assertThat(stored).isNotEmpty();
         assertThat(stored).allSatisfy(bytes -> assertThat(new String(bytes, StandardCharsets.ISO_8859_1))
                 .as("the password hash is erased before the session is stored").doesNotContain("$2a$"));
@@ -101,9 +97,55 @@ class JdbcSessionTests extends IntegrationTest {
         assertThat(signOut.statusCode()).as(signOut.body()).isBetween(200, 299);
 
         assertThat(jdbc.sql("SELECT COUNT(*) FROM SPRING_SESSION WHERE PRINCIPAL_NAME = :id")
-                .param("id", accountId.toString()).query(Integer.class).single())
+                .param("id", accountId).query(Integer.class).single())
                 .as("signing out deletes the stored session").isZero();
         assertThat(send(get("/api/v1/public/session", session)).body()).contains("\"signedIn\":false");
+    }
+
+    @Test
+    @DisplayName("disabling an account ends the sessions it already has, not only its next sign-in")
+    void disablingEndsOpenSessions() throws Exception {
+        String adminEmail = "session-admin-" + UUID.randomUUID() + "@example.test";
+        String otherEmail = "session-other-" + UUID.randomUUID() + "@example.test";
+        insertAdmin(adminEmail);
+        long other = insertAdmin(otherEmail);
+        String admin = signIn(adminEmail);
+        String disabled = signIn(otherEmail);
+        assertThat(send(get("/api/v1/admin/overview", disabled)).statusCode()).isEqualTo(200);
+
+        HttpResponse<String> disable = send(post("/api/v1/admin/accounts/" + other + "/status", admin,
+                "{\"action\":\"DISABLE\"}"));
+        assertThat(disable.statusCode()).as(disable.body()).isEqualTo(204);
+
+        assertThat(jdbc.sql("SELECT COUNT(*) FROM SPRING_SESSION WHERE PRINCIPAL_NAME = :id")
+                .param("id", Long.toString(other)).query(Integer.class).single())
+                .as("the disabled account's stored sessions are deleted").isZero();
+        assertThat(send(get("/api/v1/admin/overview", disabled)).statusCode()).isEqualTo(401);
+        assertThat(send(get("/api/v1/public/session", admin)).body())
+                .as("the admin who disabled it stays signed in").contains("\"signedIn\":true");
+    }
+
+    /** A Super Admin who signs in with {@link #PASSWORD}; removed after the test. */
+    private long insertAdmin(String email) {
+        jdbc.sql("""
+                        INSERT INTO user_account (email, password_hash, role, status, failed_logins, must_change_password,
+                                                  password_changed_at, created_at, updated_at)
+                        VALUES (:e, :h, 'SUPER_ADMIN', 'ACTIVE', 0, FALSE, :now, :now, :now)""")
+                .param("e", email).param("h", passwords.encode(PASSWORD)).param("now", Timestamps.now()).update();
+        long id = jdbc.sql("SELECT id FROM user_account WHERE email = :e").param("e", email)
+                .query(Long.class).single();
+        accounts.add(id);
+        return id;
+    }
+
+    /** Signs in and returns the session cookie, as {@code CCSESSION=…}. */
+    private String signIn(String email) throws Exception {
+        HttpResponse<String> response = send(post("/api/v1/auth/login", "",
+                "{\"email\":\"" + email + "\",\"password\":\"" + PASSWORD + "\"}"));
+        assertThat(response.statusCode()).as(response.body()).isEqualTo(200);
+        String cookie = response.headers().allValues("Set-Cookie").stream()
+                .filter(c -> c.startsWith("CCSESSION=")).findFirst().orElseThrow();
+        return cookie.substring(0, cookie.indexOf(';'));
     }
 
     private HttpRequest get(String path, String cookie) {

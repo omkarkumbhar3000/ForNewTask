@@ -12,6 +12,7 @@ import org.clevercubs.child.AgeGroups;
 import org.clevercubs.platform.db.Rows;
 import org.clevercubs.platform.db.SqlDialect;
 import org.clevercubs.platform.db.Timestamps;
+import org.clevercubs.platform.security.AccountSessions;
 import org.clevercubs.platform.security.PasswordPolicy;
 import org.clevercubs.platform.security.Role;
 import org.clevercubs.platform.settings.Settings;
@@ -51,9 +52,10 @@ public class AdminService {
     private final PasswordPolicy policy;
     private final AgeGroups ageGroups;
     private final SqlDialect dialect;
+    private final AccountSessions sessions;
 
     public AdminService(JdbcClient jdbc, AuditLog audit, Settings settings, PasswordEncoder passwords,
-            PasswordPolicy policy, AgeGroups ageGroups, SqlDialect dialect) {
+            PasswordPolicy policy, AgeGroups ageGroups, SqlDialect dialect, AccountSessions sessions) {
         this.jdbc = jdbc;
         this.audit = audit;
         this.settings = settings;
@@ -61,6 +63,7 @@ public class AdminService {
         this.policy = policy;
         this.ageGroups = ageGroups;
         this.dialect = dialect;
+        this.sessions = sessions;
     }
 
     // --- overview and reports -------------------------------------------------------------------------
@@ -131,6 +134,10 @@ public class AdminService {
         };
         if (jdbc.sql(sql).param("now", Timestamps.now()).param("id", accountId).update() == 0) {
             throw ApiException.notFound("Account");
+        }
+        if ("DISABLE".equals(action)) {
+            // SEC-R02: the status is checked only at sign-in, so end the sessions the account already holds.
+            sessions.endAll(accountId);
         }
         audit.record(adminId, ADMIN, "ACCOUNT_" + action, "user_account", accountId, Map.of());
     }

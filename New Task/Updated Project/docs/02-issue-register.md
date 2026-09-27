@@ -145,6 +145,7 @@ Defects found in the new code. Fixed ones keep their row so the history stays ho
 | ID | Severity | Issue | Status |
 |---|---|---|---|
 | SEC-R01 | Low | **Registration says when an email address is already registered** (`email-taken`), which lets someone test whether an address has an account. The sign-in itself reveals nothing (`SEC-E07` fixed) | ⚠️ Open by choice (`DD-22`): a silent failure would leave a real parent unable to tell why they cannot register. Mitigation options: per-address throttling of registration, or an email-verification flow once an email provider exists (`INF-04`) |
+| SEC-R02 | High | Found in `OBJ-036`, while a Super Admin created by mistake was about to be disabled. **Disabling an account refused only its next sign-in.** Sessions it already held kept working, and because the 30-minute timeout counts idle time, a session in use would never expire | ✅ Fixed (2026-09-27): disabling now deletes every stored session of the account (`AccountSessions`, through the account-id session index). Proof: `JdbcSessionTests.disablingEndsOpenSessions`, over a real server with database sessions. The acting admin stays signed in |
 | FUN-R01 | Medium | Opening the quiz page started a try at once, so visiting or reloading it used one of the three tries without the child choosing to | ✅ Fixed before release: a read-only `GET /learn/quizzes/{id}` overview; only "Let's go" starts a try (`QuizAttemptTests.overviewUsesNoAttempt`) |
 | FUN-R02 | Low | A suggested username could contain the child's own first name (for "Kit": `happy-kitten-42`), which the server's own rule then refused | ✅ Fixed: suggestions are checked against the child's name (`RegistrationTests.suggestionsRespectTheChildsName`); found by the browser tests |
 | FUN-R03 | Low | Pressing Enter in a password dialog chose "Cancel" (the first submit button) | ✅ Fixed: Cancel is a plain button; Enter confirms |
@@ -177,7 +178,7 @@ value.
 ## 6. Verification of the existing issues against the build (E → F)
 
 Checked on 2026-09-27 against the running build and the automated tests (`app/`: JUnit, 219 tests, on
-MySQL and on PostgreSQL; 228 after `OBJ-036`, all passing again; `e2e/`: Playwright, desktop and phone). ✅ = fixed and verified (class F), 🟡 = partly fixed, ⚠️ = still open
+MySQL and on PostgreSQL; 229 after `OBJ-036`, all passing again; `e2e/`: Playwright, desktop and phone). ✅ = fixed and verified (class F), 🟡 = partly fixed, ⚠️ = still open
 with its reason, ℹ️ = waiting for information.
 
 | ID | Status | How it is closed, and the evidence |

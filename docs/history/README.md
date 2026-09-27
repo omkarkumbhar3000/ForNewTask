@@ -1,6 +1,6 @@
 # History — Append-only record of objectives, decisions and what was learned
 
-**Starts at:** `OBJ-031` · **Next objective ID:** `OBJ-037` · **Next decision ID:** `D81`
+**Starts at:** `OBJ-031` · **Next objective ID:** `OBJ-037` · **Next decision ID:** `D82`
 **Earlier history:** `OBJ-001`–`OBJ-030` and `D1`–`D47` belong to the retired Jira/PAM/CI project. They are
 kept in git, not in this tree: `git show 2a3298d:docs/history/README.md` (index),
 `git show 2a3298d:docs/history/01-objective-records.md` (records), `git show 2a3298d:docs/history/03-decisions.md`.

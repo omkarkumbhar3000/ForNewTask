@@ -59,14 +59,14 @@ content files (`sourceWord`).
 | 17 | Contact Us, clearly visible | Footer on every page; `contact.html` lists every address in `CC_CONTACT_EMAIL` (`D80`) | `e2e` public pages, `PagesAndMediaTests.contactAddresses`, `CleverCubsPropertiesTests` |
 | 18 | Terms & Conditions, flagged for legal review | `terms.html`, `privacy.html` marked draft | `INF-03` |
 | 19 | Super Admin dashboard, RBAC, protected sensitive actions, audit | `/admin/`, `AdminService`, recent-password rule (`DD-26`); a Super Admin can add another (`D79`) | `AdminTests` (10) |
-| 20 | Security list | See `02-issue-register.md` §6 (every baseline issue with its test) | 228 JUnit tests |
+| 20 | Security list | See `02-issue-register.md` §6 (every baseline issue with its test) | 229 JUnit tests |
 | 21 | Java, clean architecture, justified dependencies | Packages by feature, no ORM, no Lombok, no JS framework | `pom.xml` (7 runtime starters) |
 | 22 | Schema from the requirements, proposed first | `05-data-model.md` (approved with `D68`), migrations V1–V4, a PostgreSQL copy for the cloud (`D73`) | `DatabaseSetupTests` on both databases |
 | 23 | Desktop first, responsive, mobile-ready APIs | Versioned JSON API; responsive pages | `e2e` at 1440, 1024, 768, 375 px |
 | 25 | Measured performance work | See §2 "Weight" and §6; lighter media (`DD-29`) | `e2e/measure.mjs`, `MediaWeightTests` |
 | 26 | Maintainable | One stylesheet, shared modules, docs per area, one setup guide (root `README.md`) and a setup script | — |
 | 27 | Existing issues kept apart from new ones | `02-issue-register.md` §2–§6 | — |
-| 28 | Test the listed flows | JUnit (228, on MySQL and on PostgreSQL) and Playwright (6 journeys) | §5 |
+| 28 | Test the listed flows | JUnit (229, on MySQL and on PostgreSQL) and Playwright (6 journeys) | §5 |
 | 30 | Git: check media, LFS, secrets, generated files before committing | `.gitignore`, LFS rules for `media/` | §7 |
 
 ## 5. How it was tested
@@ -74,8 +74,8 @@ content files (`sourceWord`).
 | Level | What | Result |
 |---|---|---|
 | Unit | Progress, quiz, reward, age-group, username and password rules; throttle; media weight (`MediaWeightTests`) | ✅ |
-| Integration (Testcontainers MySQL 8.4) | Registration, sign-in, lock, sessions, child mode, lessons, quizzes (limit, lock, grant, resume, simultaneous starts), rewards, year completion, parent area, admin, pages and media, security headers, CSRF, IDOR, injection strings, club separation, adding a Super Admin | ✅ 228 tests, 0 failures (`mvnw verify`) |
-| The same suite on PostgreSQL 18, production's version (`-Dclevercubs.test.db=postgresql`, `D73`) | Everything above, plus database sessions over a real server and letter case in email addresses and usernames | ✅ 228 tests, 0 failures |
+| Integration (Testcontainers MySQL 8.4) | Registration, sign-in, lock, sessions, child mode, lessons, quizzes (limit, lock, grant, resume, simultaneous starts), rewards, year completion, parent area, admin, pages and media, security headers, CSRF, IDOR, injection strings, club separation, adding a Super Admin | ✅ 229 tests, 0 failures (`mvnw verify`) |
+| The same suite on PostgreSQL 18, production's version (`-Dclevercubs.test.db=postgresql`, `D73`) | Everything above, plus database sessions over a real server and letter case in email addresses and usernames | ✅ 229 tests, 0 failures |
 | Browser (Playwright, installed Chrome) | Public pages at four widths without script errors; protected URLs; register → child mode → lesson → ask a grown-up → parent gate → requests → progress → feedback → delete the account; at 1440 and 375 px | ✅ 6 of 6 against the development server (MySQL) and ✅ 6 of 6 against production, https://clevercubs.vercel.app (Neon PostgreSQL) |
 | Manual browser review | Every page of the three areas, the quiz with a wrong answer, the lock after three tries, the admin dashboard | ✅ found and fixed `FUN-R01`–`FUN-R04` |
 

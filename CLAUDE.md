@@ -172,7 +172,7 @@ $env:CLEVERCUBS_URL = "https://…"; npx playwright test      # the same journey
 node measure.mjs                                            # page weights (in e2e/)
 ```
 
-- **`verify` is the whole backend gate** (228 tests), and the PostgreSQL run must pass too whenever SQL or a
+- **`verify` is the whole backend gate** (229 tests), and the PostgreSQL run must pass too whenever SQL or a
   migration changes. No linter, formatter or type check is configured.
   The Mockito "self-attaching" and `EnableDynamicAgentLoading` warnings are JDK 26 noise, not a failure.
 - **The cloud image:** `docker build -f Dockerfile.vercel -t clevercubs:local .` from `Updated Project/`;
@@ -343,6 +343,10 @@ node measure.mjs                                            # page weights (in e
 - **Account lock:** 5 wrong passwords in a row lock an account for 15 minutes (`MAX_FAILURES`,
   `LOCK_DURATION`, `DD-05`). A Super Admin can unlock it, or issue a temporary password for any account
   except their own.
+- ⛔ **An account's status is checked only at sign-in.** Disabling one must therefore also end its stored
+  sessions, which `AdminService` does through `AccountSessions.endAll` (`SEC-R02`). Any new way of cutting
+  off an account needs the same call. In the `test` profile there are no stored sessions, so only
+  `JdbcSessionTests` can prove it.
 - **Security wiring:**
   - `SecurityConfig`'s public openings are `OPTIONS /**`, `/api/v1/public/**`, `/login` and
     `POST /api/v1/auth/register|login`. HTTP Basic, form login and the default logout are disabled;

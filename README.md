@@ -213,7 +213,7 @@ lives and who can retrieve it.
 
 | Suite | Command (from the repository root) | Needs | Takes |
 |---|---|---|---|
-| Backend on MySQL (**the gate**, 228 tests) | `& "$p\app\mvnw.cmd" -f "$p\app\pom.xml" verify` | Docker running | ≈1 min warm (first run downloads images) |
+| Backend on MySQL (**the gate**, 229 tests) | `& "$p\app\mvnw.cmd" -f "$p\app\pom.xml" verify` | Docker running | ≈1 min warm (first run downloads images) |
 | The same on PostgreSQL 18 (production's version) | `& "$p\app\mvnw.cmd" -f "$p\app\pom.xml" test "-Dclevercubs.test.db=postgresql"` | Docker running | ≈1 min warm |
 | One class / one test | `... test -Dtest=QuizAttemptTests` · `... test "-Dtest=QuizAttemptTests#threeAttemptsThenLocked"` | Docker | seconds |
 | Browser journeys, local (6) | `cd "$p\e2e"; npx playwright test` (desktop 1440 px and phone 375 px) · one size: `--project=mobile` · last report: `npx playwright show-report` | App running, Node, Chrome | ≈20 s |

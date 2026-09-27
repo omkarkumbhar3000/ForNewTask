@@ -39,6 +39,10 @@ project.** Method: analyse → implement → test → cross-check → clean up �
   owner chose **`admin@clevercubs.test`**, created through a new, audited **"Add a Super Admin"** in the admin
   area that needs a password re-confirmation. A one-time temporary password is shown only to the creating
   admin, and the new admin chooses a strong password at first sign-in (`D79`).
+- **Production amendment (2026-09-27):** the second admin was first created as `admin@gmail.com` (id 11). The
+  flow itself worked. The owner chose to switch to the planned address: add `admin@clevercubs.test` the same
+  way, then **disable** (not delete) `admin@gmail.com`, keeping its audit history. A real mail domain would
+  receive this admin's mail once email is added (`INF-04`).
 - **Old project:** after the audit, it goes to the **Windows Recycle Bin**, which keeps it recoverable (`D80`).
 
 **Standing constraints:** the repository is public (`D74`) · secrets only in environment variables, Vercel
