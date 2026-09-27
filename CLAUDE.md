@@ -16,9 +16,10 @@ recoverable from checkpoint commit `2a3298d` (`git show 2a3298d:<path>`).
 | `tools/` | Reusable toolkit: `render/`, `rag/`, `onboarding/`, `paths.py` (§Toolkit) | A project's own tooling lives inside `Updated Project/`, not here |
 | `docs/history/` | Append-only record: objective register, decisions `D-NN`, narrative | ⛔ Never edit an existing entry |
 | `.claude/` | `settings.json` (objective hook, deny list) and `rules/markdown-docs.md` | ⛔ The deny list is the owner's to change |
-| `AGENTS.md` | The guide for agents other than Claude Code, and the most detailed record of what the build has and lacks | Read §6, §10 and §11 before assuming a feature exists |
+| `README.md` | **The one central CleverCubs guide** (`D77`): project facts, requirements, setup script, running and access, environments, the credentials reference, tests, deployment, troubleshooting, documentation map | Keep it true: a change to setup, access or deployment updates it in the same commit |
+| `AGENTS.md` | The bootstrap an AI agent follows after a fresh clone (setup, health checks, tests, the Git workflow) | Development rules are here in `CLAUDE.md`, not there |
 
-Git: branch `main`, remote `github.com/omkarkumbhar3000/ForNewTask`.
+**Owner:** Omkar Kumbhar (`D76`). Git: branch `main`, remote `github.com/omkarkumbhar3000/ForNewTask`.
 
 This repository is for the **current application's work**. The reusable framework it grew into lives in a
 separate repository, `NewProject_Framework` (sibling folder `..\NewProject_Framework`). ⛔ Never put this
@@ -145,7 +146,8 @@ are in `docs/06-review-summary.md`, the cloud deployment in `docs/07-deployment.
 - **Three profiles in `application.yml`:** `dev` (imports `../.env`, serves static files from source),
   `test` (never reads `.env`, sessions off) and `cloud` (the Vercel image: PostgreSQL from Neon's `PG*`
   variables, `PORT`, trusted `X-Forwarded-*` headers, media at `/app/media`).
-- **`README.md` in `Updated Project/`** is the team's guide: start, try, test, the API list.
+- **The root `README.md`** is the team's guide (setup, access, credentials reference, tests, troubleshooting);
+  the endpoint list is in `docs/04` §5.
 
 ### Commands
 
@@ -158,11 +160,13 @@ $env:JAVA_HOME = "C:\Program Files\Java\jdk-26.0.2"     # before ANY maven comma
 $app = ".\New Task\Updated Project\app"                  # from the repository root; mvnw.cmd is in app/
 
 & "$app\mvnw.cmd" -f "$app\pom.xml" verify                                                 # the whole gate
-& "$app\mvnw.cmd" -f "$app\pom.xml" test "-Dclevercubs.test.db=postgresql"                 # the same, on PostgreSQL 17
+& "$app\mvnw.cmd" -f "$app\pom.xml" test "-Dclevercubs.test.db=postgresql"                 # the same, on PostgreSQL 18 (as production)
 & "$app\mvnw.cmd" -f "$app\pom.xml" test -Dtest=AuthenticationTests                        # one class
 & "$app\mvnw.cmd" -f "$app\pom.xml" test "-Dtest=LoginRedirectEntryPointTests#rejectsNull" # one method
 & "$app\mvnw.cmd" -f "$app\pom.xml" spring-boot:run -Dspring-boot.run.profiles=dev         # :8080
 
+powershell -ExecutionPolicy Bypass -File "New Task\Updated Project\setup.ps1" -CheckOnly     # what is missing (installs nothing)
+powershell -ExecutionPolicy Bypass -File "New Task\Updated Project\setup.ps1"                # first setup: software, .env, start, Chrome
 powershell -ExecutionPolicy Bypass -File "New Task\Updated Project\start-dev.ps1" -Restart   # db + build + start + Chrome
 powershell -ExecutionPolicy Bypass -File "New Task\Updated Project\stop-dev.ps1"
 cd "New Task\Updated Project\e2e"; npx playwright test      # browser journeys (app must be running)
@@ -314,6 +318,50 @@ node measure.mjs                                            # page weights (in e
   (`assertPassedSecurity`), not the 404 that follows.
 - **An issue moves from `E` to `F` in the issue register only with the test that proves the fix.**
 
+### Code-level traps
+
+- **Password change is narrow on purpose.** `PasswordChangeRequiredFilter` guards the data API (`/api/**`)
+  only, so a flagged account can still load the change-password page. Its `ALLOWED_WHILE_FLAGGED` list is
+  closed: `GET /me`, `POST /logout|login|reauth|change-password` and `/api/v1/public/**`.
+- ⛔ **Two things in `PasswordChangeService` look redundant and are not.**
+  - The current password is checked with `ReauthenticationToken`, which the provider treats as *not* a
+    sign-in, so `last_login_at` and the sign-in audit row stay untouched.
+  - `AuthController.store(...)` does not rotate the session id; only `login` calls
+    `request.changeSessionId()`.
+- **`AdminBootstrap` creates one `SUPER_ADMIN` only when both guards pass:** no account has the configured
+  address, *and* no Super Admin exists at all.
+  - It writes an `ADMIN_BOOTSTRAPPED` audit row, sets `must_change_password`, and never updates anything.
+  - A short configured password is warned about, not refused (`D69`).
+  - With only one of the two variables set, it logs "partly configured" and does nothing.
+- **Account lock:** 5 wrong passwords in a row lock an account for 15 minutes (`MAX_FAILURES`,
+  `LOCK_DURATION`, `DD-05`). A Super Admin can unlock it, or issue a temporary password for any account
+  except their own.
+- **Security wiring:**
+  - `SecurityConfig`'s public openings are `OPTIONS /**`, `/api/v1/public/**`, `/login` and
+    `POST /api/v1/auth/register|login`. HTTP Basic, form login and the default logout are disabled;
+    `AuthController` owns all three.
+  - The login page's `next` target is rebuilt from the request URI and must be local, so `//evil.example`
+    and `/\evil.example` are refused.
+  - The session cookie is `CCSESSION` (`HttpOnly`, `SameSite=Lax`, `Secure` except in `dev`). The
+    `XSRF-TOKEN` cookie is not `HttpOnly` by design (`DD-03`).
+- **Problem codes** include `unauthenticated`, `forbidden`, `not-found`, `invalid-input`,
+  `invalid-credentials`, `reauth-required`, `password-change-required`, `weak-password` and `server-error`.
+  `ApiProblemEntryPoint` builds the same body inside the filter chain.
+- **`system_setting` holds 8 seeded keys** (`V2__reference_data.sql`), and `Settings.update` rejects unknown
+  keys:
+  - `progress.lesson_weight_percent` 70
+  - `quiz.max_attempts` 3 and `quiz.grant_attempts` 3
+  - `quiz.default_pass_mark_percent` 70
+  - `reward.threshold_percent` 80
+  - `session.child_idle_minutes` 30
+  - `parent.reauth_minutes` 15
+  - `consent.document_version` 2026-09-draft
+- **Nullable columns:** read them with an explicit type, `rs.getObject(i, LocalDateTime.class)` or
+  `Long.class`, never `Object.class`.
+- **Code comments cite decisions by number** (`DQ-nn`, `DD-nn`, `D-nn`). An issue never changes ID:
+  `SEC-E`/`FUN-E` are baseline issues, `SEC-R`/`FUN-R` were introduced by this build, and `INF-` is
+  information still required.
+
 ## ⛔ Standing rules
 
 - **Nothing is finished until it is verified.** Say "done", "fixed", "tested" or "validated" only after
@@ -369,6 +417,7 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File BLAST\hooks\inject-objec
 - **`.claude/settings.json` denies `git merge` and `git remote set-url`** in both shells. A refused merge is
   that rule working; only the owner can change it.
 - **PDFs are Git LFS objects** (`.gitattributes`); `git lfs` must be installed to clone them as files.
-- **A nested `.git` in an uploaded project** is recorded as a pointer, not as files. See `New Task/README.md`.
+- **A nested `.git` in an uploaded project** is recorded as a pointer, not as files. Upload a project into
+  `New Task/Current Project/` without its `.git` folder (root `README.md` §13).
 - `mar.md` at the root is the owner's private Marathi companion to CLI sessions. It is gitignored; keep it
   that way.

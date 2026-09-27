@@ -8,7 +8,7 @@
 > Decisions, prior objectives and findings live in [`../docs/history/`](../docs/history/README.md); the
 > assistant reads them when needed and must **never copy them back into this file.**
 
-**Owner:** Sudesh Sawant · **Updated:** 2026-09-27 · **Work area:** `../New Task/`
+**Owner:** Omkar Kumbhar · **Updated:** 2026-09-27 · **Work area:** `../New Task/`
 
 ---
 
@@ -16,84 +16,41 @@
 
 <!-- ▼▼▼ WRITE THE CURRENT REQUIREMENT HERE — replace everything between the markers ▼▼▼ -->
 
-**`OBJ-034` — Enhance the Kids Learn / CleverCubs project into a simple, lightweight, secure,
-child-friendly educational application with a Java backend.** This is stage 2 of `OBJ-031`.
-Phases 1–3 ✅ · Blueprint approved (`D68`) · B0–B8 built ✅ · ✅ **Completion run done 2026-09-27**: live at
-https://clevercubs.vercel.app; what remains needs the owner (`Updated Project/docs/06-review-summary.md` §8).
+**`OBJ-035` — Consolidate the CleverCubs documentation and onboarding: simple, automated, minimal files.**
+Goal: someone clones the repository, gives the AI/CLI bootstrap file to their agent, lets it install and
+configure what can safely be automated, the application opens in Chrome, and the central guide covers
+any remaining manual step.
 
-The overnight run (2026-09-26, `D71`, `D72`) and the completion run (2026-09-27: both database suites,
-E2E, media fixes, docs, push, Vercel production) are done; detail in `../docs/history/03-narrative-log.md`.
+**Ownership (owner's statement, 2026-09-27):** **Omkar Kumbhar is the project owner.** Sudesh Sawant's account
+was used only for trial and testing; never name Sudesh Sawant as owner in any documentation.
 
-### ✅ First-admin setup (2026-09-27, amends `OBJ-034`) — done; `Updated Project/docs/07-deployment.md` §9
+| # | Requirement |
+|---:|---|
+| 1 | **One central `.md` guide** (setup, installation, configuration, run, test, access, deployment, usage). Inspect first; consolidate existing content instead of duplicating it. Tables wherever possible |
+| 2 | **Project information table**: name, owner, GitHub URL, production URL, local URL/port, production database (Neon PostgreSQL), local database (MySQL), platform (Vercel), technology (detected), admin access and test access (explained securely), contact email (the configured one, never invented) |
+| 3 | **Requirements table** (software, version, purpose, install/verify): only what the project actually needs, detected from the repository |
+| 4 | **One PowerShell setup script**: check software and versions, report what is missing, install what is safe, clone or set up, install project dependencies, prepare local configuration without exposing secrets, start the application, open it in Chrome. Safe to re-run. No hard-coded secret |
+| 5 | **One AI/CLI bootstrap file** (committed): inspect the repository, read the guide, detect the OS and tools, check/install software, read configuration, prepare local environment config without exposing secrets, install dependencies, start services and the application, run health checks and relevant tests, open Chrome, verify access, report manual steps, update docs if setup changes. Use project skills when useful (Git workflow skill included); never force every skill |
+| 6 | **Git workflow in the bootstrap**: status, pull and reconcile, review conflicts, update docs, verify tests/build, no secrets staged, sensitive files ignored, meaningful commit, push to the right branch, verify. Never blindly overwrite remote work |
+| 7 | **Access/running table**: production URL, run locally, tests, frontend, backend, supporting services, stop, open in Chrome, production deployment, Git update |
+| 8 | **Credentials reference table** (Super Admin, admin username, test username/credentials, production access, team trial access): where each secret is stored and how an authorised person retrieves or configures it. ⛔ No real secret in the public repository; no fake credentials presented as real; a test account only through the app's own mechanism |
+| 9 | **Contact email**: configure the one previously provided; never invent one. If intentionally unset, show it as a pending business input. Verify where it appears |
+| 10 | **Production independence**, verified technically: production (Vercel + Neon) does not depend on the owner's PC; local and production are separate (table: environment, depends on my PC, database, access). Free-plan limits (cold start) |
+| 11 | **System recommendations table** (OS, RAM, CPU, storage, internet, Chrome, Docker), based on the actual application |
+| 12 | **Troubleshooting table** (start failure, DB connection, Chrome, port in use, pull conflict, Vercel build, login) |
+| 13 | **Consolidation**: inspect every `.md`; find duplicate, outdated and conflicting content; keep the number of files minimal; preserve useful information before removing anything |
+| 14 | **Final validation**: simulate a fresh clone; verify commands, the script, the bootstrap, production URL, local start, tests, Chrome launch, Git and Vercel information, no secrets in git, `.gitignore`; check all docs for stale URLs, names and owner information; record final verified values |
+| 15 | **Commit and push** after verification: update docs, status, secret check, tests, commit, push to the right repository, verify the remote, clean tree |
+| 16 | **Final report table** (docs, bootstrap, script, production URL, local start, tests, Chrome, credentials, contact email, push, Vercel, cleanup) plus what still needs the owner |
 
-1. In the Vercel project `clevercubs`, locate `CC_ADMIN_INITIAL_PASSWORD`. ⛔ Its value never appears in
-   chat, logs, screenshots, documentation or git.
-2. On https://clevercubs.vercel.app, sign in as the Super Admin (the owner's Gmail, `D75`) and follow the
-   forced password change. **Stop where the owner must choose the new password**, and say exactly what to do.
-3. After the owner's step: verify the account and new password work; delete `CC_ADMIN_INITIAL_PASSWORD`
-   from Vercel; redeploy only if required; verify the admin sign-in again.
-4. Record the completed first-admin setup in the project documentation. Never store a secret anywhere.
+**Owner's answers (2026-09-27):** the central guide is the root **`README.md`**, absorbing
+`Updated Project/README.md`, `New Task/README.md` and `e2e/README.md` · the AI/CLI bootstrap is a rewritten
+**`AGENTS.md`** (development rules stay in `CLAUDE.md`) · the contact email stays **unset, a pending business
+input** · team trial access is **self-registration**, with no shared account (`D76`–`D77`).
 
-**Owner decisions (2026-09-27):** the repository is public for now (`D74`) · the cloud database is the
-assistant's choice, most consistent with the code and lowest in maintenance (`D73`: Neon PostgreSQL) ·
-the owner accepts the Vercel/Neon terms when prompted · the production Super Admin signs in as the
-owner's Gmail address; the Contact Us address stays unset for now (`INF-02` open) (`D75`).
-
-Tokens supplied by the owner are used only from environment variables and never written to any file in the
-repository or printed.
-
-**The full requirement is authoritative and verbatim:**
-[`../New Task/Updated Project/docs/00-source-requirement.md`](../New%20Task/Updated%20Project/docs/00-source-requirement.md)
-(§1–§31 plus the owner's addendum). This block summarises it; where the two differ, the verbatim file wins.
-
-### Summary
-
-| Area | What is required (§ of the requirement) |
-|---|---|
-| Input and output | The baseline is `../New Task/Current Project/Kids_learn_project/`, the primary source of truth, never modified. The enhanced version goes in `../New Task/Updated Project/`. Missing artifacts are created there (addendum) |
-| Goal | Child-friendly, simple, attractive, light theme, lightweight, secure, clear to parents, maintainable, mobile-ready. Purposeful animation only (§2, §24) |
-| Principle | Ask before any decision that materially affects architecture, data model, security, roles, auth, parent–child relationships, course, quiz or reward logic, the database, the mobile design or existing functionality. Minor UI decisions follow industry practice and are documented (§3, §31) |
-| Analysis first | The twelve points in §4. Plan before any structural change. Remove existing functionality only if it is obsolete, conflicts with the requirement, or is approved |
-| Users | Several age groups, derived from the date of birth; the experience adapts to the group (§5) |
-| Accounts | Parent registration plus child registration; mandatory, optional and recommended fields; data minimisation (§6). Parent → Child → Courses → Lessons → Quizzes → Progress; a secure escalation to the parent (§7) |
-| Access | Authentication, sessions, expiry, logout, RBAC (Child, Parent, Super Admin). A protected URL without a session redirects to login, and authorization is enforced on the backend (§8) |
-| Learning | Course cards, descriptions, progress, resume (§9). Progress is calculated on the backend and stays below 100% until the required quiz is passed (§10). At most 3 quiz attempts, enforced by the backend (§11) |
-| Profile, rewards | Profile with username, display name, avatar, summaries and badges (§12). Rewards above 80%, no leaderboards (§13). Encouraging, age-appropriate tone (§14) |
-| Parent and site | Parent feedback, visible to admins only (§15). A one-year completion summary for the parent, whose decision continuation remains (§16). Contact Us (§17). Terms & Conditions, flagged for legal review (§18) |
-| Admin | A Super Admin dashboard with RBAC, protection for sensitive actions and an audit trail (§19) |
-| Security | Mandatory: the §20 list, privacy by design, no compliance claim without verification |
-| Technology | Java backend with a clean architecture and justified dependencies only (§21). A schema designed from the requirements and proposed before implementation (§22). Desktop first, responsive, APIs a mobile client could use (§23) |
-| Quality | Measured performance work (§25), maintainability (§26), the five issue classes of §27, the tests listed in §28 |
-| Workflow | Understand → Analyse → Plan → Build → Validate → Review (§29) |
-
-### Points the requirement itself says to confirm, not invent
-
-Age-group definitions (§5) · what happens after 3 failed attempts (§11) · what "above 80%" measures (§13) ·
-the parent-escalation behaviour (§7) · the target jurisdiction and the legal/privacy review areas (§18,
-§20) · the final registration field list (§6) · the database schema, proposed before implementation (§22).
-
-### Standing constraints
-
-- **Git:** before every commit, check large files and LFS, secrets, generated and temporary files (§30).
-- **Protocol 0:** Discovery answered, schema in `LLM.md` §3, Blueprint approved (`D68`) — HALT lifted.
-- **Skills:** use the installed skills that add real value, and report which ones helped (addendum).
-
-### Owner decisions taken at intake (2026-09-26; detail in `docs/03-decisions.md`, history `D56`–`D67`)
-
-| Topic | Decision |
-|---|---|
-| Stack | Spring Boot 4.1, and plain HTML/CSS/JS pages calling a versioned REST API |
-| Database | MySQL 8 in Docker; Testcontainers for tests |
-| Child sign-in | The parent signs in and picks the child; the parent area asks for the password again |
-| Escalation | An in-app parent gate and request inbox; email later, by configuration |
-| Lessons | A topic is a course of short lessons (about five items); one lesson per rhyme or story |
-| Progress | Lessons make up 70%, passing the quiz adds 30%, calculated on the server |
-| Pass mark | 70%, per quiz, editable by the admin |
-| 3 attempts | Then the quiz locks, and the parent can grant 3 more (audited) |
-| Rewards | A best quiz score of 80% or more |
-| Year program | An admin-defined course list per age group, complete when all its courses reach 100% |
-| Age groups | 2–3, 4–5 and 6–8, stored as editable data |
-| Privacy | Jurisdiction undecided: the strictest common baseline; legal texts flagged for review |
+**Standing constraints:** the repository is public (`D74`) · secrets only in environment variables, Vercel
+or a password manager, never printed · edit markdown with `Edit` · history is append-only · check large
+files, LFS, secrets and generated files before every commit.
 
 <!-- ▲▲▲ WRITE THE CURRENT REQUIREMENT HERE ▲▲▲ -->
 

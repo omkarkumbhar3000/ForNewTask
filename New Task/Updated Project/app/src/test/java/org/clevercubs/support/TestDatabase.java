@@ -14,9 +14,9 @@ import org.testcontainers.utility.MountableFile;
  * image and the same user-creation script (../db/init/01-users.sh), so tests exercise the least-privilege
  * cc_app user and the Flyway grants rather than a superuser.
  *
- * <p>{@code mvnw test -Dclevercubs.test.db=postgresql} runs the same suite on PostgreSQL 17, the database of
- * the hosted deployment (D73). There the schema owner is cc_migrator and the Flyway callback creates cc_app,
- * as it does on the host.
+ * <p>{@code mvnw test -Dclevercubs.test.db=postgresql} runs the same suite on PostgreSQL 18, the major version
+ * of the hosted deployment's Neon database (D73; checked 2026-09-27). There the schema owner is cc_migrator
+ * and the Flyway callback creates cc_app, as it does on the host.
  */
 public final class TestDatabase {
 
@@ -49,7 +49,7 @@ public final class TestDatabase {
     }
 
     private static PostgreSQLContainer postgres() {
-        return new PostgreSQLContainer(DockerImageName.parse("postgres:17-alpine"))
+        return new PostgreSQLContainer(DockerImageName.parse("postgres:18-alpine"))
                 .withDatabaseName("clevercubs")
                 .withUsername("cc_migrator")
                 .withPassword(MIGRATOR_PASSWORD);

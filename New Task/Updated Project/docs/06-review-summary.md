@@ -63,7 +63,7 @@ content files (`sourceWord`).
 | 22 | Schema from the requirements, proposed first | `05-data-model.md` (approved with `D68`), migrations V1–V4, a PostgreSQL copy for the cloud (`D73`) | `DatabaseSetupTests` on both databases |
 | 23 | Desktop first, responsive, mobile-ready APIs | Versioned JSON API; responsive pages | `e2e` at 1440, 1024, 768, 375 px |
 | 25 | Measured performance work | See §2 "Weight" and §6; lighter media (`DD-29`) | `e2e/measure.mjs`, `MediaWeightTests` |
-| 26 | Maintainable | One stylesheet, shared modules, docs per area, `README.md` | — |
+| 26 | Maintainable | One stylesheet, shared modules, docs per area, one setup guide (root `README.md`) and a setup script | — |
 | 27 | Existing issues kept apart from new ones | `02-issue-register.md` §2–§6 | — |
 | 28 | Test the listed flows | JUnit (219, on MySQL and on PostgreSQL) and Playwright (6 journeys) | §5 |
 | 30 | Git: check media, LFS, secrets, generated files before committing | `.gitignore`, LFS rules for `media/` | §7 |
@@ -74,7 +74,7 @@ content files (`sourceWord`).
 |---|---|---|
 | Unit | Progress, quiz, reward, age-group, username and password rules; throttle; media weight (`MediaWeightTests`) | ✅ |
 | Integration (Testcontainers MySQL 8.4) | Registration, sign-in, lock, sessions, child mode, lessons, quizzes (limit, lock, grant, resume, simultaneous starts), rewards, year completion, parent area, admin, pages and media, security headers, CSRF, IDOR, injection strings | ✅ 219 tests, 0 failures (`mvnw verify`) |
-| The same suite on PostgreSQL 17 (`-Dclevercubs.test.db=postgresql`, `D73`) | Everything above, plus database sessions over a real server and letter case in email addresses and usernames | ✅ 219 tests, 0 failures |
+| The same suite on PostgreSQL 18, production's version (`-Dclevercubs.test.db=postgresql`, `D73`) | Everything above, plus database sessions over a real server and letter case in email addresses and usernames | ✅ 219 tests, 0 failures |
 | Browser (Playwright, installed Chrome) | Public pages at four widths without script errors; protected URLs; register → child mode → lesson → ask a grown-up → parent gate → requests → progress → feedback → delete the account; at 1440 and 375 px | ✅ 6 of 6 against the development server (MySQL) and ✅ 6 of 6 against production, https://clevercubs.vercel.app (Neon PostgreSQL) |
 | Manual browser review | Every page of the three areas, the quiz with a wrong answer, the lock after three tries, the admin dashboard | ✅ found and fixed `FUN-R01`–`FUN-R04` |
 
@@ -100,7 +100,7 @@ before the whole file has arrived.
 
 ## 7. Deployment
 
-Local: `start-dev.ps1` (see `README.md`). **Production: https://clevercubs.vercel.app**, a container on
+Local: `setup.ps1` once, then `start-dev.ps1` (see the repository's root `README.md`). **Production: https://clevercubs.vercel.app**, a container on
 Vercel built from GitHub `main`, with PostgreSQL from Neon (`D73`). It was verified on 2026-09-27: health,
 security headers and HSTS, access control, the six browser journeys, and a read-only check of the cloud
 database ([`07-deployment.md`](07-deployment.md) §9). Every push to `main` deploys it. The first Super

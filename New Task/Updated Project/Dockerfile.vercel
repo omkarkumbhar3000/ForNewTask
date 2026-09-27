@@ -6,7 +6,7 @@
 # Local check:  docker build -f Dockerfile.vercel -t clevercubs .   (then see docs/07-deployment.md section 6)
 
 # --- build: compile and package the application ------------------------------------------------------------
-# Tests are not run here; they run on both databases before a push (README.md section 3).
+# Tests are not run here; they run on both databases before a push (the repository's README.md section 10).
 FROM maven:3.9-eclipse-temurin-25 AS build
 WORKDIR /build
 COPY app/pom.xml ./

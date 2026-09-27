@@ -128,3 +128,46 @@ into `OBJ-034`.
   the full requirement then replaced.
 
 **Dependencies.** `OBJ-031` stage 2 · `D55`.
+
+---
+
+### OBJ-034 — CleverCubs rebuilt on Java, published and deployed
+
+**Objective ID.** `OBJ-034`
+
+**Title.** Enhance the Kids Learn / CleverCubs project into a simple, lightweight, secure, child-friendly
+educational application with a Java backend (stage 2 of `OBJ-031`).
+
+**Status.** Superseded by `OBJ-035`. Completed: everything the project side can do is built, verified,
+published and deployed; the remaining items need the owner's business or legal input.
+
+**Summary.** The baseline (44 PHP/HTML pages) was analysed and rebuilt as one Spring Boot 4.1 application
+with about 20 data-driven pages, Parent, Child and Super Admin roles, server-side progress, a three-try
+quiz limit and rewards. It runs on MySQL locally and on Neon PostgreSQL in the cloud. The overnight run
+built B1–B8, and the completion run tested both databases, lightened the media and published the work. It
+then deployed to Vercel and verified production. The first Super Admin was set up in the owner's browser.
+
+**Key Deliverables.** `New Task/Updated Project/` (application, content, media, tests, docs `00`–`07`) ·
+219 JUnit tests passing on MySQL and PostgreSQL · 6 Playwright journeys passing locally and on production ·
+production at https://clevercubs.vercel.app · commits `3651d3b`, `16243b6`, `809dd62`, `72ac44c`, `aeaf40c`,
+`6946611`.
+
+**Related Files.** `New Task/Updated Project/docs/06-review-summary.md` (state and what remains) ·
+`docs/07-deployment.md` (cloud) · `docs/02-issue-register.md` · `docs/03-decisions.md` · this history's
+narrative §OBJ-034.
+
+**Reason for Archiving.** The owner's next instruction is a separate objective: consolidate the
+documentation and onboarding (`OBJ-035`).
+
+**Pending Work.** Owner inputs only (`06-review-summary.md` §8): legal review (`INF-03`), an email provider
+(`INF-04`), content for 6–8 and Year 2 (`INF-01`), missing story video and body-parts audio (`INF-09`,
+`INF-10`), media licences (`INF-11`), certificate wording (`INF-07`), the contact address (`INF-02`), and a
+review of `DD-20`–`DD-29`.
+
+**Lessons Learned / Observations.**
+- Browser journeys against the live deployment found a defect the local run could not (`FUN-R07`).
+- On a GitHub build, Vercel applies `.vercelignore` from the repository root; the Vercel CLI changes files
+  unasked (a token file, a broad `.env*` ignore rule, vendor agent skills).
+- A secret can be used without being seen: file outside the repository → clipboard → masked field.
+
+**Dependencies.** `OBJ-031` · `D56`–`D75`.

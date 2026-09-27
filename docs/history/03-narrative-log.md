@@ -328,3 +328,41 @@ Detail: `Updated Project/docs/07-deployment.md` §9.
   just after the password change; neither came from the assistant.
 
 **Decisions.** None new.
+
+## OBJ-035 — One guide, one setup script, one AI bootstrap
+
+**What changed.** The owner asked for simple, automated onboarding with as few Markdown files as possible.
+- **Consolidated:** the root `README.md` became the one central guide, all tables (`D77`). It absorbed
+  `Updated Project/README.md`, `New Task/README.md` and `e2e/README.md`, which were removed after their content
+  was checked in; the final API list moved to `docs/04` §5.
+- **AI bootstrap:** `AGENTS.md` was rewritten as the fresh-clone bootstrap for AI agents, including the Git
+  workflow. Its development notes moved to `CLAUDE.md` §"Code-level traps".
+- **Setup script:** the new `New Task/Updated Project/setup.ps1` checks and installs software, prepares `.env`
+  without printing a value, installs dependencies, starts the application and opens Chrome.
+- **Ownership:** Omkar Kumbhar is recorded as owner (`D76`).
+
+Verified:
+- production answers with the local application and database stopped (Neon, `ap-southeast-1`, PostgreSQL
+  18.6);
+- 219/219 tests on MySQL and on PostgreSQL 18; the test image moved from 17 to production's 18;
+- a full setup run started the application and opened Chrome, and the local journeys pass 6/6;
+- a fresh clone checked, prepared and built.
+
+**What was learned.**
+
+- **Production runs PostgreSQL 18, not 17.** The docs and the test container said 17 until the server was
+  asked (`SELECT version()`). The test image now matches.
+- **Windows PowerShell 5.1 turns native stderr into error records when output is captured in the session,**
+  so `$ErrorActionPreference = 'Stop'` ended `start-dev.ps1` at `docker compose`'s first progress line. The
+  scripts now use `Continue` and check exit codes.
+- **A deep clone folder breaks a Windows checkout.** Base path plus the repository's longest path (110)
+  passed 260 characters, and git aborted the checkout. The fix is `core.longpaths`, which `setup.ps1` sets
+  when it clones. Git's own hint (`git restore --source=HEAD :/`) was not enough; the index needs
+  `--staged --worktree`.
+- **`start-dev.ps1` found only Oracle JDKs** under `Program Files\Java`. It now also finds Temurin, Microsoft
+  and Azul builds, and checks the version is 25 or newer.
+- A Chrome new-window launch hands off to the running browser, so its process disappears. The proof is the
+  window title, not the process list.
+
+**Decisions.** `D76` (Omkar Kumbhar is the owner), `D77` (the root `README.md` is the central guide,
+`AGENTS.md` is the AI bootstrap, the contact email is a pending input, trial access is self-registration).

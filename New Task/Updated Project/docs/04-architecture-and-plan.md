@@ -33,9 +33,10 @@ approved (`D68`); ✅ built and verified (see [`06-review-summary.md`](06-review
 ## 2. Folder layout of `Updated Project/`
 
 ```text
-Updated Project/
-├── README.md                 how to set up, run, test; where things are
-├── docs/                     00–05 (this set), plus the review summary at the end
+Updated Project/              (the setup and access guide is the repository's root README.md)
+├── setup.ps1                 first setup: checks and installs software, prepares .env, starts, opens Chrome
+├── start-dev.ps1, stop-dev.ps1   daily start (MySQL + build + run + Chrome) and stop
+├── docs/                     00 requirement … 05 data model, 06 review summary, 07 deployment
 ├── app/                      the Spring Boot application (Maven)
 │   ├── pom.xml
 │   └── src/
@@ -52,15 +53,17 @@ Updated Project/
 │       │   ├── audit/
 │       │   └── platform/     security config, errors, validation, settings, media
 │       ├── main/resources/
-│       │   ├── db/migration/ Flyway: V1 schema, V2 reference data
+│       │   ├── db/migration/ Flyway, one folder per database: mysql/ and postgresql/ (V1–V4, afterMigrate grants)
 │       │   ├── content/      course JSON produced by the extraction tool
 │       │   ├── static/       pages, css/, js/, img/, fonts/
-│       │   └── application.yml (+ -dev, -test)
-│       └── test/java/…       unit, integration (Testcontainers MySQL), security tests
-├── media/                    course media, copied from the baseline and organised by course
+│       │   └── application.yml  profiles dev, test and cloud (test settings also in test/resources)
+│       └── test/java/…       unit, integration (Testcontainers MySQL or PostgreSQL), security tests
+├── media/                    course media (Git LFS), organised by course; MEDIA-MAP.csv, OPTIMISED.csv
+├── db/init/                  creates the two least-privilege MySQL users on the first start
 ├── tools/                    content extraction (baseline HTML → content JSON + media map), media optimisation
 ├── e2e/                      browser tests (Playwright), a development dependency only
-├── docker-compose.yml        MySQL 8 for development
+├── docker-compose.yml        MySQL 8.4 for development
+├── Dockerfile.vercel         the cloud image; vercel.json, .vercelignore and .dockerignore beside it
 └── .env.example              every variable, no values (the real .env is gitignored)
 ```
 
@@ -136,14 +139,21 @@ scripts (`DD-12`).
 
 ## 5. API surface (resource-oriented, `/api/v1`, JSON)
 
-| Area | Endpoints (illustrative; the final list is in the README) |
+The endpoints as built (all JSON under `/api/v1`; errors are RFC 9457 problem+json with a stable `code`):
+
+| Area | Endpoints |
 |---|---|
-| Auth | `POST /auth/register` (parent + first child + consent) · `POST /auth/login` · `POST /auth/logout` · `GET /auth/me` · `POST /auth/reauth` · `POST /auth/change-password` |
-| Session mode | `POST /session/child` `{childId}` · `POST /session/parent` `{password}` |
-| Parent | `GET/POST /parent/children` · `GET/PATCH/DELETE /parent/children/{id}` · `GET /parent/children/{id}/progress` · `GET /parent/children/{id}/export` · `GET/POST /parent/requests/{id}/approve\|decline` · `POST /parent/feedback` · `GET /parent/children/{id}/year-summary` · `POST /parent/children/{id}/next-year` |
-| Learn (child mode) | `GET /learn/home` (courses for the age group, resume target) · `GET /learn/courses/{slug}` · `GET /learn/lessons/{id}` · `PUT /learn/items/{id}/view` · `POST /learn/quizzes/{id}/attempts` (start or resume) · `PUT /learn/attempts/{id}/answers/{questionId}` · `GET /learn/profile` · `POST /learn/requests` ("ask a grown-up") · `GET /learn/messages` |
-| Admin | CRUD on `/admin/courses`, `/lessons`, `/items`, `/quizzes`, `/questions`, `/programs`, `/age-groups`, `/badges`, `/messages` · `GET /admin/accounts`, `/admin/children` (paginated) · `PATCH /admin/accounts/{id}` (status, temporary password) · `GET/PATCH /admin/feedback` · `GET/PUT /admin/settings` · `GET /admin/audit` · `GET /admin/reports/summary` |
-| Public | `GET /public/courses` (catalogue, no progress) · `GET /public/contact` |
+| Public | `GET public/health` · `GET public/session` · `GET public/courses` · `GET public/contact` · `GET public/avatars` · `GET public/ages` · `GET public/username-suggestion` |
+| Auth | `POST auth/register` (parent + first child + consent) · `POST auth/login` · `POST auth/logout` · `GET auth/me` · `POST auth/reauth` · `POST auth/change-password` |
+| Session mode | `POST session/child {childId}` (parent) · `POST session/parent {password}` (child) |
+| Child | `GET learn/me` · `GET learn/home` · `GET learn/courses/{slug}` · `GET learn/lessons/{id}` · `PUT learn/items/{id}/view` · `GET learn/quizzes/{id}` · `POST learn/quizzes/{id}/attempts` · `GET learn/attempts/{id}` · `PUT learn/attempts/{id}/answers/{questionId}` · `GET learn/profile` · `GET/POST learn/requests` |
+| Parent | `GET parent/overview` · `GET/POST parent/children` · `GET/PATCH/DELETE parent/children/{id}` · `GET parent/children/{id}/year-summary` · `POST parent/children/{id}/next-year` · `GET parent/children/{id}/export` · `POST parent/children/{id}/quizzes/{quizId}/grant` · `GET parent/requests` · `POST parent/requests/{id}/approve\|decline` · `GET/POST parent/feedback` · `GET/PATCH/DELETE parent/account` |
+| Admin | `GET admin/overview` · `GET admin/reports/courses` · `GET admin/accounts` · `POST admin/accounts/{id}/status` · `POST admin/accounts/{id}/temporary-password` · `GET admin/children` · `GET admin/children/{id}/progress` · `GET/PATCH admin/courses[/{id}]` · `PATCH admin/lessons/{id}` · `PATCH admin/items/{id}` · `GET/PATCH admin/quizzes/{id}` · `PATCH admin/questions/{id}` · `GET admin/programs` · `PUT admin/programs/{id}/courses` · `GET/PATCH admin/age-groups[/{id}]` · `GET/PATCH admin/badges[/{id}]` · `GET/POST/PATCH admin/messages[/{id}]` · `GET/PATCH admin/feedback[/{id}]` · `GET admin/settings` · `PUT admin/settings/{key}` · `GET admin/audit` · `GET admin/audit/actions` |
+
+Every state-changing call needs the `X-XSRF-TOKEN` header carrying the value of the `XSRF-TOKEN` cookie.
+Deleting or exporting a child, deleting an account, and admin changes to accounts, settings, programs and
+age groups need the password confirmed within the last 15 minutes (`POST auth/reauth`); otherwise the answer
+is `403 reauth-required`.
 
 **Conventions:**
 
@@ -260,7 +270,7 @@ Each phase ends with its checks passing. Progress is tracked in `BLAST/task_plan
 |---|---|
 | Drive D: is 99% full (5.1 GB free); the media copy needs about 420 MB | Copy only the referenced media, without the background videos; measure the free space before and after |
 | The Docker engine is stopped | Start Docker Desktop before B0; the tests need it (Testcontainers) |
-| `JAVA_HOME` points at a missing JDK | Every Maven run sets `JAVA_HOME` to `jdk-26.0.2` (recorded in the README) |
+| `JAVA_HOME` points at a missing JDK | The scripts find a JDK 25+ themselves; a bare Maven run sets `JAVA_HOME` first (root `README.md` §10) |
 | Playwright browsers download about 300 MB on C: (48 GB free) | Fine; installed under `e2e/` only |
 | No `ffmpeg` on the machine | `tools/optimize_media.py` runs ffmpeg and Pillow from a throw-away Docker image (`tools/mediatool.Dockerfile`); video re-encoding stays deferred (§7) |
 | The size of the build | Phased, with each phase verified before the next, so a pause at any point leaves working, tested code |

@@ -11,7 +11,7 @@ verified in §9
 | Part | Where | Notes |
 |---|---|---|
 | Application | A container on Vercel (Functions, container image), region `sin1` (Singapore) | Built from `Dockerfile.vercel` on every deployment. 2 GB memory, 1 vCPU on the Hobby plan |
-| Database | PostgreSQL 17 from **Neon**, added through the Vercel Marketplace, same region | Free plan. The Neon integration puts the connection settings into the project's environment |
+| Database | PostgreSQL 18 from **Neon** (server 18.6, host in `ap-southeast-1`, checked 2026-09-27), added through the Vercel Marketplace, same region | Free plan. The Neon integration puts the connection settings into the project's environment |
 | Lesson media (423 MB) | Inside the image, at `/app/media` | Served by the application behind sign-in, exactly as in development (`/media/**`, byte ranges, a week's private cache) |
 | Sessions | In the database (Spring Session JDBC, tables from `V4`) | Vercel stops an idle instance after 5 minutes and may run several at once; a sign-in survives both |
 | Source | GitHub `omkarkumbhar3000/ForNewTask`, branch `main`, project root `New Task/Updated Project` | Connected to the project (§5); every push to `main` deploys. Git LFS is switched on for the project, so the media files arrive as files |
@@ -44,7 +44,7 @@ provider and brings a second vendor; the PostgreSQL support could then be remove
 | `platform/db/Timestamps`, `Rows` | Time is written and read as UTC without a zone on both; rows returned as maps have the same value types on both |
 | Email addresses and usernames | MySQL compares them without regard to case; PostgreSQL uses `CITEXT` columns and a cast parameter for the same behaviour |
 | Least privilege | MySQL: `db/init/01-users.sh`. PostgreSQL: the Flyway callback creates the `cc_app` role with `CC_DB_APP_PASSWORD` and grants it exactly the MySQL rights |
-| Tests | `mvnw test` runs on MySQL; `mvnw test -Dclevercubs.test.db=postgresql` runs the same suite on PostgreSQL 17 |
+| Tests | `mvnw test` runs on MySQL; `mvnw test -Dclevercubs.test.db=postgresql` runs the same suite on PostgreSQL 18, production's major version |
 
 ## 4. Configuration
 
@@ -88,7 +88,7 @@ the parent area and the admin sign-in (`e2e/`: `$env:CLEVERCUBS_URL = "<address>
 ```powershell
 docker build -f Dockerfile.vercel -t clevercubs:local .
 # a throwaway PostgreSQL, then the image against it with the cloud profile
-docker run -d --name cc-pg -e POSTGRES_DB=clevercubs -e POSTGRES_USER=owner -e POSTGRES_PASSWORD=<pw> -p 55432:5432 postgres:17-alpine
+docker run -d --name cc-pg -e POSTGRES_DB=clevercubs -e POSTGRES_USER=owner -e POSTGRES_PASSWORD=<pw> -p 55432:5432 postgres:18-alpine
 docker run --rm -p 8090:8080 -e PGHOST_UNPOOLED=host.docker.internal:55432 -e PGDATABASE=clevercubs `
   -e PGUSER=owner -e PGPASSWORD=<pw> -e CC_DB_APP_PASSWORD=<16+ chars> -e CC_COOKIE_SECURE=false `
   -e SPRING_DATASOURCE_URL=jdbc:postgresql://host.docker.internal:55432/clevercubs clevercubs:local

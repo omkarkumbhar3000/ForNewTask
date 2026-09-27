@@ -11,9 +11,10 @@ governance and live in the root `CLAUDE.md`.
 ## "Update MD files" is a defined instruction
 
 When the owner says it, update **every markdown file currently in effect**, not just the one last
-touched: the root `CLAUDE.md`, `README.md` and `AGENTS.md`, everything in `BLAST/`, `New Task/README.md`,
-the `README.md` of each `tools/` folder, and the documentation inside `New Task/Updated Project/`. Check
-each is still accurate and consistent with the others.
+touched: the root `CLAUDE.md`, `README.md` and `AGENTS.md`, everything in `BLAST/`, the `README.md` of each
+`tools/` folder, and the documentation inside `New Task/Updated Project/docs/`. Check each is still accurate
+and consistent with the others. Do not add a new small Markdown file for one topic (`D77`): extend the
+central guide or the matching `docs/` file.
 
 **Excluded:** `New Task/Current Project/` (the owner's baseline, never edited), `docs/history/` entries
 (append-only), and anything generated (a `.docx`/`.xlsx` rendered from markdown; a corpus in `.tmp/`).
@@ -29,8 +30,9 @@ A fact belongs in exactly one layer; the others cross-reference it.
 | **Protocol memory** | `BLAST/LLM.md`, `task_plan.md`, `findings.md`, `progress.md` | Schema and law, phases, discoveries, run history |
 | **Project baseline** | `New Task/Current Project/` | The project, requirement and feedback as provided |
 | **Project output** | `New Task/Updated Project/` | The improved project and its own documentation |
-| Operating guidance | root `CLAUDE.md` | How to work in this workspace |
-| Orientation | root `README.md` | What each folder is, for someone opening it cold |
+| Operating guidance | root `CLAUDE.md` | How to work in this workspace: development rules, conventions |
+| Central guide and orientation | root `README.md` | Setup, access, credentials reference, tests, deployment, troubleshooting, and what each folder is |
+| AI bootstrap | root `AGENTS.md` | What an AI agent does after a fresh clone, and the Git workflow |
 
 Before adding a section, check whether a layer already owns the topic. **Prefer merging over creating.**
 A document that asserts the state of another document goes stale; point at the source instead.
