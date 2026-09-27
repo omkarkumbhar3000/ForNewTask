@@ -3,7 +3,7 @@
 > Single source of architectural truth. `LLM.md` is **law**; the planning files
 > (`task_plan.md`, `findings.md`, `progress.md`) are **memory**.
 >
-> **Status (`OBJ-034`): Blueprint proposed, awaiting the owner's approval.** Discovery is answered
+> **Status (`OBJ-034`): Blueprint approved (`D68`); B0–B8 built and deployed.** Discovery is answered
 > (`D56`–`D67`). The project's design lives in `../New Task/Updated Project/docs/`; this file records only
 > what is law for the run and points there for detail.
 

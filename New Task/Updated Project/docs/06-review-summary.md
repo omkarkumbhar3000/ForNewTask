@@ -1,7 +1,7 @@
 # Review Summary — What the enhanced CleverCubs delivers, and what is still open
 
 **Objective:** `OBJ-034` · **Requirement:** [`00-source-requirement.md`](00-source-requirement.md) §29 Phase 6 ·
-**Date:** 2026-09-27 · **Status:** ✅ build complete and verified locally; deployment in §7
+**Date:** 2026-09-27 · **Status:** ✅ build complete, verified locally and live at https://clevercubs.vercel.app (§7)
 
 ---
 
@@ -75,7 +75,7 @@ content files (`sourceWord`).
 | Unit | Progress, quiz, reward, age-group, username and password rules; throttle; media weight (`MediaWeightTests`) | ✅ |
 | Integration (Testcontainers MySQL 8.4) | Registration, sign-in, lock, sessions, child mode, lessons, quizzes (limit, lock, grant, resume, simultaneous starts), rewards, year completion, parent area, admin, pages and media, security headers, CSRF, IDOR, injection strings | ✅ 219 tests, 0 failures (`mvnw verify`) |
 | The same suite on PostgreSQL 17 (`-Dclevercubs.test.db=postgresql`, `D73`) | Everything above, plus database sessions over a real server and letter case in email addresses and usernames | ✅ 219 tests, 0 failures |
-| Browser (Playwright, installed Chrome) | Public pages at four widths without script errors; protected URLs; register → child mode → lesson → ask a grown-up → parent gate → requests → progress → feedback → delete the account; at 1440 and 375 px | ✅ 6 of 6, against the development server (MySQL) and against the cloud image (PostgreSQL) |
+| Browser (Playwright, installed Chrome) | Public pages at four widths without script errors; protected URLs; register → child mode → lesson → ask a grown-up → parent gate → requests → progress → feedback → delete the account; at 1440 and 375 px | ✅ 6 of 6 against the development server (MySQL) and ✅ 6 of 6 against production, https://clevercubs.vercel.app (Neon PostgreSQL) |
 | Manual browser review | Every page of the three areas, the quiz with a wrong answer, the lock after three tries, the admin dashboard | ✅ found and fixed `FUN-R01`–`FUN-R04` |
 
 ## 6. Performance (measured on the local build)
@@ -100,16 +100,17 @@ before the whole file has arrived.
 
 ## 7. Deployment
 
-Local: `start-dev.ps1` (see `README.md`). The cloud deployment is described in
-[`07-deployment.md`](07-deployment.md): a container on Vercel with PostgreSQL from Neon, prepared and
-verified locally (the image passes the browser journeys against PostgreSQL). The first deployment waits for
-the owner to accept the Neon Marketplace terms.
+Local: `start-dev.ps1` (see `README.md`). **Production: https://clevercubs.vercel.app**, a container on
+Vercel built from GitHub `main`, with PostgreSQL from Neon (`D73`). It was verified on 2026-09-27: health,
+security headers and HSTS, access control, the six browser journeys, and a read-only check of the cloud
+database ([`07-deployment.md`](07-deployment.md) §9). Every push to `main` deploys it.
 
 ## 8. What remains, and what needs the owner
 
 | Item | Needed from | Detail |
 |---|---|---|
-| The cloud database | Owner, once | Neon PostgreSQL is decided (`D73`, `DQ-12`); the Marketplace terms are accepted by the account owner in a browser ([`07-deployment.md`](07-deployment.md) §5) |
+| First Super Admin sign-in | Owner | Reveal `CC_ADMIN_INITIAL_PASSWORD` in the Vercel project's settings, sign in, choose a new password, then delete the variable ([`07-deployment.md`](07-deployment.md) §8) |
+| A faster first visit after an idle spell | Later | Vercel stops an idle instance after 5 minutes, and the application then takes about 15 s to start. Faster start-up (Spring AOT or class-data sharing) or a paid plan's always-on instance would remove it |
 | The repository is public | Owner (accepted for now, `D74`) | The media files are publicly downloadable from GitHub while their licences are unconfirmed (`INF-11`) |
 | Contact address (`INF-02`) | Owner (unset by choice, `D75`) | Set `CC_CONTACT_EMAIL` on the Vercel project when an address should be shown; until then the page says it is being set up |
 | Legal review (`INF-03`) | Owner / counsel | Terms, privacy notice, consent wording, retention, target country |

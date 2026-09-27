@@ -18,7 +18,8 @@
 
 **`OBJ-034` — Enhance the Kids Learn / CleverCubs project into a simple, lightweight, secure,
 child-friendly educational application with a Java backend.** This is stage 2 of `OBJ-031`.
-Phases 1–3 ✅ · Blueprint approved (`D68`) · B0–B8 built ✅ · 🟡 **Completion run: verify, publish, deploy.**
+Phases 1–3 ✅ · Blueprint approved (`D68`) · B0–B8 built ✅ · ✅ **Completion run done 2026-09-27**: live at
+https://clevercubs.vercel.app; what remains needs the owner (`Updated Project/docs/06-review-summary.md` §8).
 
 The overnight run of 2026-09-26 (`D71`, `D72`) is done up to its first push (`3651d3b`: build, §1–§31
 cross-check, baseline kept out of git). Its improvement push and the Vercel deployment remain.

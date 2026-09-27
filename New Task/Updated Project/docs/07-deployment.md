@@ -1,8 +1,8 @@
 # Deployment — CleverCubs on Vercel
 
 **Objective:** `OBJ-034` (overnight run, step 6; completion run) · **Decision:** `D73` (Neon PostgreSQL, `DQ-12`) ·
-**Date:** 2026-09-27 · **Status:** 🟡 prepared and verified locally; the first cloud deployment waits for
-**one owner action** (§5)
+**Date:** 2026-09-27 · **Status:** ✅ live at **https://clevercubs.vercel.app**, built from GitHub `main`;
+verified in §9
 
 ---
 
@@ -14,7 +14,8 @@
 | Database | PostgreSQL 17 from **Neon**, added through the Vercel Marketplace, same region | Free plan. The Neon integration puts the connection settings into the project's environment |
 | Lesson media (423 MB) | Inside the image, at `/app/media` | Served by the application behind sign-in, exactly as in development (`/media/**`, byte ranges, a week's private cache) |
 | Sessions | In the database (Spring Session JDBC, tables from `V4`) | Vercel stops an idle instance after 5 minutes and may run several at once; a sign-in survives both |
-| Source | GitHub `omkarkumbhar3000/ForNewTask`, project root `New Task/Updated Project` | Git LFS is switched on for the project, so the media files arrive as files |
+| Source | GitHub `omkarkumbhar3000/ForNewTask`, branch `main`, project root `New Task/Updated Project` | Connected to the project (§5); every push to `main` deploys. Git LFS is switched on for the project, so the media files arrive as files |
+| Address | **https://clevercubs.vercel.app** (production) | Team "OM's projects" (`om-projects11`), project `clevercubs` |
 
 Development and the default test run keep **MySQL 8.4** (`DQ-02`, `D67`). Nothing about local work changes.
 
@@ -116,7 +117,27 @@ nothing relevant changed; Neon's free database pauses when idle and wakes on the
 
 | Item | Needed from |
 |---|---|
-| Accept the Neon terms (§5) | Owner |
-| Confirm `D73` (PostgreSQL in the cloud, MySQL locally), or choose a managed MySQL instead (§2) | Owner |
-| The repository is **public**, and so are the media files in it; their licences are unconfirmed (`INF-11`) | Owner |
+| **First Super Admin sign-in:** reveal `CC_ADMIN_INITIAL_PASSWORD` (Vercel → project `clevercubs` → Settings → Environment Variables), sign in at `/login` with the owner's address, set a new password when asked, then delete the variable (§7) | Owner |
+| The repository is **public**, and so are the media files in it; their licences are unconfirmed (`INF-11`, accepted for now by `D74`) | Owner |
+| The Contact Us address: set `CC_CONTACT_EMAIL` on the project and redeploy when one should be shown (`INF-02`, `D75`) | Owner |
 | A custom domain, if wanted | Owner |
+
+The Neon terms are accepted and `D73` is decided, so both are closed.
+
+## 9. Production verification (2026-09-27)
+
+| Check | Result |
+|---|---|
+| Boot: `GET /api/v1/public/health` | ✅ `200 {"status":"UP"}`: the container started, Flyway migrated Neon, and the application answered as `cc_app` (15.7 s on a cold start) |
+| Security headers on `/` | ✅ `Strict-Transport-Security: max-age=31536000; includeSubDomains`, the CSP, `nosniff`, `X-Frame-Options: DENY`, `Referrer-Policy: same-origin`; the `XSRF-TOKEN` cookie is `Secure` |
+| A protected page without a session | ✅ `302` to `https://clevercubs.vercel.app/login?next=%2Fparent%2F` (the scheme and host come through the proxy headers) |
+| The API without a session | ✅ `401 application/problem+json`, `code: unauthenticated` |
+| Media without a session | ✅ `302` to sign-in |
+| A `POST` without the CSRF token | ✅ `403` |
+| Weak password at registration (API) | ✅ `400 weak-password`, field `parent.password`, identical to local |
+| Browser journeys (`e2e/`, `CLEVERCUBS_URL=https://clevercubs.vercel.app`) | ✅ 6 of 6 at 1440 and 375 px (commit `72ac44c`): public pages at four widths, protected URLs, and register → child mode → lesson → ask a grown-up → parent gate → requests → progress → feedback → delete the account. The first run found `FUN-R07` (fixed) and a too-short assertion timeout for a cold-starting instance (the suite now allows 30 s when the address is remote) |
+| The cloud database (read-only query as the Neon owner role) | ✅ 4 Flyway migrations (V1–V4); 11 courses, 53 lessons, 189 cards, 134 quiz questions; 1 Super Admin (the bootstrap); the `cc_app` role present; server sessions stored; 0 test accounts left behind |
+
+How the database was queried without exposing a secret: `vercel env pull <file outside the repository>
+--environment=production`, only the four `PG*` values passed to a throw-away `postgres:17-alpine` container
+(`psql` with `PGSSLMODE=require`), and both files deleted straight after.

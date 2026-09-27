@@ -249,7 +249,9 @@ the videos themselves (the pictures and the MP4 indexes are already optimised, `
 `OBJ-034` is in its completion run (`BLAST/Objective.md`): **B0–B8 are complete and verified**
 (`docs/06-review-summary.md`, `docs/04` §9 status column, `BLAST/task_plan.md`), and the build is published
 on GitHub (`D72`, public by `D74`). The issue register §6 records every baseline issue against the build
-with its test. The Vercel production deployment is described, with its state, in `docs/07-deployment.md`.
+with its test. **Production is live at https://clevercubs.vercel.app** (Vercel, Neon PostgreSQL; built
+from GitHub on every push to `main`), verified on 2026-09-27 (`docs/07-deployment.md` §9). What still needs
+the owner is in `docs/06-review-summary.md` §8.
 
 ## 12. Conventions
 

@@ -267,3 +267,38 @@ assistant (Neon PostgreSQL, `D73`), and chose the production admin address and a
 **Decisions.** `D73` (Neon PostgreSQL in the cloud, MySQL locally), `D74` (public repository),
 `D75` (production admin address; contact address unset). Documented default `DD-29` (lighter media) and
 owner decision `DQ-12` in `Updated Project/docs/03-decisions.md`.
+
+### The Vercel production deployment (2026-09-27)
+
+**What changed.** The completion-run commit `16243b6` was pushed and verified on the public repository.
+The Vercel project `clevercubs` was created, with its variables set from stdin and never printed, and Neon
+was attached once the owner had accepted the Marketplace terms. A laptop upload stalled on the home
+connection, so the project was connected to GitHub (root `New Task/Updated Project`, Git LFS on), and every
+push to `main` now deploys it. **Production is live at https://clevercubs.vercel.app.** The checks:
+
+- health, HSTS and the security headers, redirects, 401 problem+json, media behind sign-in, and CSRF all
+  pass;
+- the six browser journeys pass (6 of 6);
+- a read-only query on Neon found V1–V4, 11 courses, 53 lessons and 189 cards, one Super Admin, and no
+  test data left behind (`Updated Project/docs/07-deployment.md` §9).
+
+Commits: `809dd62` (build setup), `72ac44c` (`FUN-R07`).
+
+**What was learned.**
+
+- **On a GitHub build Vercel applies `.vercelignore` from the repository root.** The anchored allow-list
+  (`/*`) removed the whole repository and `.git`, and the ignore command's `git diff` then exited 129, which
+  failed the deployment. It is now a deny-list of unanchored patterns, and the ignore command ends in
+  `|| exit 1`, so an error means "build".
+- **The live site found a defect the local run could not** (`FUN-R07`): on a slower connection the sign-in
+  and registration buttons worked before their page script had attached, so the browser submitted the form
+  itself as a GET, putting the typed fields in the address. The buttons now ship disabled and the forms
+  declare `method="post"`.
+- **A serverless target needs test timeouts sized for a cold start.** An idle instance takes about 15 s to
+  start, longer than the 5 s assertion timeout; the suite allows 30 s when the address is remote.
+- **Marketplace terms cannot be accepted on the owner's behalf,** and the CLI reports them as pending until
+  the owner finishes the acceptance in the browser under the right team.
+- **The Vercel CLI changes files unasked:** a token file, a broad `.env*` ignore rule, and vendor agent
+  skills. Each was found in `git status` and removed before a commit.
+
+**Decisions.** None new; the owner's remaining actions are in `Updated Project/docs/06-review-summary.md` §8.

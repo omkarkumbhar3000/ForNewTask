@@ -15,4 +15,7 @@ npx playwright show-report          # the HTML report of the last run
 ```
 
 Each run registers its own throw-away family (`e2e-…@example.test`) and deletes it through the Account page
-at the end, which also tests the deletion. Set `CLEVERCUBS_URL` to test another address.
+at the end, which also tests the deletion. Set `CLEVERCUBS_URL` to test another address, for example
+production: `$env:CLEVERCUBS_URL = "https://clevercubs.vercel.app"; npx playwright test`. With another
+address set, an assertion waits up to 30 s instead of 5 s, because a cloud instance that was idle for five
+minutes takes about 15 s to start.

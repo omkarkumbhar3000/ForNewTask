@@ -137,5 +137,7 @@ check the staged files for secrets before committing.
 
 ## 8. The cloud copy
 
-A container on Vercel with PostgreSQL from Neon: how it is built, configured, deployed and checked is in
-[`docs/07-deployment.md`](docs/07-deployment.md).
+**Live at https://clevercubs.vercel.app** — a container on Vercel with PostgreSQL from Neon (`D73`). Every
+push to `main` deploys it. How it is built, configured, deployed and checked is in
+[`docs/07-deployment.md`](docs/07-deployment.md); the browser journeys run against it with
+`$env:CLEVERCUBS_URL = "https://clevercubs.vercel.app"; npx playwright test` (from `e2e/`).

@@ -176,6 +176,14 @@ node measure.mjs                                            # page weights (in e
 - **The cloud image:** `docker build -f Dockerfile.vercel -t clevercubs:local .` from `Updated Project/`;
   running it against a local PostgreSQL is `docs/07-deployment.md` §6. The image build skips the tests, so
   run both database suites before pushing.
+- ⛔ **Production is live at https://clevercubs.vercel.app, and every push to `main` deploys it.** Vercel
+  builds from GitHub (project root `New Task/Updated Project`, Git LFS on). A push is skipped only when
+  nothing under `app/`, `media/` or the deployment files changed. Check a change with
+  `$env:CLEVERCUBS_URL = "https://clevercubs.vercel.app"; npx playwright test` from `e2e/`.
+  - `.vercelignore` is applied from the repository root on those builds, so keep it a deny-list of
+    unanchored patterns (`docs/07-deployment.md` §7).
+  - Do not deploy with `vercel deploy` from the laptop: it uploads the 417 MB of media and stalls on this
+    connection.
 - **`start-dev.ps1`** finds a working JDK itself, starts MySQL, builds, and starts the jar detached with its
   log in `Updated Project/.tmp/app.log`. ⛔ Do not pipe its output (`| Select-Object`) in a tool call: the
   started JVM inherits the pipe and the call never returns.
@@ -207,6 +215,10 @@ node measure.mjs                                            # page weights (in e
   - Under Git Bash, prefix `docker run` with `MSYS_NO_PATHCONV=1`, or `-w /work` becomes a Windows path.
 - ⛔ **`vercel link` writes `Updated Project/.env.local` holding a `VERCEL_OIDC_TOKEN`.** It is gitignored
   (`.env.local`, `.vercel/`); never commit or print it.
+  - `vercel link` and `vercel integration add` also append a broad `.env*` rule to that folder's
+    `.gitignore`, which would hide `.env.example`.
+  - `vercel integration add neon` also installs vendor agent skills into `.agents/`, `.claude/skills/` and
+    `skills-lock.json`. Remove those after any such command, and check `git status`.
 
 ### Architecture rules that span several files
 
