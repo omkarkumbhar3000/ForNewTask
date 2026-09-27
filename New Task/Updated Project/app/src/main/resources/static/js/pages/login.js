@@ -27,3 +27,6 @@ form.addEventListener('submit', async (event) => {
     button.disabled = false;
   }
 });
+// The button ships disabled (login.html): clicked before this handler existed, the browser would submit the
+// form itself and reload the page, losing what was typed. It works from here on.
+form.querySelector('button[type="submit"]').disabled = false;

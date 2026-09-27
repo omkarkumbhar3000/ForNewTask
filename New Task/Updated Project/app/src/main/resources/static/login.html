@@ -19,7 +19,7 @@
       <h1>Sign in</h1>
       <p class="muted">For parents, guardians and CleverCubs administrators. Children start learning from a parent's account.</p>
       <div class="panel">
-        <form id="login-form" class="form" novalidate>
+        <form id="login-form" class="form" method="post" novalidate>
           <p class="form-alert" hidden tabindex="-1"></p>
           <div class="field">
             <label for="email">Email address</label>
@@ -29,7 +29,7 @@
             <label for="password">Password</label>
             <input id="password" name="password" type="password" autocomplete="current-password" required maxlength="200">
           </div>
-          <button class="btn btn-primary" type="submit">Sign in</button>
+          <button class="btn btn-primary" type="submit" disabled>Sign in</button>
         </form>
       </div>
       <p>New here? <a href="/register">Create a family account</a>.</p>

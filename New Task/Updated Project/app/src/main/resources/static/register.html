@@ -19,7 +19,7 @@
       <h1>Create a family account</h1>
       <p class="muted">A grown-up creates the account and adds the first child. You can add more children later. Fields marked <span class="req">required</span> are needed; everything else is optional.</p>
 
-      <form id="register-form" class="form stack-lg" novalidate>
+      <form id="register-form" class="form stack-lg" method="post" novalidate>
         <p class="form-alert" hidden tabindex="-1"></p>
 
         <section class="panel form" aria-labelledby="about-you">
@@ -92,7 +92,7 @@
         </section>
 
         <div class="row">
-          <button class="btn btn-primary btn-big" type="submit">Create account</button>
+          <button class="btn btn-primary btn-big" type="submit" disabled>Create account</button>
           <a href="/login">I already have an account</a>
         </div>
       </form>

@@ -151,6 +151,7 @@ Defects found in the new code. Fixed ones keep their row so the history stays ho
 | FUN-R04 | Low | The celebration animation widened a 375 px phone page by 2–3 px for a second | ✅ Fixed in two steps: the layer contains its paint; then (2026-09-27) the card "pop" became a small hop instead of a 6% scale, which had pushed the card's sticker past the edge of the screen (`e2e` responsive check, repeated against the cloud image) |
 | FUN-R05 | Low | Sessions were held in the server's memory, so a restart signed everyone out | ✅ Fixed: sessions are kept in the database in development and in the cloud (`DD-28`, `JdbcSessionTests`) |
 | FUN-R06 | Medium | Found while adding PostgreSQL (`D73`), before any release: there, an email address or username typed in other letter case would not have matched (sign-in refused, a taken username reported as free) | ✅ Fixed before release: `SqlDialect.caseInsensitive` and `CITEXT` columns (`RegistrationTests.identitiesIgnoreLetterCase`, run on both databases) |
+| FUN-R07 | Medium | Found by the browser journeys against the live deployment: on the sign-in and registration pages the button worked before the page's script had attached its handler, which on a slower connection takes the time of one or two requests. A click then made the browser submit the form itself: the page reloaded, everything typed was lost, and, as the forms named no method, the fields went into the address as a GET | ✅ Fixed (2026-09-27): both buttons ship disabled and are enabled by the script once it handles the form, and both forms say `method="post"`. Proof: the `e2e/` journeys, which failed at this click on production and pass there now |
 
 ## 5. Information or requirements still required (class I)
 
@@ -199,7 +200,7 @@ with its reason, ℹ️ = waiting for information.
 | SEC-E17 | ✅ | Scores, progress and rewards decided by the server; correct answers are not sent before an answer (`QuizAttemptTests.correctAnswersAreNotSentUpFront`) |
 | SEC-E18 | ✅ | Every value is written with `textContent`; strict CSP; `<b>`/`<script>` strings show as text (`e2e` feedback step) |
 | SEC-E19 | ✅ | Bodies are `JSON.stringify` objects (`js/api.js`) |
-| SEC-E20 | 🟡 | CSP, `nosniff`, `frame-ancestors 'none'`, `Referrer-Policy` (`SecurityConfigurationTests.securityHeadersArePresent`); HTTPS and HSTS depend on the host (`INF-05`; Vercel serves HTTPS) |
+| SEC-E20 | ✅ | CSP, `nosniff`, `frame-ancestors 'none'`, `Referrer-Policy` (`SecurityConfigurationTests.securityHeadersArePresent`). HTTPS and HSTS come from the host: on the production deployment (2026-09-27) every page answers over HTTPS with `Strict-Transport-Security: max-age=31536000; includeSubDomains`, and the cookies are `Secure` (checked with `curl -D -`; `07-deployment.md` §9) |
 | SEC-E21 | ✅ | No third-party request at runtime; fonts self-hosted; `default-src 'self'` |
 | SEC-E22 | ✅ | Sign-out invalidates the session (`AuthenticationTests.signOutInvalidatesTheSession`) |
 | SEC-E23 | ✅ | Identity comes from the session; ids in page addresses are ownership-checked |

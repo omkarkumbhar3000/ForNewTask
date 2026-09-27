@@ -65,3 +65,7 @@ form.addEventListener('submit', async (event) => {
     button.disabled = false;
   }
 });
+// The button ships disabled (register.html): this page waits for the session and the avatar list before the
+// handler above exists, and a click in that time would make the browser submit the form itself and reload
+// the page, losing everything typed. It works from here on.
+form.querySelector('button[type="submit"]').disabled = false;
