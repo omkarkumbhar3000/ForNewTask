@@ -103,13 +103,13 @@ before the whole file has arrived.
 Local: `start-dev.ps1` (see `README.md`). **Production: https://clevercubs.vercel.app**, a container on
 Vercel built from GitHub `main`, with PostgreSQL from Neon (`D73`). It was verified on 2026-09-27: health,
 security headers and HSTS, access control, the six browser journeys, and a read-only check of the cloud
-database ([`07-deployment.md`](07-deployment.md) §9). Every push to `main` deploys it.
+database ([`07-deployment.md`](07-deployment.md) §9). Every push to `main` deploys it. The first Super
+Admin is set up with the owner's own password, and the temporary credential is deleted from Vercel.
 
 ## 8. What remains, and what needs the owner
 
 | Item | Needed from | Detail |
 |---|---|---|
-| First Super Admin sign-in | Owner | Reveal `CC_ADMIN_INITIAL_PASSWORD` in the Vercel project's settings, sign in, choose a new password, then delete the variable ([`07-deployment.md`](07-deployment.md) §8) |
 | A faster first visit after an idle spell | Later | Vercel stops an idle instance after 5 minutes, and the application then takes about 15 s to start. Faster start-up (Spring AOT or class-data sharing) or a paid plan's always-on instance would remove it |
 | The repository is public | Owner (accepted for now, `D74`) | The media files are publicly downloadable from GitHub while their licences are unconfirmed (`INF-11`) |
 | Contact address (`INF-02`) | Owner (unset by choice, `D75`) | Set `CC_CONTACT_EMAIL` on the Vercel project when an address should be shown; until then the page says it is being set up |

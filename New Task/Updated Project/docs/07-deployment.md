@@ -117,12 +117,12 @@ nothing relevant changed; Neon's free database pauses when idle and wakes on the
 
 | Item | Needed from |
 |---|---|
-| **First Super Admin sign-in:** reveal `CC_ADMIN_INITIAL_PASSWORD` (Vercel → project `clevercubs` → Settings → Environment Variables), sign in at `/login` with the owner's address, set a new password when asked, then delete the variable (§7) | Owner |
 | The repository is **public**, and so are the media files in it; their licences are unconfirmed (`INF-11`, accepted for now by `D74`) | Owner |
 | The Contact Us address: set `CC_CONTACT_EMAIL` on the project and redeploy when one should be shown (`INF-02`, `D75`) | Owner |
 | A custom domain, if wanted | Owner |
 
-The Neon terms are accepted and `D73` is decided, so both are closed.
+The Neon terms are accepted, `D73` is decided and the first Super Admin is set up (§9), so all three are
+closed.
 
 ## 9. Production verification (2026-09-27)
 
@@ -137,6 +137,13 @@ The Neon terms are accepted and `D73` is decided, so both are closed.
 | Weak password at registration (API) | ✅ `400 weak-password`, field `parent.password`, identical to local |
 | Browser journeys (`e2e/`, `CLEVERCUBS_URL=https://clevercubs.vercel.app`) | ✅ 6 of 6 at 1440 and 375 px (commit `72ac44c`): public pages at four widths, protected URLs, and register → child mode → lesson → ask a grown-up → parent gate → requests → progress → feedback → delete the account. The first run found `FUN-R07` (fixed) and a too-short assertion timeout for a cold-starting instance (the suite now allows 30 s when the address is remote) |
 | The cloud database (read-only query as the Neon owner role) | ✅ 4 Flyway migrations (V1–V4); 11 courses, 53 lessons, 189 cards, 134 quiz questions; 1 Super Admin (the bootstrap); the `cc_app` role present; server sessions stored; 0 test accounts left behind |
+
+| First Super Admin setup | ✅ Completed on 2026-09-27 in the owner's browser. The account signed in with the temporary password and was sent to "Choose your own password"; the owner chose the new password; `CC_ADMIN_INITIAL_PASSWORD` was then deleted from the project (it existed in Production only); a fresh sign-in with the new password reached the dashboard (audit: `auth login signed in`). The account is `ACTIVE`, not locked, and no longer flagged to change its password. No redeploy was needed: a variable change applies to new deployments only, the old value is no longer a valid password, and the bootstrap never runs again once a Super Admin exists (`D69`) |
+
+The temporary password went from Vercel to the Windows clipboard and was pasted into the masked fields, so it
+never appeared in a chat, log, screenshot or file in the repository; the clipboard was cleared straight
+after. With `CC_ADMIN_EMAIL` still set and the password gone, the bootstrap logs one harmless warning at each
+start ("only partly configured"); deleting `CC_ADMIN_EMAIL` as well would silence it.
 
 How the database was queried without exposing a secret: `vercel env pull <file outside the repository>
 --environment=production`, only the four `PG*` values passed to a throw-away `postgres:17-alpine` container

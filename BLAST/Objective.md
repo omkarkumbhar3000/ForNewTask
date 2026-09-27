@@ -21,23 +21,18 @@ child-friendly educational application with a Java backend.** This is stage 2 of
 Phases 1–3 ✅ · Blueprint approved (`D68`) · B0–B8 built ✅ · ✅ **Completion run done 2026-09-27**: live at
 https://clevercubs.vercel.app; what remains needs the owner (`Updated Project/docs/06-review-summary.md` §8).
 
-The overnight run of 2026-09-26 (`D71`, `D72`) is done up to its first push (`3651d3b`: build, §1–§31
-cross-check, baseline kept out of git). Its improvement push and the Vercel deployment remain.
+The overnight run (2026-09-26, `D71`, `D72`) and the completion run (2026-09-27: both database suites,
+E2E, media fixes, docs, push, Vercel production) are done; detail in `../docs/history/03-narrative-log.md`.
 
-### 🟡 Completion run (2026-09-27, amends `OBJ-034`) — end to end; stop only a step truly blocked
+### ✅ First-admin setup (2026-09-27, amends `OBJ-034`) — done; `Updated Project/docs/07-deployment.md` §9
 
-1. **Docker running**, then the full suite on **MySQL and PostgreSQL** and the E2E journeys against the
-   current code. No reliance on earlier runs; fix what fails.
-2. **Review every uncommitted change**; discard or overwrite nothing without checking it.
-3. **Finish the code-side items** of `docs/06-review-summary.md` §8, and the deferred media fixes
-   (`FUN-E29`, `FUN-E32`) unless they genuinely need a business decision.
-4. **Docs and history:** record `D73`; correct the test count and the stale "publish to GitHub remaining";
-   fix `Dockerfile.vercel`'s README reference; update anything else stale; re-check `CLAUDE.md`.
-5. **Git:** status, diff, ignores, secrets, LFS; commit; push; the repository **public**; verify the remote.
-6. **Vercel:** connect the cloud database once the owner accepts the Vercel/Neon terms; deploy to
-   production; verify it and run the E2E journeys against it; fix and redeploy as needed.
-7. **Final verification** (local, MySQL, PostgreSQL, GitHub, Vercel, cloud database, E2E, docs,
-   security), a cross-check against the requirement, and a concise report.
+1. In the Vercel project `clevercubs`, locate `CC_ADMIN_INITIAL_PASSWORD`. ⛔ Its value never appears in
+   chat, logs, screenshots, documentation or git.
+2. On https://clevercubs.vercel.app, sign in as the Super Admin (the owner's Gmail, `D75`) and follow the
+   forced password change. **Stop where the owner must choose the new password**, and say exactly what to do.
+3. After the owner's step: verify the account and new password work; delete `CC_ADMIN_INITIAL_PASSWORD`
+   from Vercel; redeploy only if required; verify the admin sign-in again.
+4. Record the completed first-admin setup in the project documentation. Never store a secret anywhere.
 
 **Owner decisions (2026-09-27):** the repository is public for now (`D74`) · the cloud database is the
 assistant's choice, most consistent with the code and lowest in maintenance (`D73`: Neon PostgreSQL) ·

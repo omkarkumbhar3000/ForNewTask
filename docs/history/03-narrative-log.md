@@ -302,3 +302,29 @@ Commits: `809dd62` (build setup), `72ac44c` (`FUN-R07`).
   skills. Each was found in `git status` and removed before a commit.
 
 **Decisions.** None new; the owner's remaining actions are in `Updated Project/docs/06-review-summary.md` §8.
+
+### First Super Admin setup on production (2026-09-27)
+
+**What changed.** At the owner's request, in the owner's signed-in Chrome session:
+
+- the assistant located `CC_ADMIN_INITIAL_PASSWORD` in the Vercel project;
+- it signed in to https://clevercubs.vercel.app as the Super Admin and reached "Choose your own password";
+- it stopped there, and the owner chose the new password;
+- `CC_ADMIN_INITIAL_PASSWORD` was then deleted from Vercel (Production was its only environment);
+- the owner signed in again with the new password and reached the dashboard.
+
+The account is active, unlocked and no longer flagged to change its password. No redeploy was needed.
+Detail: `Updated Project/docs/07-deployment.md` §9.
+
+**What was learned.**
+
+- **A secret can be used without being seen.** The value went from `vercel env pull` (a file outside the
+  repository, deleted at once) to the Windows clipboard, and was pasted into the masked password fields. It
+  never passed through a chat, a tool result or a screenshot, and the clipboard was cleared afterwards.
+- **Check which page a browser tool is acting on before a click.** One element search ran while the tab was
+  still on Vercel and offered Vercel's own "Log Out"; a screenshot confirmed the page before anything was
+  clicked.
+- The audit trail showed a real family registered at 08:30 (not a test account) and one refused admin sign-in
+  just after the password change; neither came from the assistant.
+
+**Decisions.** None new.
