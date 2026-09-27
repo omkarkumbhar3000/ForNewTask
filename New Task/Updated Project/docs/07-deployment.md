@@ -57,7 +57,7 @@ Every value lives in the Vercel project's environment; nothing secret is in the 
 | `CC_ADMIN_EMAIL` | Project setup | plain | The first Super Admin's sign-in address |
 | `CC_ADMIN_INITIAL_PASSWORD` | Project setup, random | secret, readable by the owner | The first sign-in only; the account must change it at once. Remove it afterwards (§7) |
 | `PORT` | Project setup | plain | `8080`: where Vercel sends traffic (the image runs without root) |
-| `CC_CONTACT_EMAIL` | Owner, later | plain | The Contact Us address (`INF-02`) |
+| `CC_CONTACT_EMAIL` | Owner's addresses, set 2026-09-27 | plain | The Contact Us addresses, comma-separated (`D80`) |
 
 The image sets `SPRING_PROFILES_ACTIVE=cloud`, which reads the variables above (`application.yml`).
 
@@ -118,7 +118,6 @@ nothing relevant changed; Neon's free database pauses when idle and wakes on the
 | Item | Needed from |
 |---|---|
 | The repository is **public**, and so are the media files in it; their licences are unconfirmed (`INF-11`, accepted for now by `D74`) | Owner |
-| The Contact Us address: set `CC_CONTACT_EMAIL` on the project and redeploy when one should be shown (`INF-02`, `D75`) | Owner |
 | A custom domain, if wanted | Owner |
 
 The Neon terms are accepted, `D73` is decided and the first Super Admin is set up (§9), so all three are

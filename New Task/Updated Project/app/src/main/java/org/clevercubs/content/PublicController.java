@@ -56,8 +56,9 @@ class PublicController {
 
     @GetMapping("/contact")
     Map<String, Object> contact() {
-        String email = properties.contactEmail();
-        return Map.of("email", email == null ? "" : email, "configured", email != null && !email.isBlank());
+        // D80: one or more addresses. "email" stays for older clients: the addresses joined by ", ".
+        List<String> emails = properties.contactEmails();
+        return Map.of("emails", emails, "email", String.join(", ", emails), "configured", !emails.isEmpty());
     }
 
     @GetMapping("/avatars")

@@ -1,7 +1,7 @@
 # Baseline Analysis — The uploaded CleverCubs project, as it is
 
 **Objective:** `OBJ-034` · **Requirement:** [`00-source-requirement.md`](00-source-requirement.md) §4, §29
-(Phases 1–2) · **Baseline:** `New Task/Current Project/Kids_learn_project/` (read-only, never modified) ·
+(Phases 1–2) · **Baseline:** `New Task/Current Project/Kids_learn_project/` (read-only, never modified; removed after migration on 2026-09-27, `D80`) ·
 **Status:** ✅ Phases 1–2 complete (2026-09-26)
 
 This document answers the twelve points of requirement §4 from the files themselves. Every claim cites a

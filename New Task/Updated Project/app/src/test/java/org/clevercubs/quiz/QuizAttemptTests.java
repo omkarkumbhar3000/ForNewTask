@@ -60,8 +60,9 @@ class QuizAttemptTests extends IntegrationTest {
         journeys.cleanUp();
     }
 
+    /** A Tiny Cub (3) has finished every lesson of one of their own courses (colours, animals, fruits; D78). */
     private Family readyForQuiz(String slug) throws Exception {
-        Family f = journeys.family(5);
+        Family f = journeys.family(3);
         journeys.enterChildMode(f);
         journeys.finishLessons(f, slug);
         return f;
@@ -70,7 +71,7 @@ class QuizAttemptTests extends IntegrationTest {
     @Test
     @DisplayName("the quiz stays closed until every lesson is done (DD-16)")
     void quizNeedsTheLessons() throws Exception {
-        Family f = journeys.family(5);
+        Family f = journeys.family(3); // animals is a Tiny Cubs course (D78)
         journeys.enterChildMode(f);
         mvc.perform(post("/api/v1/learn/quizzes/" + journeys.quizId("animals") + "/attempts").with(realCsrf())
                         .session(f.session()))
@@ -106,17 +107,17 @@ class QuizAttemptTests extends IntegrationTest {
     @Test
     @DisplayName("passing at 70% completes the course but earns no badge; 80% is the reward line (D62, D64)")
     void passMarkAndRewardLineAreSeparate() throws Exception {
-        Family f = readyForQuiz("flowers");
-        long quiz = journeys.quizId("flowers");
+        Family f = readyForQuiz("fruits");
+        long quiz = journeys.quizId("fruits");
         String seventy = journeys.answerAll(f, journeys.startQuiz(f, quiz), quiz, 7);
         assertThat((Boolean) com.jayway.jsonpath.JsonPath.read(seventy, "$.result.passed")).isTrue();
         assertThat((Integer) com.jayway.jsonpath.JsonPath.read(seventy, "$.result.coursePercent")).isEqualTo(100);
         List<String> none = com.jayway.jsonpath.JsonPath.read(seventy, "$.result.newBadges[*].code");
-        assertThat(none).doesNotContain("quiz-star-flowers");
+        assertThat(none).doesNotContain("quiz-star-fruits");
 
         String eighty = journeys.answerAll(f, journeys.startQuiz(f, quiz), quiz, 8);
         List<String> badges = com.jayway.jsonpath.JsonPath.read(eighty, "$.result.newBadges[*].code");
-        assertThat(badges).contains("quiz-star-flowers");
+        assertThat(badges).contains("quiz-star-fruits");
     }
 
     @Test
@@ -229,7 +230,7 @@ class QuizAttemptTests extends IntegrationTest {
         Family a = readyForQuiz("colours");
         long quiz = journeys.quizId("colours");
         long attempt = journeys.startQuiz(a, quiz);
-        Family b = journeys.family(5);
+        Family b = journeys.family(3);
         journeys.enterChildMode(b);
         mvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get(
                         "/api/v1/learn/attempts/" + attempt).session(b.session()))

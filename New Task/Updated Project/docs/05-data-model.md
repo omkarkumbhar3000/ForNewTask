@@ -188,3 +188,13 @@ callback also creates the `cc_app` role, since a hosted database has no init scr
 needs the same change to the other, and both test runs (`mvnw test`, `mvnw test -Dclevercubs.test.db=postgresql`)
 must pass.
 
+
+## 10. Each club's own courses (`V5__club_programs.sql`, `D78`)
+
+| Change | Why |
+|---|---|
+| `DELETE FROM program_course` in both migration folders | Every Year-1 program held every course (`DD-20`, `FUN-R08`). No table or column changes. Enrolments, progress and attempts are untouched |
+| `ContentSeeder` refills `program_course` from `resources/programs/year-1.json` whenever the table is empty | Each club gets its own set (`DQ-13`): Tiny 4, Little 4, Big 3 courses, with no course in two clubs. The file is read only while the table is empty, so the admin's later program edits are never overwritten |
+
+A child reaches a course only if it is in a program they are enrolled in (`program_course` joined with
+`program_enrolment`). That is their club's Year 1, or the next club's after a parent chose to continue.

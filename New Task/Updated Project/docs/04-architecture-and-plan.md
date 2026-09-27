@@ -148,7 +148,7 @@ The endpoints as built (all JSON under `/api/v1`; errors are RFC 9457 problem+js
 | Session mode | `POST session/child {childId}` (parent) · `POST session/parent {password}` (child) |
 | Child | `GET learn/me` · `GET learn/home` · `GET learn/courses/{slug}` · `GET learn/lessons/{id}` · `PUT learn/items/{id}/view` · `GET learn/quizzes/{id}` · `POST learn/quizzes/{id}/attempts` · `GET learn/attempts/{id}` · `PUT learn/attempts/{id}/answers/{questionId}` · `GET learn/profile` · `GET/POST learn/requests` |
 | Parent | `GET parent/overview` · `GET/POST parent/children` · `GET/PATCH/DELETE parent/children/{id}` · `GET parent/children/{id}/year-summary` · `POST parent/children/{id}/next-year` · `GET parent/children/{id}/export` · `POST parent/children/{id}/quizzes/{quizId}/grant` · `GET parent/requests` · `POST parent/requests/{id}/approve\|decline` · `GET/POST parent/feedback` · `GET/PATCH/DELETE parent/account` |
-| Admin | `GET admin/overview` · `GET admin/reports/courses` · `GET admin/accounts` · `POST admin/accounts/{id}/status` · `POST admin/accounts/{id}/temporary-password` · `GET admin/children` · `GET admin/children/{id}/progress` · `GET/PATCH admin/courses[/{id}]` · `PATCH admin/lessons/{id}` · `PATCH admin/items/{id}` · `GET/PATCH admin/quizzes/{id}` · `PATCH admin/questions/{id}` · `GET admin/programs` · `PUT admin/programs/{id}/courses` · `GET/PATCH admin/age-groups[/{id}]` · `GET/PATCH admin/badges[/{id}]` · `GET/POST/PATCH admin/messages[/{id}]` · `GET/PATCH admin/feedback[/{id}]` · `GET admin/settings` · `PUT admin/settings/{key}` · `GET admin/audit` · `GET admin/audit/actions` |
+| Admin | `GET admin/overview` · `GET admin/reports/courses` · `GET/POST admin/accounts` (`POST` adds a Super Admin, `D79`) · `POST admin/accounts/{id}/status` · `POST admin/accounts/{id}/temporary-password` · `GET admin/children` · `GET admin/children/{id}/progress` · `GET/PATCH admin/courses[/{id}]` · `PATCH admin/lessons/{id}` · `PATCH admin/items/{id}` · `GET/PATCH admin/quizzes/{id}` · `PATCH admin/questions/{id}` · `GET admin/programs` · `PUT admin/programs/{id}/courses` · `GET/PATCH admin/age-groups[/{id}]` · `GET/PATCH admin/badges[/{id}]` · `GET/POST/PATCH admin/messages[/{id}]` · `GET/PATCH admin/feedback[/{id}]` · `GET admin/settings` · `PUT admin/settings/{key}` · `GET admin/audit` · `GET admin/audit/actions` |
 
 Every state-changing call needs the `X-XSRF-TOKEN` header carrying the value of the `XSRF-TOKEN` cookie.
 Deleting or exporting a child, deleting an account, and admin changes to accounts, settings, programs and
@@ -189,7 +189,8 @@ is `403 reauth-required`.
 ### 6.3 Age-group adaptation (§5, `D66`)
 
 The child's age group comes from the server as a `ui_profile`. The same pages then adapt, driven by data
-rather than separate code paths.
+rather than separate code paths. The age group also decides **what** the child may open. Each club's program
+has its own courses, and anything outside the child's program is `404` (`DQ-13`, `D78`).
 
 | Aspect | Toddler (2–3) | Pre-school (4–5) | Early primary (6–8) |
 |---|---|---|---|

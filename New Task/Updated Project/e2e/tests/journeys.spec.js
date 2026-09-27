@@ -87,12 +87,20 @@ test('a family registers, learns, asks a grown-up, and deletes its account', asy
   await page.getByRole('button', { name: 'Start learning as Kit' }).click();
   await expect(page).toHaveURL(/\/learn\/$/);
   await expect(page.locator('html')).toHaveAttribute('data-profile', 'TODDLER');
-  await expect(page.locator('.tile')).toHaveCount(11);
+  // A three-year-old is a Tiny Cub and sees only Tiny Cubs' own courses (D78).
+  await expect(page.locator('.tile')).toHaveCount(4);
+  for (const name of ['Colours', 'Animals', 'Fruits', 'Rhymes']) {
+    await expect(page.getByRole('link', { name: new RegExp(`^${name}`) })).toBeVisible();
+  }
   await noHorizontalScroll(page);
 
-  // The child cannot open the parent area by typing its address.
+  // The child cannot open the parent area, or another club's course, by typing its address.
   const denied = await page.request.get('/api/v1/parent/overview');
   expect(denied.status()).toBe(403);
+  for (const slug of ['alphabets', 'stories']) {
+    const otherClub = await page.request.get(`/api/v1/learn/courses/${slug}`);
+    expect(otherClub.status(), `a Tiny Cub opening ${slug}`).toBe(404);
+  }
 
   // A lesson: open every card, the lesson completes.
   await page.getByRole('link', { name: /^Colours/ }).click();

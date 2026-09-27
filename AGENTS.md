@@ -17,7 +17,7 @@ as possible. Work through §2 in order. Report at the end with §5.
 | ⛔ Secrets never leave their store | The repository is public. Never print, log, commit or paste a password, token or key. Local secrets live only in `New Task/Updated Project/.env` (gitignored): write them there, never show their values |
 | Never invent values | No made-up emails, credentials or URLs. A missing value is reported as a manual step |
 | Ask before anything destructive or outward-facing | `docker compose down -v` (deletes local data), deleting files or accounts, force-push, `git reset --hard`, `git clean`, and any change to Vercel, Neon or production |
-| Leave these alone | `docs/history/` entries (append-only), `New Task/Current Project/` (the baseline, not in git), `BLAST/` except `BLAST/Objective.md` |
+| Leave these alone | `docs/history/` entries (append-only), `BLAST/` except `BLAST/Objective.md`. `New Task/Current Project/` would hold a future project's untouched baseline; CleverCubs' baseline was removed after its migration audit (`D80`) |
 | Use the project's scripts first | `setup.ps1`, `start-dev.ps1`, `stop-dev.ps1` in `New Task/Updated Project/` already solve the known traps |
 | Skills are optional | Use an installed skill only when it helps, for example a Git workflow skill such as `go-go-go` for §6, or a browser skill to look at the page. Never run skills just because they exist |
 | Verify before claiming | Say *done* only after the check in the table's last column has passed |
@@ -39,7 +39,7 @@ as possible. Work through §2 in order. Report at the end with §5.
 | 9 | Start supporting services | Docker Desktop running; MySQL via `docker compose up -d` in `$p` (the start script does it) | `docker ps` shows `clevercubs-mysql` healthy |
 | 10 | Start the application | `setup.ps1` without switches (it calls `start-dev.ps1`). ⚠️ From an agent's tool call, **do not pipe or redirect** `start-dev.ps1`'s output: the started JVM inherits the handle and the call never returns. Start it in its own window instead: `Start-Process powershell -ArgumentList '-NoProfile','-ExecutionPolicy','Bypass','-File',"$p\start-dev.ps1"`, then poll step 11. Check port 8080 first (`Get-NetTCPConnection -LocalPort 8080`) | Port 8080 answers |
 | 11 | Health checks | `Invoke-RestMethod http://127.0.0.1:8080/api/v1/public/health` → `status: UP` (Flyway ran and the database answers). `http://127.0.0.1:8080/parent/` without a session → `302` to `/login?next=…` | Both answers as stated |
-| 12 | Run the relevant tests | Backend gate: `& "$p\app\mvnw.cmd" -f "$p\app\pom.xml" verify` (219 tests, Docker needed). ⚠️ `verify` rebuilds the jar that `start-dev.ps1` runs, and Windows locks it: run it **before** step 10, or stop the app first (`stop-dev.ps1`). If `mvnw` rejects `JAVA_HOME`, set it to the JDK that `setup.ps1` reported. Browser journeys (app running): `cd "$p\e2e"; npx playwright test` | `Tests run: 219, Failures: 0` and `6 passed` |
+| 12 | Run the relevant tests | Backend gate: `& "$p\app\mvnw.cmd" -f "$p\app\pom.xml" verify` (228 tests, Docker needed). ⚠️ `verify` rebuilds the jar that `start-dev.ps1` runs, and Windows locks it: run it **before** step 10, or stop the app first (`stop-dev.ps1`). If `mvnw` rejects `JAVA_HOME`, set it to the JDK that `setup.ps1` reported. Browser journeys (app running): `cd "$p\e2e"; npx playwright test` | `Tests run: 219, Failures: 0` and `6 passed` |
 | 13 | Open the application in Chrome | `start-dev.ps1` opens a **new Chrome window** itself; otherwise `Start-Process chrome "--new-window http://127.0.0.1:8080"`. With browser tools, open a dedicated tab | The CleverCubs welcome page is showing |
 | 14 | Verify access | Create a family at `/register` (a throw-away `…@example.test` address), open a lesson, then delete the account on the Account page. Or rely on step 12's journeys, which do exactly this | The journey works end to end |
 | 15 | Report | The table in §5 plus every manual step left | The person knows what is done and what is theirs to do |
@@ -73,7 +73,7 @@ If you do, keep them outside the repository and delete them afterwards. Deployme
 | Browser journeys | ✅/❌ | `N passed` |
 | Chrome | ✅/❌ | opened / not found |
 | Production | ✅/❌ | health `UP` at https://clevercubs.vercel.app |
-| Manual steps left | — | e.g. install Docker Desktop and restart; set the contact email (pending business input) |
+| Manual steps left | — | e.g. install Docker Desktop and restart |
 
 ## 6. Git workflow
 

@@ -11,7 +11,7 @@
 
 ## 1. Mission
 
-Rebuild the CleverCubs toddler-learning site (`../New Task/Current Project/Kids_learn_project/`) as a simple,
+Rebuild the CleverCubs toddler-learning site (the baseline `Kids_learn_project`, removed after migration, `D80`) as a simple,
 lightweight, secure, child-friendly educational application. It has a Java (Spring Boot 4.1) backend,
 parent, child and Super Admin roles, backend-calculated progress, a three-attempt quiz limit, rewards, and a
 light, responsive UI that adapts to the child's age group. It keeps all of the baseline's learning content.

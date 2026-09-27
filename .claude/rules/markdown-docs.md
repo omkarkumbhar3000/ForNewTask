@@ -16,7 +16,7 @@ touched: the root `CLAUDE.md`, `README.md` and `AGENTS.md`, everything in `BLAST
 and consistent with the others. Do not add a new small Markdown file for one topic (`D77`): extend the
 central guide or the matching `docs/` file.
 
-**Excluded:** `New Task/Current Project/` (the owner's baseline, never edited), `docs/history/` entries
+**Excluded:** `New Task/Current Project/` (an owner's baseline, never edited, when one is present), `docs/history/` entries
 (append-only), and anything generated (a `.docx`/`.xlsx` rendered from markdown; a corpus in `.tmp/`).
 
 ## One fact, one home
@@ -28,7 +28,7 @@ A fact belongs in exactly one layer; the others cross-reference it.
 | **Requirement — active** | `BLAST/Objective.md` | The single active objective. Injected every prompt; kept small |
 | **Requirement — history** | `docs/history/` | **Append-only.** Objective register, decisions, narrative |
 | **Protocol memory** | `BLAST/LLM.md`, `task_plan.md`, `findings.md`, `progress.md` | Schema and law, phases, discoveries, run history |
-| **Project baseline** | `New Task/Current Project/` | The project, requirement and feedback as provided |
+| **Project baseline** | `New Task/Current Project/` | The project, requirement and feedback as provided. Absent now: CleverCubs' baseline was removed after migration (`D80`) |
 | **Project output** | `New Task/Updated Project/` | The improved project and its own documentation |
 | Operating guidance | root `CLAUDE.md` | How to work in this workspace: development rules, conventions |
 | Central guide and orientation | root `README.md` | Setup, access, credentials reference, tests, deployment, troubleshooting, and what each folder is |

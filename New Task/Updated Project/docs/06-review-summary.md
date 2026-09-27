@@ -1,7 +1,8 @@
 # Review Summary — What the enhanced CleverCubs delivers, and what is still open
 
 **Objective:** `OBJ-034` · **Requirement:** [`00-source-requirement.md`](00-source-requirement.md) §29 Phase 6 ·
-**Date:** 2026-09-27 · **Status:** ✅ build complete, verified locally and live at https://clevercubs.vercel.app (§7)
+**Date:** 2026-09-27 · **Status:** ✅ build complete, verified locally and live at https://clevercubs.vercel.app (§7).
+`OBJ-036` added club-specific courses (`D78`), additional Super Admins (`D79`) and the contact addresses (`D80`)
 
 ---
 
@@ -42,8 +43,8 @@ content files (`sourceWord`).
 |---|---|---|---|
 | 1, 4, 29 | Understand the baseline first; enhanced version in `Updated Project/` | `01-baseline-analysis.md`, `02-issue-register.md`; the app, content and media all in `Updated Project/` | This document; the app runs without the old folder |
 | 2, 24 | Child-friendly, simple, light theme, purposeful animation | Design system `css/app.css`; one celebration on success; age-adaptive pages | Browser review at 1440 and 375 px |
-| 3, 31 | Ask before material decisions | `D56`–`D75`; defaults `DD-01`–`DD-29` documented | `03-decisions.md` |
-| 5 | Age groups from the date of birth; experience adapts | Bands 2–3, 4–5, 6–8 as data; `ui_profile` drives size, wording, stars or numbers | `ChildRulesTests`, `LearningFlowTests.homeStartsAtZero` |
+| 3, 31 | Ask before material decisions | `D56`–`D80`; defaults `DD-01`–`DD-29` documented | `03-decisions.md` |
+| 5 | Age groups from the date of birth; experience adapts | Bands 2–3, 4–5, 6–8 as data; `ui_profile` drives size, wording, stars or numbers. Each club has its own courses, and a child opens only theirs (`DQ-13`) | `ChildRulesTests`, `LearningFlowTests.homeStartsAtZero`, `ClubProgramsTests` (4) |
 | 6 | Parent and child registration, mandatory and optional fields | `register.html`, `RegistrationService` (`DD-09`) | `RegistrationTests` (11) |
 | 7 | Parent → child → courses → progress; escalation to the parent | Child mode (`D58`), "Ask a grown-up" requests, parent inbox (`D59`) | `QuizAttemptTests.parentGrantsMoreAttempts`, `ParentAreaTests.usernameRequest`, `e2e` |
 | 8 | Authentication, sessions, RBAC, protected URLs redirect to login, backend authorisation | `SecurityConfig`, `SessionAuthentication`, ownership checks | `AuthenticationTests`, `SecurityConfigurationTests`, `PagesAndMediaTests`, `LoginLockTests` |
@@ -55,17 +56,17 @@ content files (`sourceWord`).
 | 14 | Encouraging, age-appropriate messages | `ui_message` rows per age group, editable by the admin | Browser review |
 | 15 | Parent feedback, admins only | `FeedbackService`; admin Feedback section | `ParentAreaTests.feedbackVisibility` |
 | 16 | One-year completion summary; the parent decides about next year | Year summary page, certificate, next-year choice | `ParentAreaTests.completingTheYear` |
-| 17 | Contact Us, clearly visible | Footer on every page; `contact.html` | `e2e` public pages |
+| 17 | Contact Us, clearly visible | Footer on every page; `contact.html` lists every address in `CC_CONTACT_EMAIL` (`D80`) | `e2e` public pages, `PagesAndMediaTests.contactAddresses`, `CleverCubsPropertiesTests` |
 | 18 | Terms & Conditions, flagged for legal review | `terms.html`, `privacy.html` marked draft | `INF-03` |
-| 19 | Super Admin dashboard, RBAC, protected sensitive actions, audit | `/admin/`, `AdminService`, recent-password rule (`DD-26`) | `AdminTests` (8) |
-| 20 | Security list | See `02-issue-register.md` §6 (every baseline issue with its test) | 219 JUnit tests |
+| 19 | Super Admin dashboard, RBAC, protected sensitive actions, audit | `/admin/`, `AdminService`, recent-password rule (`DD-26`); a Super Admin can add another (`D79`) | `AdminTests` (10) |
+| 20 | Security list | See `02-issue-register.md` §6 (every baseline issue with its test) | 228 JUnit tests |
 | 21 | Java, clean architecture, justified dependencies | Packages by feature, no ORM, no Lombok, no JS framework | `pom.xml` (7 runtime starters) |
 | 22 | Schema from the requirements, proposed first | `05-data-model.md` (approved with `D68`), migrations V1–V4, a PostgreSQL copy for the cloud (`D73`) | `DatabaseSetupTests` on both databases |
 | 23 | Desktop first, responsive, mobile-ready APIs | Versioned JSON API; responsive pages | `e2e` at 1440, 1024, 768, 375 px |
 | 25 | Measured performance work | See §2 "Weight" and §6; lighter media (`DD-29`) | `e2e/measure.mjs`, `MediaWeightTests` |
 | 26 | Maintainable | One stylesheet, shared modules, docs per area, one setup guide (root `README.md`) and a setup script | — |
 | 27 | Existing issues kept apart from new ones | `02-issue-register.md` §2–§6 | — |
-| 28 | Test the listed flows | JUnit (219, on MySQL and on PostgreSQL) and Playwright (6 journeys) | §5 |
+| 28 | Test the listed flows | JUnit (228, on MySQL and on PostgreSQL) and Playwright (6 journeys) | §5 |
 | 30 | Git: check media, LFS, secrets, generated files before committing | `.gitignore`, LFS rules for `media/` | §7 |
 
 ## 5. How it was tested
@@ -73,8 +74,8 @@ content files (`sourceWord`).
 | Level | What | Result |
 |---|---|---|
 | Unit | Progress, quiz, reward, age-group, username and password rules; throttle; media weight (`MediaWeightTests`) | ✅ |
-| Integration (Testcontainers MySQL 8.4) | Registration, sign-in, lock, sessions, child mode, lessons, quizzes (limit, lock, grant, resume, simultaneous starts), rewards, year completion, parent area, admin, pages and media, security headers, CSRF, IDOR, injection strings | ✅ 219 tests, 0 failures (`mvnw verify`) |
-| The same suite on PostgreSQL 18, production's version (`-Dclevercubs.test.db=postgresql`, `D73`) | Everything above, plus database sessions over a real server and letter case in email addresses and usernames | ✅ 219 tests, 0 failures |
+| Integration (Testcontainers MySQL 8.4) | Registration, sign-in, lock, sessions, child mode, lessons, quizzes (limit, lock, grant, resume, simultaneous starts), rewards, year completion, parent area, admin, pages and media, security headers, CSRF, IDOR, injection strings, club separation, adding a Super Admin | ✅ 228 tests, 0 failures (`mvnw verify`) |
+| The same suite on PostgreSQL 18, production's version (`-Dclevercubs.test.db=postgresql`, `D73`) | Everything above, plus database sessions over a real server and letter case in email addresses and usernames | ✅ 228 tests, 0 failures |
 | Browser (Playwright, installed Chrome) | Public pages at four widths without script errors; protected URLs; register → child mode → lesson → ask a grown-up → parent gate → requests → progress → feedback → delete the account; at 1440 and 375 px | ✅ 6 of 6 against the development server (MySQL) and ✅ 6 of 6 against production, https://clevercubs.vercel.app (Neon PostgreSQL) |
 | Manual browser review | Every page of the three areas, the quiz with a wrong answer, the lock after three tries, the admin dashboard | ✅ found and fixed `FUN-R01`–`FUN-R04` |
 
@@ -85,7 +86,7 @@ content files (`sourceWord`).
 | Welcome (first visit, fonts included) | 141 KB | 13 |
 | Sign in | 26 KB | 5 |
 | Parent dashboard | 28 KB | 6 |
-| Child home, 11 courses | 33 KB | 7 |
+| Child home, 11 courses (measured before `D78`; a club now shows 3–4) | 33 KB | 7 |
 | Birds lesson 1 (baseline: 56.85 MB) | 385 KB | 13 |
 | Rhyme video lesson (video streams on play) | 153 KB | 8 |
 
@@ -112,10 +113,9 @@ Admin is set up with the owner's own password, and the temporary credential is d
 |---|---|---|
 | A faster first visit after an idle spell | Later | Vercel stops an idle instance after 5 minutes, and the application then takes about 15 s to start. Faster start-up (Spring AOT or class-data sharing) or a paid plan's always-on instance would remove it |
 | The repository is public | Owner (accepted for now, `D74`) | The media files are publicly downloadable from GitHub while their licences are unconfirmed (`INF-11`) |
-| Contact address (`INF-02`) | Owner (unset by choice, `D75`) | Set `CC_CONTACT_EMAIL` on the Vercel project when an address should be shown; until then the page says it is being set up |
 | Legal review (`INF-03`) | Owner / counsel | Terms, privacy notice, consent wording, retention, target country |
 | Email provider (`INF-04`) | Owner | Self-service password reset and request notifications; until then admins issue temporary passwords (`DD-25`) |
-| Content for 6–8 and a Year 2 (`INF-01`) | Owner | The next-year screen says the program is being prepared |
+| More content, especially for 6–8, and a Year 2 (`INF-01`) | Owner | Big Cubs has three courses (`DQ-13`); a club past Year 1 is told its program is being prepared |
 | The missing story video (`INF-09`), body-parts audio (`INF-10`) | Owner | Shown as "coming soon" / read aloud by the browser |
 | Media licences (`INF-11`) | Owner | Some pictures look like stock images (one carries a watermark) |
 | Certificate wording (`INF-07`) | Owner | A neutral draft is shown |
@@ -123,8 +123,8 @@ Admin is set up with the owner's own password, and the temporary credential is d
 
 ## 9. Assumptions made
 
-No baseline user data exists to migrate (`D68`); the baseline content is the whole Year-1 program for every
-age group (`DD-20`); children aged 9 and above keep the oldest band's presentation; a video counts as watched
+No baseline user data exists to migrate (`D68`); the baseline content is split into three club programs by
+the assistant's judgement of age suitability (`DQ-13`, replacing `DD-20`); children aged 9 and above keep the oldest band's presentation; a video counts as watched
 at 90% (`DD-17`); "Mark as seen" is the parent's answer to a help request.
 
 ## 10. Recommendations

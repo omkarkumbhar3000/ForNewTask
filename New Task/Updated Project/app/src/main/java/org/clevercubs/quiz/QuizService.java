@@ -101,6 +101,7 @@ public class QuizService {
     public AttemptView start(long childId, long quizId) {
         Map<String, Object> quiz = quiz(quizId);
         long courseId = ((Number) quiz.get("course_id")).longValue();
+        progress.requireInChildsProgram(childId, courseId, "Quiz");
 
         // Serialise every start for this child and quiz on the allowance row.
         jdbc.sql(dialect.insertOrLockExisting("""
@@ -153,6 +154,7 @@ public class QuizService {
                 .filter(c -> c.quiz() != null && c.quiz().quizId() == quizId)
                 .findFirst()
                 .orElseThrow(() -> ApiException.notFound("Quiz"));
+        progress.requireInChildsProgram(childId, course.courseId(), "Quiz");
         int questions = jdbc.sql("SELECT COUNT(*) FROM quiz_question WHERE quiz_id = :q AND pool = 'MAIN'")
                 .param("q", quizId).query(Integer.class).single();
         ChildRow child = children.find(childId).orElseThrow(() -> ApiException.notFound("Child"));

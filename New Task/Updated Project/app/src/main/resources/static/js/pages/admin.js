@@ -108,9 +108,32 @@ async function accounts(query = '') {
     toast('Account updated.', 'good');
     accounts(query);
   };
+  // D79: another Super Admin gets a temporary password, shown once here, and chooses their own at first sign-in.
+  const newAdminEmail = input('', { type: 'email', placeholder: 'new.admin@example.com', 'aria-label': 'Email address of the new Super Admin', autocomplete: 'off' });
+  const addAdmin = h('form', { class: 'row' }, newAdminEmail,
+    h('button', { class: 'btn btn-small', type: 'submit', text: 'Add a Super Admin' }));
+  addAdmin.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = newAdminEmail.value.trim();
+    if (!email) return;
+    if (!(await confirmDialog('Add a Super Admin?', `${email} will have full administrator rights and must choose a new password at the first sign-in.`, 'Add Super Admin'))) return;
+    try {
+      const { temporaryPassword } = await post('/admin/accounts', { email });
+      await dialog({
+        title: 'Temporary password',
+        body: [h('p', { text: `Give this to ${email} privately. It is shown only once.` }),
+          h('p', { class: 'code', text: temporaryPassword })],
+        actions: [{ label: 'Done', value: 'ok', class: 'btn-primary' }],
+      });
+      accounts(query);
+    } catch (err) {
+      toast(err.message, 'bad');
+    }
+  });
   mount(content,
     header('Accounts', 'Disabling an account stops its sign-in. Account changes ask for your password again if it was entered more than 15 minutes ago.'),
     form,
+    addAdmin,
     table([
       ['Email', (r) => r.email],
       ['Name', (r) => r.full_name || (r.role === 'SUPER_ADMIN' ? 'Administrator' : '')],

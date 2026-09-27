@@ -5,6 +5,7 @@ import java.util.Map;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -37,6 +38,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/admin")
 class AdminController {
+
+    record NewSuperAdmin(@NotBlank(message = "required") @Email(message = "must be an email address")
+            @Size(max = 254, message = "is too long") String email) {
+    }
 
     record AccountAction(@NotBlank(message = "required") String action) {
     }
@@ -121,6 +126,19 @@ class AdminController {
             @RequestParam(defaultValue = "50") int size, @RequestParam(defaultValue = "0") int page) {
         admin();
         return admin.accounts(q, size(size), Math.max(0, page));
+    }
+
+    /**
+     * D79: add another Super Admin. Sensitive, so the password must have been proven recently (DD-26). The
+     * random temporary password is returned once, to this admin only; the new admin must replace it at the
+     * first sign-in.
+     */
+    @PostMapping("/accounts")
+    ResponseEntity<Map<String, Object>> addSuperAdmin(@Valid @RequestBody NewSuperAdmin body,
+            HttpServletRequest request) {
+        long adminId = admin();
+        recent.require(request);
+        return ResponseEntity.status(201).body(admin.createSuperAdmin(adminId, body.email()));
     }
 
     @PostMapping("/accounts/{id}/status")

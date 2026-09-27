@@ -2,7 +2,8 @@
 
 **Objective:** `OBJ-034` · **Requirement:** [`00-source-requirement.md`](00-source-requirement.md) §3, §31 ·
 **Status:** ✅ all 12 owner decisions answered (2026-09-26); defaults in §3 apply unless overridden. `DD-20`–`DD-26`
-were added during the build (2026-09-27) and are open to the owner's review
+were added during the build (2026-09-27) and are open to the owner's review. `DQ-13` and `DQ-14` were settled
+in `OBJ-036` (2026-09-27)
 
 ---
 
@@ -212,6 +213,44 @@ PostgreSQL or a non-relational store ([`07-deployment.md`](07-deployment.md) §2
 consistent with the application and lowest in maintenance: **Neon PostgreSQL.** Development and the default
 test run stay on MySQL 8.4 (`DQ-02`); the suite passes on both. History `D73`.
 
+### DQ-13 — Which courses each club gets (§5, §16)
+
+Under `DD-20` every Year-1 program held all 11 courses. Worse, no course, lesson, card or quiz endpoint
+checked the child's program, so any child could open any course (`FUN-R08`). The owner asked for three
+distinct sets, the smallest and simplest for Tiny Cubs, with no course deleted, and left the mapping to the
+assistant.
+
+**Answer (2026-09-27): ✅ Decided by the assistant on the owner's instruction.** The mapping weighs age
+suitability, difficulty, attention span and the skill each course builds.
+
+| Club | Courses | Basis |
+|---|---|---|
+| Tiny Cubs (2–3) | colours, animals, fruits, rhymes | Recognising and naming familiar things; songs; no symbols |
+| Little Cubs (4–5) | alphabets, numbers, body parts, vegetables | Letters, counting and self-awareness: pre-school readiness |
+| Big Cubs (6–8) | birds, flowers, stories | Finer categories, longer descriptions and whole stories |
+
+- **Where the split lives:** `resources/programs/year-1.json` holds it. `ContentSeeder` applies it while
+  `program_course` is empty, and migration `V5` emptied the old table once.
+- **Changing it:** the admin's Programs page still does.
+- **Enforcement:** every child endpoint calls `ProgressService.requireInChildsProgram` and answers `404`
+  outside the program.
+- **Moving up:** completing a year and choosing *Continue* enrols the child in the next club's Year 1.
+- **Content:** Big Cubs has only three courses until more content exists (`INF-01`).
+
+History `D78`; replaces `DD-20`.
+
+### DQ-14 — An additional Super Admin (§19)
+
+The owner asked for a second Super Admin named `admin` with a short password. Neither fits: sign-in is by
+email address, and `DD-01` refuses that password. Both rules stay.
+
+| Option | What it means |
+|---|---|
+| **"Add a Super Admin" in the admin area** (chosen) | An existing admin confirms their password and enters the address. They see a one-time random password, and the new admin must replace it at the first sign-in. The action is audited without the address |
+| A second bootstrap variable | Configuration only, but it stretches `D69`'s one-time bootstrap and leaves a password in a project variable |
+
+**Answer (2026-09-27): ✅ The in-app action, for `admin@clevercubs.test`.** History `D79`.
+
 ## 3. Documented defaults (DD)
 
 Standard practice, applied unless the owner overrides it. Each one closes a security or quality gap recorded
@@ -238,7 +277,7 @@ in [`02-issue-register.md`](02-issue-register.md).
 | DD-13 | Configuration and secrets | Database credentials and the first Super Admin come from environment variables (`.env`, gitignored); only `.env.example` is kept. The application connects as a dedicated least-privilege database user, never as `root` | §20; ASVS V2.10, V14.1 |
 | DD-14 | Audit | Every administrative change, attempt reset, role change and login failure is written to an append-only audit table: who, what, when and the affected record. Passwords and personal fields are never written to it | §19 |
 | DD-15 | Architecture | A modular monolith, packaged by feature (accounts, learning, quiz, progress, rewards, feedback, admin, audit). Business rules such as progress, attempt limits and reward thresholds live in plain Java classes, testable without Spring or a database. Controllers stay thin | §21, §26; clean-architecture practice, without layers that simple CRUD does not need |
-| DD-20 | Year programs | Each age group's Year-1 program starts with every published course, because the baseline content is the only content (`INF-01`). The age group changes the presentation, not the course list. The Super Admin edits the lists (Programs) | `D65`; no content exists that could tell the bands apart |
+| DD-20 | Year programs | ⛔ **Replaced by `DQ-13` (`D78`, 2026-09-27): each club now has its own set.** Originally: each age group's Year-1 program starts with every published course, because the baseline content is the only content (`INF-01`). The age group changes the presentation, not the course list. The Super Admin edits the lists (Programs) | `D65`; no content exists that could tell the bands apart |
 | DD-21 | Completion recognition | A course without a quiz (rhymes, stories) earns a completion badge at 100%, and a completed year earns a badge and a certificate. Score badges still follow `D64` (80% or more) | §13 lists "completion recognition"; 100% progress is above the 80% line |
 | DD-22 | Registration message | A taken email is reported as taken ("Please sign in instead"), so a parent knows what to do. Tracked as `SEC-R01` with its mitigations | Usability over a small enumeration risk; the sign-in itself reveals nothing |
 | DD-23 | Child messages | "Ask a grown-up" sends a request type only (more tries, a new username, help), never free text from the child | Privacy by design (§20); no moderation needed |

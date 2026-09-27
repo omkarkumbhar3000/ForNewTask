@@ -16,41 +16,34 @@
 
 <!-- ▼▼▼ WRITE THE CURRENT REQUIREMENT HERE — replace everything between the markers ▼▼▼ -->
 
-**`OBJ-035` — Consolidate the CleverCubs documentation and onboarding: simple, automated, minimal files.**
-Goal: someone clones the repository, gives the AI/CLI bootstrap file to their agent, lets it install and
-configure what can safely be automated, the application opens in Chrome, and the central guide covers
-any remaining manual step.
-
-**Ownership (owner's statement, 2026-09-27):** **Omkar Kumbhar is the project owner.** Sudesh Sawant's account
-was used only for trial and testing; never name Sudesh Sawant as owner in any documentation.
+**`OBJ-036` — Club-specific assignments, a second Super Admin, the contact emails, and removing the old
+project.** Method: analyse → implement → test → cross-check → clean up → document → push → verify production.
 
 | # | Requirement |
 |---:|---|
-| 1 | **One central `.md` guide** (setup, installation, configuration, run, test, access, deployment, usage). Inspect first; consolidate existing content instead of duplicating it. Tables wherever possible |
-| 2 | **Project information table**: name, owner, GitHub URL, production URL, local URL/port, production database (Neon PostgreSQL), local database (MySQL), platform (Vercel), technology (detected), admin access and test access (explained securely), contact email (the configured one, never invented) |
-| 3 | **Requirements table** (software, version, purpose, install/verify): only what the project actually needs, detected from the repository |
-| 4 | **One PowerShell setup script**: check software and versions, report what is missing, install what is safe, clone or set up, install project dependencies, prepare local configuration without exposing secrets, start the application, open it in Chrome. Safe to re-run. No hard-coded secret |
-| 5 | **One AI/CLI bootstrap file** (committed): inspect the repository, read the guide, detect the OS and tools, check/install software, read configuration, prepare local environment config without exposing secrets, install dependencies, start services and the application, run health checks and relevant tests, open Chrome, verify access, report manual steps, update docs if setup changes. Use project skills when useful (Git workflow skill included); never force every skill |
-| 6 | **Git workflow in the bootstrap**: status, pull and reconcile, review conflicts, update docs, verify tests/build, no secrets staged, sensitive files ignored, meaningful commit, push to the right branch, verify. Never blindly overwrite remote work |
-| 7 | **Access/running table**: production URL, run locally, tests, frontend, backend, supporting services, stop, open in Chrome, production deployment, Git update |
-| 8 | **Credentials reference table** (Super Admin, admin username, test username/credentials, production access, team trial access): where each secret is stored and how an authorised person retrieves or configures it. ⛔ No real secret in the public repository; no fake credentials presented as real; a test account only through the app's own mechanism |
-| 9 | **Contact email**: configure the one previously provided; never invent one. If intentionally unset, show it as a pending business input. Verify where it appears |
-| 10 | **Production independence**, verified technically: production (Vercel + Neon) does not depend on the owner's PC; local and production are separate (table: environment, depends on my PC, database, access). Free-plan limits (cold start) |
-| 11 | **System recommendations table** (OS, RAM, CPU, storage, internet, Chrome, Docker), based on the actual application |
-| 12 | **Troubleshooting table** (start failure, DB connection, Chrome, port in use, pull conflict, Vercel build, login) |
-| 13 | **Consolidation**: inspect every `.md`; find duplicate, outdated and conflicting content; keep the number of files minimal; preserve useful information before removing anything |
-| 14 | **Final validation**: simulate a fresh clone; verify commands, the script, the bootstrap, production URL, local start, tests, Chrome launch, Git and Vercel information, no secrets in git, `.gitignore`; check all docs for stale URLs, names and owner information; record final verified values |
-| 15 | **Commit and push** after verification: update docs, status, secret check, tests, commit, push to the right repository, verify the remote, clean tree |
-| 16 | **Final report table** (docs, bootstrap, script, production URL, local start, tests, Chrome, credentials, contact email, push, Vercel, cleanup) plus what still needs the owner |
+| 1 | **Three distinct assignment sets**, one per club: Tiny Cubs (2–3), Little Cubs (4–5), Big Cubs (6–8). Today every club effectively gets the whole catalogue; that must end. Tiny gets only the simplest, lowest-criticality set (a few genuinely suitable extra simple activities allowed), never the full catalogue. Little and Big each get their own set, not an inherited "everything below plus more". The mapping is the assistant's decision from age suitability, difficulty, criticality, complexity, attention span, skills and appropriateness. First inspect the structure, list every assignment, show the current mapping and whether all clubs see everything, then propose, implement and verify (UI, backend, database). **A Tiny child must not reach Little or Big assignments**; Little and Big must get their intended sets. Delete no assignment: reassign it, or document it as pending if it fits no club. Tests, E2E, docs |
+| 2 | **One additional Super Admin**, requested as username `admin` with a short password given in the chat (deliberately not recorded here), only if multiple Super Admins are safely supported. ⛔ The plaintext password is never committed, documented, logged or shown in screenshots; it is configured through the secure mechanism. Verify the new account signs in with Super Admin permissions and the existing admin still works. Follow the first-login password-change flow. If a security rule prevents it, do not bypass the model: explain, and implement the safest supported approach |
+| 3 | **Remove the old project** (`New Task/Current Project/`) only after a complete dependency and migration audit: code, config, env vars, scripts, build, migrations, tests, E2E, media, docs, deployment, git, AI instructions, skills/rules, imports, relative paths, Vercel, GitHub, CI/CD. Preserve and move anything still needed, verify the updated project independently (tests, app, E2E, production), then delete. `New Task/` ends with only `Updated Project/`. Delete nothing on assumption |
+| 4 | **Contact emails** `jagrutihivarekar@gmail.com` and `asmi.ptl14@gmail.com` via the existing `CC_CONTACT_EMAIL` mechanism: support both properly if the field holds one address. Verify the Contact page, the endpoint, the Vercel configuration and production |
+| 5 | **Full regression**: club separation and no leakage; the existing and new Super Admin, a normal user, registration, access control; the main, assignment, dashboard, admin and contact pages; MySQL and PostgreSQL suites, E2E, build, production deployment, database connectivity, no broken references, no secrets |
+| 6 | **Documentation**: update the central guide (clubs, distribution model, Super Admin management, contact configuration, old-project removal, any new setup step); tables; minimal files; never the plaintext password |
+| 7 | **Git**: status, diff, secrets, `.gitignore`, tests, production build, docs, one complete commit, push to `main`, verify the remote, clean tree. Use the Git workflow skill where useful; no force-push |
+| 8 | **Final report table** (the three clubs with counts and logic, both Super Admins, contact emails, audit, removal, tests, E2E, production, docs, push, secrets) |
 
-**Owner's answers (2026-09-27):** the central guide is the root **`README.md`**, absorbing
-`Updated Project/README.md`, `New Task/README.md` and `e2e/README.md` · the AI/CLI bootstrap is a rewritten
-**`AGENTS.md`** (development rules stay in `CLAUDE.md`) · the contact email stays **unset, a pending business
-input** · team trial access is **self-registration**, with no shared account (`D76`–`D77`).
+**Findings and answers (2026-09-27):**
+- **Clubs:** every club's program holds all 11 courses (the seeder cross-joins them), and the course, lesson,
+  card and quiz endpoints never check the child's program. The mapping, disjoint with nothing deleted: Tiny =
+  colours, animals, fruits, rhymes · Little = alphabets, numbers, body parts, vegetables · Big = birds,
+  flowers, stories. Access is enforced by the child's program (`D78`).
+- **Second admin:** sign-in is by email and the password policy refuses the requested password. Neither is weakened. The
+  owner chose **`admin@clevercubs.test`**, created through a new, audited **"Add a Super Admin"** in the admin
+  area that needs a password re-confirmation. A one-time temporary password is shown only to the creating
+  admin, and the new admin chooses a strong password at first sign-in (`D79`).
+- **Old project:** after the audit, it goes to the **Windows Recycle Bin**, which keeps it recoverable (`D80`).
 
 **Standing constraints:** the repository is public (`D74`) · secrets only in environment variables, Vercel
-or a password manager, never printed · edit markdown with `Edit` · history is append-only · check large
-files, LFS, secrets and generated files before every commit.
+or a password manager, never printed · edit markdown with `Edit` · history is append-only · every SQL change
+runs on MySQL and PostgreSQL, with a migration in both folders.
 
 <!-- ▲▲▲ WRITE THE CURRENT REQUIREMENT HERE ▲▲▲ -->
 
@@ -65,7 +58,7 @@ The assistant runs the instruction above using the whole workspace as context, w
 | Standing rules: objective-first workflow, edit scope, change control, validation, git | root `../CLAUDE.md` |
 | Why something is the way it is: decisions, prior objectives | `../docs/history/README.md` |
 | The protocol and its phases | `B.L.A.S.T.md`; memory in `LLM.md`, `task_plan.md`, `findings.md`, `progress.md` |
-| The project being improved, its requirement and its feedback | `../New Task/Current Project/` |
+| The project being improved, its requirement and its feedback | `../New Task/Current Project/` when a baseline is present (CleverCubs' was removed, `D80`); its requirement is `../New Task/Updated Project/docs/00-source-requirement.md` |
 | The work in progress and its documentation | `../New Task/Updated Project/` |
 | Searchable PDFs, markdown → Word/Excel, API-testing onboarding | `../tools/rag/` · `../tools/render/` · `../tools/onboarding/` |
 

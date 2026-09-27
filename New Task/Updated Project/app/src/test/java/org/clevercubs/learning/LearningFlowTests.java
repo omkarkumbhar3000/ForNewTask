@@ -105,7 +105,7 @@ class LearningFlowTests extends IntegrationTest {
         MvcResult home = journeys.getJson(f.session(), "/api/v1/learn/home");
         assertThat(home.getResponse().getStatus()).isEqualTo(200);
         List<Integer> percents = Journeys.read(home, "$.courses[*].percent");
-        assertThat(percents).hasSize(11).containsOnly(0);
+        assertThat(percents).as("Tiny Cubs' own four courses (D78)").hasSize(4).containsOnly(0);
         assertThat(Journeys.<String>read(home, "$.greeting")).contains("Zoe");
         assertThat(Journeys.<String>read(home, "$.resume.courseSlug")).isNotBlank();
         assertThat(Journeys.<String>read(home, "$.child.uiProfile")).isEqualTo("TODDLER");
@@ -114,7 +114,7 @@ class LearningFlowTests extends IntegrationTest {
     @Test
     @DisplayName("opening every card of a lesson completes it and progress follows the 70/30 rule (D61)")
     void lessonCompletionMovesProgress() throws Exception {
-        Family f = journeys.family(5);
+        Family f = journeys.family(3); // animals is a Tiny Cubs course (D78)
         journeys.enterChildMode(f);
         List<Long> lessons = journeys.lessonIds("animals");
         journeys.finishLesson(f, lessons.getFirst());
@@ -129,7 +129,7 @@ class LearningFlowTests extends IntegrationTest {
     @Test
     @DisplayName("every lesson done is 70%: never 100% before the quiz is passed (section 10)")
     void lessonsAloneStopAtSeventy() throws Exception {
-        Family f = journeys.family(5);
+        Family f = journeys.family(3); // colours is a Tiny Cubs course (D78)
         journeys.enterChildMode(f);
         journeys.finishLessons(f, "colours");
         MvcResult course = journeys.getJson(f.session(), "/api/v1/learn/courses/colours");
@@ -156,7 +156,7 @@ class LearningFlowTests extends IntegrationTest {
     @Test
     @DisplayName("a course without a quiz reaches 100% through its lessons and earns its completion badge")
     void mediaCourseCompletes() throws Exception {
-        Family f = journeys.family(4);
+        Family f = journeys.family(6); // stories is a Big Cubs course (D78)
         journeys.enterChildMode(f);
         journeys.finishLessons(f, "stories");
         MvcResult course = journeys.getJson(f.session(), "/api/v1/learn/courses/stories");
@@ -172,9 +172,11 @@ class LearningFlowTests extends IntegrationTest {
     @Test
     @DisplayName("a card that is coming soon cannot be marked as viewed")
     void missingMediaCannotBeViewed() throws Exception {
-        Family f = journeys.family(4);
+        Family f = journeys.family(6); // the missing video is a story, a Big Cubs course (D78)
         journeys.enterChildMode(f);
-        long missing = jdbc.sql("SELECT id FROM lesson_item WHERE status = 'MEDIA_MISSING' LIMIT 1")
+        long missing = jdbc.sql("""
+                        SELECT i.id FROM lesson_item i JOIN lesson l ON l.id = i.lesson_id JOIN course c ON c.id = l.course_id
+                        WHERE i.status = 'MEDIA_MISSING' AND c.slug = 'stories' LIMIT 1""")
                 .query(Long.class).single();
         mvc.perform(put("/api/v1/learn/items/" + missing + "/view").with(realCsrf()).session(f.session()))
                 .andExpect(status().is(422))

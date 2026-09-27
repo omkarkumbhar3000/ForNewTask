@@ -22,12 +22,13 @@ are in `findings.md`; trial code removed.
 
 ## Status
 
-Awaiting stage 2: the owner uploads the current project, requirement and feedback into
-`../New Task/Current Project/` and starts it. Protocol 0 applies from that point.
+Stage 2 started on 2026-09-26 with the CleverCubs upload; the build and its deployment followed. The
+current state is in `../docs/history/README.md` §3 and `../New Task/Updated Project/docs/06-review-summary.md`.
+The uploaded baseline was removed after its migration audit (`D80`).
 
 ## OBJ-032 — framework extracted to NewProject_Framework
 
 - The reusable, generalised version of this BLAST setup now lives in the separate repository
   `NewProject_Framework` (first commit `4bd37b0`): template, portable `sh` objective hook, `verify.py`
   self-check, pre-commit safety hook, optional tools and skills, bootstrap script.
-- This folder is unchanged in behaviour; its hook stays the proven PowerShell one. Status above still holds.
+- This folder is unchanged in behaviour; its hook stays the proven PowerShell one.

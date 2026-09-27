@@ -366,3 +366,60 @@ Verified:
 
 **Decisions.** `D76` (Omkar Kumbhar is the owner), `D77` (the root `README.md` is the central guide,
 `AGENTS.md` is the AI bootstrap, the contact email is a pending input, trial access is self-registration).
+
+## OBJ-036 — Club courses, another Super Admin, the contact emails, the old project removed
+
+**What changed.**
+
+- **Club courses (`D78`, `FUN-R08`):**
+  - *The problem:* every club saw all 11 courses. The seeder cross-joined every course into every Year-1
+    program, and no child endpoint checked the program, so a two-year-old could open any course by its
+    address.
+  - *The split:* Tiny Cubs has colours, animals, fruits and rhymes; Little Cubs has alphabets, numbers, body
+    parts and vegetables; Big Cubs has birds, flowers and stories. No course was deleted.
+  - *How it is built:* the mapping is `resources/programs/year-1.json`. `V5` (both databases) emptied
+    `program_course`, and the seeder refills it from the file. `ProgressService.requireInChildsProgram`
+    answers `404` for a course, lesson, card or quiz outside the child's program.
+- **Additional Super Admins (`D79`):**
+  - A new `POST /api/v1/admin/accounts` and **Admin → Accounts → Add a Super Admin**, with a recent-password
+    check, a one-time temporary password, a forced change at first sign-in, and an audit row without the
+    address.
+  - The requested username and password were not usable as given (sign-in is by email; `DD-01` refuses the
+    password), so neither rule was weakened. The plaintext is in no file.
+- **Contact (`D80`):**
+  - `CC_CONTACT_EMAIL` takes a comma-separated list. The endpoint returns `emails`, and the page links each
+    one.
+  - Production holds the two owner-given addresses (a plain Vercel variable, set before the push).
+- **Old project (`D80`):**
+  - *The audit:* no reference in code, configuration, build, migrations, tests, E2E, Docker, Vercel, CI or the
+    AI instructions. The only tool that reads it, `extract_content.py`, stops cleanly without it. A last dry
+    run found all 305 media files already present, with 0 to copy.
+  - *The removal:* `New Task/Current Project/` (389 files, 579 MB, never in git) went to the Windows Recycle
+    Bin, and its tracked `.gitkeep` was removed. `New Task/` holds only `Updated Project/`.
+
+Verified locally:
+
+| Check | Result |
+|---|---|
+| Suites before the removal | 228/228 on MySQL and on PostgreSQL 18 |
+| Suites after the removal | 228/228 on MySQL and on PostgreSQL 18, from scratch |
+| Browser journeys, before and after | 6/6. The journey now checks the Tiny Cubs home (4 tiles) and a `404` for a Little and a Big course |
+| Local MySQL | Migrated to V5 and holds exactly the three sets |
+| "Add a Super Admin" in headless Chrome | Driven with a throw-away local admin: confirmation, the temporary password shown once, and the new row as "Super Admin, temporary password". Both accounts were deleted afterwards |
+
+**What was learned.**
+
+- **A seeding shortcut became an access rule.** The fallback "no program → show every course" and the
+  cross-join hid the missing program check. The test that now guards it asks the negative question: can a
+  Tiny Cub open a Big Cubs course?
+- **The pre-commit scan found the requested plaintext password** in the objective file and in `D79`, both
+  written this session. Nothing used it, but the owner's rule was never to document it, so both were
+  rewritten before the first commit. Scan the whole diff, including new files, for the literal value.
+- **A bin move is safe to script only after checking the bin.** `MaxCapacity` must exceed the folder, and
+  `NukeOnDelete` must be 0; otherwise Windows asks to delete for good, or does so. The path lengths must fit
+  too. `Microsoft.VisualBasic.FileIO.FileSystem.DeleteDirectory` with `SendToRecycleBin` then does it in one
+  call.
+
+**Decisions.** `D78` (distinct club sets, enforced by the program), `D79` (additional Super Admins through
+the audited in-app action; `admin@clevercubs.test`), `D80` (the contact addresses; the old project to the
+Recycle Bin).

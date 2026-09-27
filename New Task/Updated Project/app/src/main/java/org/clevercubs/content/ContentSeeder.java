@@ -5,8 +5,11 @@ import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 import org.slf4j.Logger;
@@ -35,8 +38,12 @@ import tools.jackson.databind.ObjectMapper;
  * application never reads the baseline folder itself.
  *
  * <p>It also seeds the rewards (one score badge per quiz course, D64; a completion badge per media course and
- * per program, DD-21) and fills every Year-1 program with the published courses (DD-20). It runs only when
- * the course table is empty, so an administrator's later edits are never overwritten.
+ * per program, DD-21). The content runs only when the course table is empty, so an administrator's later
+ * edits are never overwritten.
+ *
+ * <p>Each club's Year-1 program gets its own courses from {@code resources/programs/year-1.json} (D78), and
+ * only while {@code program_course} is empty: on a new database right after the content, and once on an
+ * existing one after migration V5 cleared the old all-courses-everywhere rows (DD-20, replaced).
  */
 @Component
 @Order(10)
@@ -83,18 +90,37 @@ class ContentSeeder implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws IOException {
         int existing = jdbc.sql("SELECT COUNT(*) FROM course").query(Integer.class).single();
-        if (existing > 0) {
-            return;
+        if (existing == 0) {
+            List<CourseJson> courses = read();
+            tx.executeWithoutResult(status -> {
+                LocalDateTime now = Timestamps.now();
+                for (CourseJson c : courses) {
+                    insertCourse(c, now);
+                }
+            });
+            log.info("Seeded {} courses from resources/content", courses.size());
         }
-        List<CourseJson> courses = read();
-        tx.executeWithoutResult(status -> {
-            LocalDateTime now = Timestamps.now();
-            for (CourseJson c : courses) {
-                insertCourse(c, now);
-            }
-            seedPrograms();
-        });
-        log.info("Seeded {} courses from resources/content", courses.size());
+        int assigned = jdbc.sql("SELECT COUNT(*) FROM program_course").query(Integer.class).single();
+        if (assigned == 0) {
+            Map<String, List<String>> clubs = readPrograms();
+            tx.executeWithoutResult(status -> seedPrograms(clubs));
+        }
+    }
+
+    /** Club code (TINY, LITTLE, BIG) to its Year-1 course slugs, in order. */
+    private Map<String, List<String>> readPrograms() throws IOException {
+        Resource file = new PathMatchingResourcePatternResolver().getResource("classpath:programs/year-1.json");
+        try (InputStream in = file.getInputStream()) {
+            @SuppressWarnings("unchecked")
+            Map<String, Object> raw = json.readValue(in, Map.class);
+            Map<String, List<String>> clubs = new LinkedHashMap<>();
+            raw.forEach((key, value) -> {
+                if (value instanceof List<?> slugs) {
+                    clubs.put(key, slugs.stream().map(String::valueOf).toList());
+                }
+            });
+            return clubs;
+        }
     }
 
     private List<CourseJson> read() throws IOException {
@@ -190,13 +216,42 @@ class ContentSeeder implements ApplicationRunner {
         }
     }
 
-    /** DD-20: every Year-1 program starts with every published course, in course order. */
-    private void seedPrograms() {
-        jdbc.sql(dialect.insertIgnoringDuplicates("""
-                        INSERT INTO program_course (program_id, course_id, sort_order)
-                        SELECT p.id, c.id, c.sort_order FROM program p CROSS JOIN course c
-                        WHERE p.year_number = 1 AND c.status = 'PUBLISHED'"""))
-                .update();
+    /**
+     * D78: each club's Year-1 program gets its own courses, in the order the file lists them. A published course
+     * that no club names is logged, because no child can reach it.
+     */
+    private void seedPrograms(Map<String, List<String>> clubs) {
+        Set<String> placed = new HashSet<>();
+        clubs.forEach((club, slugs) -> {
+            Long programId = jdbc.sql("""
+                            SELECT p.id FROM program p JOIN age_group g ON g.id = p.age_group_id
+                            WHERE g.code = :club AND p.year_number = 1""")
+                    .param("club", club).query(Long.class).optional().orElse(null);
+            if (programId == null) {
+                log.warn("programs/year-1.json names club {}, which has no Year-1 program", club);
+                return;
+            }
+            int order = 1;
+            for (String slug : slugs) {
+                Long courseId = jdbc.sql("SELECT id FROM course WHERE slug = :s").param("s", slug)
+                        .query(Long.class).optional().orElse(null);
+                if (courseId == null) {
+                    log.warn("programs/year-1.json names course {}, which does not exist", slug);
+                    continue;
+                }
+                jdbc.sql(dialect.insertIgnoringDuplicates("""
+                                INSERT INTO program_course (program_id, course_id, sort_order)
+                                VALUES (:p, :c, :o)"""))
+                        .param("p", programId).param("c", courseId).param("o", order++).update();
+                placed.add(slug);
+            }
+        });
+        List<String> unplaced = jdbc.sql("SELECT slug FROM course WHERE status = 'PUBLISHED' ORDER BY sort_order")
+                .query(String.class).list().stream().filter(s -> !placed.contains(s)).toList();
+        if (!unplaced.isEmpty()) {
+            log.warn("Published courses in no club's program, so no child can reach them: {}", unplaced);
+        }
+        log.info("Filled the Year-1 programs from programs/year-1.json: {}", clubs);
         List<Map<String, Object>> programs = jdbc.sql("""
                         SELECT p.id, g.code, g.name FROM program p JOIN age_group g ON g.id = p.age_group_id""")
                 .query(Rows.MAP).list();

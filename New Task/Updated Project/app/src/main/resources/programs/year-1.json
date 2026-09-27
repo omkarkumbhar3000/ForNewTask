@@ -1,0 +1,6 @@
+{
+  "description": "Year 1 of each club (D78): its own course set, easiest first. Tiny Cubs 2-3: familiar things to recognise, short lessons and nursery rhymes. Little Cubs 4-5: letters, counting to 20, body parts with what they do, vegetables. Big Cubs 6-8: named species of birds and flowers, and moral stories. A course listed here reaches only children enrolled in that club's program; a published course listed nowhere reaches nobody and is logged at start-up. Seeded only while program_course is empty; admins change programs in the admin area.",
+  "TINY": ["colours", "animals", "fruits", "rhymes"],
+  "LITTLE": ["alphabets", "numbers", "body-parts", "vegetables"],
+  "BIG": ["birds", "flowers", "stories"]
+}

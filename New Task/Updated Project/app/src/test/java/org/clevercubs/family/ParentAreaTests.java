@@ -145,7 +145,7 @@ class ParentAreaTests extends IntegrationTest {
         Family f = journeys.family(4);
         MvcResult r = journeys.getJson(f.session(), "/api/v1/parent/children/" + f.childId() + "/year-summary");
         assertThat(r.getResponse().getStatus()).isEqualTo(200);
-        assertThat(Journeys.<Integer>read(r, "$.coursesTotal")).isEqualTo(11);
+        assertThat(Journeys.<Integer>read(r, "$.coursesTotal")).as("a Little Cub's four courses (D78)").isEqualTo(4);
         assertThat(Journeys.<String>read(r, "$.status")).isEqualTo("ACTIVE");
         assertThat(Journeys.<List<String>>read(r, "$.needsAttention")).isNotEmpty();
         mvc.perform(json(post("/api/v1/parent/children/" + f.childId() + "/next-year"), "{\"decision\":\"CONTINUE\"}")
@@ -159,8 +159,12 @@ class ParentAreaTests extends IntegrationTest {
     void completingTheYear() throws Exception {
         Family f = journeys.family(4);
         journeys.enterChildMode(f);
-        List<String> slugs = jdbc.sql("SELECT slug FROM course WHERE status = 'PUBLISHED' ORDER BY sort_order")
-                .query(String.class).list();
+        List<String> slugs = jdbc.sql("""
+                        SELECT c.slug FROM program_enrolment e JOIN program_course pc ON pc.program_id = e.program_id
+                        JOIN course c ON c.id = pc.course_id WHERE e.child_id = :c ORDER BY pc.sort_order""")
+                .param("c", f.childId()).query(String.class).list();
+        assertThat(slugs).as("a Little Cub's own year (D78)")
+                .containsExactly("alphabets", "numbers", "body-parts", "vegetables");
         for (String slug : slugs) {
             journeys.finishLessons(f, slug);
             List<Long> quiz = jdbc.sql("SELECT q.id FROM quiz q JOIN course c ON c.id = q.course_id WHERE c.slug = :s")
@@ -178,10 +182,23 @@ class ParentAreaTests extends IntegrationTest {
         assertThat(Journeys.<String>read(summary, "$.status")).isEqualTo("COMPLETED");
         assertThat(Journeys.<List<Object>>read(summary, "$.certificates")).hasSize(1);
         assertThat(Journeys.<String>read(summary, "$.certificates[0].verificationCode")).hasSize(16);
+        assertThat(Journeys.<String>read(summary, "$.nextProgram.title")).as("the next club's year is offered")
+                .isNotBlank();
+        // Continuing enrols the child in the next club's Year 1, so the answer already describes that new year;
+        // the completed year keeps the parent's decision.
         mvc.perform(json(post("/api/v1/parent/children/" + f.childId() + "/next-year"), "{\"decision\":\"CONTINUE\"}")
                         .session(f.session()))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.nextDecision").value("CONTINUE"));
+                .andExpect(jsonPath("$.status").value("ACTIVE"))
+                .andExpect(jsonPath("$.coursesTotal").value(3));
+        assertThat(jdbc.sql("SELECT next_decision FROM program_enrolment WHERE child_id = :c AND status = 'COMPLETED'")
+                .param("c", f.childId()).query(String.class).single()).isEqualTo("CONTINUE");
+
+        // Only now do the next club's courses open (D78).
+        journeys.enterChildMode(f);
+        MvcResult next = journeys.getJson(f.session(), "/api/v1/learn/home");
+        assertThat(Journeys.<List<String>>read(next, "$.courses[*].slug")).containsExactly("birds", "flowers", "stories");
+        mvc.perform(get("/api/v1/learn/courses/stories").session(f.session())).andExpect(status().isOk());
     }
 
     @Test

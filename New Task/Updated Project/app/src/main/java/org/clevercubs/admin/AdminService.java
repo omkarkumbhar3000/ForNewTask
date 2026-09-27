@@ -144,6 +144,48 @@ public class AdminService {
         if (adminId == accountId) {
             throw ApiException.rule("own-account", "Use the change-password form for your own account.");
         }
+        String temporary = newTemporaryPassword();
+        int changed = jdbc.sql("""
+                        UPDATE user_account SET password_hash = :hash, must_change_password = TRUE,
+                               password_changed_at = :now, failed_logins = 0, locked_until = NULL, updated_at = :now
+                        WHERE id = :id""")
+                .param("hash", passwords.encode(temporary)).param("now", Timestamps.now()).param("id", accountId)
+                .update();
+        if (changed == 0) {
+            throw ApiException.notFound("Account");
+        }
+        audit.record(adminId, ADMIN, "ACCOUNT_TEMPORARY_PASSWORD", "user_account", accountId, Map.of());
+        return temporary;
+    }
+
+    /**
+     * D79: another Super Admin, created by an existing one. The account starts with a random temporary password,
+     * returned once to the creating admin, and must choose its own at the first sign-in
+     * ({@code must_change_password}); the audit row names the role, never the address or the password.
+     */
+    @Transactional
+    public Map<String, Object> createSuperAdmin(long adminId, String email) {
+        String address = email.trim();
+        int taken = jdbc.sql("SELECT COUNT(*) FROM user_account WHERE email = " + dialect.caseInsensitive("e"))
+                .param("e", address).query(Integer.class).single();
+        if (taken > 0) {
+            throw ApiException.field("email-taken", "email", "An account already uses this address.");
+        }
+        String temporary = newTemporaryPassword();
+        jdbc.sql("""
+                        INSERT INTO user_account (email, password_hash, role, status, failed_logins, locked_until,
+                                                  must_change_password, password_changed_at, created_at, updated_at)
+                        VALUES (:e, :hash, 'SUPER_ADMIN', 'ACTIVE', 0, NULL, TRUE, :now, :now, :now)""")
+                .param("e", address).param("hash", passwords.encode(temporary)).param("now", Timestamps.now())
+                .update();
+        long accountId = jdbc.sql("SELECT id FROM user_account WHERE email = " + dialect.caseInsensitive("e"))
+                .param("e", address).query(Long.class).single();
+        audit.record(adminId, ADMIN, "ACCOUNT_CREATED", "user_account", accountId, Map.of("role", ADMIN));
+        return Map.of("accountId", accountId, "email", address, "role", ADMIN, "temporaryPassword", temporary);
+    }
+
+    /** 16 random characters in four groups, from an alphabet without look-alikes, that the policy accepts. */
+    private String newTemporaryPassword() {
         String alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789";
         String temporary;
         do {
@@ -156,16 +198,6 @@ public class AdminService {
             }
             temporary = sb.toString();
         } while (policy.problem(temporary, null).isPresent());
-        int changed = jdbc.sql("""
-                        UPDATE user_account SET password_hash = :hash, must_change_password = TRUE,
-                               password_changed_at = :now, failed_logins = 0, locked_until = NULL, updated_at = :now
-                        WHERE id = :id""")
-                .param("hash", passwords.encode(temporary)).param("now", Timestamps.now()).param("id", accountId)
-                .update();
-        if (changed == 0) {
-            throw ApiException.notFound("Account");
-        }
-        audit.record(adminId, ADMIN, "ACCOUNT_TEMPORARY_PASSWORD", "user_account", accountId, Map.of());
         return temporary;
     }
 

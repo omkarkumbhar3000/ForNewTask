@@ -171,3 +171,41 @@ review of `DD-20`–`DD-29`.
 - A secret can be used without being seen: file outside the repository → clipboard → masked field.
 
 **Dependencies.** `OBJ-031` · `D56`–`D75`.
+
+---
+
+### OBJ-035 — One guide, one setup script, one AI bootstrap
+
+**Objective ID.** `OBJ-035`
+
+**Title.** Consolidate the CleverCubs documentation and onboarding: one central guide, one setup script, one
+AI/CLI bootstrap file, secure credential references.
+
+**Status.** Superseded by `OBJ-036`. Completed and verified.
+
+**Summary.**
+- **Consolidated:** the root `README.md` became the one central guide (tables throughout) and absorbed three
+  smaller READMEs.
+- **AI bootstrap:** `AGENTS.md` became the fresh-clone bootstrap for AI agents, including the Git workflow.
+- **Setup script:** `setup.ps1` checks and installs software, prepares `.env` without printing values, starts
+  the application and opens Chrome.
+- **Verified:** production independence, both database suites, a setup run, and a fresh clone.
+
+**Key Deliverables.** `README.md` · `AGENTS.md` · `New Task/Updated Project/setup.ps1` · the `start-dev.ps1`
+fixes · the PostgreSQL 18 test image · commits `ac718cc`, `eb506aa`.
+
+**Related Files.** `CLAUDE.md` §"Code-level traps" · `New Task/Updated Project/docs/04` §5 (API list) ·
+this history's narrative §OBJ-035.
+
+**Reason for Archiving.** The owner's next instruction is a separate objective (`OBJ-036`): club-specific
+assignments, a second Super Admin, contact emails, and removing the old project.
+
+**Pending Work.** None in scope. The contact email was a pending input; `OBJ-036` supplies it.
+
+**Lessons Learned / Observations.**
+- Production ran PostgreSQL 18 while the docs said 17: ask the server.
+- In Windows PowerShell 5.1, captured stderr plus `$ErrorActionPreference = 'Stop'` ends a script.
+- A deep clone path passes the 260-character limit: use `core.longpaths`.
+- Check what is staged before committing: a failed `git add` left a commit with deletions only.
+
+**Dependencies.** `OBJ-034` · `D76`, `D77`.

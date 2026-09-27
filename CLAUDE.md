@@ -11,7 +11,7 @@ recoverable from checkpoint commit `2a3298d` (`git show 2a3298d:<path>`).
 | Path | Is | Rule |
 |---|---|---|
 | `BLAST/` | The framework: protocol (`B.L.A.S.T.md`), the objective file, memory files, A.N.T. layer skeletons, the objective hook. Has its own `CLAUDE.md` | ⛔ Reusable only. No project data, names or keys |
-| `New Task/Current Project/` | The project to improve, as the owner provides it, with its requirement and colleague feedback | ⛔ Baseline. Read and analyse; never modify |
+| `New Task/Current Project/` | Where a *new* project to improve is uploaded, created when one arrives. CleverCubs' baseline was removed after its migration was audited (`D80`) | ⛔ A baseline is read and analysed, never modified |
 | `New Task/Updated Project/` | The improved project: all new code, configuration, docs and deliverables | ✅ The only place development output goes |
 | `tools/` | Reusable toolkit: `render/`, `rag/`, `onboarding/`, `paths.py` (§Toolkit) | A project's own tooling lives inside `Updated Project/`, not here |
 | `docs/history/` | Append-only record: objective register, decisions `D-NN`, narrative | ⛔ Never edit an existing entry |
@@ -70,10 +70,13 @@ before any work starts, and that file then governs the work and its output.** Th
 - If the current project has a design system, extend it rather than adding a second one. Replacing it is a
   major change.
 
-## The current project — `Kids_learn_project` (CleverCubs)
+## The original project — `Kids_learn_project` (CleverCubs), removed after migration
 
-It was uploaded to `New Task/Current Project/Kids_learn_project/` on 2026-09-26. `BLAST/Objective.md` and
-`docs/history/README.md` record the current stage; this file does not.
+It was uploaded to `New Task/Current Project/Kids_learn_project/` on 2026-09-26. **It was removed from the
+workspace on 2026-09-27** and moved to the Windows Recycle Bin (`D80`). A dependency audit found nothing that
+reads it: every course, card, quiz question and media file the application uses is in `Updated Project/`.
+The notes below describe it, because the issue register's `E` issues refer to it; `01-baseline-analysis.md`
+has the full analysis. `BLAST/Objective.md` and `docs/history/README.md` record the current stage.
 
 - **The requirement** came through the CLI, not the upload. It is stored verbatim in
   `New Task/Updated Project/docs/00-source-requirement.md`. It asks for a rebuild with a **Java backend**,
@@ -110,12 +113,6 @@ It was uploaded to `New Task/Current Project/Kids_learn_project/` on 2026-09-26.
   - The tables are `stds` (users, with hashed passwords), `stds2` (feedback) and `std3` (one row per user
     and one column per subject; the posted `subject` names the column).
   - **No schema or SQL dump was supplied.** That is Information Required before the backend can run.
-- **Running it here:** PHP and MySQL are not installed on this machine, so only the static pages run.
-  - `python3.11 -m http.server 8765 --directory "New Task/Current Project/Kids_learn_project"` serves them,
-    including the names with spaces.
-  - It serves `index.php` as a download. Start at `fisrt_page.html` instead, and set
-    `localStorage.loggedIn = "true"` to unlock the hubs.
-  - The login, register, progress and feedback calls fail without PHP.
 - **Already broken in the baseline**, so these are not regressions if you find them later:
   - Links to files that were never uploaded: `get_progress.php`, `progress.html`, `learning.html`,
     `index.html` and `body_quiz.html`.
@@ -126,9 +123,10 @@ It was uploaded to `New Task/Current Project/Kids_learn_project/` on 2026-09-26.
   - `New Task/Updated Project/media/` is committed through **Git LFS** (its own `.gitattributes`). Any new
     media file must be matched by an LFS rule **before** it is staged. The largest file is 83 MB; GitHub's
     hard limit is 100 MB.
-  - The baseline `New Task/Current Project/Kids_learn_project/` (579 MB) is **kept out of the repository**
-    (`.gitignore`). Its content lives on in `Updated Project/` (content JSON and `media/`, checked by
-    sha256). It stays on disk only so `tools/extract_content.py` can be re-run.
+  - The baseline `New Task/Current Project/Kids_learn_project/` (579 MB) was **never in the repository**
+    (`.gitignore` keeps it out), and is now removed from the disk too (`D80`). Its content lives on in
+    `Updated Project/`: the content JSON and `media/`, checked by sha256, are now the source of truth.
+    `tools/extract_content.py` can no longer be re-run unless the folder is restored from the Recycle Bin.
   - Never commit `.env`, `target/`, `.tmp/`, `node_modules/`, `e2e/test-results/` or `.playwright-mcp/`.
 
 ## The application being built — `New Task/Updated Project/`
@@ -174,7 +172,7 @@ $env:CLEVERCUBS_URL = "https://…"; npx playwright test      # the same journey
 node measure.mjs                                            # page weights (in e2e/)
 ```
 
-- **`verify` is the whole backend gate** (219 tests), and the PostgreSQL run must pass too whenever SQL or a
+- **`verify` is the whole backend gate** (228 tests), and the PostgreSQL run must pass too whenever SQL or a
   migration changes. No linter, formatter or type check is configured.
   The Mockito "self-attaching" and `EnableDynamicAgentLoading` warnings are JDK 26 noise, not a failure.
 - **The cloud image:** `docker build -f Dockerfile.vercel -t clevercubs:local .` from `Updated Project/`;
@@ -234,6 +232,15 @@ node measure.mjs                                            # page weights (in e
   - Never trust a user or child ID sent by the browser, and check ownership in the service layer
     (`SEC-E04`).
   - Child mode swaps `ROLE_PARENT` for `ROLE_CHILD` (`D58`).
+- ⛔ **A child reaches only the courses of a program they are enrolled in (`D78`).**
+  - Each club (Tiny 2–3, Little 4–5, Big 6–8) has its own Year-1 course set, listed in
+    `resources/programs/year-1.json`. `ContentSeeder` fills the programs from it whenever `program_course` is
+    empty, and migration `V5` cleared the old everything-everywhere rows.
+  - Every child endpoint that opens a course, lesson, card or quiz calls
+    `ProgressService.requireInChildsProgram`, and anything outside the program is a `404`. A new child
+    endpoint must do the same.
+  - Continuing after a completed year enrols the child in the next club's Year 1, which opens its courses.
+  - `ClubProgramsTests` guards all of this.
 - **Every route is closed until it is opened.** `SecurityConfig` is an explicit allow list ending in
   `anyRequest().authenticated()`, and `PasswordChangeRequiredFilter` keeps its own closed list. A new route
   must be added to them deliberately.

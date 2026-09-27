@@ -74,7 +74,8 @@ mar.md
 
 # --- The uploaded baseline (D72) ----------------------------------------------
 # 579 MB, migrated into "New Task/Updated Project" (content JSON + media/, sha256-checked).
-# Kept on disk only so Updated Project/tools/extract_content.py can be re-run.
+# Removed from the workspace after its migration audit (D80). The rule stays so a
+# restored copy (for a re-run of extract_content.py) can never be committed.
 New Task/Current Project/Kids_learn_project/
 
 # --- Test and tool artefacts -------------------------------------------------

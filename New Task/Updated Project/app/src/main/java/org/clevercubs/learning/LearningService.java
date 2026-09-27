@@ -104,9 +104,7 @@ public class LearningService {
                 }
             }
         }
-        if (courses.isEmpty()) {
-            courses.addAll(all.values());
-        }
+        // No fallback to the whole catalogue: a child sees only their own program's courses (D78).
         int programPercent = ProgressRules.average(courses.stream().mapToInt(CourseProgress::percent).toArray());
         int badges = jdbc.sql("SELECT COUNT(*) FROM child_badge WHERE child_id = :c").param("c", childId)
                 .query(Integer.class).single();
@@ -159,6 +157,7 @@ public class LearningService {
                 .param("slug", slug).query(Rows.MAP).list().stream().findFirst()
                 .orElseThrow(() -> ApiException.notFound("Course"));
         long courseId = ((Number) course.get("id")).longValue();
+        progress.requireInChildsProgram(childId, courseId, "Course");
         CourseProgress p = progress.forChild(childId).get(courseId);
         List<LessonSummary> lessons = jdbc.sql("""
                         SELECT l.id, l.title, l.sort_order,
@@ -186,6 +185,7 @@ public class LearningService {
                 .param("id", lessonId).query(Rows.MAP).list().stream().findFirst()
                 .orElseThrow(() -> ApiException.notFound("Lesson"));
         long courseId = ((Number) lesson.get("course_id")).longValue();
+        progress.requireInChildsProgram(childId, courseId, "Lesson");
         int sort = ((Number) lesson.get("sort_order")).intValue();
 
         List<ItemView> items = jdbc.sql("""
@@ -233,6 +233,7 @@ public class LearningService {
                         WHERE i.id = :id AND l.status = 'PUBLISHED' AND c.status = 'PUBLISHED'""")
                 .param("id", itemId).query(Rows.MAP).list().stream().findFirst()
                 .orElseThrow(() -> ApiException.notFound("Card"));
+        progress.requireInChildsProgram(childId, ((Number) item.get("course_id")).longValue(), "Card");
         if (!"READY".equals(item.get("status"))) {
             throw ApiException.rule("media-missing", "This one is coming soon.");
         }

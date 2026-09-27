@@ -1,7 +1,7 @@
 # Issue Register — Existing and new issues, kept apart
 
 **Objective:** `OBJ-034` · **Requirement:** [`00-source-requirement.md`](00-source-requirement.md) §20, §27 ·
-**Baseline:** `New Task/Current Project/Kids_learn_project/` (read-only) · **Status:** 🟡 living document;
+**Baseline:** `New Task/Current Project/Kids_learn_project/` (read-only; removed after migration on 2026-09-27, `D80`) · **Status:** 🟡 living document;
 verification of every `E` issue against the build is in §6 (2026-09-27)
 
 ---
@@ -152,6 +152,7 @@ Defects found in the new code. Fixed ones keep their row so the history stays ho
 | FUN-R05 | Low | Sessions were held in the server's memory, so a restart signed everyone out | ✅ Fixed: sessions are kept in the database in development and in the cloud (`DD-28`, `JdbcSessionTests`) |
 | FUN-R06 | Medium | Found while adding PostgreSQL (`D73`), before any release: there, an email address or username typed in other letter case would not have matched (sign-in refused, a taken username reported as free) | ✅ Fixed before release: `SqlDialect.caseInsensitive` and `CITEXT` columns (`RegistrationTests.identitiesIgnoreLetterCase`, run on both databases) |
 | FUN-R07 | Medium | Found by the browser journeys against the live deployment: on the sign-in and registration pages the button worked before the page's script had attached its handler, which on a slower connection takes the time of one or two requests. A click then made the browser submit the form itself: the page reloaded, everything typed was lost, and, as the forms named no method, the fields went into the address as a GET | ✅ Fixed (2026-09-27): both buttons ship disabled and are enabled by the script once it handles the form, and both forms say `method="post"`. Proof: the `e2e/` journeys, which failed at this click on production and pass there now |
+| FUN-R08 | High | Found in `OBJ-036`: all three clubs saw the same 11 courses. The seeder put every course into every Year-1 program (`DD-20`). No course, lesson, card or quiz endpoint checked the child's program, so a two-year-old could open any course by its address | ✅ Fixed (2026-09-27, `D78`/`DQ-13`): each club has its own set, `V5` replaced the old rows, and every child endpoint answers `404` outside the child's program. Proof: `ClubProgramsTests` (exact disjoint sets; ages 3, 5 and 7; a Tiny Cub refused a Little and a Big course, lesson, card and quiz, with nothing recorded) |
 
 ## 5. Information or requirements still required (class I)
 
@@ -161,8 +162,8 @@ value.
 
 | ID | Needed | Why it matters | Placeholder until supplied |
 |---|---|---|---|
-| INF-01 | **Content for age groups the baseline does not cover**, and for a "next-year" program (§5, §16) | The baseline content is toddler and pre-school level | Courses are tagged by age group; the next-year screen says the program is being prepared |
-| INF-02 | **Contact Us details** (§17): the application's contact email or form recipient, and whether a phone number is shown | Must not expose personal details (§17) | A configuration value (`app.contact.email`) that shows "not configured" |
+| INF-01 | **Content for age groups the baseline does not cover**, and for a "next-year" program (§5, §16) | The baseline content is toddler and pre-school level | The 11 courses are split across the three clubs (`DQ-13`), so Big Cubs has only 3. Clubs past Year 1 say the program is being prepared |
+| INF-02 | ✅ **Resolved (2026-09-27, `D80`).** Contact Us details (§17) | Must not expose personal details (§17) | The owner supplied two addresses. `CC_CONTACT_EMAIL` now holds a comma-separated list, and the Contact page shows each one (`CleverCubsPropertiesTests`, `PagesAndMediaTests`). No phone number is shown |
 | INF-03 | **Legal review** of the Terms & Conditions, privacy notice, consent wording and retention periods (§18, §20) | Children's personal data; compliance is never claimed without review | Drafts marked "Draft — requires legal review" on every page that shows them |
 | INF-04 | **An email or SMS provider**, if the parent is to be reached outside the app (DQ-10), including password reset | Without one, a parent who forgets their password cannot reset it alone | In-app flows only; password reset is admin-assisted and audited |
 | INF-05 | **Hosting target**: domain, HTTPS, production database (§8, §20) | `Secure` cookies and HSTS need HTTPS; production credentials need a secret store | Local development profile; production settings documented and read from the environment |
@@ -176,7 +177,7 @@ value.
 ## 6. Verification of the existing issues against the build (E → F)
 
 Checked on 2026-09-27 against the running build and the automated tests (`app/`: JUnit, 219 tests, on
-MySQL and on PostgreSQL; `e2e/`: Playwright, desktop and phone). ✅ = fixed and verified (class F), 🟡 = partly fixed, ⚠️ = still open
+MySQL and on PostgreSQL; 228 after `OBJ-036`, all passing again; `e2e/`: Playwright, desktop and phone). ✅ = fixed and verified (class F), 🟡 = partly fixed, ⚠️ = still open
 with its reason, ℹ️ = waiting for information.
 
 | ID | Status | How it is closed, and the evidence |

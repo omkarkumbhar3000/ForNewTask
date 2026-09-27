@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.clevercubs.platform.settings.Settings;
+import org.clevercubs.platform.web.ApiException;
 import org.clevercubs.quiz.QuizRules;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Service;
@@ -133,6 +134,22 @@ public class ProgressService {
     }
 
     /** The course ids of a program, in program order. */
+    /**
+     * D78: a child reaches a course only through a program they are enrolled in: their club's Year 1, or the
+     * next club's program once the parent chooses to continue. Anything else answers as if it did not exist,
+     * so another club's course is neither shown nor recorded.
+     */
+    public void requireInChildsProgram(long childId, long courseId, String what) {
+        int reachable = jdbc.sql("""
+                        SELECT COUNT(*) FROM program_course pc
+                        JOIN program_enrolment e ON e.program_id = pc.program_id
+                        WHERE pc.course_id = :course AND e.child_id = :child""")
+                .param("course", courseId).param("child", childId).query(Integer.class).single();
+        if (reachable == 0) {
+            throw ApiException.notFound(what);
+        }
+    }
+
     public List<Long> programCourseIds(long programId) {
         return jdbc.sql("""
                         SELECT pc.course_id FROM program_course pc JOIN course c ON c.id = pc.course_id

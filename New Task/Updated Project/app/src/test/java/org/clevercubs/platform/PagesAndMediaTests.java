@@ -121,4 +121,15 @@ class PagesAndMediaTests extends IntegrationTest {
                 .andExpect(jsonPath("$.minAge").value(2))
                 .andExpect(jsonPath("$.maxAge").value(8));
     }
+
+    @Test
+    @DisplayName("the contact endpoint lists the configured addresses (D80)")
+    void contactAddresses() throws Exception {
+        mvc.perform(get("/api/v1/public/contact"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.configured").value(true))
+                .andExpect(jsonPath("$.emails.length()").value(1))
+                .andExpect(jsonPath("$.emails[0]").value("hello@clevercubs.test"))
+                .andExpect(jsonPath("$.email").value("hello@clevercubs.test"));
+    }
 }

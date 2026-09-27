@@ -125,6 +125,53 @@ class AdminTests extends IntegrationTest {
     }
 
     @Test
+    @DisplayName("a Super Admin adds another: temporary password once, forced change, full admin rights, audited (D79)")
+    void addSuperAdmin() throws Exception {
+        MockHttpSession admin = journeys.admin();
+        String email = Journeys.uniqueEmail("second_admin");
+        journeys.remember(email);
+        MvcResult created = mvc.perform(json(post("/api/v1/admin/accounts"), "{\"email\":\"" + email + "\"}")
+                .session(admin)).andReturn();
+        assertThat(created.getResponse().getStatus()).as(created.getResponse().getContentAsString()).isEqualTo(201);
+        assertThat(Journeys.<String>read(created, "$.role")).isEqualTo("SUPER_ADMIN");
+        String temporary = Journeys.read(created, "$.temporaryPassword");
+        assertThat(temporary).hasSizeGreaterThanOrEqualTo(12);
+
+        mvc.perform(json(post("/api/v1/admin/accounts"), "{\"email\":\"" + email.toUpperCase() + "\"}").session(admin))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.code").value("email-taken"));
+
+        MockHttpSession second = journeys.login(email, temporary);
+        mvc.perform(get("/api/v1/admin/overview").session(second))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.code").value("password-change-required"));
+        String chosen = "the new admin keeps a long sentence " + System.nanoTime();
+        mvc.perform(json(post("/api/v1/auth/change-password"),
+                        "{\"currentPassword\":\"" + temporary + "\",\"newPassword\":\"" + chosen + "\"}").session(second))
+                .andExpect(status().is2xxSuccessful());
+        mvc.perform(get("/api/v1/admin/overview").session(second)).andExpect(status().isOk());
+        journeys.login(email, chosen);
+
+        String details = jdbc.sql("""
+                        SELECT details FROM audit_event WHERE action = 'ACCOUNT_CREATED' AND target_type = 'user_account'
+                        ORDER BY id DESC LIMIT 1""").query(String.class).single();
+        assertThat(details).contains("SUPER_ADMIN").doesNotContain(email).doesNotContain(temporary);
+    }
+
+    @Test
+    @DisplayName("only a Super Admin may add one, and the address must be an email address")
+    void addSuperAdminIsGuarded() throws Exception {
+        Family f = journeys.family(4);
+        mvc.perform(json(post("/api/v1/admin/accounts"), "{\"email\":\"someone@example.test\"}").session(f.session()))
+                .andExpect(status().isForbidden());
+        MockHttpSession admin = journeys.admin();
+        mvc.perform(json(post("/api/v1/admin/accounts"), "{\"email\":\"admin\"}").session(admin))
+                .andExpect(status().isBadRequest());
+        assertThat(jdbc.sql("SELECT COUNT(*) FROM user_account WHERE email = 'someone@example.test'")
+                .query(Integer.class).single()).isZero();
+    }
+
+    @Test
     @DisplayName("settings are validated, change the live rule, and are audited with before and after")
     void settingsChange() throws Exception {
         MockHttpSession admin = journeys.admin();
