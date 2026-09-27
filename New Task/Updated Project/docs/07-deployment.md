@@ -62,19 +62,25 @@ The image sets `SPRING_PROFILES_ACTIVE=cloud`, which reads the variables above (
 
 ## 5. First deployment
 
-**Owner, once:** sign in to Vercel and accept the Neon Marketplace terms at
-`https://vercel.com/om-projects11/~/integrations/accept-terms/neon?source=cli`.
+What was done on 2026-09-27, in order. Anyone with the Vercel CLI signed in to the team can repeat it.
 
-**Then (the assistant, or anyone with the Vercel CLI signed in to the team):**
+| Step | Command or action (from `New Task/Updated Project`) | Note |
+|---:|---|---|
+| 1 | `vercel link --yes --project clevercubs --scope om-projects11` | Creates the project. Writes `.vercel/` and `.env.local` (a `VERCEL_OIDC_TOKEN`), both gitignored |
+| 2 | `vercel env add PORT production --value 8080`, the same for `CC_ADMIN_EMAIL`; `CC_DB_APP_PASSWORD` (`--sensitive`) and `CC_ADMIN_INITIAL_PASSWORD` from stdin | Passwords generated at random, piped in, never printed or written to a file (`D75`) |
+| 3 | **Owner, once:** accept the Neon Marketplace terms at `https://vercel.com/om-projects11/~/integrations/accept-terms/neon?source=cli`, team "OM's projects" selected | Until then the next step answers `integration_terms_acceptance_required` |
+| 4 | `vercel integration add neon --name clevercubs-db -m region=sin1 -e production -e preview` | Adds `PGHOST_UNPOOLED`, `PGDATABASE`, `PGUSER`, `PGPASSWORD` (and others the application ignores) |
+| 5 | `vercel git connect https://github.com/omkarkumbhar3000/ForNewTask.git --yes` | Builds come from GitHub, not from a laptop upload (§7) |
+| 6 | `vercel api /v9/projects/clevercubs -X PATCH -F "rootDirectory=New Task/Updated Project" -F gitLFS=true` | Without the root directory Vercel would build the repository root; without LFS the media would arrive as pointer files |
+| 7 | The first production deployment: `vercel api /v13/deployments -X POST` with a `gitSource` for `main`; afterwards every push to `main` deploys | Under Git Bash, prefix `vercel api` with `MSYS_NO_PATHCONV=1` |
 
-```powershell
-# from "New Task/Updated Project", linked to the project (vercel link --project clevercubs)
-vercel integration add neon --name clevercubs-db -m region=sin1 -e production -e preview
-vercel deploy --prod
-```
+⚠️ **The CLI changes files it was not asked to.** `vercel link` and `vercel integration add` append a broad
+`.env*` rule to this folder's `.gitignore`, which would also hide `.env.example`, and `integration add neon`
+installs vendor "agent skills" into `.agents/`, `.claude/skills/` and `skills-lock.json`. Those were removed
+and the `.gitignore` restored; check `git status` after any such command.
 
 Then check the production address: the welcome page, register a family, a lesson with a video, a quiz,
-the parent area and the admin sign-in (`e2e/`: `CLEVERCUBS_URL=<address> npx playwright test`).
+the parent area and the admin sign-in (`e2e/`: `$env:CLEVERCUBS_URL = "<address>"; npx playwright test`).
 
 ## 6. Checking an image locally
 
@@ -94,7 +100,8 @@ docker run --rm -p 8090:8080 -e PGHOST_UNPOOLED=host.docker.internal:55432 -e PG
 
 | Task | How |
 |---|---|
-| Deploy a change | Push to `main`. The build is skipped when nothing under `app/`, `media/` or the deployment files changed (`vercel.json` `ignoreCommand`) |
+| Deploy a change | Push to `main`; Vercel builds from GitHub. The build is skipped when nothing under `app/`, `media/` or the deployment files changed (`vercel.json` `ignoreCommand`; its `\|\| exit 1` makes any git error mean "build" rather than a failed deployment). A `vercel deploy` from a laptop uploads the 417 MB media instead and stalled on a home connection, so it is not the way to deploy |
+| `.vercelignore` | Vercel applies it from the **repository root** on a GitHub build, so it is a deny-list of unanchored patterns; an allow-list beginning with `/*` removed the whole repository, `.git` included, in the first attempt |
 | Roll back | Vercel dashboard → Deployments → an earlier one → Promote to Production |
 | Logs | Vercel dashboard → the project → Logs (the container's output) |
 | After the first admin sign-in | Delete `CC_ADMIN_INITIAL_PASSWORD` from the project; the bootstrap never runs again once a Super Admin exists (`D69`) |

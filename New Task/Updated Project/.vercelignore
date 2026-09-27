@@ -1,9 +1,17 @@
-# What Vercel takes from this folder for a deployment (docs/07-deployment.md): only the container build and
-# its inputs. Documentation, the browser tests, tools and local scripts stay out.
-/*
-!/Dockerfile.vercel
-!/.dockerignore
-!/vercel.json
-!/app
-!/media
-/app/target
+# What Vercel leaves out of a deployment (docs/07-deployment.md §5). Deployments are built from GitHub, and
+# there Vercel applies this file from the REPOSITORY root, not from this folder: an allow-list beginning with
+# `/*` removed the whole repository, .git included, and the build failed. So this is a deny-list, every pattern
+# is unanchored, and none may match .git or what the container build needs (app/pom.xml, app/src, media/,
+# Dockerfile.vercel, .dockerignore, vercel.json). The image itself is limited further by .dockerignore.
+docs/
+e2e/
+tools/
+db/init/
+BLAST/
+.claude/
+app/target/
+.tmp/
+*.md
+*.ps1
+docker-compose.yml
+.env*

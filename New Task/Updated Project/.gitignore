@@ -8,7 +8,8 @@
 .env.*.local
 !.env.example
 
-# Vercel CLI: the project link and the token file `vercel link` writes (docs/07-deployment.md)
+# Vercel CLI: the project link and the token file `vercel link` writes (docs/07-deployment.md). The CLI
+# appends a broad `.env*` here on link or integration commands; keep it out, it would hide .env.example.
 .vercel/
 
 # Build output and dependencies
