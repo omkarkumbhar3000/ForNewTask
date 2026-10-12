@@ -432,5 +432,3 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File BLAST\hooks\inject-objec
 - **PDFs are Git LFS objects** (`.gitattributes`); `git lfs` must be installed to clone them as files.
 - **A nested `.git` in an uploaded project** is recorded as a pointer, not as files. Upload a project into
   `New Task/Current Project/` without its `.git` folder (root `README.md` §13).
-- `mar.md` at the root is the owner's private Marathi companion to CLI sessions. It is gitignored; keep it
-  that way.

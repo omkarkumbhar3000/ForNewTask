@@ -68,10 +68,6 @@ desktop.ini
 *.orig
 *.rej
 
-# --- Local-only --------------------------------------------------------------
-# The owner's private Marathi companion to CLI sessions. Never published.
-mar.md
-
 # --- The uploaded baseline (D72) ----------------------------------------------
 # 579 MB, migrated into "New Task/Updated Project" (content JSON + media/, sha256-checked).
 # Removed from the workspace after its migration audit (D80). The rule stays so a
