@@ -149,12 +149,14 @@ are in `docs/06-review-summary.md`, the cloud deployment in `docs/07-deployment.
 
 ### Commands
 
-`JAVA_HOME` is wrong machine-wide: it names a `jdk-26.0.1` that doesn't exist. `mvnw.cmd` fails until you
-set it, so set it in the same command. Docker Desktop must be running, because the tests start a real MySQL
-through Testcontainers. A cold start takes about 30 seconds; that is not a hang.
+`JAVA_HOME` (User and Machine scope) is `C:\Program Files\Java\latest\jdk-26`, a junction to `jdk-26.0.2`, and
+`mvnw.cmd -v` runs on Java 26.0.2 without an override (checked 2026-10-12). It used to name a missing
+`jdk-26.0.1`; if `mvnw.cmd` ever reports *JAVA_HOME is not defined correctly* again, set it in the same command
+(first line below). Docker Desktop must be running, because the tests start a real MySQL through
+Testcontainers. A cold start takes about 30 seconds; that is not a hang.
 
 ```powershell
-$env:JAVA_HOME = "C:\Program Files\Java\jdk-26.0.2"     # before ANY maven command
+# $env:JAVA_HOME = "C:\Program Files\Java\jdk-26.0.2"   # only if JAVA_HOME is broken again
 $app = ".\New Task\Updated Project\app"                  # from the repository root; mvnw.cmd is in app/
 
 & "$app\mvnw.cmd" -f "$app\pom.xml" verify                                                 # the whole gate
